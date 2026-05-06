@@ -1,0 +1,145 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
+class ProductSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        DB::table("products")->insert([
+            [
+                'product_id' => Str::uuid(),
+                'name' => 'Acrylic Display Premium',
+                'product_type' => 1,
+                'category_type' => 1,
+                'price' => 250000,
+                'discount' => 0,
+                'image_url' => json_encode(['https://ibekami.id/storage/gambar_produk/Acrylic_6811a5c76b71d.webp']),
+                'detail' => json_encode(['Material' => 'Acrylic 5mm', 'Size' => '20x30cm']),
+                'description' => "Display stand acrylic premium dengan kualitas terbaik untuk keperluan display produk atau informasi.",
+                'status' => 'Aktif',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'product_id' => Str::uuid(),
+                'name' => 'Custom Merchandise Tumbler',
+                'product_type' => 1,
+                'category_type' => 1,
+                'price' => 85000,
+                'discount' => 10,
+                'image_url' => json_encode(['https://ibekami.id/storage/gambar_produk/Merchandise_6811ac1035649.webp']),
+                'detail' => json_encode(['Material' => 'Stainless Steel', 'Capacity' => '500ml']),
+                'description' => "Tumbler custom dengan kualitas premium, cocok untuk souvenir atau merchandise perusahaan.",
+                'status' => 'Aktif',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'product_id' => Str::uuid(),
+                'name' => 'Digital Printing Banner',
+                'product_type' => 1,
+                'category_type' => 1,
+                'price' => 45000,
+                'discount' => 0,
+                'image_url' => json_encode(['https://ibekami.id/storage/gambar_produk/Digital Printing_6811aa7d344bc.webp']),
+                'detail' => json_encode(['Material' => 'Flexi Korea', 'Size' => 'Custom']),
+                'description' => "Banner digital printing dengan kualitas cetak tinggi, tahan cuaca dan warna tidak mudah pudar.",
+                'status' => 'Aktif',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'product_id' => Str::uuid(),
+                'name' => 'Plaque Penghargaan Kayu',
+                'product_type' => 1,
+                'category_type' => 1,
+                'price' => 350000,
+                'discount' => 5,
+                'image_url' => json_encode(['https://ibekami.id/storage/gambar_produk/Portfolio of Plaques_68392250d50c3.webp']),
+                'detail' => json_encode(['Material' => 'Kayu Jati', 'Size' => '25x35cm']),
+                'description' => "Plaque penghargaan dari kayu jati berkualitas dengan finishing glossy yang elegan.",
+                'status' => 'Aktif',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'product_id' => Str::uuid(),
+                'name' => 'Goodie Bag Custom Print',
+                'product_type' => 1,
+                'category_type' => 1,
+                'price' => 15000,
+                'discount' => 0,
+                'image_url' => json_encode(['https://ibekami.id/storage/gambar_produk/Digital Printing_6811aa7d344bc.webp']),
+                'detail' => json_encode(['Material' => 'Spunbond', 'Size' => '30x40cm']),
+                'description' => "Goodie bag dengan custom print, cocok untuk event, seminar, atau promosi perusahaan.",
+                'status' => 'Aktif',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'product_id' => Str::uuid(),
+                'name' => 'Acrylic Box Display',
+                'product_type' => 1,
+                'category_type' => 1,
+                'price' => 180000,
+                'discount' => 0,
+                'image_url' => json_encode(['https://ibekami.id/storage/gambar_produk/Acrylic_6811a5c76b71d.webp']),
+                'detail' => json_encode(['Material' => 'Acrylic 3mm', 'Size' => '15x15x15cm']),
+                'description' => "Box display acrylic untuk koleksi atau display produk dengan desain minimalis dan elegan.",
+                'status' => 'Aktif',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'product_id' => Str::uuid(),
+                'name' => 'Sticker Vinyl Premium',
+                'product_type' => 1,
+                'category_type' => 1,
+                'price' => 25000,
+                'discount' => 15,
+                'image_url' => json_encode(['https://ibekami.id/storage/gambar_produk/Digital Printing_6811aa7d344bc.webp']),
+                'detail' => json_encode(['Material' => 'Vinyl', 'Size' => 'A4']),
+                'description' => "Sticker vinyl premium dengan daya rekat kuat dan tahan lama, cocok untuk outdoor maupun indoor.",
+                'status' => 'Aktif',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'product_id' => Str::uuid(),
+                'name' => 'Mug Custom Ceramic',
+                'product_type' => 1,
+                'category_type' => 1,
+                'price' => 35000,
+                'discount' => 0,
+                'image_url' => json_encode(['https://ibekami.id/storage/gambar_produk/Merchandise_6811ac1035649.webp']),
+                'detail' => json_encode(['Material' => 'Ceramic', 'Capacity' => '330ml']),
+                'description' => "Mug ceramic berkualitas tinggi dengan custom print, cocok untuk souvenir atau merchandise.",
+                'status' => 'Aktif',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'product_id' => Str::uuid(),
+                'name' => 'Produk Tidak Aktif',
+                'product_type' => 1,
+                'category_type' => 1,
+                'price' => 50000,
+                'discount' => 0,
+                'image_url' => json_encode(['https://ibekami.id/storage/gambar_produk/Merchandise_6811ac1035649.webp']),
+                'detail' => json_encode(['Status' => 'Tidak Aktif']),
+                'description' => "Produk ini tidak akan muncul di halaman utama karena statusnya tidak aktif.",
+                'status' => 'Tidak Aktif',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+    }
+}
