@@ -1,0 +1,15 @@
+{
+  "name": "IBEKAMI Website",
+  "short_name": "IBEKAMI",
+  "description": "IBEKAMI - Digital Printing & Souvenir Custom Medan",
+  "display": "browser",
+  "start_url": "/",
+  "scope": "/",
+  "orientation": "any",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "categories": [],
+  "iarc_rating_id": "",
+  "screenshots": [],
+  "shortcuts": []
+}

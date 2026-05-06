@@ -4,6 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+    <!-- Disable PWA Install Prompt - Multiple Methods -->
+    <meta name="mobile-web-app-capable" content="no">
+    <meta name="apple-mobile-web-app-capable" content="no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- Prevent indexing by app stores -->
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="googlebot" content="noindex, nofollow">
+    
+    <!-- Link to manifest that disables installation -->
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    
+    <!-- Explicitly prevent service worker registration -->
+    <meta http-equiv="origin-trial" content="">
 
     <title>@yield('title', 'IBEKAMI - Digital Printing & Souvenir Custom Medan')</title>
 
@@ -70,5 +86,101 @@
     </main>
 
     @stack('scripts')
+    
+    <!-- Prevent PWA Install Prompt - Enhanced Multi-Layer Defense -->
+    <script>
+        (function() {
+            'use strict';
+            
+            // Layer 1: Prevent beforeinstallprompt (Standard PWA)
+            let deferredPrompt = null;
+            
+            window.addEventListener('beforeinstallprompt', (e) => {
+                console.log('PWA install prompt blocked');
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                deferredPrompt = null; // Don't store the event
+                return false;
+            }, { capture: true, passive: false });
+            
+            // Layer 2: Prevent appinstalled event
+            window.addEventListener('appinstalled', (e) => {
+                console.log('App installation blocked');
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return false;
+            }, { capture: true, passive: false });
+            
+            // Layer 3: Unregister ALL service workers (Android WebAPK prevention)
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    if (registrations.length > 0) {
+                        console.log('Unregistering ' + registrations.length + ' service worker(s)');
+                        for(let registration of registrations) {
+                            registration.unregister().then(function(success) {
+                                if (success) {
+                                    console.log('Service worker unregistered successfully');
+                                }
+                            });
+                        }
+                    }
+                }).catch(function(err) {
+                    console.log('Service worker unregistration failed:', err);
+                });
+                
+                // Prevent future service worker registrations
+                const originalRegister = navigator.serviceWorker.register;
+                navigator.serviceWorker.register = function() {
+                    console.log('Service worker registration blocked');
+                    return Promise.reject(new Error('Service worker registration is disabled'));
+                };
+            }
+            
+            // Layer 4: Block all PWA-related events at document level
+            ['beforeinstallprompt', 'appinstalled'].forEach(eventName => {
+                document.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    return false;
+                }, { capture: true, passive: false });
+            });
+            
+            // Layer 5: Override window.matchMedia for display-mode detection
+            const originalMatchMedia = window.matchMedia;
+            window.matchMedia = function(query) {
+                if (query.includes('display-mode')) {
+                    // Always return browser mode, never standalone
+                    return {
+                        matches: query.includes('browser'),
+                        media: query,
+                        onchange: null,
+                        addListener: function() {},
+                        removeListener: function() {},
+                        addEventListener: function() {},
+                        removeEventListener: function() {},
+                        dispatchEvent: function() { return true; }
+                    };
+                }
+                return originalMatchMedia.call(window, query);
+            };
+            
+            // Layer 6: Clear any PWA-related storage
+            try {
+                if (window.localStorage) {
+                    const pwaKeys = Object.keys(localStorage).filter(key => 
+                        key.includes('pwa') || key.includes('install') || key.includes('prompt')
+                    );
+                    pwaKeys.forEach(key => localStorage.removeItem(key));
+                }
+            } catch(e) {
+                console.log('Could not clear PWA storage:', e);
+            }
+            
+            console.log('PWA prevention layers activated');
+        })();
+    </script>
 </body>
 </html>

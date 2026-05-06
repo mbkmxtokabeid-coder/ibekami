@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Add SetLocale middleware to web group
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
+            \App\Http\Middleware\PreventPWA::class, // Prevent PWA install prompt
         ]);
         
         // Global API Throttle - Safety Net

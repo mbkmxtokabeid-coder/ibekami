@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * Prevent PWA Install Prompt Middleware
+ * 
+ * This middleware adds HTTP headers to prevent browsers from showing
+ * the "Install App" or "Add to Home Screen" prompt.
+ * 
+ * Critical for preventing Android WebAPK install prompts that confuse users.
+ * 
+ * @see PWA_INSTALL_PROMPT_FIX.md for full documentation
+ */
+class PreventPWA
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        $response = $next($request);
+        
+        // Layer 1: Prevent PWA detection by search engines and browsers
+        $response->headers->set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet');
+        
+        // Layer 2: Disable PWA-related browser features
+        $response->headers->set('Feature-Policy', "display-capture 'none'; web-share 'none'");
+        $response->headers->set('Permissions-Policy', 'display-capture=(), web-share=()');
+        
+        // Layer 3: Security headers (bonus)
+        $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
+        $response->headers->set('X-Content-Type-Options', 'nosniff');
+        
+        // Layer 4: Special handling for manifest.json
+        if ($request->is('manifest.json')) {
+            $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+            $response->headers->set('Pragma', 'no-cache');
+            $response->headers->set('Expires', '0');
+        }
+        
+        return $response;
+    }
+}
