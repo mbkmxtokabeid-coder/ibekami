@@ -25,6 +25,53 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
+
+    {{-- Structured Data: LocalBusiness + WebSite (global) --}}
+    @if(config('app.env') === 'production')
+    @php
+        $globalSchema = [
+            '@context' => 'https://schema.org',
+            '@graph' => [
+                [
+                    '@type' => 'LocalBusiness',
+                    '@id' => config('app.url') . '/#business',
+                    'name' => 'IBEKAMI',
+                    'description' => 'Jasa digital printing dan souvenir custom berkualitas tinggi di Medan. Melayani cetak banner, spanduk, kaos, mug, dan berbagai produk custom lainnya.',
+                    'url' => config('app.url'),
+                    'telephone' => '+628170769999',
+                    'priceRange' => 'Rp',
+                    'image' => asset('storage/logos/logo ibekami (3).png'),
+                    'address' => [
+                        '@type' => 'PostalAddress',
+                        'addressLocality' => 'Medan',
+                        'addressRegion' => 'Sumatera Utara',
+                        'addressCountry' => 'ID',
+                    ],
+                    'geo' => [
+                        '@type' => 'GeoCoordinates',
+                        'latitude' => 3.5952,
+                        'longitude' => 98.6722,
+                    ],
+                    'openingHoursSpecification' => [
+                        '@type' => 'OpeningHoursSpecification',
+                        'dayOfWeek' => ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+                        'opens' => '08:00',
+                        'closes' => '17:00',
+                    ],
+                    'sameAs' => ['https://wa.me/628170769999'],
+                ],
+                [
+                    '@type' => 'WebSite',
+                    '@id' => config('app.url') . '/#website',
+                    'url' => config('app.url'),
+                    'name' => 'IBEKAMI',
+                    'publisher' => ['@id' => config('app.url') . '/#business'],
+                ],
+            ],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($globalSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
+    @endif
 </head>
 <body class="min-h-screen text-gray-900 dark:text-gray-100 antialiased">
 

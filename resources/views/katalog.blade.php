@@ -4,6 +4,21 @@
 
 @section('content')
 
+{{-- Structured Data: BreadcrumbList halaman Katalog --}}
+@if(config('app.env') === 'production')
+@php
+    $katalogSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Beranda', 'item' => config('app.url')],
+            ['@type' => 'ListItem', 'position' => 2, 'name' => 'Katalog Produk', 'item' => route('katalog')],
+        ],
+    ];
+@endphp
+<script type="application/ld+json">{!! json_encode($katalogSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
+@endif
+
 <div class="min-h-screen bg-[#fff2e0] pt-24 lg:pt-28">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 

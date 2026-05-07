@@ -183,3 +183,53 @@ function changeMainImage(imageUrl, clickedButton) {
     }
 }
 </script>
+
+{{-- Structured Data: Product + BreadcrumbList --}}
+@if(config('app.env') === 'production')
+@php
+    $schemaImages = array_values($productData['images'] ?? [$productData['image']]);
+    $schemaPrice = 0;
+    $schemaPriceNote = '';
+    if ($productData['price'] > 0) {
+        if ($productData['discount'] > 0) {
+            $schemaPrice = round($productData['price'] * (1 - $productData['discount'] / 100));
+        } else {
+            $schemaPrice = $productData['price'];
+        }
+    } else {
+        $schemaPriceNote = 'Hubungi kami untuk informasi harga';
+    }
+    $schemaData = [
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'Product',
+                'name' => $productData['name'],
+                'description' => $productData['desc'],
+                'image' => $schemaImages,
+                'category' => $productData['category'],
+                'brand' => ['@type' => 'Brand', 'name' => 'IBEKAMI'],
+                'offers' => array_filter([
+                    '@type' => 'Offer',
+                    'url' => url()->current(),
+                    'priceCurrency' => 'IDR',
+                    'price' => (string) $schemaPrice,
+                    'description' => $schemaPriceNote ?: null,
+                    'priceValidUntil' => ($productData['discount'] > 0) ? now()->addMonths(3)->toDateString() : null,
+                    'availability' => 'https://schema.org/InStock',
+                    'seller' => ['@type' => 'Organization', 'name' => 'IBEKAMI'],
+                ]),
+            ],
+            [
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => [
+                    ['@type' => 'ListItem', 'position' => 1, 'name' => 'Beranda', 'item' => config('app.url')],
+                    ['@type' => 'ListItem', 'position' => 2, 'name' => 'Katalog', 'item' => route('katalog')],
+                    ['@type' => 'ListItem', 'position' => 3, 'name' => $productData['name'], 'item' => url()->current()],
+                ],
+            ],
+        ],
+    ];
+@endphp
+<script type="application/ld+json">{!! json_encode($schemaData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
+@endif

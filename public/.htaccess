@@ -12,6 +12,12 @@
         Header set Pragma "no-cache"
         Header set Expires "0"
     </FilesMatch>
+
+    # Blokir Google dari mengindeks file PDF & dokumen internal
+    # (file non-HTML tidak punya <head>, jadi harus pakai HTTP header)
+    <FilesMatch "\.(pdf|doc|docx|xls|xlsx)$">
+        Header set X-Robots-Tag "noindex, nofollow"
+    </FilesMatch>
 </IfModule>
 
 <IfModule mod_rewrite.c>
