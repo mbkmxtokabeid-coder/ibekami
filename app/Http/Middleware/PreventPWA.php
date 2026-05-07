@@ -27,18 +27,15 @@ class PreventPWA
     {
         $response = $next($request);
         
-        // Layer 1: Prevent PWA detection by search engines and browsers
-        $response->headers->set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet');
-        
-        // Layer 2: Disable PWA-related browser features
+        // Disable PWA-related browser features
         $response->headers->set('Feature-Policy', "display-capture 'none'; web-share 'none'");
         $response->headers->set('Permissions-Policy', 'display-capture=(), web-share=()');
         
-        // Layer 3: Security headers (bonus)
+        // Security headers
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         
-        // Layer 4: Special handling for manifest.json
+        // Special handling for manifest.json
         if ($request->is('manifest.json')) {
             $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
             $response->headers->set('Pragma', 'no-cache');
