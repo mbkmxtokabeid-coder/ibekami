@@ -59,7 +59,7 @@
                 <p class="text-base text-[#7a6452] leading-relaxed font-medium italic">"{{ $productData['desc'] }}"</p>
                 
                 @if($productData['price'] > 0)
-                <div class="mt-4 flex items-center gap-3">
+                <div class="mt-4 flex items-center gap-3" data-nosnippet>
                     @if($productData['discount'] > 0)
                         @php
                             $discountedPrice = $productData['price'] * (1 - $productData['discount'] / 100);

@@ -9,11 +9,8 @@
     <meta name="mobile-web-app-capable" content="no">
     <meta name="apple-mobile-web-app-capable" content="no">
 
-    {{-- ❌ HAPUS BARIS INI — penyebab notifikasi PWA masih muncul --}}
-    {{-- <link rel="manifest" href="{{ asset('manifest.json') }}"> --}}
-
     @if(config('app.env') === 'production')
-        <meta name="robots" content="index, follow">
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     @else
         <meta name="robots" content="noindex, nofollow">
     @endif

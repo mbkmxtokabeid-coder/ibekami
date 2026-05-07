@@ -100,7 +100,7 @@
                 <div class="px-2 pb-3 sm:px-4 sm:pb-5 flex flex-col flex-1">
                     
                     <!-- Badge Hot Deal -->
-                    <div class="mb-2 sm:mb-3">
+                    <div class="mb-2 sm:mb-3" data-nosnippet>
                         <span class="inline-block bg-[#ff9100] text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full uppercase tracking-widest shadow-md shadow-[#ff9100]/20">
                             {{ __('messages.hot_deal') }}
                         </span>
