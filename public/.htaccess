@@ -1,12 +1,9 @@
 <IfModule mod_headers.c>
-    # Prevent PWA Installation - Critical Headers
-    # These headers tell browsers NOT to treat this as an installable app
-    Header set X-Robots-Tag "noindex, nofollow, noarchive, nosnippet"
+    # Security Headers
     Header set X-Frame-Options "SAMEORIGIN"
     Header set X-Content-Type-Options "nosniff"
     
-    # Explicitly disable PWA features
-    Header set Feature-Policy "display-capture 'none'; web-share 'none'"
+    # Disable PWA features (tidak ada hubungannya dengan X-Robots-Tag)
     Header set Permissions-Policy "display-capture=(), web-share=()"
     
     # Cache control for manifest to prevent aggressive caching

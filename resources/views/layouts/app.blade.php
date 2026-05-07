@@ -12,6 +12,12 @@
     {{-- ❌ HAPUS BARIS INI — penyebab notifikasi PWA masih muncul --}}
     {{-- <link rel="manifest" href="{{ asset('manifest.json') }}"> --}}
 
+    @if(config('app.env') === 'production')
+        <meta name="robots" content="index, follow">
+    @else
+        <meta name="robots" content="noindex, nofollow">
+    @endif
+
     <title>@yield('title', 'IBEKAMI - Digital Printing & Souvenir Custom Medan')</title>
 
     <link rel="icon" type="image/png" href="{{ asset('storage/logos/logo ibekami (3).png') }}">
