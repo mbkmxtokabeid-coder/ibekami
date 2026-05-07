@@ -28,7 +28,7 @@ class PreventPWA
         $response = $next($request);
         
         // Disable PWA-related browser features
-        $response->headers->set('Feature-Policy', "display-capture 'none'; web-share 'none'");
+        // Feature-Policy is deprecated, Permissions-Policy is the modern standard
         $response->headers->set('Permissions-Policy', 'display-capture=(), web-share=()');
         
         // Security headers

@@ -215,12 +215,19 @@
             <a href="{{ url('/#hot-deals') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a>
             
             <!-- Katalog Dropdown (Mobile) -->
-            <div class="bg-[#fff2e0]/40 rounded-2xl overflow-hidden">
+            <div class="bg-[#fff2e0]/40 rounded-2xl">
                 <button @click="catalogMenuOpen = !catalogMenuOpen" class="w-full flex justify-between items-center px-4 py-3 text-[15px] font-semibold text-[#2C1A0E] outline-none">
                     {{ __('messages.catalog') }}
                     <svg class="w-5 h-5 transition-transform duration-300 text-[#ff9100]" :class="{'rotate-180': catalogMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
-                <div x-show="catalogMenuOpen" x-cloak x-collapse class="px-4 pb-3 flex flex-col gap-2">
+                <div x-show="catalogMenuOpen" x-cloak 
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 -translate-y-1"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 -translate-y-1"
+                     class="px-4 pb-3 flex flex-col gap-2">
                     <div class="w-full h-px bg-black/5 mb-1"></div>
                     <a href="{{ route('katalog') }}" class="px-3 py-2 rounded-xl bg-[#ff9100]/10 text-[14px] font-bold text-[#ff9100]">{{ __('messages.all_products') }}</a>
                     
