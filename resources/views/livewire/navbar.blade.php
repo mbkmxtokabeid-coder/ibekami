@@ -20,9 +20,6 @@
                 <div class="w-8 h-8 sm:w-9 sm:h-9 bg-[#ff9100] rounded-full items-center justify-center hidden">
                     <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white" viewBox="0 0 20 20"><path d="M10 2L3 7v11h5v-5h4v5h5V7z"/></svg>
                 </div>
-                <span class="font-['Playfair_Display'] text-[16px] sm:text-[18px] font-black text-[#2C1A0E] tracking-tight">
-                    IBE<span class="text-[#ff9100]">KAMI</span>
-                </span>
             </a>
 
             <!-- 2. Desktop Links -->

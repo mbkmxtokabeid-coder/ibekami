@@ -1,5 +1,5 @@
 <div>
-<section class="relative bg-[#FFF2E0] min-h-[85vh] flex items-center justify-center overflow-hidden px-4 py-16 lg:py-20">
+<section class="relative bg-[#FFF2E0] min-h-[85vh] flex items-center justify-center overflow-hidden px-4 py-16 lg:py-20 pt-28 lg:pt-32">
     
     <!-- Background Blurs (lebih ringan & subtle) -->
     <div class="absolute top-0 right-[-10%] w-[40vw] max-w-[420px] h-[40vw] max-h-[420px] bg-[#FF9100]/10 blur-[80px] rounded-full animate-[pulse_6s_ease-in-out_infinite]"></div>
@@ -62,30 +62,19 @@
                 </a>
             </div>
 
-            <!-- Trust -->
-            <div class="flex items-center gap-4 pt-5 border-t border-black/5 w-full max-w-[420px]">
-                <div class="flex -space-x-2">
-                    <div class="w-8 h-8 rounded-full border border-[#FFF2E0] bg-[#FF9100] text-white flex items-center justify-center text-[9px] font-bold">PA</div>
-                    <div class="w-8 h-8 rounded-full border border-[#FFF2E0] bg-[#FFB066] text-white flex items-center justify-center text-[9px] font-bold">BS</div>
-                    <div class="w-8 h-8 rounded-full border border-[#FFF2E0] bg-[#2C1A0E] text-white flex items-center justify-center text-[9px] font-bold">5K+</div>
-                </div>
-                <p class="text-[11px] font-semibold text-[#5C3D28]">
-                    {{ __('messages.trusted_by') }} 1,000+ <span class="opacity-70">{{ __('messages.partners') }}</span>
-                </p>
-            </div>
         </div>
 
         <!-- KONTEN KANAN -->
-        <div class="lg:col-span-6 relative w-full h-[340px] sm:h-[460px] lg:h-[520px] flex items-center justify-center mt-6 lg:mt-0">
+        <div class="lg:col-span-6 relative w-full flex items-center justify-center mt-6 lg:mt-0">
             
-            <!-- Frame -->
-            <div class="relative w-[85%] h-[90%] bg-[#FFF2E0] rounded-t-[140px] rounded-b-[32px] 
+            <!-- Frame — aspect-square agar video 1:1 tampil penuh -->
+            <div class="relative w-[85%] max-w-[480px] aspect-square bg-[#FFF2E0] rounded-2xl
             border border-white/60 shadow-lg shadow-[#FF9100]/10 overflow-hidden transition-transform duration-500">
 
                 @if($banner && $videoUrl)
                     <video autoplay loop muted playsinline
                          @if($posterUrl) poster="{{ $posterUrl }}" @endif
-                         class="w-full h-full object-cover scale-105">
+                         class="w-full h-full object-contain">
                         <source src="{{ $videoUrl }}" type="video/webm">
                         <source src="{{ $videoUrl }}" type="video/mp4">
                     </video>
@@ -101,23 +90,12 @@
                     </div>
                 @endif
 
-                <div class="absolute inset-0 bg-[#FF9100]/10 mix-blend-multiply"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-[#FFF2E0] via-transparent to-transparent opacity-60"></div>
+                <div class="absolute inset-0 bg-[#FF9100]/10 mix-blend-multiply pointer-events-none"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#FFF2E0] via-transparent to-transparent opacity-40 pointer-events-none"></div>
             </div>
 
-            <!-- Floating Card 1 -->
-            <div class="absolute top-6 left-2 bg-white/80 backdrop-blur-md border border-white/60 p-3 rounded-xl shadow-md animate-[float_4s_ease-in-out_infinite]">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-[#FF9100]/10 rounded-lg flex items-center justify-center text-[#FF9100]">✓</div>
-                    <div>
-                        <p class="text-[9px] font-semibold text-[#8A6A54] uppercase">{{ __('messages.precision') }}</p>
-                        <p class="text-[13px] font-bold text-[#2C1A0E]">0.01mm</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Floating Card 2 -->
-            <div class="absolute bottom-14 right-2 bg-white/80 backdrop-blur-md border border-white/60 p-3 rounded-xl shadow-md animate-[float_5s_ease-in-out_infinite_reverse]">
+            <!-- Floating Card Rating -->
+            <div class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-md border border-white/60 p-3 rounded-xl shadow-md animate-[float_5s_ease-in-out_infinite_reverse]">
                 <div class="flex items-center gap-2">
                     <div class="w-8 h-8 bg-yellow-300/30 rounded-lg flex items-center justify-center">★</div>
                     <div>

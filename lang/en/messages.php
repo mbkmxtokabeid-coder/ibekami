@@ -47,7 +47,7 @@ return [
     'custom_souvenir' => 'Custom souvenir, merchandise & digital printing with sharp quality and high precision.',
     'precision' => 'Precision',
     'rating' => 'Rating',
-    'made_in_medan' => 'Ikhtiar Berkah, Original Medan Product',
+    'made_in_medan' => 'Ikhtiar Berkah, Creative Economy from Medan Indonesia (IBEKAMI)',
     'make_ideas_real' => 'Turn Ideas Into',
     'real_work' => 'Real Work',
     
