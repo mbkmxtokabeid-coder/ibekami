@@ -7,14 +7,15 @@
 
     <title>@yield('title', 'Admin — ' . config('app.name'))</title>
 
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&display=swap" rel="stylesheet" />
 
-    {{-- Highcharts --}}
-    <script src="https://code.highcharts.com/highcharts.js"></script>
+    {{-- Highcharts — defer agar tidak blocking --}}
+    <script src="https://code.highcharts.com/highcharts.js" defer></script>
 
-    {{-- SweetAlert2 --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- SweetAlert2 — defer agar tidak blocking --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -63,7 +64,7 @@
         </div>
     </div>
 
-    @livewireScripts
     @stack('scripts')
+    @livewireScripts
 </body>
 </html>

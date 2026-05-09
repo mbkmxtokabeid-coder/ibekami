@@ -2,25 +2,25 @@
 
 @section('content')
 
-    {{-- Hero Section --}}
+    {{-- Hero Section — above the fold, render langsung --}}
     <livewire:halaman-utama.hero />
 
-    {{-- Hot Deals --}}
-    <livewire:halaman-utama.hot-deals />
+    {{-- Hot Deals — lazy: render setelah hero selesai --}}
+    <livewire:halaman-utama.hot-deals lazy />
 
-    {{-- product-section --}}
-    <livewire:halaman-utama.product-section />
+    {{-- Product Section — lazy --}}
+    <livewire:halaman-utama.product-section lazy />
 
-    {{-- belanja-online --}}
-    <livewire:halaman-utama.belanja-online />
+    {{-- Belanja Online — lazy --}}
+    <livewire:halaman-utama.belanja-online lazy />
 
-    {{-- ulasan --}}
-    <livewire:halaman-utama.ulasan />
+    {{-- Ulasan — lazy --}}
+    <livewire:halaman-utama.ulasan lazy />
 
-    {{-- mitra --}}
-    <livewire:halaman-utama.mitra />
+    {{-- Mitra — lazy --}}
+    <livewire:halaman-utama.mitra lazy />
 
-    {{-- footer --}}
-    <livewire:footer />
+    {{-- Footer — lazy --}}
+    <livewire:footer lazy />
 
 @endsection

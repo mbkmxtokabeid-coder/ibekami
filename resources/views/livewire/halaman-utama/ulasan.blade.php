@@ -15,28 +15,34 @@
              x-data="{
                 scrollPosition: 0,
                 isPaused: false,
-                cardWidth: 0,
                 totalWidth: 0,
+                animFrame: null,
+                lastTime: null,
                 
                 init() {
-                    this.cardWidth = this.$refs.track.children[0].offsetWidth + 24; // width + gap
-                    this.totalWidth = this.$refs.track.scrollWidth / 3; // dibagi 3 karena duplikat 3x
-                    this.startAutoScroll();
+                    // Defer layout reads to after paint — avoids forced reflow on init
+                    requestAnimationFrame(() => {
+                        this.totalWidth = this.$refs.track.scrollWidth / 3;
+                        this.startAutoScroll();
+                    });
                 },
                 
                 startAutoScroll() {
-                    setInterval(() => {
+                    const step = (timestamp) => {
+                        if (!this.lastTime) this.lastTime = timestamp;
+                        const delta = timestamp - this.lastTime;
+                        this.lastTime = timestamp;
+
                         if (!this.isPaused) {
-                            this.scrollPosition -= 1;
-                            
-                            // Reset position untuk infinite loop
-                            if (Math.abs(this.scrollPosition) >= this.totalWidth) {
+                            this.scrollPosition += delta * 0.04; // ~1px per 25ms
+                            if (this.scrollPosition >= this.totalWidth) {
                                 this.scrollPosition = 0;
                             }
-                            
-                            this.$refs.track.style.transform = `translateX(${this.scrollPosition}px)`;
+                            this.$refs.track.style.transform = `translateX(-${this.scrollPosition}px)`;
                         }
-                    }, 30); // Update setiap 30ms untuk smooth animation
+                        this.animFrame = requestAnimationFrame(step);
+                    };
+                    this.animFrame = requestAnimationFrame(step);
                 }
              }"
              @mouseenter="isPaused = true"

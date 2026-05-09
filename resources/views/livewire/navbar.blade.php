@@ -1,6 +1,6 @@
 
 <nav x-data="{ mobileMenuOpen: false, searchOpen: false, langMenuOpen: false, catalogMenuOpen: false, scrolled: false }" 
-     @scroll.window.throttle.100ms="scrolled = (window.pageYOffset > 20)"
+     @scroll.window.throttle.150ms="scrolled = (window.pageYOffset > 20)"
      class="fixed top-0 inset-x-0 z-[100] transition-all duration-500 ease-out"
      :class="scrolled ? 'py-3' : 'py-4 lg:py-6'">
     
@@ -80,7 +80,7 @@
                         <svg class="w-4 h-4 text-[#8A6A54] group-focus-within:text-[#ff9100] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0Z"/></svg>
                     </div>
                     <input type="text" 
-                           wire:model.live.debounce.500ms="search"
+                           wire:model.live.debounce.350ms="search"
                            wire:keydown.enter="performSearch"
                            class="block w-32 xl:w-44 p-2 pl-9 text-[12px] font-medium text-[#2C1A0E] bg-white/40 border border-white/50 rounded-full focus:ring-2 focus:ring-[#ff9100]/30 focus:bg-white outline-none placeholder-[#8A6A54] transition-all shadow-inner" 
                            placeholder="{{ __('messages.search') }}...">
@@ -191,7 +191,7 @@
                     <svg class="w-4.5 h-4.5 text-[#8A6A54]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </div>
                 <input type="text" 
-                       wire:model.live.debounce.500ms="search"
+                       wire:model.live.debounce.350ms="search"
                        wire:keydown.enter="performSearch"
                        class="block w-full p-3.5 pl-10 text-[14px] font-medium text-[#2C1A0E] bg-[#fff2e0]/60 rounded-xl border-none focus:ring-2 focus:ring-[#ff9100]/40 outline-none placeholder-[#8A6A54]" 
                        placeholder="{{ __('messages.search_placeholder') }}">

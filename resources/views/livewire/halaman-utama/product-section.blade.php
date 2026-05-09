@@ -50,13 +50,15 @@
                           transition-all duration-300 ease-out 
                           hover:-translate-y-1 flex flex-col cursor-pointer">
 
-                    <!-- Image Container -->
+                    <!-- Image Container — dimensi eksplisit mencegah CLS -->
                     <div class="h-[130px] md:h-[180px] rounded-2xl overflow-hidden bg-gradient-to-br from-[#FFF2E0] to-[#FFE5C8] mb-3">
                         <img 
                             src="{{ $product['img'] }}"
                             alt="{{ $product['name'] }}"
                             loading="lazy"
                             decoding="async"
+                            width="400"
+                            height="300"
                             class="w-full h-full object-cover transition-all duration-500 
                                    group-hover:scale-[1.04]"
                             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text={{ urlencode($product['name']) }}'"

@@ -47,6 +47,6 @@
 </div>
 
 {{-- Footer --}}
-<livewire:footer />
+<livewire:footer lazy />
 
 @endsection

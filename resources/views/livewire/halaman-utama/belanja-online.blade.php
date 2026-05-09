@@ -26,6 +26,8 @@
                 <div class="w-14 h-14 sm:w-16 sm:h-16 bg-[#fff2e0] rounded-2xl flex-shrink-0 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300 ease-out border border-[#ff9100]/5 overflow-hidden p-2">
                     <img src="{{ $tokopediaLogo }}" 
                          alt="Tokopedia" 
+                         width="56"
+                         height="56"
                          class="w-full h-full object-contain"
                          loading="lazy">
                 </div>
@@ -54,6 +56,8 @@
                 <div class="w-14 h-14 sm:w-16 sm:h-16 bg-[#fff2e0] rounded-2xl flex-shrink-0 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out border border-[#ff9100]/5 overflow-hidden p-2">
                     <img src="{{ $shopeeLogo }}" 
                          alt="Shopee" 
+                         width="56"
+                         height="56"
                          class="w-full h-full object-contain"
                          loading="lazy">
                 </div>

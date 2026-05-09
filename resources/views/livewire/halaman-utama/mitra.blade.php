@@ -29,30 +29,38 @@
                         scrollPosition: 0,
                         isPaused: false,
                         totalWidth: 0,
+                        animFrame: null,
+                        lastTime: null,
                         
                         init() {
-                            this.totalWidth = this.$refs.track.scrollWidth / 2;
-                            this.startAutoScroll();
+                            requestAnimationFrame(() => {
+                                this.totalWidth = this.$refs.track.scrollWidth / 2;
+                                this.startAutoScroll();
+                            });
                         },
                         
                         startAutoScroll() {
-                            setInterval(() => {
+                            const step = (timestamp) => {
+                                if (!this.lastTime) this.lastTime = timestamp;
+                                const delta = timestamp - this.lastTime;
+                                this.lastTime = timestamp;
+
                                 if (!this.isPaused) {
-                                    this.scrollPosition += 1;
-                                    
+                                    this.scrollPosition += delta * 0.03;
                                     if (this.scrollPosition >= this.totalWidth) {
                                         this.scrollPosition = 0;
                                     }
-                                    
                                     this.$refs.track.style.transform = `translateX(-${this.scrollPosition}px)`;
                                 }
-                            }, 30);
+                                this.animFrame = requestAnimationFrame(step);
+                            };
+                            this.animFrame = requestAnimationFrame(step);
                         }
                     }"
                     @mouseenter="isPaused = true"
                     @mouseleave="isPaused = false"
                     class="relative">
-                        <div x-ref="track" class="flex gap-4 transition-transform duration-100 ease-linear">
+                        <div x-ref="track" class="flex gap-4">
                             @php
                                 // Duplikasi 2x untuk infinite loop
                                 $bumnLoop = array_merge($partnersBumn, $partnersBumn);
@@ -62,7 +70,10 @@
                             <div wire:key="bumn-{{ $partner['id'] }}-{{ $index }}" 
                                  class="w-36 h-20 shrink-0 bg-white rounded-xl border border-[#ff9100]/10 flex items-center justify-center p-4 hover:border-[#ff9100] hover:shadow-lg hover:shadow-[#ff9100]/10 transition-all group">
                                 <img src="{{ $partner['image'] }}" 
-                                     loading="lazy" 
+                                     loading="lazy"
+                                     decoding="async"
+                                     width="144"
+                                     height="80"
                                      alt="Partner BUMN"
                                      class="max-h-full max-w-full object-contain grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 transition-all"
                                      onerror="this.src='https://via.placeholder.com/150x80?text=BUMN'">
@@ -85,31 +96,39 @@
                         scrollPosition: 0,
                         isPaused: false,
                         totalWidth: 0,
+                        animFrame: null,
+                        lastTime: null,
                         
                         init() {
-                            this.totalWidth = this.$refs.track.scrollWidth / 2;
-                            this.scrollPosition = this.totalWidth;
-                            this.startAutoScroll();
+                            requestAnimationFrame(() => {
+                                this.totalWidth = this.$refs.track.scrollWidth / 2;
+                                this.scrollPosition = this.totalWidth;
+                                this.startAutoScroll();
+                            });
                         },
                         
                         startAutoScroll() {
-                            setInterval(() => {
+                            const step = (timestamp) => {
+                                if (!this.lastTime) this.lastTime = timestamp;
+                                const delta = timestamp - this.lastTime;
+                                this.lastTime = timestamp;
+
                                 if (!this.isPaused) {
-                                    this.scrollPosition -= 1;
-                                    
+                                    this.scrollPosition -= delta * 0.03;
                                     if (this.scrollPosition <= 0) {
                                         this.scrollPosition = this.totalWidth;
                                     }
-                                    
                                     this.$refs.track.style.transform = `translateX(-${this.scrollPosition}px)`;
                                 }
-                            }, 30);
+                                this.animFrame = requestAnimationFrame(step);
+                            };
+                            this.animFrame = requestAnimationFrame(step);
                         }
                     }"
                     @mouseenter="isPaused = true"
                     @mouseleave="isPaused = false"
                     class="relative">
-                        <div x-ref="track" class="flex gap-4 transition-transform duration-100 ease-linear">
+                        <div x-ref="track" class="flex gap-4">
                             @php
                                 // Duplikasi 2x untuk infinite loop
                                 $orgLoop = array_merge($partnersOrganization, $partnersOrganization);
@@ -119,7 +138,10 @@
                             <div wire:key="org-{{ $partner['id'] }}-{{ $index }}" 
                                  class="w-36 h-20 shrink-0 bg-white rounded-xl border border-[#ff9100]/10 flex items-center justify-center p-4 hover:border-[#ff9100] hover:shadow-lg hover:shadow-[#ff9100]/10 transition-all group">
                                 <img src="{{ $partner['image'] }}" 
-                                     loading="lazy" 
+                                     loading="lazy"
+                                     decoding="async"
+                                     width="144"
+                                     height="80"
                                      alt="Partner Organization"
                                      class="max-h-full max-w-full object-contain grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 transition-all"
                                      onerror="this.src='https://via.placeholder.com/150x80?text=Organization'">

@@ -130,13 +130,17 @@
         
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             @forelse($relatedProducts as $item)
-                <a href="{{ route('katalog.detail', ['slug' => $item['slug']]) }}"
+                <a wire:key="related-{{ $item['slug'] }}"
+                   href="{{ route('katalog.detail', ['slug' => $item['slug']]) }}"
                 class="bg-[#FDFAF7] rounded-2xl overflow-hidden border border-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(44,26,14,0.1)] group cursor-pointer flex flex-col">
 
                     <div class="aspect-[4/3] bg-[#E8E3D8] relative overflow-hidden shrink-0">
                         <img src="{{ $item['img'] }}"
                             alt="{{ $item['name'] }}"
                             loading="lazy"
+                            decoding="async"
+                            width="400"
+                            height="300"
                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         
                         <div class="absolute inset-0 bg-[#2C1A0E]/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

@@ -62,6 +62,8 @@
                              alt="{{ $product['name'] }}"
                              loading="lazy"
                              decoding="async"
+                             width="400"
+                             height="300"
                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         
                         <div class="absolute inset-0 bg-[#2C1A0E]/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

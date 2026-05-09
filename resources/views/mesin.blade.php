@@ -4,13 +4,13 @@
 
 @section('content')
 
-    {{-- Hero mesin --}}
+    {{-- Hero mesin — above the fold, render langsung --}}
     <livewire:mesin.hero-mesin />
 
-    {{-- Hot Deals --}}
-    <livewire:mesin.mesin-section />
+    {{-- Mesin Section — lazy --}}
+    <livewire:mesin.mesin-section lazy />
 
-    {{-- footer --}}
-    <livewire:footer />
+    {{-- Footer — lazy --}}
+    <livewire:footer lazy />
 
 @endsection

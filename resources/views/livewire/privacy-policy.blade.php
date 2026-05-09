@@ -11,7 +11,7 @@
         }
     }
 }" 
-@scroll.window.throttle.50ms="
+@scroll.window.throttle.150ms="
     const sections = ['section-1', 'section-2', 'section-3', 'section-4', 'section-5', 'section-6'];
     const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
     

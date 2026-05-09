@@ -64,7 +64,8 @@
 
             @forelse($deals as $index => $deal)
             <!-- Kartu Individu -->
-            <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20{{ urlencode($deal->name) }}%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F"
+            <a wire:key="deal-{{ $deal->id }}"
+               href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20{{ urlencode($deal->name) }}%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F"
                target="_blank"
                @click.throttle.2000ms
                @mouseenter="setHovered({{ $index }})"
@@ -78,7 +79,9 @@
                     <img src="{{ $deal->image_full_url }}" 
                          alt="{{ $deal->name }}" 
                          loading="lazy" 
-                         decoding="async" 
+                         decoding="async"
+                         width="400"
+                         height="300"
                          class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out origin-center">
                     
                     <!-- Overlay Halus -->
