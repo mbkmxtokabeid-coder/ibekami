@@ -14,6 +14,9 @@
     {{-- Belanja Online — lazy --}}
     <livewire:halaman-utama.belanja-online lazy />
 
+    {{-- Sosial Media — lazy --}}
+    <livewire:halaman-utama.sosial-media lazy />
+
     {{-- Ulasan — lazy --}}
     <livewire:halaman-utama.ulasan lazy />
 
