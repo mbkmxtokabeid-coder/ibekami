@@ -65,7 +65,7 @@ class DetailKatalog extends Component
                 ->map(function ($relatedProduct) {
                     return [
                         'name' => $relatedProduct->name,
-                        'cat' => $relatedProduct->category->name ?? $relatedProduct->type->name ?? 'Kategori',
+                        'cat' => $relatedProduct->type->name ?? $relatedProduct->category->name ?? 'Produk',
                         'img' => $this->getProductImage($relatedProduct),
                         'slug' => \Illuminate\Support\Str::slug($relatedProduct->name),
                         'status' => $relatedProduct->status,
@@ -79,7 +79,7 @@ class DetailKatalog extends Component
     {
         $this->productData = [
             'name' => $this->product->name,
-            'category' => $this->product->category->name ?? $this->product->type->name ?? 'Kategori',
+            'category' => $this->product->type->name ?? $this->product->category->name ?? 'Produk',
             'image' => $this->getProductImage($this->product),
             'images' => $this->getAllProductImages($this->product),
             'desc' => $this->product->description ?? 'Produk berkualitas tinggi dengan desain yang menarik dan fungsional.',

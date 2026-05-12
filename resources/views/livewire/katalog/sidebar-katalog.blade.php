@@ -26,6 +26,7 @@
 
             {{-- Kategori Section --}}
             <div x-data="{
+                open: true,
                 debounceTimer: null,
                 debouncedSetCategory(categoryName) {
                     clearTimeout(this.debounceTimer);
@@ -34,25 +35,118 @@
                     }, 400);
                 }
             }">
-                <p class="text-[11px] font-black tracking-[0.15em] uppercase text-[#7a5d48] mb-4 ml-1">{{ __('messages.category') }}</p>
-                <div class="space-y-2">
+                {{-- Header dropdown --}}
+                <button @click="open = !open"
+                    class="w-full flex items-center justify-between mb-4 ml-1 outline-none group">
+                    <p class="text-[11px] font-black tracking-[0.15em] uppercase text-[#7a5d48]">{{ __('messages.category') }}</p>
+                    <svg class="w-4 h-4 text-[#ff9100] transition-transform duration-300 mr-1"
+                         :class="open ? 'rotate-180' : ''"
+                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+
+                <div x-show="open"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 -translate-y-2"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-end="opacity-0 -translate-y-2"
+                     class="space-y-1">
+
+                    {{-- Semua Produk --}}
                     @foreach($categories as $cat)
+                        @if($cat['group'] === 'all')
                         <button
                             @click="debouncedSetCategory('{{ $cat['name'] }}')"
-                            class="w-full flex items-center justify-between px-5 py-3 rounded-2xl text-[14px] font-bold transition-all group
+                            class="w-full flex items-center justify-between px-5 py-3 rounded-2xl text-[14px] font-bold transition-all
                                 {{ $activeCategory === $cat['name']
-                                        ? 'bg-white text-[#ff9100] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 scale-[1.02]'
-                                        : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}"
+                                    ? 'bg-white text-[#ff9100] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 scale-[1.02]'
+                                    : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}"
                         >
-                            <span class="flex items-start gap-3 text-left flex-1">
-                                <span class="w-2.5 h-2.5 mt-1.5 rounded-full shrink-0 {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100] shadow-[0_0_8px_#ff9100]' : 'bg-[#d1c2b4]' }}"></span>
-                                <span class="leading-tight">{{ $cat['name'] }}</span>
+                            <span class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full shrink-0 {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100] shadow-[0_0_8px_#ff9100]' : 'bg-[#d1c2b4]' }}"></span>
+                                {{ $cat['name'] }}
                             </span>
                             <span class="text-[11px] font-black px-2.5 py-1 rounded-full {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100]/10 text-[#ff9100]' : 'bg-[#f5ede8] text-[#a89584]' }}">
                                 {{ $cat['count'] }}
                             </span>
                         </button>
+                        @endif
                     @endforeach
+
+                    {{-- Group: Tipe Produk --}}
+                    @php $types = array_filter($categories, fn($c) => $c['group'] === 'type'); @endphp
+                    @if(count($types) > 0)
+                    <div x-data="{ openType: true }" class="pt-1">
+                        <button @click="openType = !openType"
+                            class="w-full flex items-center justify-between px-5 py-2 text-[10px] font-black tracking-[0.12em] uppercase text-[#ff9100] outline-none">
+                            <span>Tipe Produk</span>
+                            <svg class="w-3 h-3 transition-transform duration-200" :class="openType ? 'rotate-180' : ''"
+                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div x-show="openType" x-transition class="space-y-1 mt-1">
+                            @foreach($categories as $cat)
+                                @if($cat['group'] === 'type')
+                                <button
+                                    @click="debouncedSetCategory('{{ $cat['name'] }}')"
+                                    class="w-full flex items-center justify-between px-5 py-2.5 rounded-2xl text-[13px] font-semibold transition-all
+                                        {{ $activeCategory === $cat['name']
+                                            ? 'bg-white text-[#ff9100] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 scale-[1.02]'
+                                            : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}"
+                                >
+                                    <span class="flex items-center gap-3 text-left flex-1">
+                                        <span class="w-2 h-2 rounded-full shrink-0 {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100]' : 'bg-[#d1c2b4]' }}"></span>
+                                        <span class="leading-tight">{{ $cat['name'] }}</span>
+                                    </span>
+                                    <span class="text-[11px] font-black px-2 py-0.5 rounded-full {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100]/10 text-[#ff9100]' : 'bg-[#f5ede8] text-[#a89584]' }}">
+                                        {{ $cat['count'] }}
+                                    </span>
+                                </button>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+                    {{-- Group: Kategori --}}
+                    @php $cats = array_filter($categories, fn($c) => $c['group'] === 'category'); @endphp
+                    @if(count($cats) > 0)
+                    <div x-data="{ openCat: false }" class="pt-1">
+                        <button @click="openCat = !openCat"
+                            class="w-full flex items-center justify-between px-5 py-2 text-[10px] font-black tracking-[0.12em] uppercase text-[#7a5d48] outline-none">
+                            <span>Kategori</span>
+                            <svg class="w-3 h-3 transition-transform duration-200" :class="openCat ? 'rotate-180' : ''"
+                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div x-show="openCat" x-transition class="space-y-1 mt-1">
+                            @foreach($categories as $cat)
+                                @if($cat['group'] === 'category')
+                                <button
+                                    @click="debouncedSetCategory('{{ $cat['name'] }}')"
+                                    class="w-full flex items-center justify-between px-5 py-2.5 rounded-2xl text-[13px] font-semibold transition-all
+                                        {{ $activeCategory === $cat['name']
+                                            ? 'bg-white text-[#ff9100] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 scale-[1.02]'
+                                            : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}"
+                                >
+                                    <span class="flex items-center gap-3 text-left flex-1">
+                                        <span class="w-2 h-2 rounded-full shrink-0 {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100]' : 'bg-[#d1c2b4]' }}"></span>
+                                        <span class="leading-tight">{{ $cat['name'] }}</span>
+                                    </span>
+                                    <span class="text-[11px] font-black px-2 py-0.5 rounded-full {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100]/10 text-[#ff9100]' : 'bg-[#f5ede8] text-[#a89584]' }}">
+                                        {{ $cat['count'] }}
+                                    </span>
+                                </button>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
                 </div>
             </div>
 
@@ -84,8 +178,8 @@
 
         </div>
 
-        {{-- WhatsApp CTA Card --}}
-        <div class="hidden lg:block bg-[#ff9100] rounded-[32px] p-6 text-center shadow-[0_20px_40px_rgba(255,145,0,0.25)] border-t border-white/20">
+        {{-- WhatsApp CTA Card — desktop: selalu tampil, mobile: tampil di bawah filter --}}
+        <div class="bg-[#ff9100] rounded-[32px] p-6 text-center shadow-[0_20px_40px_rgba(255,145,0,0.25)] border-t border-white/20">
             <p class="text-white font-black text-[16px] mb-1">{{ __('messages.need_help') }}</p>
             <p class="text-white/80 text-[12px] mb-5 font-medium leading-relaxed">{{ __('messages.free_consultation') }}</p>
             <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F"

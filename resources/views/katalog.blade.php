@@ -33,14 +33,18 @@
             </p>
         </div>
 
-        {{-- Layout: Sidebar + Grid (mulai setara) --}}
+        {{-- Layout: Sidebar + Grid --}}
         <div class="flex flex-col lg:flex-row gap-8 items-start">
 
-            {{-- Sidebar --}}
-            <livewire:katalog.sidebar-katalog />
+            {{-- Sidebar — di mobile tampil BAWAH (order-2), di desktop tampil KIRI (order-none) --}}
+            <div class="w-full lg:w-auto order-2 lg:order-none">
+                <livewire:katalog.sidebar-katalog />
+            </div>
 
-            {{-- Produk --}}
-            <livewire:katalog.katalog-section />
+            {{-- Produk — di mobile tampil ATAS (order-1), di desktop tampil KANAN (order-none) --}}
+            <div class="w-full order-1 lg:order-none min-w-0">
+                <livewire:katalog.katalog-section />
+            </div>
 
         </div>
     </div>

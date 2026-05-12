@@ -73,7 +73,7 @@ class ProductSection extends Component
             return [
                 'id' => $product->product_id,
                 'name' => $product->name,
-                'cat' => $product->category->name ?? $product->type->name ?? 'Kategori',
+                'cat' => $product->type->name ?? $product->category->name ?? 'Produk',
                 'img' => $this->getProductImage($product),
                 'slug' => \Illuminate\Support\Str::slug($product->name),
             ];

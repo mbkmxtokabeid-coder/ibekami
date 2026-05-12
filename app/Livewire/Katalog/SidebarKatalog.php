@@ -28,28 +28,29 @@ class SidebarKatalog extends Component
         
         // Hitung total semua produk (tanpa filter status)
         $totalProducts = Product::count();
-        $this->categories[] = ['name' => __('messages.all_products'), 'count' => $totalProducts];
+        $this->categories[] = ['name' => __('messages.all_products'), 'count' => $totalProducts, 'group' => 'all'];
 
-        // Ambil categories dengan count (semua produk)
-        $dbCategories = Category::withCount('products')->get();
-
-        foreach ($dbCategories as $cat) {
-            if ($cat->products_count > 0) {
-                $this->categories[] = [
-                    'name' => $cat->name,
-                    'count' => $cat->products_count
-                ];
-            }
-        }
-
-        // Ambil types dengan count (semua produk)
+        // Ambil types dengan count (semua produk) — tampil sebagai group utama
         $dbTypes = Type::withCount('products')->get();
-
         foreach ($dbTypes as $type) {
             if ($type->products_count > 0) {
                 $this->categories[] = [
                     'name' => $type->name,
-                    'count' => $type->products_count
+                    'count' => $type->products_count,
+                    'group' => 'type',
+                ];
+            }
+        }
+
+        // Ambil categories dengan count — tampil sebagai sub-group
+        // Hanya tampilkan kategori yang sudah punya produk
+        $dbCategories = Category::withCount('products')->get();
+        foreach ($dbCategories as $cat) {
+            if ($cat->products_count > 0) {
+                $this->categories[] = [
+                    'name' => $cat->name,
+                    'count' => $cat->products_count,
+                    'group' => 'category',
                 ];
             }
         }
