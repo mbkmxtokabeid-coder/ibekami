@@ -40,7 +40,8 @@ class PreventPWA
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         
         // Blokir akses ke file PWA — return 404 jika ada yang request langsung
-        if ($request->is('manifest.json') || $request->is('sw.js') || $request->is('service-worker.js') || $request->is('offline.html')) {
+        // KECUALI sw.js yang merupakan kill switch untuk unregister SW lama
+        if ($request->is('manifest.json') || $request->is('service-worker.js') || $request->is('offline.html')) {
             abort(404);
         }
         

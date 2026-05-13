@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
 <head>
+    {{-- CRITICAL: Unregister semua Service Worker SEBELUM apapun di-load --}}
+    {{-- SW lama bisa intercept request dan menyebabkan halaman blank + permission popup --}}
+    <script>
+        (function() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(function(regs) {
+                    regs.forEach(function(r) { r.unregister(); });
+                });
+                // Hapus semua cache SW lama
+                if ('caches' in window) {
+                    caches.keys().then(function(keys) {
+                        keys.forEach(function(key) { caches.delete(key); });
+                    });
+                }
+            }
+        })();
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -71,15 +88,6 @@
     </main>
 
     @stack('scripts')
-
-    {{-- Unregister sisa service worker lama di browser user --}}
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                registrations.forEach(function(r) { r.unregister(); });
-            });
-        }
-    </script>
 
     {{-- Structured Data: LocalBusiness + WebSite (non-blocking, di bawah body) --}}
     @if(config('app.env') === 'production')

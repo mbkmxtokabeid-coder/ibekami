@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Route;
 // Mencegah browser/audit tool mendeteksi PWA dari file yang mungkin masih ada di server
 
 Route::get('/manifest.json', fn() => abort(404));
-Route::get('/sw.js', fn() => abort(404));
+// sw.js TIDAK di-404 — file ini adalah kill switch yang meng-unregister SW lama di browser pengunjung
+// Route::get('/sw.js', fn() => abort(404)); // JANGAN aktifkan ini
 Route::get('/service-worker.js', fn() => abort(404));
 Route::get('/offline.html', fn() => abort(404));
 
