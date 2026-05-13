@@ -27,19 +27,21 @@ class PreventPWA
     {
         $response = $next($request);
         
-        // Disable PWA-related browser features
-        // Feature-Policy is deprecated, Permissions-Policy is the modern standard
-        $response->headers->set('Permissions-Policy', 'display-capture=(), web-share=()');
+        // Blokir semua fitur yang bisa memicu PWA install prompt atau permission popup
+        // web-share: mencegah popup "wants to access other apps and services"
+        // display-capture, fullscreen, picture-in-picture: fitur yang tidak dipakai
+        $response->headers->set(
+            'Permissions-Policy',
+            'display-capture=(), web-share=(), fullscreen=(), picture-in-picture=()'
+        );
         
         // Security headers
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         
-        // Special handling for manifest.json
-        if ($request->is('manifest.json')) {
-            $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
-            $response->headers->set('Pragma', 'no-cache');
-            $response->headers->set('Expires', '0');
+        // Blokir akses ke file PWA — return 404 jika ada yang request langsung
+        if ($request->is('manifest.json') || $request->is('sw.js') || $request->is('service-worker.js') || $request->is('offline.html')) {
+            abort(404);
         }
         
         return $response;

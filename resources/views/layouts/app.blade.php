@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- Anti-PWA --}}
-    <meta name="mobile-web-app-capable" content="no">
-    <meta name="apple-mobile-web-app-capable" content="no">
+    {{-- Anti-PWA: tag ini sengaja dihapus total, bukan di-set ke "no" --}}
+    {{-- Kehadiran tag apple-mobile-web-app-capable & mobile-web-app-capable --}}
+    {{-- meski content="no" tetap bisa dideteksi sebagai sinyal PWA oleh browser --}}
 
     @if(config('app.env') === 'production')
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -18,7 +18,7 @@
     <title>@yield('title', 'IBEKAMI - Digital Printing & Souvenir Custom Medan')</title>
 
     <link rel="icon" type="image/png" href="{{ asset('storage/logos/logo ibekami (3).png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('storage/logos/logo ibekami (3).png') }}">
+    {{-- apple-touch-icon dihapus: sinyal PWA yang tidak diperlukan --}}
 
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.bunny.net">
