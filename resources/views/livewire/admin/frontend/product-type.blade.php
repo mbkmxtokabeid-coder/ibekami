@@ -244,12 +244,20 @@
                     <input type="file"
                            wire:model="image"
                            accept="image/jpg,image/jpeg,image/png,image/webp"
+                           x-data
+                           x-on:change="
+                               const f = $event.target.files[0];
+                               if (f && f.size > 2 * 1024 * 1024) {
+                                   $event.target.value = '';
+                                   alert('❌ ' + f.name + '\n\nUkuran gambar melebihi 2MB. Silakan kompres gambar terlebih dahulu.');
+                               }
+                           "
                            class="w-full text-sm text-gray-600 border border-gray-300 rounded-lg px-3 py-2
                                   file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0
                                   file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700
                                   hover:file:bg-gray-200 transition
                                   @error('image') border-red-400 bg-red-50 @enderror"/>
-                    <p class="mt-1 text-xs text-gray-400">Format: JPG, PNG, WEBP. Maks 2MB.</p>
+                    <p class="mt-1 text-xs text-gray-400">Format: JPG, PNG, WEBP. Maks <strong>2MB</strong>.</p>
                     @error('image')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror

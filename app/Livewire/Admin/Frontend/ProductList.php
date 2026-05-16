@@ -137,7 +137,7 @@ class ProductList extends Component
             'status'          => ['required', 'in:Aktif,Tidak Aktif'],
             'details.*.key'   => ['nullable', 'string', 'max:100'],
             'details.*.value' => ['nullable', 'string', 'max:255'],
-            'images.*'        => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'images.*'        => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 
@@ -150,7 +150,7 @@ class ProductList extends Component
             'status.required'        => 'Status produk wajib dipilih.',
             'images.*.image'         => 'File harus berupa gambar.',
             'images.*.mimes'         => 'Format: jpg, jpeg, png, webp.',
-            'images.*.max'           => 'Ukuran gambar maksimal 4MB.',
+            'images.*.max'           => 'Ukuran gambar maksimal 2MB.',
         ];
     }
 

@@ -340,14 +340,23 @@
 
                                 <input type="file" wire:model="images" multiple
                                        accept="image/jpg,image/jpeg,image/png,image/webp"
+                                       x-data
+                                       x-on:change="
+                                           const max = 2 * 1024 * 1024;
+                                           const invalid = Array.from($event.target.files).filter(f => f.size > max);
+                                           if (invalid.length > 0) {
+                                               $event.target.value = '';
+                                               alert('❌ ' + invalid.map(f => f.name).join(', ') + '\n\nUkuran gambar melebihi 2MB. Silakan kompres gambar terlebih dahulu.');
+                                           }
+                                       "
                                        class="w-full text-sm text-gray-600 border border-gray-300 rounded-lg px-3 py-2
                                               file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0
                                               file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700
                                               hover:file:bg-gray-200 transition
                                               @error('images.*') border-red-400 @enderror"/>
 
-                                <p class="text-xs text-red-500">
-                                    Pastikan ukuran gambar sudah 1:1 dengan minimal 800px:800px
+                                <p class="text-xs text-gray-400 mt-1">
+                                    Format: JPG, PNG, WEBP · Maks <strong>2MB</strong> per gambar · Rasio 1:1, min 800×800px
                                 </p>
 
                                 <div wire:loading wire:target="images" class="text-xs text-cyan-600 flex items-center gap-1">

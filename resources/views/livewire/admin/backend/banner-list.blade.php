@@ -198,6 +198,21 @@
                         <input type="file"
                                wire:model="media"
                                accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/x-msvideo,video/x-matroska,video/webm"
+                               x-data
+                               x-on:change="
+                                   const f = $event.target.files[0];
+                                   if (!f) return;
+                                   const isVideo = f.type.startsWith('video/');
+                                   const maxImage = 2 * 1024 * 1024;   // 2MB untuk gambar
+                                   const maxVideo = 100 * 1024 * 1024; // 100MB untuk video
+                                   if (!isVideo && f.size > maxImage) {
+                                       $event.target.value = '';
+                                       alert('❌ ' + f.name + '\n\nUkuran gambar melebihi 2MB. Silakan kompres gambar terlebih dahulu.');
+                                   } else if (isVideo && f.size > maxVideo) {
+                                       $event.target.value = '';
+                                       alert('❌ ' + f.name + '\n\nUkuran video melebihi 100MB.');
+                                   }
+                               "
                                class="w-full text-sm text-gray-600 border border-gray-300 rounded-lg px-3 py-2
                                       file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0
                                       file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700
@@ -206,16 +221,13 @@
 
                         {{-- Hints --}}
                         <div class="mt-2 space-y-1">
-                            <p class="text-xs text-red-500">
-                                Make sure the resolution is vertical (9:16) like 720x1280px for the best result.
-                            </p>
                             <p class="text-xs text-gray-400">
                                 📹 <strong>Video:</strong> Format mp4/mov/avi/mkv — maks <strong>100MB</strong>,
                                 durasi disarankan <strong>≤ 30 detik</strong>, rasio <strong>1:1</strong>.
                                 Video akan otomatis dikompresi ke <strong>WebM</strong>.
                             </p>
                             <p class="text-xs text-gray-400">
-                                🖼️ <strong>Gambar:</strong> Format jpg/png/webp — maks <strong>5MB</strong>.
+                                🖼️ <strong>Gambar:</strong> Format jpg/png/webp — maks <strong>2MB</strong>, rasio vertikal 9:16 (720×1280px).
                             </p>
                         </div>
 

@@ -81,8 +81,8 @@ class MachineList extends Component
         return [
             'title' => ['required', 'string', 'max:200'],
             'image' => $this->isEditing
-                ? ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096']
-                : ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+                ? ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048']
+                : ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 
@@ -93,7 +93,7 @@ class MachineList extends Component
             'title.max'      => 'Judul maksimal 200 karakter.',
             'image.image'    => 'File harus berupa gambar.',
             'image.mimes'    => 'Format: jpg, jpeg, png, webp.',
-            'image.max'      => 'Ukuran gambar maksimal 4MB.',
+            'image.max'      => 'Ukuran gambar maksimal 2MB.',
         ];
     }
 
