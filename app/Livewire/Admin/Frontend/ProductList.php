@@ -185,10 +185,13 @@ class ProductList extends Component
         ];
 
         if ($this->isEditing) {
-            Product::findOrFail($this->editingId)->update($data);
+            $product = Product::findOrFail($this->editingId);
+            $product->update($data);
+            $this->clearProductCache($product->product_id, $product->name);
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Produk berhasil diperbarui.']);
         } else {
             Product::create($data);
+            $this->clearAllKatalogCache();
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Produk berhasil ditambahkan.']);
         }
 
@@ -207,8 +210,64 @@ class ProductList extends Component
             }
         }
 
+        $this->clearProductCache($product->product_id, $product->name);
         $product->delete();
         $this->dispatch('swal', ['type' => 'success', 'title' => 'Dihapus!', 'text' => 'Produk berhasil dihapus.']);
+    }
+
+    // ── Cache Helpers ─────────────────────────────────────────────
+
+    /**
+     * Hapus cache untuk produk tertentu (detail + related) dan semua cache katalog.
+     */
+    private function clearProductCache(string $productId, string $productName): void
+    {
+        // Cache detail produk (semua locale)
+        foreach (['id', 'en'] as $locale) {
+            $slug = \Illuminate\Support\Str::slug($productName);
+            cache()->forget("product_detail_{$slug}_{$locale}");
+            cache()->forget("related_products_{$productId}_{$locale}");
+        }
+
+        // Cache katalog (semua kombinasi filter)
+        $this->clearAllKatalogCache();
+    }
+
+    /**
+     * Hapus semua cache katalog.
+     * Cache key katalog menggunakan md5 dari kombinasi filter.
+     * Scan file cache dan hapus yang mengandung prefix 'katalog_products_'.
+     */
+    private function clearAllKatalogCache(): void
+    {
+        // Hapus cache key default yang paling umum diakses
+        foreach (['id', 'en'] as $locale) {
+            foreach (['Semua Produk', 'All Products'] as $cat) {
+                foreach (['Terbaru', 'Newest', 'A - Z', 'Z - A', 'Terlama', 'Oldest'] as $sort) {
+                    $key = 'katalog_products_' . md5($cat . $sort . '' . '' . '' . '' . $locale);
+                    cache()->forget($key);
+                }
+            }
+        }
+
+        // Scan file cache untuk hapus semua key katalog (md5 hash tidak bisa di-enumerate)
+        $cacheDir = storage_path('framework/cache/data');
+        if (!is_dir($cacheDir)) return;
+
+        try {
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($cacheDir, \RecursiveDirectoryIterator::SKIP_DOTS)
+            );
+            foreach ($iterator as $file) {
+                if (!$file->isFile()) continue;
+                $content = @file_get_contents($file->getRealPath());
+                if ($content && str_contains($content, 'katalog_products_')) {
+                    @unlink($file->getRealPath());
+                }
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Cache clear failed: ' . $e->getMessage());
+        }
     }
 
     // ── Render ────────────────────────────────────────────────────
