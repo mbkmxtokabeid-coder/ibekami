@@ -23,7 +23,7 @@
             allCategories: {{ Js::from($allCategories) }},
             types: {{ Js::from($selectedTypes) }},
             categories: {{ Js::from($selectedCategories) }},
-            wireId: $wire.__instance.id
+            wireId: $wire.$id
         })"
         class="relative shrink-0 flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl border transition-all
             {{ count($selectedTypes) > 0 || count($selectedCategories) > 0
