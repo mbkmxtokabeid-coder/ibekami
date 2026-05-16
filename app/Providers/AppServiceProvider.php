@@ -34,11 +34,15 @@ class AppServiceProvider extends ServiceProvider
         // GLOBAL RATE LIMITERS (Safety Net)
         // ═══════════════════════════════════════════════════════════════════
         
-        // Global Web Throttle - 120 requests per minute per IP
-        // Ini adalah jaring pengaman terakhir untuk semua web routes
-        // Lebih tinggi dari API karena web memiliki banyak assets (CSS, JS, images)
+        // Global Web Throttle - 300 requests per minute per IP
+        // Livewire mengirim banyak request saat upload/polling, jadi limit harus cukup tinggi
         RateLimiter::for('web', function (Request $request) {
-            return Limit::perMinute(120)
+            // Kecualikan Livewire internal endpoints dari throttle
+            if ($request->is('livewire/*')) {
+                return Limit::none();
+            }
+
+            return Limit::perMinute(300)
                 ->by($request->ip())
                 ->response(function (Request $request, array $headers) {
                     return response()->view('errors.rate-limit', [
@@ -124,10 +128,15 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // Rate Limiter untuk Admin Area
-        // 10 request per menit per IP
-        // Proteksi ketat untuk admin panel
+        // Dinaikkan untuk mendukung upload file via Livewire
+        // Livewire upload mengirim banyak request: polling + chunk + component update
         RateLimiter::for('admin', function (Request $request) {
-            return Limit::perMinute(10)
+            // Kecualikan Livewire internal endpoints
+            if ($request->is('livewire/*')) {
+                return Limit::none();
+            }
+
+            return Limit::perMinute(120)
                 ->by($request->ip())
                 ->response(function (Request $request, array $headers) {
                     return response()->view('errors.rate-limit', [
