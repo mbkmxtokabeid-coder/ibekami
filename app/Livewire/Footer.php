@@ -8,7 +8,7 @@ class Footer extends Component
 {
     public string $companyName = 'IBEKAMI';
     public string $companyFullName = 'Ikhtiar Berkah Ekonomi Kreatif Asli Medan Indonesia';
-    public string $email = 'ibeka1011@gmail.com';
+    public string $email = 'ibeka1010@gmail.com';
     public string $whatsappNumber = '628170769999';
     public string $instagramHandle = '@ibekami.id';
     public string $tiktokHandle = '@ibekami.id';
