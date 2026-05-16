@@ -92,45 +92,12 @@ class DetailKatalog extends Component
 
     private function getProductImage($product)
     {
-        $imageUrl = $product->image_url;
-        
-        if (is_string($imageUrl)) {
-            $imageUrl = json_decode($imageUrl, true);
-        }
-        
-        if (!empty($imageUrl) && is_array($imageUrl) && count($imageUrl) > 0) {
-            $firstImage = $imageUrl[0];
-            if (filter_var($firstImage, FILTER_VALIDATE_URL)) {
-                return $firstImage;
-            }
-            return asset('storage/gambar_produk/' . rawurlencode($firstImage));
-        }
-        
-        return 'https://via.placeholder.com/400x300?text=' . urlencode($product->name ?? 'Product');
+        return $product->getFirstImageUrl();
     }
 
     private function getAllProductImages($product): array
     {
-        $imageUrl = $product->image_url;
-        
-        if (is_string($imageUrl)) {
-            $imageUrl = json_decode($imageUrl, true);
-        }
-        
-        if (!$product || empty($imageUrl) || !is_array($imageUrl)) {
-            return [$this->getProductImage($product)];
-        }
-
-        $images = [];
-        foreach ($imageUrl as $image) {
-            if (filter_var($image, FILTER_VALIDATE_URL)) {
-                $images[] = $image;
-            } else {
-                $images[] = asset('storage/gambar_produk/' . rawurlencode($image));
-            }
-        }
-
-        return count($images) > 0 ? $images : [$this->getProductImage($product)];
+        return $product->getAllImageUrls();
     }
 
     public function render()

@@ -199,21 +199,7 @@ class KatalogSection extends Component
 
     private function getProductImage($product)
     {
-        $imageUrl = $product->image_url;
-        
-        if (is_string($imageUrl)) {
-            $imageUrl = json_decode($imageUrl, true);
-        }
-        
-        if (!empty($imageUrl) && is_array($imageUrl) && count($imageUrl) > 0) {
-            $firstImage = $imageUrl[0];
-            if (filter_var($firstImage, FILTER_VALIDATE_URL)) {
-                return $firstImage;
-            }
-            return asset('storage/gambar_produk/' . rawurlencode($firstImage));
-        }
-        
-        return 'https://via.placeholder.com/400x300?text=' . urlencode($product->name);
+        return $product->getFirstImageUrl();
     }
 
     public function getPaginatedDataProperty(): array

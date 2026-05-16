@@ -82,40 +82,7 @@ class ProductSection extends Component
 
     private function getProductImage($product): string
     {
-        $imageUrl = $product->image_url;
-        
-        // Jika image_url sudah array, gunakan langsung
-        // Jika string JSON, decode dulu
-        if (is_string($imageUrl)) {
-            $imageUrl = json_decode($imageUrl, true);
-        }
-        
-        // Pastikan $imageUrl adalah array dan tidak kosong
-        if (is_array($imageUrl) && count($imageUrl) > 0) {
-            $firstImage = $imageUrl[0];
-            
-            // Jika sudah full URL, gunakan langsung
-            if (filter_var($firstImage, FILTER_VALIDATE_URL)) {
-                return $firstImage;
-            }
-            
-            // Ekstrak nama file saja
-            $filename = basename($firstImage);
-            
-            // Cek apakah file ada di local storage
-            $localFilePath = public_path('storage/gambar_produk/' . $filename);
-            
-            if (file_exists($localFilePath)) {
-                // File ada di lokal, gunakan asset()
-                return asset('storage/gambar_produk/' . $filename);
-            } else {
-                // File tidak ada di lokal, gunakan URL ibekami.id sebagai fallback
-                return 'https://ibekami.id/storage/gambar_produk/' . $filename;
-            }
-        }
-        
-        // Default image jika tidak ada
-        return 'https://via.placeholder.com/400x300?text=' . urlencode($product->name);
+        return $product->getFirstImageUrl();
     }
 
     public function render()

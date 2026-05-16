@@ -87,16 +87,7 @@
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-1">
                                     @forelse (array_slice($product->image_url ?? [], 0, 3) as $img)
-                                        @php
-                                            // Handle both full URL and filename
-                                            if (filter_var($img, FILTER_VALIDATE_URL)) {
-                                                $imageUrl = $img;
-                                            } else {
-                                                // Gunakan path yang benar sesuai dengan struktur folder
-                                                $imageUrl = Storage::url('gambar_produk/' . $img);
-                                            }
-                                        @endphp
-                                        <img src="{{ $imageUrl }}"
+                                        <img src="{{ \App\Models\Product::resolveImageUrl($img) }}"
                                              alt="img"
                                              class="w-10 h-10 object-cover rounded border border-gray-200"
                                              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\'%3E%3Crect width=\'40\' height=\'40\' fill=\'%23f3f4f6\'/%3E%3C/svg%3E'"/>
@@ -320,17 +311,8 @@
                                 @if (!empty($existingImages))
                                     <div class="flex flex-wrap gap-2">
                                         @foreach ($existingImages as $idx => $img)
-                                            @php
-                                                // Handle both full URL and filename
-                                                if (filter_var($img, FILTER_VALIDATE_URL)) {
-                                                    $imageUrl = $img;
-                                                } else {
-                                                    // Gunakan path yang benar sesuai dengan struktur folder
-                                                    $imageUrl = Storage::url('gambar_produk/' . $img);
-                                                }
-                                            @endphp
                                             <div class="relative group">
-                                                <img src="{{ $imageUrl }}"
+                                                <img src="{{ \App\Models\Product::resolveImageUrl($img) }}"
                                                      alt="img"
                                                      class="w-16 h-16 object-cover rounded-lg border border-gray-200"
                                                      onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'64\' height=\'64\'%3E%3Crect width=\'64\' height=\'64\' fill=\'%23f3f4f6\'/%3E%3C/svg%3E'"/>

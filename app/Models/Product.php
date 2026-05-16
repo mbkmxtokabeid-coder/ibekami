@@ -39,6 +39,69 @@ class Product extends Model
         return $this->status === 'Aktif';
     }
 
+    /**
+     * Resolve URL gambar produk dari filename yang tersimpan di DB.
+     *
+     * Ada dua format path historis:
+     *  - Lama (seeder/import) : disimpan di  storage/app/public/gambar_produk/
+     *  - Baru (upload admin)  : disimpan di  storage/app/public/products/
+     *
+     * Method ini mencoba kedua lokasi secara berurutan agar backward-compatible.
+     */
+    public static function resolveImageUrl(string $filename): string
+    {
+        // Sudah berupa URL lengkap — kembalikan apa adanya
+        if (filter_var($filename, FILTER_VALIDATE_URL)) {
+            return $filename;
+        }
+
+        // Coba folder baru dulu (upload dari admin panel)
+        if (\Illuminate\Support\Facades\Storage::disk('public')->exists('products/' . $filename)) {
+            return asset('storage/products/' . rawurlencode($filename));
+        }
+
+        // Fallback ke folder lama (data seeder / import)
+        return asset('storage/gambar_produk/' . rawurlencode($filename));
+    }
+
+    /**
+     * Ambil URL gambar pertama dari produk ini.
+     */
+    public function getFirstImageUrl(): string
+    {
+        $images = $this->image_url;
+
+        if (is_string($images)) {
+            $images = json_decode($images, true);
+        }
+
+        if (!empty($images) && is_array($images)) {
+            return self::resolveImageUrl($images[0]);
+        }
+
+        return 'https://via.placeholder.com/400x300?text=' . urlencode($this->name ?? 'Product');
+    }
+
+    /**
+     * Ambil semua URL gambar dari produk ini.
+     *
+     * @return string[]
+     */
+    public function getAllImageUrls(): array
+    {
+        $images = $this->image_url;
+
+        if (is_string($images)) {
+            $images = json_decode($images, true);
+        }
+
+        if (!empty($images) && is_array($images)) {
+            return array_map(fn ($img) => self::resolveImageUrl($img), $images);
+        }
+
+        return [$this->getFirstImageUrl()];
+    }
+
     // ── Relations ─────────────────────────────────────────────────
     public function type()
     {
