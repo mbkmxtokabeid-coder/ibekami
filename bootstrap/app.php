@@ -11,6 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // ── TrustProxies HARUS paling pertama ────────────────────────────────
+        // Shared hosting (Hostinger, Niagahoster, dll) menggunakan reverse proxy.
+        // Tanpa ini Laravel tidak tahu request aslinya HTTPS → redirect loop.
+        $middleware->prepend(\App\Http\Middleware\TrustProxies::class);
+
         // Redirect authenticated users to admin dashboard instead of /home
         $middleware->redirectGuestsTo(fn () => route('admin.login'));
         $middleware->redirectUsersTo(fn () => route('admin.dashboard'));
@@ -22,15 +27,11 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         
         // Global API Throttle - Safety Net
-        // 60 requests per minute per IP untuk semua routes
-        // Mencegah DDoS dan bot flooding di tingkat aplikasi
         $middleware->api(prepend: [
             'throttle:api',
         ]);
         
         // Global Web Throttle - Safety Net
-        // 120 requests per minute per IP untuk web routes
-        // Lebih tinggi dari API karena web memiliki banyak assets
         $middleware->web(prepend: [
             'throttle:web',
         ]);

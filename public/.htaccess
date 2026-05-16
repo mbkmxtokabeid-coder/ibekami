@@ -27,6 +27,17 @@
 
     RewriteEngine On
 
+    # ── Force HTTPS (shared hosting safe) ────────────────────────────────────
+    # Cek X-Forwarded-Proto dari reverse proxy (Hostinger, Niagahoster, dll)
+    # HARUS sebelum rule lain agar tidak loop
+    RewriteCond %{HTTP:X-Forwarded-Proto} =http [NC]
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Fallback: cek HTTPS server variable langsung (jika tidak ada proxy)
+    RewriteCond %{HTTP:X-Forwarded-Proto} ^$
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
