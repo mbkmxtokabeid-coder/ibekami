@@ -309,17 +309,17 @@
 
                                 {{-- Existing images (edit mode) --}}
                                 @if (!empty($existingImages))
-                                    <div class="flex flex-wrap gap-2">
+                                    <div class="flex flex-wrap gap-3 mb-3">
                                         @foreach ($existingImages as $idx => $img)
                                             <div class="relative group">
                                                 <img src="{{ \App\Models\Product::resolveImageUrl($img) }}"
                                                      alt="img"
-                                                     class="w-16 h-16 object-cover rounded-lg border border-gray-200"
-                                                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'64\' height=\'64\'%3E%3Crect width=\'64\' height=\'64\' fill=\'%23f3f4f6\'/%3E%3C/svg%3E'"/>
+                                                     class="w-28 h-28 object-cover rounded-xl border-2 border-gray-200 shadow-sm"
+                                                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'112\' height=\'112\'%3E%3Crect width=\'112\' height=\'112\' fill=\'%23f3f4f6\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-size=\'11\'%3ENo Image%3C/text%3E%3C/svg%3E'"/>
                                                 <button type="button"
                                                         wire:click="removeExistingImage({{ $idx }})"
-                                                        class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full
-                                                               flex items-center justify-center opacity-0 group-hover:opacity-100 transition text-xs">
+                                                        class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full
+                                                               flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow-md text-sm font-bold">
                                                     ×
                                                 </button>
                                             </div>
@@ -327,46 +327,67 @@
                                     </div>
                                 @endif
 
-                                {{-- New image previews --}}
-                                @if (!empty($images))
-                                    <div class="flex flex-wrap gap-2">
-                                        @foreach ($images as $img)
-                                            <img src="{{ $img->temporaryUrl() }}"
-                                                 alt="preview"
-                                                 class="w-16 h-16 object-cover rounded-lg border border-cyan-200"/>
-                                        @endforeach
+                                {{-- New image previews — Alpine.js client-side preview (no server round-trip) --}}
+                                <div
+                                    x-data="{
+                                        previews: [],
+                                        maxSize: 2 * 1024 * 1024,
+                                        handleFiles(event) {
+                                            const files = Array.from(event.target.files);
+                                            const invalid = files.filter(f => f.size > this.maxSize);
+                                            if (invalid.length > 0) {
+                                                event.target.value = '';
+                                                this.previews = [];
+                                                alert('❌ File terlalu besar:\n' + invalid.map(f => f.name + ' (' + (f.size/1024/1024).toFixed(1) + 'MB)').join('\n') + '\n\nMaksimal 2MB per gambar.');
+                                                return;
+                                            }
+                                            this.previews = [];
+                                            files.forEach(f => {
+                                                const reader = new FileReader();
+                                                reader.onload = e => this.previews.push(e.target.result);
+                                                reader.readAsDataURL(f);
+                                            });
+                                        }
+                                    }"
+                                >
+                                    {{-- Preview grid --}}
+                                    <template x-if="previews.length > 0">
+                                        <div class="flex flex-wrap gap-3 mb-3">
+                                            <template x-for="(src, i) in previews" :key="i">
+                                                <div class="relative">
+                                                    <img :src="src"
+                                                         class="w-28 h-28 object-cover rounded-xl border-2 border-cyan-300 shadow-sm"/>
+                                                    <span class="absolute bottom-1 right-1 bg-black/50 text-white text-[10px] px-1.5 py-0.5 rounded-full"
+                                                          x-text="(i + 1)"></span>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+
+                                    <input type="file"
+                                           wire:model="images"
+                                           multiple
+                                           accept="image/jpg,image/jpeg,image/png,image/webp"
+                                           x-on:change="handleFiles($event)"
+                                           class="w-full text-sm text-gray-600 border border-gray-300 rounded-lg px-3 py-2
+                                                  file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0
+                                                  file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700
+                                                  hover:file:bg-gray-200 transition
+                                                  @error('images.*') border-red-400 @enderror"/>
+
+                                    <p class="text-xs text-gray-400 mt-1.5">
+                                        Format: JPG, PNG, WEBP · Maks <strong>2MB</strong> per gambar · Rasio 1:1, min 800×800px
+                                    </p>
+
+                                    <div wire:loading wire:target="images" class="mt-1.5 text-xs text-cyan-600 flex items-center gap-1.5">
+                                        <svg class="animate-spin w-3 h-3" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                                        </svg>
+                                        Mengupload gambar ke server...
                                     </div>
-                                @endif
-
-                                <input type="file" wire:model="images" multiple
-                                       accept="image/jpg,image/jpeg,image/png,image/webp"
-                                       x-data
-                                       x-on:change="
-                                           const max = 2 * 1024 * 1024;
-                                           const invalid = Array.from($event.target.files).filter(f => f.size > max);
-                                           if (invalid.length > 0) {
-                                               $event.target.value = '';
-                                               alert('❌ ' + invalid.map(f => f.name).join(', ') + '\n\nUkuran gambar melebihi 2MB. Silakan kompres gambar terlebih dahulu.');
-                                           }
-                                       "
-                                       class="w-full text-sm text-gray-600 border border-gray-300 rounded-lg px-3 py-2
-                                              file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0
-                                              file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700
-                                              hover:file:bg-gray-200 transition
-                                              @error('images.*') border-red-400 @enderror"/>
-
-                                <p class="text-xs text-gray-400 mt-1">
-                                    Format: JPG, PNG, WEBP · Maks <strong>2MB</strong> per gambar · Rasio 1:1, min 800×800px
-                                </p>
-
-                                <div wire:loading wire:target="images" class="text-xs text-cyan-600 flex items-center gap-1">
-                                    <svg class="animate-spin w-3 h-3" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                                    </svg>
-                                    Mengupload gambar...
+                                    @error('images.*')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
-                                @error('images.*')<p class="text-xs text-red-600">{{ $message }}</p>@enderror
                             </div>
                         </div>
 
