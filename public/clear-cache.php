@@ -11,12 +11,14 @@ if (($_GET['token'] ?? '') !== SECRET) {
 
 header('Content-Type: text/plain; charset=utf-8');
 
-// public_html/ ada di dalam domain root, bukan di luar
-// Struktur Hostinger: /home/u908433838/domains/ibekami.id/public_html/
-// Jadi base path = dirname(__DIR__) = /home/u908433838/domains/ibekami.id
-$base = dirname(__DIR__);
+// Path yang benar sesuai struktur server
+// public_html/ → __DIR__
+// ibekami_bckend/ → dirname(__DIR__) . '/ibekami_bckend'
+$base = dirname(__DIR__) . '/ibekami_bckend';
 
-echo "Base path: $base\n\n";
+echo "Laravel base: $base\n";
+echo "Exists: " . (is_dir($base) ? 'YES ✓' : 'NO ✗') . "\n\n";
+
 echo "=== CLEARING LARAVEL CACHE ===\n\n";
 
 // 1. Bootstrap cache
@@ -37,55 +39,69 @@ foreach ($cacheFiles as $file) {
     }
 }
 
-// 2. Framework cache
-echo "\n2. Framework cache:\n";
+// 2. Framework cache, views, sessions
+echo "\n2. Framework directories:\n";
 $dirs = [
-    "$base/storage/framework/cache/data",
-    "$base/storage/framework/views",
-    "$base/storage/framework/sessions",
+    'cache/data' => "$base/storage/framework/cache/data",
+    'views'      => "$base/storage/framework/views",
+    'sessions'   => "$base/storage/framework/sessions",
 ];
-foreach ($dirs as $dir) {
-    if (!is_dir($dir)) { echo "   skip (not found): $dir\n"; continue; }
+foreach ($dirs as $label => $dir) {
+    if (!is_dir($dir)) { echo "   skip (not found): $label\n"; continue; }
     $count = 0;
-    foreach (new RecursiveIteratorIterator(
+    $it = new RecursiveIteratorIterator(
         new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS)
-    ) as $f) {
+    );
+    foreach ($it as $f) {
         if ($f->isFile()) { unlink($f->getRealPath()); $count++; }
     }
-    echo "   DELETED $count files in: " . basename($dir) . "\n";
+    echo "   DELETED $count files in: $label\n";
 }
 
-// 3. Cek .env
-echo "\n3. .env location check:\n";
-$envPaths = [
-    "$base/.env",
-    dirname($base) . "/.env",
-    "$base/public_html/../.env",
+// 3. Cek file kritis
+echo "\n3. Critical files check:\n";
+$files = [
+    '.env'                                 => "$base/.env",
+    'bootstrap/app.php'                    => "$base/bootstrap/app.php",
+    'app/Http/Middleware/TrustProxies.php' => "$base/app/Http/Middleware/TrustProxies.php",
+    'vendor/autoload.php'                  => "$base/vendor/autoload.php",
 ];
-foreach ($envPaths as $p) {
-    $real = realpath($p);
-    echo "   " . $p . " → " . ($real ?: 'NOT FOUND') . "\n";
+foreach ($files as $label => $path) {
+    $exists = file_exists($path);
+    echo "   $label: " . ($exists ? 'EXISTS ✓' : 'NOT FOUND ✗') . "\n";
 }
 
-// 4. Cek file kritis
-echo "\n4. Critical files:\n";
-$critical = [
-    'bootstrap/app.php'                        => "$base/bootstrap/app.php",
-    'app/Http/Middleware/TrustProxies.php'     => "$base/app/Http/Middleware/TrustProxies.php",
-    '.env'                                     => "$base/.env",
-];
-foreach ($critical as $label => $path) {
-    echo "   $label: " . (file_exists($path) ? 'EXISTS ✓' : 'NOT FOUND ✗') . "\n";
-    if (file_exists($path)) echo "     → " . realpath($path) . "\n";
+// 4. Cek .env values
+echo "\n4. .env values:\n";
+$envPath = "$base/.env";
+if (file_exists($envPath)) {
+    $watch = ['APP_ENV', 'APP_URL', 'APP_DEBUG', 'SESSION_SECURE_COOKIE', 'CACHE_PREFIX'];
+    foreach (file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        foreach ($watch as $k) {
+            if (str_starts_with(trim($line), $k . '=')) {
+                echo "   " . trim($line) . "\n";
+            }
+        }
+    }
+} else {
+    echo "   .env NOT FOUND — upload .env ke: $base/.env\n";
 }
 
-// 5. Tampilkan struktur folder
-echo "\n5. Folder structure at base:\n";
-foreach (scandir($base) as $item) {
-    if ($item === '.' || $item === '..') continue;
-    $type = is_dir("$base/$item") ? '[DIR]' : '[FILE]';
-    echo "   $type $item\n";
+// 5. Cek TrustProxies terdaftar
+echo "\n5. TrustProxies registration:\n";
+$appPhp = "$base/bootstrap/app.php";
+if (file_exists($appPhp)) {
+    $content = file_get_contents($appPhp);
+    echo "   " . (str_contains($content, 'TrustProxies') ? 'REGISTERED ✓' : 'NOT REGISTERED ✗') . "\n";
+} else {
+    echo "   bootstrap/app.php NOT FOUND\n";
 }
+
+// 6. Proxy headers saat ini
+echo "\n6. Proxy headers:\n";
+echo "   X-Forwarded-Proto : " . ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'NOT SET') . "\n";
+echo "   HTTPS             : " . ($_SERVER['HTTPS'] ?? 'off') . "\n";
+echo "   SERVER_PORT       : " . ($_SERVER['SERVER_PORT'] ?? '?') . "\n";
 
 echo "\n=== DONE ===\n";
 echo "HAPUS FILE INI: public_html/clear-cache.php\n";
