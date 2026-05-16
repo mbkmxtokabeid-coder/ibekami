@@ -3,7 +3,7 @@
     Header set X-Frame-Options "SAMEORIGIN"
     Header set X-Content-Type-Options "nosniff"
     
-    # Disable PWA features (tidak ada hubungannya dengan X-Robots-Tag)
+    # Disable PWA features
     Header set Permissions-Policy "display-capture=(), web-share=()"
     
     # Cache control for manifest to prevent aggressive caching
@@ -14,7 +14,6 @@
     </FilesMatch>
 
     # Blokir Google dari mengindeks file PDF & dokumen internal
-    # (file non-HTML tidak punya <head>, jadi harus pakai HTTP header)
     <FilesMatch "\.(pdf|doc|docx|xls|xlsx)$">
         Header set X-Robots-Tag "noindex, nofollow"
     </FilesMatch>
@@ -27,16 +26,13 @@
 
     RewriteEngine On
 
-    # ── Force HTTPS (shared hosting safe) ────────────────────────────────────
-    # Cek X-Forwarded-Proto dari reverse proxy (Hostinger, Niagahoster, dll)
-    # HARUS sebelum rule lain agar tidak loop
-    RewriteCond %{HTTP:X-Forwarded-Proto} =http [NC]
-    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-    # Fallback: cek HTTPS server variable langsung (jika tidak ada proxy)
-    RewriteCond %{HTTP:X-Forwarded-Proto} ^$
-    RewriteCond %{HTTPS} off
-    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    # ── HTTPS redirect DINONAKTIFKAN ─────────────────────────────────────────
+    # Hostinger sudah handle HTTPS redirect di level Nginx/server.
+    # Jangan tambahkan redirect HTTPS di sini — akan menyebabkan redirect loop
+    # karena PHP menerima request sebagai HTTP dari proxy internal Hostinger.
+    #
+    # Jika ingin force HTTPS, aktifkan di hPanel → SSL → Force HTTPS.
+    # ─────────────────────────────────────────────────────────────────────────
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
