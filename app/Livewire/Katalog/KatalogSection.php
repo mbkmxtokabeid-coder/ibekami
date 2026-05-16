@@ -16,10 +16,15 @@ class KatalogSection extends Component
     public int $perPage = 9;
     public ?string $typeFilter = null;
 
+    // Multi-select filter
+    public array $selectedTypes = [];
+    public array $selectedCategories = [];
+
     protected $listeners = [
-        'categoryChanged' => 'onCategoryChanged',
-        'sortChanged' => 'onSortChanged',
-        'searchChanged' => 'onSearchChanged',
+        'categoryChanged'    => 'onCategoryChanged',
+        'sortChanged'        => 'onSortChanged',
+        'searchChanged'      => 'onSearchChanged',
+        'multiFilterChanged' => 'onMultiFilterChanged',
     ];
 
     public function mount(): void
@@ -94,47 +99,64 @@ class KatalogSection extends Component
         $this->page = 1;
     }
 
+    #[On('multiFilterChanged')]
+    public function onMultiFilterChanged(array $types, array $categories): void
+    {
+        $this->selectedTypes      = $types;
+        $this->selectedCategories = $categories;
+        $this->typeFilter         = null;
+        $this->page               = 1;
+    }
+
     public function resetFilters(): void
     {
-        $this->activeCategory = __('messages.all_products');
-        $this->sortBy = __('messages.newest');
-        $this->search = '';
-        $this->typeFilter = null;
-        $this->page = 1;
+        $this->activeCategory     = __('messages.all_products');
+        $this->sortBy             = __('messages.newest');
+        $this->search             = '';
+        $this->typeFilter         = null;
+        $this->selectedTypes      = [];
+        $this->selectedCategories = [];
+        $this->page               = 1;
         $this->dispatch('filtersReset');
     }
 
     protected function getFilteredProducts(): array
     {
-        // Generate cache key berdasarkan filter parameters
         $cacheKey = 'katalog_products_' . md5(
-            $this->activeCategory . 
-            $this->sortBy . 
-            $this->search . 
+            $this->activeCategory .
+            $this->sortBy .
+            $this->search .
             ($this->typeFilter ?? '') .
+            implode(',', $this->selectedTypes) .
+            implode(',', $this->selectedCategories) .
             app()->getLocale()
         );
-        
-        // Cache selama 5 menit (300 detik)
-        // Data produk tidak berubah setiap detik, jadi aman di-cache
+
         return cache()->remember($cacheKey, 300, function () {
-            // Query semua produk tanpa filter status
             $query = Product::with(['type', 'category']);
 
-            // Filter berdasarkan type dari URL jika ada
-            if ($this->typeFilter) {
-                $query->whereHas('type', function ($typeQuery) {
-                    $typeQuery->where('name', $this->typeFilter);
+            // Multi-select filter (dari popup) — prioritas tertinggi
+            $hasMultiFilter = count($this->selectedTypes) > 0 || count($this->selectedCategories) > 0;
+
+            if ($hasMultiFilter) {
+                $query->where(function ($q) {
+                    if (count($this->selectedTypes) > 0) {
+                        $q->orWhereHas('type', fn($tq) => $tq->whereIn('name', $this->selectedTypes));
+                    }
+                    if (count($this->selectedCategories) > 0) {
+                        $q->orWhereHas('category', fn($cq) => $cq->whereIn('name', $this->selectedCategories));
+                    }
                 });
             }
-            // Filter kategori dari sidebar
+            // Filter dari URL ?type=
+            elseif ($this->typeFilter) {
+                $query->whereHas('type', fn($tq) => $tq->where('name', $this->typeFilter));
+            }
+            // Filter dari sidebar single-select
             elseif ($this->activeCategory !== __('messages.all_products')) {
                 $query->where(function ($q) {
-                    $q->whereHas('category', function ($categoryQuery) {
-                        $categoryQuery->where('name', 'like', '%' . $this->activeCategory . '%');
-                    })->orWhereHas('type', function ($typeQuery) {
-                        $typeQuery->where('name', 'like', '%' . $this->activeCategory . '%');
-                    });
+                    $q->whereHas('category', fn($cq) => $cq->where('name', 'like', '%' . $this->activeCategory . '%'))
+                      ->orWhereHas('type', fn($tq) => $tq->where('name', 'like', '%' . $this->activeCategory . '%'));
                 });
             }
 
@@ -164,11 +186,11 @@ class KatalogSection extends Component
 
             return $query->get()->map(function ($product) {
                 return [
-                    'id' => $product->product_id,
-                    'name' => $product->name,
-                    'cat' => $product->type->name ?? $product->category->name ?? 'Produk',
-                    'img' => $this->getProductImage($product),
-                    'slug' => \Illuminate\Support\Str::slug($product->name),
+                    'id'     => $product->product_id,
+                    'name'   => $product->name,
+                    'cat'    => $product->type->name ?? $product->category->name ?? 'Produk',
+                    'img'    => $this->getProductImage($product),
+                    'slug'   => \Illuminate\Support\Str::slug($product->name),
                     'status' => $product->status,
                 ];
             })->toArray();

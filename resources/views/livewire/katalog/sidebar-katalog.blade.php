@@ -1,11 +1,14 @@
+{{-- Wrapper tunggal — Livewire hanya boleh punya satu root element --}}
+<div style="isolation: isolate;">
+
 <aside class="w-full lg:w-80 shrink-0">
     <div class="lg:sticky lg:top-[76px] space-y-6">
 
         {{-- Main Sidebar Frame --}}
         <div class="bg-[#fff2e0] rounded-[40px] p-8 space-y-8 shadow-[0_20px_50px_rgba(166,78,47,0.15),0_10px_20px_rgba(0,0,0,0.05)] border border-white/50">
 
-            {{-- Search Section --}}
-            <div>
+            {{-- Search Section — desktop only --}}
+            <div class="hidden lg:block">
                 <p class="text-[11px] font-black tracking-[0.15em] uppercase text-[#ff9100] mb-4 ml-1">{{ __('messages.search_products') }}</p>
                 <div class="relative group">
                     <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/90 z-10"
@@ -24,8 +27,8 @@
                 </div>
             </div>
 
-            {{-- Kategori Section --}}
-            <div x-data="{
+            {{-- Kategori Section — desktop only, di mobile pakai popup filter --}}
+            <div class="hidden lg:block" x-data="{
                 open: true,
                 debounceTimer: null,
                 debouncedSetCategory(categoryName) {
@@ -35,7 +38,6 @@
                     }, 400);
                 }
             }">
-                {{-- Header dropdown --}}
                 <button @click="open = !open"
                     class="w-full flex items-center justify-between mb-4 ml-1 outline-none group">
                     <p class="text-[11px] font-black tracking-[0.15em] uppercase text-[#7a5d48]">{{ __('messages.category') }}</p>
@@ -54,7 +56,6 @@
                      x-transition:leave-end="opacity-0 -translate-y-2"
                      class="space-y-1">
 
-                    {{-- Semua Produk --}}
                     @foreach($categories as $cat)
                         @if($cat['group'] === 'all')
                         <button
@@ -62,8 +63,7 @@
                             class="w-full flex items-center justify-between px-5 py-3 rounded-2xl text-[14px] font-bold transition-all
                                 {{ $activeCategory === $cat['name']
                                     ? 'bg-white text-[#ff9100] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 scale-[1.02]'
-                                    : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}"
-                        >
+                                    : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}">
                             <span class="flex items-center gap-3">
                                 <span class="w-2.5 h-2.5 rounded-full shrink-0 {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100] shadow-[0_0_8px_#ff9100]' : 'bg-[#d1c2b4]' }}"></span>
                                 {{ $cat['name'] }}
@@ -75,7 +75,6 @@
                         @endif
                     @endforeach
 
-                    {{-- Group: Tipe Produk --}}
                     @php $types = array_filter($categories, fn($c) => $c['group'] === 'type'); @endphp
                     @if(count($types) > 0)
                     <div x-data="{ openType: true }" class="pt-1">
@@ -95,8 +94,7 @@
                                     class="w-full flex items-center justify-between px-5 py-2.5 rounded-2xl text-[13px] font-semibold transition-all
                                         {{ $activeCategory === $cat['name']
                                             ? 'bg-white text-[#ff9100] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 scale-[1.02]'
-                                            : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}"
-                                >
+                                            : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}">
                                     <span class="flex items-center gap-3 text-left flex-1">
                                         <span class="w-2 h-2 rounded-full shrink-0 {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100]' : 'bg-[#d1c2b4]' }}"></span>
                                         <span class="leading-tight">{{ $cat['name'] }}</span>
@@ -111,7 +109,6 @@
                     </div>
                     @endif
 
-                    {{-- Group: Kategori --}}
                     @php $cats = array_filter($categories, fn($c) => $c['group'] === 'category'); @endphp
                     @if(count($cats) > 0)
                     <div x-data="{ openCat: false }" class="pt-1">
@@ -131,8 +128,7 @@
                                     class="w-full flex items-center justify-between px-5 py-2.5 rounded-2xl text-[13px] font-semibold transition-all
                                         {{ $activeCategory === $cat['name']
                                             ? 'bg-white text-[#ff9100] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 scale-[1.02]'
-                                            : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}"
-                                >
+                                            : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}">
                                     <span class="flex items-center gap-3 text-left flex-1">
                                         <span class="w-2 h-2 rounded-full shrink-0 {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100]' : 'bg-[#d1c2b4]' }}"></span>
                                         <span class="leading-tight">{{ $cat['name'] }}</span>
@@ -150,8 +146,8 @@
                 </div>
             </div>
 
-            {{-- Urutkan Section --}}
-            <div x-data="{
+            {{-- Urutkan Section — desktop only --}}
+            <div class="hidden lg:block" x-data="{
                 debounceTimer: null,
                 debouncedSetSort(sortValue) {
                     clearTimeout(this.debounceTimer);
@@ -168,8 +164,7 @@
                             class="w-full text-left px-5 py-3.5 rounded-2xl text-[14px] font-bold transition-all
                                    {{ $sortBy === $sort
                                         ? 'bg-[#3d2b1f] text-white shadow-[0_10px_20px_rgba(61,43,31,0.3)] scale-[1.02]'
-                                        : 'text-[#8c7664] hover:bg-white/40' }}"
-                        >
+                                        : 'text-[#8c7664] hover:bg-white/40' }}">
                             {{ $sort }}
                         </button>
                     @endforeach
@@ -178,7 +173,7 @@
 
         </div>
 
-        {{-- WhatsApp CTA Card — desktop: selalu tampil, mobile: tampil di bawah filter --}}
+        {{-- WhatsApp CTA Card --}}
         <div class="bg-[#ff9100] rounded-[32px] p-6 text-center shadow-[0_20px_40px_rgba(255,145,0,0.25)] border-t border-white/20">
             <p class="text-white font-black text-[16px] mb-1">{{ __('messages.need_help') }}</p>
             <p class="text-white/80 text-[12px] mb-5 font-medium leading-relaxed">{{ __('messages.free_consultation') }}</p>
@@ -195,3 +190,5 @@
 
     </div>
 </aside>
+
+</div>{{-- end wrapper --}}

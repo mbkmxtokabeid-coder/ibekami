@@ -1,5 +1,32 @@
 
-<nav x-data="{ mobileMenuOpen: false, searchOpen: false, langMenuOpen: false, catalogMenuOpen: false, scrolled: false }" 
+<nav x-data="{ 
+        mobileMenuOpen: false, 
+        searchOpen: false, 
+        langMenuOpen: false, 
+        catalogMenuOpen: false, 
+        scrolled: false,
+        currentLocale: '{{ app()->getLocale() }}',
+        isChangingLanguage: false,
+        debouncedChangeLanguage(locale) {
+            if (this.isChangingLanguage || this.currentLocale === locale) return;
+            this.isChangingLanguage = true;
+            this.langMenuOpen = false;
+            this.currentLocale = locale;
+            fetch(`/lang/${locale}`, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) window.location.reload();
+                else this.isChangingLanguage = false;
+            })
+            .catch(() => { this.isChangingLanguage = false; });
+        }
+    }" 
      @scroll.window.throttle.150ms="scrolled = (window.pageYOffset > 20)"
      class="fixed top-0 inset-x-0 z-[100] transition-all duration-500 ease-out"
      :class="scrolled ? 'py-3' : 'py-4 lg:py-6'">
@@ -87,43 +114,7 @@
                 </div>
 
                 <!-- Language Dropdown -->
-                <div class="relative shrink-0" x-data="{ 
-                    currentLocale: '{{ app()->getLocale() }}',
-                    languageDebounceTimer: null,
-                    isChangingLanguage: false,
-                    debouncedChangeLanguage(locale) {
-                        // Leading edge debounce: eksekusi segera pada klik pertama
-                        if (!this.isChangingLanguage) {
-                            this.isChangingLanguage = true;
-                            this.currentLocale = locale;
-                            
-                            // Call backend endpoint dengan rate limiting
-                            fetch(`/lang/${locale}`, {
-                                method: 'GET',
-                                headers: {
-                                    'X-Requested-With': 'XMLHttpRequest',
-                                    'Accept': 'application/json',
-                                }
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    // Reload page setelah berhasil
-                                    window.location.reload();
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Language switch error:', error);
-                                this.isChangingLanguage = false;
-                            });
-                            
-                            // Blokir klik selanjutnya selama 500ms
-                            setTimeout(() => {
-                                this.isChangingLanguage = false;
-                            }, 500);
-                        }
-                    }
-                }">
+                <div class="relative shrink-0">
                     <button @click="langMenuOpen = !langMenuOpen" @click.outside="langMenuOpen = false" 
                             class="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/40 border border-white/50 text-[#5C3D28] hover:text-[#ff9100] hover:bg-white transition-all outline-none shadow-sm"
                             :class="langMenuOpen ? 'bg-white ring-2 ring-[#ff9100]/30' : ''">

@@ -56,7 +56,7 @@
             <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
                @click.throttle.2000ms
-               class="w-full md:w-auto bg-slate-900 text-white px-10 py-5 rounded-[1.8rem] font-bold hover:bg-[#ff9100] transition-all duration-500 text-center uppercase tracking-widest text-xs">
+               class="w-full md:w-auto bg-[#ff9100] text-white px-10 py-5 rounded-[1.8rem] font-bold hover:bg-[#e07d00] transition-all duration-300 text-center uppercase tracking-widest text-xs shadow-lg shadow-[#ff9100]/30">
                 {{ __('messages.contact_via_whatsapp') }}
             </a>
         </div>

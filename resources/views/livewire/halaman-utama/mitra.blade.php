@@ -75,7 +75,7 @@
                                      width="144"
                                      height="80"
                                      alt="Partner BUMN"
-                                     class="max-h-full max-w-full object-contain grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 transition-all"
+                                     class="max-h-full max-w-full object-contain transition-all"
                                      onerror="this.src='https://via.placeholder.com/150x80?text=BUMN'">
                             </div>
                             @endforeach
@@ -143,7 +143,7 @@
                                      width="144"
                                      height="80"
                                      alt="Partner Organization"
-                                     class="max-h-full max-w-full object-contain grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 transition-all"
+                                     class="max-h-full max-w-full object-contain transition-all"
                                      onerror="this.src='https://via.placeholder.com/150x80?text=Organization'">
                             </div>
                             @endforeach
