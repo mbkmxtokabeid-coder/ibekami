@@ -43,8 +43,73 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
+
+    {{-- ── Google Analytics & Tag Manager — production only ───────────────────
+         Load on first user interaction (scroll/click/touch) untuk menghindari
+         TBT (Total Blocking Time) yang merusak Core Web Vitals.
+         Fallback: muat otomatis setelah 5 detik jika user tidak interaksi.
+    ──────────────────────────────────────────────────────────────────────── --}}
+    @if(config('app.env') === 'production')
+    <script>
+    (function () {
+        var loaded = false;
+        function loadAnalytics() {
+            if (loaded) return;
+            loaded = true;
+
+            // ── Google Tag Manager ──────────────────────────────────────────
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-WMSK4N53');
+
+            // ── Google Analytics 4 (G-2DR31JFPHR) ─────────────────────────
+            var ga1 = document.createElement('script');
+            ga1.async = true;
+            ga1.src = 'https://www.googletagmanager.com/gtag/js?id=G-2DR31JFPHR';
+            document.head.appendChild(ga1);
+
+            // ── Google Analytics 4 (G-VQG7HT2KD0) + Google Ads ───────────
+            var ga2 = document.createElement('script');
+            ga2.async = true;
+            ga2.src = 'https://www.googletagmanager.com/gtag/js?id=G-VQG7HT2KD0';
+            document.head.appendChild(ga2);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', 'G-2DR31JFPHR');
+            gtag('config', 'G-VQG7HT2KD0');
+            gtag('config', 'AW-959548694');
+        }
+
+        // Trigger on first interaction
+        ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(function (evt) {
+            window.addEventListener(evt, loadAnalytics, { once: true, passive: true });
+        });
+
+        // Fallback: muat setelah 5 detik
+        setTimeout(loadAnalytics, 5000);
+    })();
+    </script>
+    @endif
 </head>
 <body class="min-h-screen text-gray-900 dark:text-gray-100 antialiased">
+
+    {{-- GTM noscript — wajib ada tepat setelah <body> untuk tracking tanpa JS --}}
+    @if(config('app.env') === 'production')
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WMSK4N53"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    @endif
 
     <livewire:navbar />
 
