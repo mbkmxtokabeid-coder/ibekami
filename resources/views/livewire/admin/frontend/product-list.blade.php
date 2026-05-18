@@ -275,17 +275,37 @@
                         {{-- Product Details --}}
                         <div class="grid grid-cols-3 items-start gap-4">
                             <label class="text-sm font-medium text-gray-700 pt-2.5">Product Details:</label>
-                            <div class="col-span-2 space-y-2">
+                            <div class="col-span-2 space-y-2 min-w-0">
                                 @foreach ($details as $i => $detail)
-                                    <div class="flex items-center gap-2">
-                                        <input type="text" wire:model="details.{{ $i }}.key"
-                                               placeholder="Nama detail (cth: Berat)"
-                                               class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100"/>
+                                    <div class="flex items-center gap-2 w-full"
+                                         x-data="{ showSuggestions: false, suggestions: ['Material', 'Color', 'Design'] }">
+                                        <div class="relative w-1/2">
+                                            <input type="text" 
+                                                   wire:model="details.{{ $i }}.key"
+                                                   @focus="showSuggestions = true"
+                                                   @click.away="showSuggestions = false"
+                                                   placeholder="Nama detail (cth: Berat)"
+                                                   class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 min-w-0"/>
+                                            
+                                            {{-- Suggestions Dropdown --}}
+                                            <div x-show="showSuggestions" 
+                                                 x-cloak
+                                                 class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                                                <template x-for="(suggestion, idx) in suggestions" :key="idx">
+                                                    <button type="button"
+                                                            @click="$wire.set('details.{{ $i }}.key', suggestion); showSuggestions = false"
+                                                            class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-700 transition"
+                                                            x-text="suggestion">
+                                                    </button>
+                                                </template>
+                                            </div>
+                                        </div>
+                                        
                                         <input type="text" wire:model="details.{{ $i }}.value"
                                                placeholder="Nilai (cth: 200gr)"
-                                               class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100"/>
+                                               class="w-1/2 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 min-w-0"/>
                                         <button type="button" wire:click="removeDetail({{ $i }})"
-                                                class="text-red-400 hover:text-red-600 transition shrink-0">
+                                                class="text-red-400 hover:text-red-600 transition shrink-0 w-8 h-8 flex items-center justify-center">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                             </svg>
