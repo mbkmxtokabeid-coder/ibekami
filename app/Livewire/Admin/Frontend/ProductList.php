@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Frontend;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Type;
+use App\Services\ImageCompressor;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -167,11 +168,43 @@ class ProductList extends Component
             }
         }
 
-        // Handle images — store only filename (matching old DB format)
+        // Handle images — compress and convert to WebP (with fallback)
         $imagePaths = $this->existingImages;
+
         foreach ($this->images as $img) {
-            $path         = $img->store('products', 'public');
-            $imagePaths[] = basename($path); // store filename only like old DB
+            try {
+                // Check if ImageCompressor is available
+                if (ImageCompressor::isAvailable()) {
+                    // Compress to WebP (100-300KB)
+                    $compressor = new ImageCompressor();
+                    $filename = uniqid('product_', true) . '.webp';
+                    $storagePath = 'products/' . $filename;
+                    
+                    $compressor->compressToWebP($img->getRealPath(), $storagePath);
+                    $imagePaths[] = $filename;
+                } else {
+                    // Fallback: save original without compression
+                    $path = $img->store('products', 'public');
+                    $imagePaths[] = basename($path);
+                    
+                    \Illuminate\Support\Facades\Log::warning('Image saved without compression: GD extension not available');
+                }
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('Image processing failed: ' . $e->getMessage());
+                
+                // Fallback: save original
+                try {
+                    $path = $img->store('products', 'public');
+                    $imagePaths[] = basename($path);
+                } catch (\Exception $e2) {
+                    $this->dispatch('swal', [
+                        'type'  => 'error',
+                        'title' => 'Gagal!',
+                        'text'  => 'Gagal menyimpan gambar: ' . $e2->getMessage()
+                    ]);
+                    return;
+                }
+            }
         }
 
         $data = [

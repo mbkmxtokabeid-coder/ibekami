@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Backend;
 
 use App\Models\Banner;
+use App\Services\ImageCompressor;
 use App\Services\VideoCompressor;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -151,7 +152,25 @@ class BannerList extends Component
                 }
                 $this->isProcessing = false;
             } else {
-                $mediaPath = $this->media->store('banners', 'public');
+                // Compress image to WebP (100-300KB)
+                $this->isProcessing = true;
+                $filename = Str::uuid() . '.webp';
+                $outputPath = 'banners/' . $filename;
+
+                try {
+                    $compressor = new ImageCompressor();
+                    $tempPath   = $this->media->getRealPath();
+                    $mediaPath  = $compressor->compressToWebP($tempPath, $outputPath);
+                } catch (\Throwable $e) {
+                    // Fallback: store original
+                    $mediaPath = $this->media->store('banners', 'public');
+                    $this->dispatch('swal', [
+                        'type'  => 'warning',
+                        'title' => 'Perhatian',
+                        'text'  => 'Kompresi gagal. Gambar disimpan tanpa kompresi: ' . $e->getMessage(),
+                    ]);
+                }
+                $this->isProcessing = false;
             }
         }
 

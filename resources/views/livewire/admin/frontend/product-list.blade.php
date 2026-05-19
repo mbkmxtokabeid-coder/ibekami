@@ -395,16 +395,24 @@
                                                   hover:file:bg-gray-200 transition
                                                   @error('images.*') border-red-400 @enderror"/>
 
-                                    <p class="text-xs text-gray-400 mt-1.5">
-                                        Format: JPG, PNG, WEBP · Maks <strong>2MB</strong> per gambar · Rasio 1:1, min 800×800px
-                                    </p>
+                                    <div class="mt-1.5 space-y-1">
+                                        <p class="text-xs text-gray-500">
+                                            📤 <strong>Upload:</strong> JPG, PNG, WEBP · Maksimal <strong>2MB</strong> per gambar
+                                        </p>
+                                        <p class="text-xs text-cyan-600 font-medium">
+                                            ✨ <strong>Otomatis:</strong> Gambar akan dikompres menjadi <strong>20-50KB</strong> dalam format <strong>WebP</strong>
+                                        </p>
+                                        <p class="text-xs text-amber-600">
+                                            ⚡ <strong>Catatan:</strong> Resolusi max 800px untuk ukuran optimal
+                                        </p>
+                                    </div>
 
                                     <div wire:loading wire:target="images" class="mt-1.5 text-xs text-cyan-600 flex items-center gap-1.5">
                                         <svg class="animate-spin w-3 h-3" fill="none" viewBox="0 0 24 24">
                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
                                         </svg>
-                                        Mengupload gambar ke server...
+                                        Mengupload dan mengkompresi gambar...
                                     </div>
                                     @error('images.*')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>

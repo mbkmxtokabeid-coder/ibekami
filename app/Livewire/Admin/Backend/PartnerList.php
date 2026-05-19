@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Backend;
 
 use App\Models\Partnership;
+use App\Services\ImageCompressor;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -115,12 +116,32 @@ class PartnerList extends Component
                 }
             }
             
-            // Simpan gambar baru ke folder gambar_partner
-            $filename = uniqid() . '.' . $this->image->getClientOriginalExtension();
-            $this->image->storeAs('gambar_partner', $filename, 'public');
+            // Check if SVG (SVG tidak perlu kompresi)
+            $extension = $this->image->getClientOriginalExtension();
             
-            // Simpan hanya nama file (bukan path lengkap) agar konsisten dengan data lama
-            $imagePath = $filename;
+            if (strtolower($extension) === 'svg') {
+                // SVG: simpan langsung tanpa kompresi
+                $filename = uniqid('partner_', true) . '.svg';
+                $this->image->storeAs('gambar_partner', $filename, 'public');
+                $imagePath = $filename;
+            } else {
+                // Compress image to WebP (100-300KB)
+                try {
+                    $compressor = new ImageCompressor();
+                    $filename = uniqid('partner_', true) . '.webp';
+                    $storagePath = 'gambar_partner/' . $filename;
+                    
+                    $compressor->compressToWebP($this->image->getRealPath(), $storagePath);
+                    $imagePath = $filename;
+                } catch (\Exception $e) {
+                    // Fallback: simpan original
+                    $filename = uniqid('partner_', true) . '.' . $extension;
+                    $this->image->storeAs('gambar_partner', $filename, 'public');
+                    $imagePath = $filename;
+                    
+                    \Illuminate\Support\Facades\Log::error('Partner image compression failed: ' . $e->getMessage());
+                }
+            }
         }
 
         if ($this->isEditing) {

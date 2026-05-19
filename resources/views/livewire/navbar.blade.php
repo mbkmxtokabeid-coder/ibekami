@@ -146,7 +146,7 @@
                 </div>
 
                 <!-- CTA Button -->
-                <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+                <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
                    @click.throttle.2000ms
                    class="hidden md:flex items-center justify-center bg-[#ff9100] text-white px-5 xl:px-6 py-2 rounded-full text-[13px] font-bold shadow-[0_4px_14px_rgba(255,145,0,0.3)] hover:shadow-[0_6px_20px_rgba(255,145,0,0.4)] hover:-translate-y-0.5 hover:bg-[#e68200] transition-all duration-300 outline-none shrink-0">
