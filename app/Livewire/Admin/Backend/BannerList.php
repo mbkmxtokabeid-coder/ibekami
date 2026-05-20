@@ -33,8 +33,10 @@ class BannerList extends Component
 
     // ── Form fields ──────────────────────────────────────────────
     public        $media         = null;
+    public        $thumbnail     = null;
     public ?string $existingMedia = null;
     public ?string $existingType  = null;
+    public ?string $existingThumbnail = null;
 
     // ── Watchers ─────────────────────────────────────────────────
     public function updatingSearch(): void  { $this->resetPage(); }
@@ -65,13 +67,15 @@ class BannerList extends Component
 
     public function openEdit(int $id): void
     {
-        $banner              = Banner::findOrFail($id);
-        $this->editingId     = $id;
-        $this->existingMedia = $banner->media_url;
-        $this->existingType  = $banner->media_type;
-        $this->media         = null;
-        $this->isEditing     = true;
-        $this->showModal     = true;
+        $banner                = Banner::findOrFail($id);
+        $this->editingId       = $id;
+        $this->existingMedia   = $banner->media_url;
+        $this->existingType    = $banner->media_type;
+        $this->existingThumbnail = $banner->thumbnail_url;
+        $this->media           = null;
+        $this->thumbnail       = null;
+        $this->isEditing       = true;
+        $this->showModal       = true;
     }
 
     public function closeModal(): void
@@ -82,11 +86,13 @@ class BannerList extends Component
 
     private function resetForm(): void
     {
-        $this->media         = null;
-        $this->existingMedia = null;
-        $this->existingType  = null;
-        $this->editingId     = null;
-        $this->isProcessing  = false;
+        $this->media              = null;
+        $this->thumbnail          = null;
+        $this->existingMedia      = null;
+        $this->existingType       = null;
+        $this->existingThumbnail  = null;
+        $this->editingId          = null;
+        $this->isProcessing       = false;
         $this->resetValidation();
     }
 
@@ -102,15 +108,23 @@ class BannerList extends Component
                 'mimes:jpg,jpeg,png,webp,mp4,mov,avi,mkv,webm',
                 'max:102400', // 100 MB max upload
             ],
+            'thumbnail' => [
+                'nullable',
+                'file',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048', // 2 MB max for thumbnail
+            ],
         ];
     }
 
     protected function messages(): array
     {
         return [
-            'media.required' => 'Media wajib diupload.',
-            'media.mimes'    => 'Format: jpg, png, webp (gambar) atau mp4, mov, avi, mkv, webm (video).',
-            'media.max'      => 'Ukuran file maksimal 100MB.',
+            'media.required'     => 'Media wajib diupload.',
+            'media.mimes'        => 'Format: jpg, png, webp (gambar) atau mp4, mov, avi, mkv, webm (video).',
+            'media.max'          => 'Ukuran file maksimal 100MB.',
+            'thumbnail.mimes'    => 'Format thumbnail: jpg, png, atau webp.',
+            'thumbnail.max'      => 'Ukuran thumbnail maksimal 2MB.',
         ];
     }
 
@@ -121,6 +135,7 @@ class BannerList extends Component
 
         $mediaPath = $this->existingMedia;
         $mediaType = $this->existingType ?? 'image';
+        $thumbnailPath = $this->existingThumbnail;
 
         if ($this->media) {
             // Delete old file
@@ -152,7 +167,7 @@ class BannerList extends Component
                 }
                 $this->isProcessing = false;
             } else {
-                // Compress image to WebP (100-300KB)
+                // Compress image to WebP (20-50KB)
                 $this->isProcessing = true;
                 $filename = Str::uuid() . '.webp';
                 $outputPath = 'banners/' . $filename;
@@ -174,9 +189,40 @@ class BannerList extends Component
             }
         }
 
+        // Handle thumbnail upload
+        if ($this->thumbnail) {
+            // Delete old thumbnail
+            if ($this->isEditing && $this->existingThumbnail) {
+                Storage::disk('public')->delete($this->existingThumbnail);
+            }
+
+            // Compress thumbnail to WebP (<100KB)
+            $this->isProcessing = true;
+            $filename = 'thumb_' . Str::uuid() . '.webp';
+            $outputPath = 'banners/' . $filename;
+
+            try {
+                $compressor = new ImageCompressor();
+                $tempPath   = $this->thumbnail->getRealPath();
+                
+                // Use lower target for thumbnails (20-100KB)
+                $thumbnailPath = $compressor->compressToWebP($tempPath, $outputPath, 100 * 1024);
+            } catch (\Throwable $e) {
+                // Fallback: store original
+                $thumbnailPath = $this->thumbnail->store('banners', 'public');
+                $this->dispatch('swal', [
+                    'type'  => 'warning',
+                    'title' => 'Perhatian',
+                    'text'  => 'Kompresi thumbnail gagal. Gambar disimpan tanpa kompresi: ' . $e->getMessage(),
+                ]);
+            }
+            $this->isProcessing = false;
+        }
+
         $data = [
-            'media_url'  => $mediaPath,
-            'media_type' => $mediaType,
+            'media_url'     => $mediaPath,
+            'media_type'    => $mediaType,
+            'thumbnail_url' => $thumbnailPath,
         ];
 
         if ($this->isEditing) {
@@ -196,6 +242,10 @@ class BannerList extends Component
 
         if ($banner->media_url) {
             Storage::disk('public')->delete($banner->media_url);
+        }
+
+        if ($banner->thumbnail_url) {
+            Storage::disk('public')->delete($banner->thumbnail_url);
         }
 
         $banner->delete();

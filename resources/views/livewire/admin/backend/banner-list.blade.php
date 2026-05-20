@@ -53,6 +53,9 @@
                         <th class="text-left px-6 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider">
                             Media (Image/Video)
                         </th>
+                        <th class="text-left px-6 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider">
+                            Thumbnail
+                        </th>
                         <th class="text-left px-6 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider w-32">
                             Action
                         </th>
@@ -68,7 +71,7 @@
                                         <div class="relative inline-block">
                                             <video
                                                 src="{{ Storage::url($banner->media_url) }}"
-                                                class="w-40 h-24 object-cover rounded-lg border border-gray-200"
+                                                class="w-32 h-32 object-cover rounded-lg border border-gray-200"
                                                 muted playsinline preload="metadata">
                                             </video>
                                             <span class="absolute top-1 left-1 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded font-medium">
@@ -78,12 +81,12 @@
                                     @else
                                         <img src="{{ Storage::url($banner->media_url) }}"
                                              alt="Banner"
-                                             class="w-40 h-24 object-cover rounded-lg border border-gray-200"/>
+                                             class="w-32 h-32 object-cover rounded-lg border border-gray-200"/>
                                     @endif
                                 @else
                                     {{-- No media yet --}}
                                     <div class="flex items-center gap-3">
-                                        <div class="w-40 h-24 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 flex flex-col items-center justify-center gap-1">
+                                        <div class="w-32 h-32 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 flex flex-col items-center justify-center gap-1">
                                             <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                                       d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
@@ -94,6 +97,17 @@
                                                 class="px-3 py-1.5 bg-cyan-500 hover:bg-cyan-600 text-white text-xs font-semibold rounded-lg transition">
                                             + Tambahkan Media
                                         </button>
+                                    </div>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4">
+                                @if ($banner->thumbnail_url)
+                                    <img src="{{ Storage::url($banner->thumbnail_url) }}"
+                                         alt="Thumbnail banner"
+                                         class="w-32 h-32 object-cover rounded-lg border border-gray-200"/>
+                                @else
+                                    <div class="w-32 h-32 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 flex items-center justify-center">
+                                        <span class="text-[11px] text-gray-400">No thumbnail</span>
                                     </div>
                                 @endif
                             </td>
@@ -120,7 +134,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="px-6 py-12 text-center text-gray-400">
+                            <td colspan="4" class="px-6 py-12 text-center text-gray-400">
                                 Belum ada banner.
                             </td>
                         </tr>
@@ -161,18 +175,18 @@
     {{-- ── Modal Create / Edit ──────────────────────────────────── --}}
     <div x-data="{ show: @entangle('showModal') }"
          x-show="show" x-cloak
-         class="fixed inset-0 z-50 flex items-center justify-center p-4"
+         class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto"
          x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
          x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
         <div class="absolute inset-0 bg-black/50" @click="$wire.closeModal()"></div>
 
-        <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-lg z-10"
+        <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] z-10 flex flex-col my-8"
              x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
              x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
-            {{-- Modal Header --}}
-            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            {{-- Modal Header (Fixed) --}}
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
                 <h3 class="text-base font-semibold text-gray-800">
                     {{ $isEditing ? 'Edit Media (Video/Image)' : 'Tambah Banner' }}
                 </h3>
@@ -183,8 +197,9 @@
                 </button>
             </div>
 
-            {{-- Modal Body --}}
-            <form wire:submit="save" class="px-6 py-5 space-y-4">
+            {{-- Modal Body (Scrollable) --}}
+            <div class="overflow-y-auto flex-1 px-6 py-5">
+                <form wire:submit="save" class="space-y-4" id="banner-form">
 
                 <div class="border border-gray-200 rounded-lg p-5 space-y-4">
 
@@ -245,6 +260,60 @@
                         @enderror
                     </div>
 
+                    {{-- Thumbnail Upload (for video LCP optimization) --}}
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                            Thumbnail (Opsional - untuk optimasi LCP video)
+                        </label>
+
+                        <input type="file"
+                               wire:model="thumbnail"
+                               accept="image/jpeg,image/png,image/webp"
+                               x-data
+                               x-on:change="
+                                   const f = $event.target.files[0];
+                                   if (!f) return;
+                                   const maxSize = 2 * 1024 * 1024; // 2MB
+                                   if (f.size > maxSize) {
+                                       $event.target.value = '';
+                                       alert('❌ ' + f.name + '\n\nUkuran thumbnail melebihi 2MB.');
+                                   }
+                               "
+                               class="w-full text-sm text-gray-600 border border-gray-300 rounded-lg px-3 py-2
+                                      file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0
+                                      file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700
+                                      hover:file:bg-gray-200 transition
+                                      @error('thumbnail') border-red-400 bg-red-50 @enderror"/>
+
+                        {{-- Hints --}}
+                        <div class="mt-2 space-y-1">
+                            <p class="text-xs text-gray-400">
+                                🎯 <strong>Thumbnail:</strong> Gambar yang ditampilkan sebelum video dimuat.
+                                Gunakan frame pertama video atau screenshot terbaik.
+                            </p>
+                            <p class="text-xs text-gray-400">
+                                💡 <strong>Tips:</strong> Ekstrak dari video dengan FFmpeg: 
+                                <code class="bg-gray-100 px-1 rounded">ffmpeg -i video.mp4 -vframes 1 thumbnail.webp</code>
+                            </p>
+                            <p class="text-xs text-gray-400">
+                                📦 Target ukuran: <strong>&lt;100KB</strong> (akan otomatis dikompres ke WebP)
+                            </p>
+                        </div>
+
+                        {{-- Upload progress --}}
+                        <div wire:loading wire:target="thumbnail" class="mt-2 text-xs text-cyan-600 flex items-center gap-1.5">
+                            <svg class="animate-spin w-3.5 h-3.5" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                            </svg>
+                            Mengupload thumbnail...
+                        </div>
+
+                        @error('thumbnail')
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     {{-- Current media preview --}}
                     @if ($isEditing && $existingMedia)
                         <div>
@@ -259,6 +328,16 @@
                                      alt="Current banner"
                                      class="w-full max-h-48 rounded-lg border border-gray-200 object-contain"/>
                             @endif
+                        </div>
+                    @endif
+
+                    {{-- Current thumbnail preview --}}
+                    @if ($isEditing && $existingThumbnail)
+                        <div>
+                            <p class="text-sm font-medium text-gray-700 mb-2">Current Thumbnail:</p>
+                            <img src="{{ Storage::url($existingThumbnail) }}"
+                                 alt="Current thumbnail"
+                                 class="w-full max-h-32 rounded-lg border border-gray-200 object-contain"/>
                         </div>
                     @endif
 
@@ -287,6 +366,23 @@
                         </div>
                     @endif
 
+                    {{-- New thumbnail preview --}}
+                    @if ($thumbnail)
+                        <div>
+                            <p class="text-sm font-medium text-gray-700 mb-2">Preview Thumbnail Baru:</p>
+                            <img src="{{ $thumbnail->temporaryUrl() }}"
+                                 alt="Thumbnail preview"
+                                 class="w-full max-h-32 rounded-lg border border-cyan-200 object-contain"/>
+                            <p class="mt-1 text-xs text-cyan-600 flex items-center gap-1">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Thumbnail akan dikompresi otomatis ke WebP (&lt;100KB) saat disimpan.
+                            </p>
+                        </div>
+                    @endif
+
                 </div>
 
                 {{-- Processing indicator --}}
@@ -299,30 +395,32 @@
                         Mengompresi video ke WebM... Mohon tunggu.
                     </div>
                 @endif
+                </form>
+            </div>
 
-                {{-- Footer --}}
-                <div class="flex items-center gap-3">
-                    <button type="submit"
-                            wire:loading.attr="disabled"
-                            class="px-5 py-2 bg-green-500 hover:bg-green-600 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition">
-                        <span wire:loading.remove wire:target="save">
-                            {{ $isEditing ? 'Update Data' : 'Simpan Banner' }}
-                        </span>
-                        <span wire:loading wire:target="save" class="flex items-center gap-2">
-                            <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                            </svg>
-                            Memproses...
-                        </span>
-                    </button>
-                    <button type="button" @click="$wire.closeModal()"
-                            class="px-5 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition">
-                        Cancel
-                    </button>
-                </div>
+            {{-- Modal Footer (Fixed) --}}
+            <div class="flex items-center gap-3 px-6 py-4 border-t border-gray-100 bg-gray-50 shrink-0">
+                <button type="submit"
+                        form="banner-form"
+                        wire:loading.attr="disabled"
+                        class="px-5 py-2 bg-green-500 hover:bg-green-600 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition">
+                    <span wire:loading.remove wire:target="save">
+                        {{ $isEditing ? 'Update Data' : 'Simpan Banner' }}
+                    </span>
+                    <span wire:loading wire:target="save" class="flex items-center gap-2">
+                        <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                        </svg>
+                        Memproses...
+                    </span>
+                </button>
+                <button type="button" @click="$wire.closeModal()"
+                        class="px-5 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition">
+                    Cancel
+                </button>
+            </div>
 
-            </form>
         </div>
     </div>
 

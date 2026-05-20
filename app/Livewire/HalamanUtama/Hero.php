@@ -10,27 +10,39 @@ class Hero extends Component
 {
     public $banner;
     public $videoUrl;
+    public $imageUrl;
     public $posterUrl;
+    public $preloadImageUrl;
 
     public function mount()
     {
-        // Ambil banner pertama yang bertipe video
-        $this->banner = Banner::where('media_type', 'video')->first();
-        
+        $this->banner = Banner::query()
+            ->orderByDesc('id')
+            ->first();
+
         if ($this->banner) {
-            // Cek apakah file video ada di local storage
-            $localPath = $this->banner->media_url;
-            
-            if (Storage::disk('public')->exists($localPath)) {
-                $this->videoUrl = asset('storage/' . $localPath);
+            if ($this->banner->media_type === 'video') {
+                $this->videoUrl = $this->resolvePublicUrl($this->banner->media_url);
+                $this->posterUrl = $this->resolvePublicUrl($this->banner->thumbnail_url);
+                $this->preloadImageUrl = $this->posterUrl;
             } else {
-                // Fallback ke URL ibekami.id
-                $this->videoUrl = 'https://ibekami.id/storage/' . $localPath;
+                $this->imageUrl = $this->resolvePublicUrl($this->banner->media_url);
+                $this->preloadImageUrl = $this->imageUrl;
             }
-            
-            // Poster image (optional, bisa dikosongkan jika tidak ada)
-            $this->posterUrl = null;
         }
+    }
+
+    private function resolvePublicUrl(?string $path): ?string
+    {
+        if (!$path) {
+            return null;
+        }
+
+        if (Storage::disk('public')->exists($path)) {
+            return asset('storage/' . $path);
+        }
+
+        return 'https://ibekami.id/storage/' . ltrim($path, '/');
     }
 
     public function render()

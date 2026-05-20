@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Banner extends Model
 {
-    protected $fillable = ['media_url', 'media_type'];
+    protected $fillable = ['media_url', 'media_type', 'thumbnail_url'];
 
     public function isVideo(): bool
     {

@@ -1,4 +1,10 @@
 <div>
+@if($preloadImageUrl)
+    @push('styles')
+        <link rel="preload" as="image" href="{{ $preloadImageUrl }}" fetchpriority="high">
+    @endpush
+@endif
+
 <section class="relative bg-[#FFF2E0] min-h-[85vh] flex items-center justify-center overflow-hidden px-4 py-16 lg:py-20 pt-28 lg:pt-32">
     
     <!-- Background Blurs (lebih ringan & subtle) -->
@@ -68,16 +74,52 @@
         <div class="lg:col-span-6 relative w-full flex items-center justify-center mt-6 lg:mt-0">
             
             <!-- Frame — aspect-square agar video 1:1 tampil penuh -->
-            <div class="relative w-[85%] max-w-[480px] aspect-square bg-[#FFF2E0] rounded-2xl
+            <div x-data="{ showVideo: false, videoReady: false }"
+                 x-init="
+                    const startVideo = () => {
+                        if (window.requestIdleCallback) {
+                            window.requestIdleCallback(() => { showVideo = true; }, { timeout: 1200 });
+                        } else {
+                            setTimeout(() => { showVideo = true; }, 500);
+                        }
+                    };
+                    if (document.readyState === 'complete') startVideo();
+                    else window.addEventListener('load', startVideo, { once: true });
+                 "
+                 class="relative w-[85%] max-w-[480px] aspect-square bg-[#FFF2E0] rounded-2xl
             border border-white/60 shadow-lg shadow-[#FF9100]/10 overflow-hidden transition-transform duration-500">
 
                 @if($banner && $videoUrl)
-                    <video autoplay loop muted playsinline
-                         @if($posterUrl) poster="{{ $posterUrl }}" @endif
+                    @if($posterUrl)
+                        <img src="{{ $posterUrl }}"
+                             alt="Banner utama IBEKAMI"
+                             width="960"
+                             height="960"
+                             loading="eager"
+                             fetchpriority="high"
+                             decoding="async"
+                             class="absolute inset-0 w-full h-full object-contain transition-opacity duration-300"
+                             :class="videoReady ? 'opacity-0' : 'opacity-100'">
+                    @endif
+
+                    <template x-if="showVideo">
+                        <video autoplay loop muted playsinline preload="none"
+                             @if($posterUrl) poster="{{ $posterUrl }}" @endif
+                             x-on:canplay="videoReady = true"
+                             class="w-full h-full object-contain">
+                            <source src="{{ $videoUrl }}" type="video/webm">
+                            <source src="{{ $videoUrl }}" type="video/mp4">
+                        </video>
+                    </template>
+                @elseif($banner && $imageUrl)
+                    <img src="{{ $imageUrl }}"
+                         alt="Banner utama IBEKAMI"
+                         width="960"
+                         height="960"
+                         loading="eager"
+                         fetchpriority="high"
+                         decoding="async"
                          class="w-full h-full object-contain">
-                        <source src="{{ $videoUrl }}" type="video/webm">
-                        <source src="{{ $videoUrl }}" type="video/mp4">
-                    </video>
                 @else
                     <!-- Fallback jika tidak ada video -->
                     <div class="w-full h-full bg-gradient-to-br from-[#FF9100]/20 to-[#FFB066]/20 flex items-center justify-center">

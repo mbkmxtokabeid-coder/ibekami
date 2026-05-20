@@ -45,6 +45,7 @@
     <link rel="stylesheet" href="{{ asset('fonts/instrument-sans.css') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
     @stack('styles')
 
     {{-- ── Google Analytics & Tag Manager — production only ───────────────────
@@ -155,6 +156,8 @@
         {{ $slot ?? '' }}
     </main>
 
+    {{-- Livewire Scripts with defer attribute for performance optimization --}}
+    @livewireScriptConfig(['defer' => true])
     @stack('scripts')
 
     {{-- ── Global Filter Popup — di sini agar fixed positioning bekerja di semua device ── --}}
