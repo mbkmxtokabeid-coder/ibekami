@@ -22,7 +22,7 @@
 
     <title>@yield('title', 'Admin Login — ' . config('app.name'))</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('storage/logos/logo ibekami (3).png') }}">
+    <link rel="icon" type="image/webp" href="{{ asset('storage/logos/logo ibekami (3).webp') }}">
     {{-- apple-touch-icon dihapus: sinyal PWA --}}
 
     {{-- Preload critical fonts for better performance --}}

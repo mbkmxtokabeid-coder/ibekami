@@ -34,7 +34,7 @@
 
     <title>@yield('title', 'IBEKAMI - Digital Printing & Souvenir Custom Medan')</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('storage/logos/logo ibekami (3).png') }}">
+    <link rel="icon" type="image/webp" href="{{ asset('storage/logos/logo ibekami (3).webp') }}">
     {{-- apple-touch-icon dihapus: sinyal PWA yang tidak diperlukan --}}
 
     {{-- Preload critical fonts for better performance --}}
