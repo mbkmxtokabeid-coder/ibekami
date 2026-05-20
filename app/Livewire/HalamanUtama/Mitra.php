@@ -4,6 +4,7 @@ namespace App\Livewire\HalamanUtama;
 
 use Livewire\Component;
 use App\Models\Partnership;
+use Illuminate\Support\Facades\Cache;
 
 class Mitra extends Component
 {
@@ -18,17 +19,20 @@ class Mitra extends Component
 
     public function loadPartners(): void
     {
-        // Load all partners from database
-        $allPartners = Partnership::orderBy('created_at', 'desc')
-            ->get()
-            ->map(function ($partner) {
-                return [
-                    'id' => $partner->id,
-                    'category' => $partner->category ?? 'BUMN',
-                    'image' => $this->getPartnerImage($partner),
-                ];
-            })
-            ->toArray();
+        // Load all partners from cache -> DB
+        $allPartners = Cache::remember('homepage:partners', now()->addMinutes(30), function () {
+            return Partnership::query()
+                ->orderBy('created_at', 'desc')
+                ->get()
+                ->map(function ($partner) {
+                    return [
+                        'id' => $partner->id,
+                        'category' => $partner->category ?? 'BUMN',
+                        'image' => $this->getPartnerImage($partner),
+                    ];
+                })
+                ->toArray();
+        });
 
         // Separate by category (case-insensitive) - STRICT MODE
         $this->partnersBumn = array_values(array_filter($allPartners, function ($partner) {

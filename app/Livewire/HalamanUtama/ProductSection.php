@@ -4,6 +4,7 @@ namespace App\Livewire\HalamanUtama;
 
 use Livewire\Component;
 use App\Models\Product;
+use Illuminate\Support\Facades\Cache;
 
 class ProductSection extends Component
 {
@@ -52,21 +53,29 @@ class ProductSection extends Component
 
     public function loadProducts(): void
     {
-        // Get total active products
-        $this->totalProducts = Product::where('status', 'Aktif')->count();
+        // Get total active products (cache biar TTFB lebih stabil)
+        $this->totalProducts = Cache::remember('homepage:active_products_count', now()->addMinutes(10), function () {
+            return Product::query()
+                ->where('status', 'Aktif')
+                ->count();
+        });
         
         // Calculate max pages
         $this->maxPages = ceil(min($this->totalProducts, $this->maxItems) / $this->perPage);
 
         // Load products for current page
         // Order by activated_at DESC (terakhir diaktifkan muncul paling depan)
-        $products = Product::with(['type', 'category'])
-            ->where('status', 'Aktif')
-            ->orderBy('activated_at', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->skip(($this->page - 1) * $this->perPage)
-            ->take($this->perPage)
-            ->get();
+        $cacheKey = sprintf('homepage:products:%d:%d:%d', $this->page, $this->perPage, $this->maxItems);
+        $products = Cache::remember($cacheKey, now()->addMinutes(10), function () {
+            return Product::query()
+                ->with(['type', 'category'])
+                ->where('status', 'Aktif')
+                ->orderBy('activated_at', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->skip(($this->page - 1) * $this->perPage)
+                ->take($this->perPage)
+                ->get();
+        });
 
         // Map products to array
         $this->products = $products->map(function ($product) {

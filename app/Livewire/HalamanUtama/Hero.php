@@ -4,6 +4,7 @@ namespace App\Livewire\HalamanUtama;
 
 use Livewire\Component;
 use App\Models\Banner;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class Hero extends Component
@@ -16,9 +17,11 @@ class Hero extends Component
 
     public function mount()
     {
-        $this->banner = Banner::query()
-            ->orderByDesc('id')
-            ->first();
+        $this->banner = Cache::remember('homepage:hero_banner', now()->addMinutes(10), function () {
+            return Banner::query()
+                ->orderByDesc('id')
+                ->first();
+        });
 
         if ($this->banner) {
             if ($this->banner->media_type === 'video') {

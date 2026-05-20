@@ -4,6 +4,7 @@ namespace App\Livewire\HalamanUtama;
 
 use Livewire\Component;
 use App\Models\Review;
+use Illuminate\Support\Facades\Cache;
 
 class Ulasan extends Component
 {
@@ -16,21 +17,24 @@ class Ulasan extends Component
 
     public function loadReviews(): void
     {
-        // Load reviews from database
-        $dbReviews = Review::orderBy('review_date', 'desc')
-            ->take(10)
-            ->get()
-            ->map(function ($review) {
-                return [
-                    'id' => $review->id,
-                    'name' => $review->name,
-                    'initials' => $this->getInitials($review->name),
-                    'text' => $review->review,
-                    'rating' => $review->star ?? 5,
-                    'date' => $review->review_date ? \Carbon\Carbon::parse($review->review_date)->diffForHumans() : '1 bulan lalu',
-                ];
-            })
-            ->toArray();
+        // Load reviews from cache -> DB
+        $dbReviews = Cache::remember('homepage:reviews', now()->addMinutes(15), function () {
+            return Review::query()
+                ->orderBy('review_date', 'desc')
+                ->take(10)
+                ->get()
+                ->map(function ($review) {
+                    return [
+                        'id' => $review->id,
+                        'name' => $review->name,
+                        'initials' => $this->getInitials($review->name),
+                        'text' => $review->review,
+                        'rating' => $review->star ?? 5,
+                        'date' => $review->review_date ? \Carbon\Carbon::parse($review->review_date)->diffForHumans() : '1 bulan lalu',
+                    ];
+                })
+                ->toArray();
+        });
 
         // Jika tidak ada review di database, gunakan dummy data
         if (empty($dbReviews)) {
