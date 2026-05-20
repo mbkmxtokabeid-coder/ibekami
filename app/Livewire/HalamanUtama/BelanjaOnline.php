@@ -14,16 +14,16 @@ class BelanjaOnline extends Component
     public function mount()
     {
         // Cek apakah logo ada di local storage
-        if (\Storage::disk('public')->exists('logos/tokopedia.png')) {
-            $this->tokopediaLogo = asset('storage/logos/tokopedia.png');
+        if (\Storage::disk('public')->exists('logos/tokopedia.webp')) {
+            $this->tokopediaLogo = asset('storage/logos/tokopedia.webp');
         } else {
-            $this->tokopediaLogo = 'https://ibekami.id/storage/logos/tokopedia.png';
+            $this->tokopediaLogo = 'https://ibekami.id/storage/logos/tokopedia.webp';
         }
 
-        if (\Storage::disk('public')->exists('logos/shopee.png')) {
-            $this->shopeeLogo = asset('storage/logos/shopee.png');
+        if (\Storage::disk('public')->exists('logos/shopee.webp')) {
+            $this->shopeeLogo = asset('storage/logos/shopee.webp');
         } else {
-            $this->shopeeLogo = 'https://ibekami.id/storage/logos/shopee.png';
+            $this->shopeeLogo = 'https://ibekami.id/storage/logos/shopee.webp';
         }
     }
 
