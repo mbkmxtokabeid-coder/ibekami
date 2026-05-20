@@ -25,9 +25,12 @@
     <link rel="icon" type="image/png" href="{{ asset('storage/logos/logo ibekami (3).png') }}">
     {{-- apple-touch-icon dihapus: sinyal PWA --}}
 
-    <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&display=swap" rel="stylesheet" />
+    {{-- Preload critical fonts for better performance --}}
+    <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/instrument-sans-latin-400-normal.woff2') }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/instrument-sans-latin-600-normal.woff2') }}" crossorigin>
+    
+    {{-- Self-hosted fonts (faster than CDN) --}}
+    <link rel="stylesheet" href="{{ asset('fonts/instrument-sans.css') }}">
 
     {{-- Highcharts — defer agar tidak blocking --}}
     <script src="https://code.highcharts.com/highcharts.js" defer></script>
