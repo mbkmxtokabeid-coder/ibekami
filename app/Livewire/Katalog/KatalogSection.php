@@ -166,20 +166,25 @@ class KatalogSection extends Component
                 });
             }
 
+            $productNameColumn = app()->getLocale() === 'en' ? 'name_en' : 'name_id';
+
             // Filter search
             if ($this->search !== '') {
-                $query->where('name', 'like', '%' . $this->search . '%');
+                $query->where(function ($q) use ($productNameColumn) {
+                    $q->where($productNameColumn, 'like', '%' . $this->search . '%')
+                        ->orWhere($productNameColumn === 'name_en' ? 'name_id' : 'name_en', 'like', '%' . $this->search . '%');
+                });
             }
 
             // Sort
             switch ($this->sortBy) {
                 case __('messages.name_az'):
                 case 'A - Z':
-                    $query->orderBy('name', 'asc');
+                    $query->orderBy($productNameColumn, 'asc');
                     break;
                 case __('messages.name_za'):
                 case 'Z - A':
-                    $query->orderBy('name', 'desc');
+                    $query->orderBy($productNameColumn, 'desc');
                     break;
                 case __('messages.oldest'):
                 case 'Terlama':

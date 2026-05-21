@@ -66,10 +66,10 @@
                 <thead>
                     <tr class="bg-gray-50 border-b border-gray-200">
                         <th class="text-left px-6 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider">
-                            <button wire:click="sort('name')" class="flex items-center gap-1 hover:text-gray-900">
+                            <button wire:click="sort('name_id')" class="flex items-center gap-1 hover:text-gray-900">
                                 Product Name
                                 <span class="text-gray-400">
-                                    @if ($sortField === 'name')
+                                    @if ($sortField === 'name_id')
                                         @if ($sortDir === 'asc') ↑ @else ↓ @endif
                                     @else
                                         ↕
