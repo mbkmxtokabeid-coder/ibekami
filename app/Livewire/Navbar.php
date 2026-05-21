@@ -18,13 +18,13 @@ class Navbar extends Component
 
     public function loadProductTypes(): void
     {
-        $this->productTypes = Type::orderBy('name', 'asc')
+        $this->productTypes = Type::orderBy('name_id', 'asc')
             ->get()
             ->map(function ($type) {
                 return [
                     'id' => $type->id,
                     'name' => $type->name,
-                    'slug' => \Illuminate\Support\Str::slug($type->name),
+                    'slug' => \Illuminate\Support\Str::slug($type->name_id ?: $type->name_en),
                 ];
             })
             ->toArray();

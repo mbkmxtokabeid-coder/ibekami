@@ -85,7 +85,7 @@
         </div>
     </div>
 
+    @livewireScriptConfig
     @stack('scripts')
-    @livewireScripts
 </body>
 </html>

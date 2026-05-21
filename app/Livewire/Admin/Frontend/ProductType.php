@@ -3,9 +3,9 @@
 namespace App\Livewire\Admin\Frontend;
 
 use App\Models\Type;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -27,8 +27,9 @@ class ProductType extends Component
     public ?int   $editingId  = null;
 
     // ── Form fields ──────────────────────────────────────────────
-    public string $name      = '';
-    public $image            = null;   // uploaded file
+    public string $name_id    = '';
+    public string $name_en    = '';
+    public $image             = null;
     public ?string $existingImage = null;
 
     // ── Listeners ────────────────────────────────────────────────
@@ -57,7 +58,8 @@ class ProductType extends Component
     {
         $type = Type::findOrFail($id);
         $this->editingId     = $id;
-        $this->name          = $type->name;
+        $this->name_id       = $type->name_id ?? '';
+        $this->name_en       = $type->name_en ?? '';
         $this->existingImage = $type->image_url;
         $this->image         = null;
         $this->isEditing     = true;
@@ -72,7 +74,8 @@ class ProductType extends Component
 
     private function resetForm(): void
     {
-        $this->name          = '';
+        $this->name_id       = '';
+        $this->name_en       = '';
         $this->image         = null;
         $this->existingImage = null;
         $this->editingId     = null;
@@ -83,21 +86,22 @@ class ProductType extends Component
     protected function rules(): array
     {
         return [
-            'name'  => ['required', 'string', 'max:100'],
-            'image' => $this->isEditing
-                ? ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048']
-                : ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'name_id' => ['required', 'string', 'max:100'],
+            'name_en' => ['required', 'string', 'max:100'],
+            'image'   => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 
     protected function messages(): array
     {
         return [
-            'name.required' => 'Nama jenis produk wajib diisi.',
-            'name.max'      => 'Nama maksimal 100 karakter.',
-            'image.image'   => 'File harus berupa gambar.',
-            'image.mimes'   => 'Format gambar: jpg, jpeg, png, webp.',
-            'image.max'     => 'Ukuran gambar maksimal 2MB.',
+            'name_id.required' => 'Nama jenis produk (Bahasa Indonesia) wajib diisi.',
+            'name_id.max'      => 'Nama Indonesia maksimal 100 karakter.',
+            'name_en.required' => 'Nama jenis produk (English) wajib diisi.',
+            'name_en.max'      => 'Nama English maksimal 100 karakter.',
+            'image.image'      => 'File harus berupa gambar.',
+            'image.mimes'      => 'Format gambar: jpg, jpeg, png, webp.',
+            'image.max'        => 'Ukuran gambar maksimal 2MB.',
         ];
     }
 
@@ -109,29 +113,27 @@ class ProductType extends Component
         $imagePath = $this->existingImage;
 
         if ($this->image) {
-            // Delete old image if editing
             if ($this->isEditing && $this->existingImage) {
                 Storage::disk('public')->delete($this->existingImage);
             }
             $imagePath = $this->image->store('types', 'public');
         }
 
+        $data = [
+            'name_id'   => $this->name_id,
+            'name_en'   => $this->name_en,
+            'image_url' => $imagePath,
+        ];
+
         if ($this->isEditing) {
-            $type = Type::findOrFail($this->editingId);
-            $type->update([
-                'name'      => $this->name,
-                'image_url' => $imagePath,
-            ]);
+            Type::findOrFail($this->editingId)->update($data);
             $this->dispatch('swal', [
                 'type'  => 'success',
                 'title' => 'Berhasil!',
                 'text'  => 'Jenis produk berhasil diperbarui.',
             ]);
         } else {
-            Type::create([
-                'name'      => $this->name,
-                'image_url' => $imagePath,
-            ]);
+            Type::create($data);
             $this->dispatch('swal', [
                 'type'  => 'success',
                 'title' => 'Berhasil!',
@@ -139,12 +141,13 @@ class ProductType extends Component
             ]);
         }
 
+        Cache::forget('homepage:hot_deals');
+
         $this->closeModal();
     }
 
     public function confirmDelete(int $id): void
     {
-        // Triggered from JS SweetAlert confirm
         $this->delete($id);
     }
 
@@ -158,6 +161,8 @@ class ProductType extends Component
 
         $type->delete();
 
+        Cache::forget('homepage:hot_deals');
+
         $this->dispatch('swal', [
             'type'  => 'success',
             'title' => 'Dihapus!',
@@ -169,7 +174,12 @@ class ProductType extends Component
     public function render()
     {
         $types = Type::query()
-            ->when($this->search, fn ($q) => $q->where('name', 'like', "%{$this->search}%"))
+            ->when($this->search, function ($q) {
+                $q->where(function ($query) {
+                    $query->where('name_id', 'like', "%{$this->search}%")
+                        ->orWhere('name_en', 'like', "%{$this->search}%");
+                });
+            })
             ->orderBy($this->sortField, $this->sortDir)
             ->paginate($this->perPage);
 

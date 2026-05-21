@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Type;
 use App\Services\ImageCompressor;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -26,22 +27,23 @@ class ProductList extends Component
     // ── Modal state ──────────────────────────────────────────────
     public bool   $showModal = false;
     public bool   $isEditing = false;
-    public ?string $editingId = null;   // UUID
+    public ?string $editingId = null;
 
     // ── Form fields ──────────────────────────────────────────────
-    public string $name           = '';
-    public string $description    = '';
-    public string $product_type   = '';
-    public string $category_type  = '';
-    public string $status         = '';
-    public array  $details        = [];
-    public array  $images         = [];
-    public array  $existingImages = [];
+    public string $name_id          = '';
+    public string $name_en          = '';
+    public string $description_id   = '';
+    public string $description_en   = '';
+    public string $product_type     = '';
+    public string $category_type    = '';
+    public string $status           = '';
+    public array  $details_id       = [];
+    public array  $details_en       = [];
+    public array  $images           = [];
+    public array  $existingImages   = [];
 
-    // ── Filtered categories ───────────────────────────────────────
     public array $filteredCategories = [];
 
-    // ── Watchers ─────────────────────────────────────────────────
     public function updatingSearch(): void  { $this->resetPage(); }
     public function updatingPerPage(): void { $this->resetPage(); }
 
@@ -49,7 +51,8 @@ class ProductList extends Component
     {
         $this->category_type      = '';
         $this->filteredCategories = $value
-            ? Category::where('type_id', $value)->orderBy('name')->get(['id', 'name'])->toArray()
+            ? Category::where('type_id', $value)->orderBy('name_id')->get()
+                ->map(fn ($c) => ['id' => $c->id, 'name' => $c->name])->values()->toArray()
             : [];
     }
 
@@ -60,12 +63,26 @@ class ProductList extends Component
         $this->resetPage();
     }
 
-    // ── Detail rows ───────────────────────────────────────────────
-    public function addDetail(): void    { $this->details[] = ['key' => '', 'value' => '']; }
-    public function removeDetail(int $i): void
+    public function addDetailId(): void
     {
-        array_splice($this->details, $i, 1);
-        $this->details = array_values($this->details);
+        $this->details_id[] = ['key' => '', 'value' => ''];
+    }
+
+    public function addDetailEn(): void
+    {
+        $this->details_en[] = ['key' => '', 'value' => ''];
+    }
+
+    public function removeDetailId(int $i): void
+    {
+        array_splice($this->details_id, $i, 1);
+        $this->details_id = array_values($this->details_id);
+    }
+
+    public function removeDetailEn(int $i): void
+    {
+        array_splice($this->details_en, $i, 1);
+        $this->details_en = array_values($this->details_en);
     }
 
     public function removeExistingImage(int $i): void
@@ -74,7 +91,6 @@ class ProductList extends Component
         $this->existingImages = array_values($this->existingImages);
     }
 
-    // ── Modal helpers ─────────────────────────────────────────────
     public function openCreate(): void
     {
         $this->resetForm();
@@ -86,24 +102,26 @@ class ProductList extends Component
     {
         $product = Product::findOrFail($id);
 
-        $this->editingId      = $id;
-        $this->name           = $product->name;
-        $this->description    = $product->description ?? '';
-        $this->product_type   = (string) ($product->product_type ?? '');
-        $this->category_type  = (string) ($product->category_type ?? '');
-        $this->status         = $product->status ?? 'Tidak Aktif';
-        $this->existingImages = $product->image_url ?? [];
-        $this->images         = [];
-        $this->details        = collect($product->detail ?? [])->map(
-            fn ($v, $k) => ['key' => $k, 'value' => $v]
-        )->values()->toArray();
+        $this->editingId        = $id;
+        $this->name_id          = $this->loadTextField($product, 'name_id');
+        $this->name_en          = $this->loadTextField($product, 'name_en');
+        $this->description_id   = $this->loadTextField($product, 'description_id');
+        $this->description_en   = $this->loadTextField($product, 'description_en');
+        $this->product_type     = (string) ($product->product_type ?? '');
+        $this->category_type    = (string) ($product->category_type ?? '');
+        $this->status           = $product->status ?? 'Tidak Aktif';
+        $this->existingImages   = $product->image_url ?? [];
+        $this->images           = [];
+        $this->details_id       = $this->loadDetailForForm($product, 'detail_id');
+        $this->details_en       = $this->loadDetailForForm($product, 'detail_en');
 
         $this->filteredCategories = $this->product_type
-            ? Category::where('type_id', $this->product_type)->orderBy('name')->get(['id', 'name'])->toArray()
+            ? Category::where('type_id', $this->product_type)->orderBy('name_id')->get()
+                ->map(fn ($c) => ['id' => $c->id, 'name' => $c->name])->values()->toArray()
             : [];
 
         $this->isEditing = true;
-        $this->showModal = true;
+        $this->showModal  = true;
     }
 
     public function closeModal(): void
@@ -112,33 +130,56 @@ class ProductList extends Component
         $this->resetForm();
     }
 
+    private function loadTextField(Product $product, string $column): string
+    {
+        $attributes = $product->getAttributes();
+
+        if (array_key_exists($column, $attributes) && $attributes[$column] !== null && $attributes[$column] !== '') {
+            return (string) $attributes[$column];
+        }
+
+        $raw = $product->getRawOriginal($column);
+
+        if (is_string($raw) && $raw !== '') {
+            return $raw;
+        }
+
+        return '';
+    }
+
     private function resetForm(): void
     {
-        $this->name               = '';
-        $this->description        = '';
-        $this->product_type       = '';
-        $this->category_type      = '';
-        $this->status             = '';
-        $this->details            = [];
-        $this->images             = [];
-        $this->existingImages     = [];
-        $this->filteredCategories = [];
-        $this->editingId          = null;
+        $this->name_id              = '';
+        $this->name_en              = '';
+        $this->description_id       = '';
+        $this->description_en       = '';
+        $this->product_type         = '';
+        $this->category_type        = '';
+        $this->status               = '';
+        $this->details_id           = [];
+        $this->details_en           = [];
+        $this->images               = [];
+        $this->existingImages       = [];
+        $this->filteredCategories   = [];
+        $this->editingId            = null;
         $this->resetValidation();
     }
 
-    // ── Validation ────────────────────────────────────────────────
     protected function rules(): array
     {
         return [
-            'product_type'    => ['required', 'exists:types,id'],
-            'category_type'   => ['required', 'exists:categories,id'],
-            'name'            => ['required', 'string', 'max:200'],
-            'description'     => ['nullable', 'string'],
-            'status'          => ['required', 'in:Aktif,Tidak Aktif'],
-            'details.*.key'   => ['nullable', 'string', 'max:100'],
-            'details.*.value' => ['nullable', 'string', 'max:255'],
-            'images.*'        => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'product_type'      => ['required', 'exists:types,id'],
+            'category_type'     => ['required', 'exists:categories,id'],
+            'name_id'           => ['required', 'string', 'max:200'],
+            'name_en'           => ['required', 'string', 'max:200'],
+            'description_id'    => ['nullable', 'string'],
+            'description_en'    => ['nullable', 'string'],
+            'status'            => ['required', 'in:Aktif,Tidak Aktif'],
+            'details_id.*.key'  => ['nullable', 'string', 'max:100'],
+            'details_id.*.value'=> ['nullable', 'string', 'max:255'],
+            'details_en.*.key'  => ['nullable', 'string', 'max:100'],
+            'details_en.*.value'=> ['nullable', 'string', 'max:255'],
+            'images.*'          => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 
@@ -147,7 +188,8 @@ class ProductList extends Component
         return [
             'product_type.required'  => 'Jenis produk wajib dipilih.',
             'category_type.required' => 'Kategori produk wajib dipilih.',
-            'name.required'          => 'Nama produk wajib diisi.',
+            'name_id.required'       => 'Nama produk (Bahasa Indonesia) wajib diisi.',
+            'name_en.required'       => 'Nama produk (English) wajib diisi.',
             'status.required'        => 'Status produk wajib dipilih.',
             'images.*.image'         => 'File harus berupa gambar.',
             'images.*.mimes'         => 'Format: jpg, jpeg, png, webp.',
@@ -155,44 +197,37 @@ class ProductList extends Component
         ];
     }
 
-    // ── CRUD ──────────────────────────────────────────────────────
     public function save(): void
     {
-        $this->validate();
-
-        // Build detail map
-        $detailMap = [];
-        foreach ($this->details as $row) {
-            if (!empty($row['key'])) {
-                $detailMap[$row['key']] = $row['value'] ?? '';
-            }
+        try {
+            $this->validate();
+        } catch (ValidationException $e) {
+            $message = collect($e->errors())->flatten()->first() ?? 'Periksa kembali data form.';
+            $this->dispatch('swal', [
+                'type'  => 'error',
+                'title' => 'Validasi gagal',
+                'text'  => $message,
+            ]);
+            throw $e;
         }
 
-        // Handle images — compress and convert to WebP (with fallback)
         $imagePaths = $this->existingImages;
 
         foreach ($this->images as $img) {
             try {
-                // Check if ImageCompressor is available
                 if (ImageCompressor::isAvailable()) {
-                    // Compress to WebP (100-300KB)
                     $compressor = new ImageCompressor();
                     $filename = uniqid('product_', true) . '.webp';
                     $storagePath = 'products/' . $filename;
-                    
                     $compressor->compressToWebP($img->getRealPath(), $storagePath);
                     $imagePaths[] = $filename;
                 } else {
-                    // Fallback: save original without compression
                     $path = $img->store('products', 'public');
                     $imagePaths[] = basename($path);
-                    
                     \Illuminate\Support\Facades\Log::warning('Image saved without compression: GD extension not available');
                 }
             } catch (\Exception $e) {
                 \Illuminate\Support\Facades\Log::error('Image processing failed: ' . $e->getMessage());
-                
-                // Fallback: save original
                 try {
                     $path = $img->store('products', 'public');
                     $imagePaths[] = basename($path);
@@ -200,7 +235,7 @@ class ProductList extends Component
                     $this->dispatch('swal', [
                         'type'  => 'error',
                         'title' => 'Gagal!',
-                        'text'  => 'Gagal menyimpan gambar: ' . $e2->getMessage()
+                        'text'  => 'Gagal menyimpan gambar: ' . $e2->getMessage(),
                     ]);
                     return;
                 }
@@ -208,19 +243,23 @@ class ProductList extends Component
         }
 
         $data = [
-            'name'          => $this->name,
-            'description'   => $this->description ?: null,
-            'product_type'  => $this->product_type,
-            'category_type' => $this->category_type,
-            'status'        => $this->status,
-            'detail'        => $detailMap ?: null,
-            'image_url'     => $imagePaths ?: null,
+            'name_id'         => $this->name_id,
+            'name_en'         => $this->name_en,
+            'description_id'  => $this->description_id ?: null,
+            'description_en'  => $this->description_en ?: null,
+            'product_type'    => $this->product_type,
+            'category_type'   => $this->category_type,
+            'status'          => $this->status,
+            'detail_id'       => $this->buildDetailMap($this->details_id),
+            'detail_en'       => $this->buildDetailMap($this->details_en),
+            'image_url'       => $imagePaths ?: null,
         ];
 
         if ($this->isEditing) {
             $product = Product::findOrFail($this->editingId);
+            $oldSlug = $product->getSlug();
             $product->update($data);
-            $this->clearProductCache($product->product_id, $product->name);
+            $this->clearProductCache($product->product_id, $oldSlug, $product->getSlug());
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Produk berhasil diperbarui.']);
         } else {
             Product::create($data);
@@ -235,7 +274,6 @@ class ProductList extends Component
     {
         $product = Product::findOrFail($id);
 
-        // Delete uploaded images (skip old-format filenames without path)
         foreach ($product->image_url ?? [] as $filename) {
             $path = 'products/' . $filename;
             if (Storage::disk('public')->exists($path)) {
@@ -243,37 +281,110 @@ class ProductList extends Component
             }
         }
 
-        $this->clearProductCache($product->product_id, $product->name);
+        $this->clearProductCache($product->product_id, $product->getSlug(), $product->getSlug());
         $product->delete();
         $this->dispatch('swal', ['type' => 'success', 'title' => 'Dihapus!', 'text' => 'Produk berhasil dihapus.']);
     }
 
-    // ── Cache Helpers ─────────────────────────────────────────────
-
     /**
-     * Hapus cache untuk produk tertentu (detail + related) dan semua cache katalog.
+     * Ambil detail dari DB (termasuk fallback raw JSON) lalu ubah ke baris form.
      */
-    private function clearProductCache(string $productId, string $productName): void
+    private function loadDetailForForm(Product $product, string $column): array
     {
-        // Cache detail produk (semua locale)
-        foreach (['id', 'en'] as $locale) {
-            $slug = \Illuminate\Support\Str::slug($productName);
-            cache()->forget("product_detail_{$slug}_{$locale}");
-            cache()->forget("related_products_{$productId}_{$locale}");
+        $detail = $product->getAttributeValue($column);
+
+        if (empty($detail)) {
+            $raw = $product->getRawOriginal($column);
+            if (is_string($raw) && $raw !== '') {
+                $decoded = json_decode($raw, true);
+                if (is_array($decoded)) {
+                    $detail = $decoded;
+                }
+            }
         }
 
-        // Cache katalog (semua kombinasi filter)
-        $this->clearAllKatalogCache();
+        return $this->normalizeDetailForForm($detail);
     }
 
     /**
-     * Hapus semua cache katalog.
-     * Cache key katalog menggunakan md5 dari kombinasi filter.
-     * Scan file cache dan hapus yang mengandung prefix 'katalog_products_'.
+     * Dukung format map {"Ukuran":"10cm"} atau list [{"key":"Size","value":"10cm"}].
      */
+    private function normalizeDetailForForm(mixed $detail): array
+    {
+        if ($detail === null || $detail === '') {
+            return [];
+        }
+
+        if (is_string($detail)) {
+            $detail = json_decode($detail, true);
+        }
+
+        if (! is_array($detail) || $detail === []) {
+            return [];
+        }
+
+        // Format list dari form lama / JSON array
+        if (array_is_list($detail)) {
+            $first = $detail[0] ?? null;
+            if (is_array($first) && array_key_exists('key', $first)) {
+                return array_values(array_map(static fn (array $row): array => [
+                    'key'   => (string) ($row['key'] ?? ''),
+                    'value' => (string) ($row['value'] ?? ''),
+                ], $detail));
+            }
+        }
+
+        // Format map key => value
+        $rows = [];
+        foreach ($detail as $key => $value) {
+            if ($key === '' && $value === '') {
+                continue;
+            }
+            if (is_array($value)) {
+                continue;
+            }
+            $rows[] = [
+                'key'   => (string) $key,
+                'value' => is_scalar($value) ? (string) $value : '',
+            ];
+        }
+
+        return $rows;
+    }
+
+    private function buildDetailMap(array $rows): ?array
+    {
+        $map = [];
+        foreach ($rows as $row) {
+            if (!empty($row['key'])) {
+                $map[$row['key']] = $row['value'] ?? '';
+            }
+        }
+
+        return $map ?: null;
+    }
+
+    private function clearProductCache(string $productId, string $oldSlug, string $newSlug): void
+    {
+        foreach (['id', 'en'] as $locale) {
+            cache()->forget("product_detail_{$oldSlug}_{$locale}");
+            cache()->forget("product_detail_{$newSlug}_{$locale}");
+            cache()->forget("related_products_{$productId}_{$locale}");
+        }
+
+        $this->clearAllKatalogCache();
+        cache()->forget('homepage:active_products_count');
+        foreach ([1, 2, 3, 4] as $page) {
+            foreach ([4, 8] as $perPage) {
+                foreach ([12, 16] as $maxItems) {
+                    cache()->forget(sprintf('homepage:products:%d:%d:%d', $page, $perPage, $maxItems));
+                }
+            }
+        }
+    }
+
     private function clearAllKatalogCache(): void
     {
-        // Hapus cache key default yang paling umum diakses
         foreach (['id', 'en'] as $locale) {
             foreach (['Semua Produk', 'All Products'] as $cat) {
                 foreach (['Terbaru', 'Newest', 'A - Z', 'Z - A', 'Terlama', 'Oldest'] as $sort) {
@@ -283,16 +394,19 @@ class ProductList extends Component
             }
         }
 
-        // Scan file cache untuk hapus semua key katalog (md5 hash tidak bisa di-enumerate)
         $cacheDir = storage_path('framework/cache/data');
-        if (!is_dir($cacheDir)) return;
+        if (!is_dir($cacheDir)) {
+            return;
+        }
 
         try {
             $iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($cacheDir, \RecursiveDirectoryIterator::SKIP_DOTS)
             );
             foreach ($iterator as $file) {
-                if (!$file->isFile()) continue;
+                if (!$file->isFile()) {
+                    continue;
+                }
                 $content = @file_get_contents($file->getRealPath());
                 if ($content && str_contains($content, 'katalog_products_')) {
                     @unlink($file->getRealPath());
@@ -303,19 +417,29 @@ class ProductList extends Component
         }
     }
 
-    // ── Render ────────────────────────────────────────────────────
     public function render()
     {
         $products = Product::with(['type', 'category'])
-            ->when($this->search, fn ($q) =>
-                $q->where('name', 'like', "%{$this->search}%")
-                  ->orWhereHas('type', fn ($q2) => $q2->where('name', 'like', "%{$this->search}%"))
-                  ->orWhereHas('category', fn ($q2) => $q2->where('name', 'like', "%{$this->search}%"))
-            )
+            ->when($this->search, function ($q) {
+                $q->where(function ($query) {
+                    $query->where('name_id', 'like', "%{$this->search}%")
+                        ->orWhere('name_en', 'like', "%{$this->search}%")
+                        ->orWhere('description_id', 'like', "%{$this->search}%")
+                        ->orWhere('description_en', 'like', "%{$this->search}%");
+                })
+                ->orWhereHas('type', function ($q2) {
+                    $q2->where('name_id', 'like', "%{$this->search}%")
+                       ->orWhere('name_en', 'like', "%{$this->search}%");
+                })
+                ->orWhereHas('category', function ($q2) {
+                    $q2->where('name_id', 'like', "%{$this->search}%")
+                       ->orWhere('name_en', 'like', "%{$this->search}%");
+                });
+            })
             ->orderBy($this->sortField, $this->sortDir)
             ->paginate($this->perPage);
 
-        $types = Type::orderBy('name')->get();
+        $types = Type::orderBy('name_id')->get();
 
         return view('livewire.admin.frontend.product-list', [
             'products' => $products,

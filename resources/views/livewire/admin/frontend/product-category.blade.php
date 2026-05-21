@@ -55,10 +55,18 @@
                             </button>
                         </th>
                         <th class="text-left px-6 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider">
-                            <button wire:click="sort('name')" class="flex items-center gap-1 hover:text-gray-900">
-                                Kategori Produk
+                            <button wire:click="sort('name_id')" class="flex items-center gap-1 hover:text-gray-900">
+                                Kategori (ID)
                                 <span class="text-gray-400 text-xs">
-                                    @if($sortField === 'name') {{ $sortDir === 'asc' ? '↑' : '↓' }} @else ↕ @endif
+                                    @if($sortField === 'name_id') {{ $sortDir === 'asc' ? '↑' : '↓' }} @else ↕ @endif
+                                </span>
+                            </button>
+                        </th>
+                        <th class="text-left px-6 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider">
+                            <button wire:click="sort('name_en')" class="flex items-center gap-1 hover:text-gray-900">
+                                Kategori (EN)
+                                <span class="text-gray-400 text-xs">
+                                    @if($sortField === 'name_en') {{ $sortDir === 'asc' ? '↑' : '↓' }} @else ↕ @endif
                                 </span>
                             </button>
                         </th>
@@ -76,7 +84,8 @@
                             <td class="px-6 py-4 text-gray-800">
                                 {{ $cat->type?->name ?? '—' }}
                             </td>
-                            <td class="px-6 py-4 text-gray-800">{{ $cat->name }}</td>
+                            <td class="px-6 py-4 text-gray-800">{{ $cat->name_id }}</td>
+                            <td class="px-6 py-4 text-gray-800">{{ $cat->name_en }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
                                     {{-- Edit --}}
@@ -89,7 +98,7 @@
                                         </svg>
                                     </button>
                                     {{-- Delete --}}
-                                    <button onclick="confirmDeleteCategory({{ $cat->id }}, '{{ addslashes($cat->name) }}')"
+                                    <button onclick="confirmDeleteCategory({{ $cat->id }}, '{{ addslashes($cat->name_id) }}')"
                                             class="w-8 h-8 flex items-center justify-center rounded border border-red-400 text-red-500
                                                    hover:bg-red-50 transition" title="Hapus">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,7 +111,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="px-6 py-12 text-center text-gray-400">
+                            <td colspan="5" class="px-6 py-12 text-center text-gray-400">
                                 Tidak ada data kategori produk.
                             </td>
                         </tr>
@@ -215,18 +224,34 @@
                     @enderror
                 </div>
 
-                {{-- Nama Kategori --}}
+                {{-- Nama Kategori (Bahasa Indonesia) --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1.5">
-                        Kategori Produk: <span class="text-red-500">*</span>
+                        Kategori Produk (Bahasa Indonesia) <span class="text-red-500">*</span>
                     </label>
                     <input type="text"
-                           wire:model="name"
-                           placeholder="Masukkan Nama Kategori"
+                           wire:model="name_id"
+                           placeholder="Contoh: Tumbler"
                            class="w-full px-4 py-2.5 text-sm border rounded-lg outline-none transition
-                                  @error('name') border-red-400 bg-red-50 focus:ring-2 focus:ring-red-200
+                                  @error('name_id') border-red-400 bg-red-50 focus:ring-2 focus:ring-red-200
                                   @else border-gray-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 @enderror"/>
-                    @error('name')
+                    @error('name_id')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Nama Kategori (English) --}}
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                        Kategori Produk (English) <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text"
+                           wire:model="name_en"
+                           placeholder="Example: Tumbler"
+                           class="w-full px-4 py-2.5 text-sm border rounded-lg outline-none transition
+                                  @error('name_en') border-red-400 bg-red-50 focus:ring-2 focus:ring-red-200
+                                  @else border-gray-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 @enderror"/>
+                    @error('name_en')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

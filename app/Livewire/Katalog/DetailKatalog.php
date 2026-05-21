@@ -30,7 +30,7 @@ class DetailKatalog extends Component
             return Product::with(['type', 'category'])
                 ->get()
                 ->first(function ($product) {
-                    return \Illuminate\Support\Str::slug($product->name) === $this->slug;
+                    return $product->getSlug() === $this->slug;
                 });
         });
 
@@ -67,7 +67,7 @@ class DetailKatalog extends Component
                         'name' => $relatedProduct->name,
                         'cat' => $relatedProduct->type->name ?? $relatedProduct->category->name ?? 'Produk',
                         'img' => $this->getProductImage($relatedProduct),
-                        'slug' => \Illuminate\Support\Str::slug($relatedProduct->name),
+                        'slug' => $relatedProduct->getSlug(),
                         'status' => $relatedProduct->status,
                     ];
                 })

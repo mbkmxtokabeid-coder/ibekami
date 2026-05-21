@@ -25,8 +25,9 @@ class ProductCategory extends Component
     public ?int  $editingId = null;
 
     // ── Form fields ──────────────────────────────────────────────
-    public string $name    = '';
-    public string $type_id = '';
+    public string $name_id  = '';
+    public string $name_en  = '';
+    public string $type_id  = '';
 
     // ── Watchers ─────────────────────────────────────────────────
     public function updatingSearch(): void  { $this->resetPage(); }
@@ -51,7 +52,8 @@ class ProductCategory extends Component
     {
         $cat             = Category::findOrFail($id);
         $this->editingId = $id;
-        $this->name      = $cat->name;
+        $this->name_id   = $cat->name_id ?? '';
+        $this->name_en   = $cat->name_en ?? '';
         $this->type_id   = (string) $cat->type_id;
         $this->isEditing = true;
         $this->showModal = true;
@@ -65,7 +67,8 @@ class ProductCategory extends Component
 
     private function resetForm(): void
     {
-        $this->name      = '';
+        $this->name_id   = '';
+        $this->name_en   = '';
         $this->type_id   = '';
         $this->editingId = null;
         $this->resetValidation();
@@ -76,7 +79,8 @@ class ProductCategory extends Component
     {
         return [
             'type_id' => ['required', 'exists:types,id'],
-            'name'    => ['required', 'string', 'max:150'],
+            'name_id' => ['required', 'string', 'max:150'],
+            'name_en' => ['required', 'string', 'max:150'],
         ];
     }
 
@@ -85,8 +89,10 @@ class ProductCategory extends Component
         return [
             'type_id.required' => 'Jenis produk wajib dipilih.',
             'type_id.exists'   => 'Jenis produk tidak valid.',
-            'name.required'    => 'Nama kategori wajib diisi.',
-            'name.max'         => 'Nama kategori maksimal 150 karakter.',
+            'name_id.required' => 'Nama kategori (Bahasa Indonesia) wajib diisi.',
+            'name_id.max'      => 'Nama Indonesia maksimal 150 karakter.',
+            'name_en.required' => 'Nama kategori (English) wajib diisi.',
+            'name_en.max'      => 'Nama English maksimal 150 karakter.',
         ];
     }
 
@@ -95,21 +101,21 @@ class ProductCategory extends Component
     {
         $this->validate();
 
+        $data = [
+            'type_id' => $this->type_id,
+            'name_id' => $this->name_id,
+            'name_en' => $this->name_en,
+        ];
+
         if ($this->isEditing) {
-            Category::findOrFail($this->editingId)->update([
-                'type_id' => $this->type_id,
-                'name'    => $this->name,
-            ]);
+            Category::findOrFail($this->editingId)->update($data);
             $this->dispatch('swal', [
                 'type'  => 'success',
                 'title' => 'Berhasil!',
                 'text'  => 'Kategori produk berhasil diperbarui.',
             ]);
         } else {
-            Category::create([
-                'type_id' => $this->type_id,
-                'name'    => $this->name,
-            ]);
+            Category::create($data);
             $this->dispatch('swal', [
                 'type'  => 'success',
                 'title' => 'Berhasil!',
@@ -136,19 +142,24 @@ class ProductCategory extends Component
     {
         $categories = Category::with('type')
             ->when($this->search, function ($q) {
-                $q->where('name', 'like', "%{$this->search}%")
-                  ->orWhereHas('type', fn ($q2) => $q2->where('name', 'like', "%{$this->search}%"));
+                $q->where(function ($query) {
+                    $query->where('name_id', 'like', "%{$this->search}%")
+                        ->orWhere('name_en', 'like', "%{$this->search}%");
+                })->orWhereHas('type', function ($q2) {
+                    $q2->where('name_id', 'like', "%{$this->search}%")
+                       ->orWhere('name_en', 'like', "%{$this->search}%");
+                });
             })
             ->when(
-                in_array($this->sortField, ['id', 'name']),
+                in_array($this->sortField, ['id', 'name_id', 'name_en']),
                 fn ($q) => $q->orderBy($this->sortField, $this->sortDir),
                 fn ($q) => $q->join('types', 'categories.type_id', '=', 'types.id')
-                             ->orderBy('types.name', $this->sortDir)
+                             ->orderBy('types.name_id', $this->sortDir)
                              ->select('categories.*')
             )
             ->paginate($this->perPage);
 
-        $types = Type::orderBy('name')->get();
+        $types = Type::orderBy('name_id')->get();
 
         return view('livewire.admin.frontend.product-category', [
             'categories' => $categories,

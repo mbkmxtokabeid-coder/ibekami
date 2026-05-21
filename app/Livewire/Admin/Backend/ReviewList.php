@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Backend;
 
 use App\Models\Review;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -25,7 +26,8 @@ class ReviewList extends Component
 
     // ── Form fields ──────────────────────────────────────────────
     public string $name        = '';
-    public string $review      = '';
+    public string $review_id   = '';
+    public string $review_en   = '';
     public string $star        = '';
     public string $review_date = '';
 
@@ -50,14 +52,15 @@ class ReviewList extends Component
 
     public function openEdit(int $id): void
     {
-        $review              = Review::findOrFail($id);
-        $this->editingId     = $id;
-        $this->name          = $review->name;
-        $this->review        = $review->review;
-        $this->star          = (string) $review->star;
-        $this->review_date   = $review->review_date?->format('Y-m-d') ?? '';
-        $this->isEditing     = true;
-        $this->showModal     = true;
+        $review            = Review::findOrFail($id);
+        $this->editingId   = $id;
+        $this->name        = $review->name;
+        $this->review_id   = $this->loadTextField($review, 'review_id');
+        $this->review_en   = $this->loadTextField($review, 'review_en');
+        $this->star        = (string) $review->star;
+        $this->review_date = $review->review_date?->format('Y-m-d') ?? '';
+        $this->isEditing   = true;
+        $this->showModal   = true;
     }
 
     public function closeModal(): void
@@ -66,10 +69,24 @@ class ReviewList extends Component
         $this->resetForm();
     }
 
+    private function loadTextField(Review $review, string $column): string
+    {
+        $attributes = $review->getAttributes();
+
+        if (array_key_exists($column, $attributes) && $attributes[$column] !== null && $attributes[$column] !== '') {
+            return (string) $attributes[$column];
+        }
+
+        $raw = $review->getRawOriginal($column);
+
+        return is_string($raw) && $raw !== '' ? $raw : '';
+    }
+
     private function resetForm(): void
     {
         $this->name        = '';
-        $this->review      = '';
+        $this->review_id   = '';
+        $this->review_en   = '';
         $this->star        = '';
         $this->review_date = '';
         $this->editingId   = null;
@@ -81,7 +98,8 @@ class ReviewList extends Component
     {
         return [
             'name'        => ['required', 'string', 'max:150'],
-            'review'      => ['required', 'string'],
+            'review_id'   => ['required', 'string'],
+            'review_en'   => ['required', 'string'],
             'star'        => ['required', 'integer', 'min:1', 'max:5'],
             'review_date' => ['nullable', 'date'],
         ];
@@ -90,13 +108,14 @@ class ReviewList extends Component
     protected function messages(): array
     {
         return [
-            'name.required'   => 'Nama reviewer wajib diisi.',
-            'name.max'        => 'Nama maksimal 150 karakter.',
-            'review.required' => 'Teks review wajib diisi.',
-            'star.required'   => 'Rating wajib dipilih.',
-            'star.min'        => 'Rating minimal bintang 1.',
-            'star.max'        => 'Rating maksimal bintang 5.',
-            'review_date.date'=> 'Format tanggal tidak valid.',
+            'name.required'      => 'Nama reviewer wajib diisi.',
+            'name.max'           => 'Nama maksimal 150 karakter.',
+            'review_id.required' => 'Teks review (Bahasa Indonesia) wajib diisi.',
+            'review_en.required' => 'Teks review (English) wajib diisi.',
+            'star.required'      => 'Rating wajib dipilih.',
+            'star.min'           => 'Rating minimal bintang 1.',
+            'star.max'           => 'Rating maksimal bintang 5.',
+            'review_date.date'   => 'Format tanggal tidak valid.',
         ];
     }
 
@@ -107,7 +126,8 @@ class ReviewList extends Component
 
         $data = [
             'name'        => $this->name,
-            'review'      => $this->review,
+            'review_id'   => $this->review_id,
+            'review_en'   => $this->review_en,
             'star'        => (int) $this->star,
             'review_date' => $this->review_date ?: null,
         ];
@@ -120,12 +140,14 @@ class ReviewList extends Component
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Review berhasil ditambahkan.']);
         }
 
+        Cache::forget('homepage:reviews');
         $this->closeModal();
     }
 
     public function delete(int $id): void
     {
         Review::findOrFail($id)->delete();
+        Cache::forget('homepage:reviews');
         $this->dispatch('swal', ['type' => 'success', 'title' => 'Dihapus!', 'text' => 'Review berhasil dihapus.']);
     }
 
@@ -135,7 +157,8 @@ class ReviewList extends Component
         $reviews = Review::query()
             ->when($this->search, fn ($q) =>
                 $q->where('name', 'like', "%{$this->search}%")
-                  ->orWhere('review', 'like', "%{$this->search}%")
+                  ->orWhere('review_id', 'like', "%{$this->search}%")
+                  ->orWhere('review_en', 'like', "%{$this->search}%")
             )
             ->orderBy($this->sortField, $this->sortDir)
             ->paginate($this->perPage);

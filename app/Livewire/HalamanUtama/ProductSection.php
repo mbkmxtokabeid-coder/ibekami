@@ -84,7 +84,7 @@ class ProductSection extends Component
                 'name' => $product->name,
                 'cat' => $product->type->name ?? $product->category->name ?? 'Produk',
                 'img' => $this->getProductImage($product),
-                'slug' => \Illuminate\Support\Str::slug($product->name),
+                'slug' => $product->getSlug(),
             ];
         })->toArray();
     }

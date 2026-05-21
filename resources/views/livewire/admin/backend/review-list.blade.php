@@ -28,7 +28,7 @@
                 <label>Search:</label>
                 <input type="text"
                        wire:model.live.debounce.300ms="search"
-                       placeholder="Cari nama atau review..."
+                       placeholder="Cari nama atau teks review..."
                        class="border border-gray-300 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-300 w-52"/>
             </div>
         </div>
@@ -49,7 +49,10 @@
                             </button>
                         </th>
                         <th class="text-left px-6 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider">
-                            The Review
+                            Review (ID)
+                        </th>
+                        <th class="text-left px-6 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider">
+                            Review (EN)
                         </th>
                         <th class="text-left px-6 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider w-28">
                             <button wire:click="sort('star')" class="flex items-center gap-1 hover:text-gray-900">
@@ -72,7 +75,10 @@
                             <td class="px-6 py-4 text-gray-700 font-medium">{{ $review->id }}</td>
                             <td class="px-6 py-4 text-gray-800 font-medium">{{ $review->name }}</td>
                             <td class="px-6 py-4 text-gray-600 max-w-xs">
-                                <p class="line-clamp-2 leading-relaxed">{{ $review->review }}</p>
+                                <p class="line-clamp-2 leading-relaxed">{{ $review->review_id }}</p>
+                            </td>
+                            <td class="px-6 py-4 text-gray-600 max-w-xs">
+                                <p class="line-clamp-2 leading-relaxed">{{ $review->review_en }}</p>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-0.5">
@@ -111,7 +117,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-12 text-center text-gray-400">
+                            <td colspan="7" class="px-6 py-12 text-center text-gray-400">
                                 Tidak ada data review.
                             </td>
                         </tr>
@@ -207,18 +213,34 @@
                     @enderror
                 </div>
 
-                {{-- Text Review --}}
+                {{-- Text Review (Bahasa Indonesia) --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1.5">
-                        Text Review: <span class="text-red-500">*</span>
+                        Teks Review (Bahasa Indonesia): <span class="text-red-500">*</span>
                     </label>
-                    <textarea wire:model="review"
-                              placeholder="Enter Text Review"
+                    <textarea wire:model="review_id"
+                              placeholder="Masukkan teks review dalam Bahasa Indonesia"
                               rows="4"
                               class="w-full px-4 py-2.5 text-sm border rounded-lg outline-none transition resize-none
-                                     @error('review') border-red-400 bg-red-50 focus:ring-2 focus:ring-red-200
+                                     @error('review_id') border-red-400 bg-red-50 focus:ring-2 focus:ring-red-200
                                      @else border-gray-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 @enderror"></textarea>
-                    @error('review')
+                    @error('review_id')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Text Review (English) --}}
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                        Text Review (English): <span class="text-red-500">*</span>
+                    </label>
+                    <textarea wire:model="review_en"
+                              placeholder="Enter review text in English"
+                              rows="4"
+                              class="w-full px-4 py-2.5 text-sm border rounded-lg outline-none transition resize-none
+                                     @error('review_en') border-red-400 bg-red-50 focus:ring-2 focus:ring-red-200
+                                     @else border-gray-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 @enderror"></textarea>
+                    @error('review_en')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

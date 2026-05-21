@@ -42,10 +42,18 @@
                             No
                         </th>
                         <th class="text-left px-6 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider">
-                            <button wire:click="sort('name')" class="flex items-center gap-1 hover:text-gray-900">
-                                Types Product
+                            <button wire:click="sort('name_id')" class="flex items-center gap-1 hover:text-gray-900">
+                                Nama (ID)
                                 <span class="text-gray-400 text-xs">
-                                    @if($sortField === 'name') {{ $sortDir === 'asc' ? '↑' : '↓' }} @else ↕ @endif
+                                    @if($sortField === 'name_id') {{ $sortDir === 'asc' ? '↑' : '↓' }} @else ↕ @endif
+                                </span>
+                            </button>
+                        </th>
+                        <th class="text-left px-6 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider">
+                            <button wire:click="sort('name_en')" class="flex items-center gap-1 hover:text-gray-900">
+                                Nama (EN)
+                                <span class="text-gray-400 text-xs">
+                                    @if($sortField === 'name_en') {{ $sortDir === 'asc' ? '↑' : '↓' }} @else ↕ @endif
                                 </span>
                             </button>
                         </th>
@@ -63,11 +71,12 @@
                             <td class="px-6 py-4 text-gray-700 font-medium">
                                 {{ ($types->currentPage() - 1) * $types->perPage() + $loop->iteration }}
                             </td>
-                            <td class="px-6 py-4 text-gray-800">{{ $type->name }}</td>
+                            <td class="px-6 py-4 text-gray-800">{{ $type->name_id }}</td>
+                            <td class="px-6 py-4 text-gray-800">{{ $type->name_en }}</td>
                             <td class="px-6 py-4">
                                 @if ($type->image_url)
                                     <img src="{{ Storage::url($type->image_url) }}"
-                                         alt="{{ $type->name }}"
+                                         alt="{{ $type->name_id }}"
                                          class="w-20 h-20 object-cover rounded-full border border-gray-200 shadow-sm"/>
                                 @else
                                     <div class="w-20 h-20 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center">
@@ -90,7 +99,7 @@
                                         </svg>
                                     </button>
                                     {{-- Delete --}}
-                                    <button onclick="confirmDelete({{ $type->id }}, '{{ addslashes($type->name) }}')"
+                                    <button onclick="confirmDelete({{ $type->id }}, '{{ addslashes($type->name_id) }}')"
                                             class="w-8 h-8 flex items-center justify-center rounded border border-red-400 text-red-500
                                                    hover:bg-red-50 transition" title="Hapus">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +112,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="px-6 py-12 text-center text-gray-400">
+                            <td colspan="5" class="px-6 py-12 text-center text-gray-400">
                                 Tidak ada data jenis produk.
                             </td>
                         </tr>
@@ -200,18 +209,34 @@
             {{-- Modal Body --}}
             <form wire:submit="save" class="px-6 py-5 space-y-5">
 
-                {{-- Nama --}}
+                {{-- Nama Bahasa Indonesia --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1.5">
-                        Nama Jenis Produk <span class="text-red-500">*</span>
+                        Nama Jenis Produk (Bahasa Indonesia) <span class="text-red-500">*</span>
                     </label>
                     <input type="text"
-                           wire:model="name"
-                           placeholder="Nama Jenis Barang"
+                           wire:model="name_id"
+                           placeholder="Contoh: Souvenir / Merchandise"
                            class="w-full px-4 py-2.5 text-sm border rounded-lg outline-none transition
-                                  @error('name') border-red-400 bg-red-50 focus:ring-2 focus:ring-red-200
+                                  @error('name_id') border-red-400 bg-red-50 focus:ring-2 focus:ring-red-200
                                   @else border-gray-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 @enderror"/>
-                    @error('name')
+                    @error('name_id')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Nama English --}}
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                        Nama Jenis Produk (English) <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text"
+                           wire:model="name_en"
+                           placeholder="Example: Souvenir / Merchandise"
+                           class="w-full px-4 py-2.5 text-sm border rounded-lg outline-none transition
+                                  @error('name_en') border-red-400 bg-red-50 focus:ring-2 focus:ring-red-200
+                                  @else border-gray-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 @enderror"/>
+                    @error('name_en')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

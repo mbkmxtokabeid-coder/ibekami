@@ -42,7 +42,7 @@ class KatalogSection extends Component
         if (request()->has('type')) {
             $typeSlug = request()->get('type');
             $type = Type::all()->first(function ($t) use ($typeSlug) {
-                return \Illuminate\Support\Str::slug($t->name) === $typeSlug;
+                return \Illuminate\Support\Str::slug($t->name_id ?: $t->name_en) === $typeSlug;
             });
             
             if ($type) {
@@ -138,25 +138,31 @@ class KatalogSection extends Component
             // Multi-select filter (dari popup) — prioritas tertinggi
             $hasMultiFilter = count($this->selectedTypes) > 0 || count($this->selectedCategories) > 0;
 
+            $typeNameColumn = app()->getLocale() === 'en' ? 'name_en' : 'name_id';
+            $categoryNameColumn = app()->getLocale() === 'en' ? 'name_en' : 'name_id';
+
             if ($hasMultiFilter) {
-                $query->where(function ($q) {
+                $query->where(function ($q) use ($typeNameColumn, $categoryNameColumn) {
                     if (count($this->selectedTypes) > 0) {
-                        $q->orWhereHas('type', fn($tq) => $tq->whereIn('name', $this->selectedTypes));
+                        $q->orWhereHas('type', fn($tq) => $tq->whereIn($typeNameColumn, $this->selectedTypes));
                     }
                     if (count($this->selectedCategories) > 0) {
-                        $q->orWhereHas('category', fn($cq) => $cq->whereIn('name', $this->selectedCategories));
+                        $q->orWhereHas('category', fn($cq) => $cq->whereIn($categoryNameColumn, $this->selectedCategories));
                     }
                 });
             }
             // Filter dari URL ?type=
             elseif ($this->typeFilter) {
-                $query->whereHas('type', fn($tq) => $tq->where('name', $this->typeFilter));
+                $query->whereHas('type', function ($tq) use ($typeNameColumn) {
+                    $tq->where($typeNameColumn, $this->typeFilter)
+                        ->orWhere(app()->getLocale() === 'en' ? 'name_id' : 'name_en', $this->typeFilter);
+                });
             }
             // Filter dari sidebar single-select
             elseif ($this->activeCategory !== __('messages.all_products')) {
-                $query->where(function ($q) {
-                    $q->whereHas('category', fn($cq) => $cq->where('name', 'like', '%' . $this->activeCategory . '%'))
-                      ->orWhereHas('type', fn($tq) => $tq->where('name', 'like', '%' . $this->activeCategory . '%'));
+                $query->where(function ($q) use ($typeNameColumn, $categoryNameColumn) {
+                    $q->whereHas('category', fn($cq) => $cq->where($categoryNameColumn, 'like', '%' . $this->activeCategory . '%'))
+                      ->orWhereHas('type', fn($tq) => $tq->where($typeNameColumn, 'like', '%' . $this->activeCategory . '%'));
                 });
             }
 
@@ -190,7 +196,7 @@ class KatalogSection extends Component
                     'name'   => $product->name,
                     'cat'    => $product->type->name ?? $product->category->name ?? 'Produk',
                     'img'    => $this->getProductImage($product),
-                    'slug'   => \Illuminate\Support\Str::slug($product->name),
+                    'slug'   => $product->getSlug(),
                     'status' => $product->status,
                 ];
             })->toArray();

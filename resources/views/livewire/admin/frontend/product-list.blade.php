@@ -42,8 +42,8 @@
                             No
                         </th>
                         <th class="text-left px-4 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider">
-                            <button wire:click="sort('name')" class="flex items-center gap-1 hover:text-gray-900">
-                                Product Name <span class="text-gray-400">@if($sortField==='name'){{ $sortDir==='asc'?'↑':'↓' }}@else ↕ @endif</span>
+                            <button wire:click="sort('name_id')" class="flex items-center gap-1 hover:text-gray-900">
+                                Product Name <span class="text-gray-400">@if($sortField==='name_id'){{ $sortDir==='asc'?'↑':'↓' }}@else ↕ @endif</span>
                             </button>
                         </th>
                         <th class="text-left px-4 py-3 font-semibold text-gray-600 uppercase text-xs tracking-wider">
@@ -72,8 +72,8 @@
                                 {{ ($products->currentPage() - 1) * $products->perPage() + $loop->iteration }}
                             </td>
                             <td class="px-4 py-3 text-gray-800 max-w-[140px]">
-                                <span title="{{ $product->name }}">
-                                    {{ Str::limit($product->name, 12) }}
+                                <span title="{{ $product->name_id }} / {{ $product->name_en }}">
+                                    {{ Str::limit($product->name_id, 12) }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-gray-600 max-w-[110px]">
@@ -111,7 +111,7 @@
                                                   d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                         </svg>
                                     </button>
-                                    <button onclick="confirmDeleteProduct('{{ $product->product_id }}', '{{ addslashes($product->name) }}')"
+                                    <button onclick="confirmDeleteProduct('{{ $product->product_id }}', '{{ addslashes($product->name_id) }}')"
                                             class="w-8 h-8 flex items-center justify-center rounded border border-red-400 text-red-500 hover:bg-red-50 transition">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -172,25 +172,24 @@
         </div>
     </div>
 
-    {{-- ── Modal Create / Edit ──────────────────────────────────── --}}
-    <div x-data="{ show: @entangle('showModal') }"
-         x-show="show" x-cloak
-         class="fixed inset-0 z-50 flex items-center justify-center p-4"
-         x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+    {{-- Modal Create / Edit --}}
+    <div @class([
+        'fixed inset-0 z-50 items-center justify-center p-4',
+        'flex' => $showModal,
+        'hidden' => ! $showModal,
+    ])>
 
-        <div class="absolute inset-0 bg-black/50" @click="$wire.closeModal()"></div>
+        <div class="absolute inset-0 bg-black/50" wire:click="closeModal"></div>
 
-        <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-2xl z-10 max-h-[90vh] flex flex-col"
-             x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-             x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
+        <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-2xl z-10 max-h-[90vh] flex flex-col pointer-events-auto"
+             wire:click.stop>
 
             {{-- Modal Header --}}
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
                 <h3 class="text-base font-semibold text-gray-800">
                     {{ $isEditing ? 'Edit Product Data' : 'Add Product Data' }}
                 </h3>
-                <button @click="$wire.closeModal()" class="text-gray-400 hover:text-gray-600 transition">
+                <button type="button" wire:click="closeModal" class="text-gray-400 hover:text-gray-600 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
@@ -199,7 +198,18 @@
 
             {{-- Modal Body (scrollable) --}}
             <div class="overflow-y-auto flex-1 px-6 py-5">
-                <form wire:submit="save" id="productForm">
+                @if ($errors->any())
+                    <div class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        <p class="font-semibold mb-1">Periksa form berikut:</p>
+                        <ul class="list-disc list-inside space-y-0.5">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <div wire:key="product-form-{{ $editingId ?? 'create' }}">
                     <div class="border border-gray-200 rounded-lg p-5 space-y-4">
 
                         {{-- Product Type --}}
@@ -207,6 +217,7 @@
                             <label class="text-sm font-medium text-gray-700 pt-2.5">Product Type:</label>
                             <div class="col-span-2">
                                 <select wire:model.live="product_type"
+                                        wire:key="product-type-{{ $editingId ?? 'create' }}"
                                         class="w-full px-3 py-2.5 text-sm border rounded-lg outline-none transition
                                                @error('product_type') border-red-400 bg-red-50 @else border-gray-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 @enderror">
                                     <option value="">— Pilih Jenis Produk —</option>
@@ -222,7 +233,8 @@
                         <div class="grid grid-cols-3 items-start gap-4">
                             <label class="text-sm font-medium text-gray-700 pt-2.5">Category Product:</label>
                             <div class="col-span-2">
-                                <select wire:model="category_type"
+                                <select wire:model.live="category_type"
+                                        wire:key="product-category-{{ $editingId ?? 'create' }}"
                                         @disabled(!$product_type)
                                         class="w-full px-3 py-2.5 text-sm border rounded-lg outline-none transition
                                                disabled:bg-gray-100 disabled:cursor-not-allowed
@@ -236,24 +248,55 @@
                             </div>
                         </div>
 
-                        {{-- Product Name --}}
+                        {{-- Product Name (ID) --}}
                         <div class="grid grid-cols-3 items-start gap-4">
-                            <label class="text-sm font-medium text-gray-700 pt-2.5">Product Name:</label>
+                            <label class="text-sm font-medium text-gray-700 pt-2.5">Nama Produk (ID):</label>
                             <div class="col-span-2">
-                                <input type="text" wire:model="name" placeholder="Product Name"
+                                <input type="text" wire:model.live="name_id" placeholder="Nama produk Bahasa Indonesia"
                                        class="w-full px-3 py-2.5 text-sm border rounded-lg outline-none transition
-                                              @error('name') border-red-400 bg-red-50 @else border-gray-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 @enderror"/>
-                                @error('name')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                                              @error('name_id') border-red-400 bg-red-50 @else border-gray-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 @enderror"/>
+                                @error('name_id')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                             </div>
                         </div>
 
-                        {{-- Product Description --}}
+                        {{-- Product Name (EN) --}}
                         <div class="grid grid-cols-3 items-start gap-4">
-                            <label class="text-sm font-medium text-gray-700 pt-2.5">Product Description:</label>
+                            <label class="text-sm font-medium text-gray-700 pt-2.5">Nama Produk (EN):</label>
                             <div class="col-span-2">
-                                <textarea wire:model="description" placeholder="Product Description" rows="3"
-                                          class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg outline-none transition
-                                                 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 resize-none"></textarea>
+                                <input type="text" wire:model.live="name_en" placeholder="Product name in English"
+                                       class="w-full px-3 py-2.5 text-sm border rounded-lg outline-none transition
+                                              @error('name_en') border-red-400 bg-red-50 @else border-gray-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 @enderror"/>
+                                @error('name_en')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                            </div>
+                        </div>
+
+                        {{-- Product Description (ID) --}}
+                        <div class="grid grid-cols-3 items-start gap-4">
+                            <label class="text-sm font-medium text-gray-700 pt-2.5">Deskripsi (ID):</label>
+                            <div class="col-span-2">
+                                <textarea
+                                    wire:key="desc-id-{{ $editingId ?? 'create' }}"
+                                    wire:model.blur="description_id"
+                                    rows="3"
+                                    placeholder="Deskripsi produk Bahasa Indonesia"
+                                    class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg outline-none transition
+                                           focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 resize-none"
+                                ></textarea>
+                            </div>
+                        </div>
+
+                        {{-- Product Description (EN) --}}
+                        <div class="grid grid-cols-3 items-start gap-4">
+                            <label class="text-sm font-medium text-gray-700 pt-2.5">Deskripsi (EN):</label>
+                            <div class="col-span-2">
+                                <textarea
+                                    wire:key="desc-en-{{ $editingId ?? 'create' }}"
+                                    wire:model.blur="description_en"
+                                    rows="3"
+                                    placeholder="Product description in English"
+                                    class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg outline-none transition
+                                           focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 resize-none"
+                                ></textarea>
                             </div>
                         </div>
 
@@ -261,7 +304,7 @@
                         <div class="grid grid-cols-3 items-start gap-4">
                             <label class="text-sm font-medium text-gray-700 pt-2.5">Product Status:</label>
                             <div class="col-span-2">
-                                <select wire:model="status"
+                                <select wire:model.live="status"
                                         class="w-full px-3 py-2.5 text-sm border rounded-lg outline-none transition
                                                @error('status') border-red-400 bg-red-50 @else border-gray-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 @enderror">
                                     <option value="">— Select Product Status —</option>
@@ -272,39 +315,41 @@
                             </div>
                         </div>
 
-                        {{-- Product Details --}}
+                        {{-- Product Details (ID) --}}
                         <div class="grid grid-cols-3 items-start gap-4">
-                            <label class="text-sm font-medium text-gray-700 pt-2.5">Product Details:</label>
+                            <label class="text-sm font-medium text-gray-700 pt-2.5">Detail Produk (ID):</label>
                             <div class="col-span-2 space-y-2 min-w-0">
-                                @foreach ($details as $i => $detail)
-                                    <div class="flex items-center gap-2 w-full"
-                                         x-data="{ showSuggestions: false, suggestions: ['Material', 'Color', 'Design'] }">
-                                        <div class="relative w-1/2">
-                                            <input type="text" 
-                                                   wire:model="details.{{ $i }}.key"
-                                                   @focus="showSuggestions = true"
-                                                   @click.away="showSuggestions = false"
-                                                   placeholder="Nama detail (cth: Berat)"
+                                @foreach ($details_id as $i => $detail)
+                                    <div wire:key="detail-id-{{ $editingId ?? 'create' }}-{{ $i }}"
+                                         class="flex items-center gap-2 w-full">
+                                        <div class="relative w-1/2"
+                                             x-data="{ open: false, suggestions: ['Material', 'Warna', 'Ukuran', 'Berat'] }"
+                                             @click.outside="open = false"
+                                             @keydown.escape.window="open = false">
+                                            <input type="text"
+                                                   wire:model.blur="details_id.{{ $i }}.key"
+                                                   @focus="open = true"
+                                                   @blur="setTimeout(() => open = false, 150)"
+                                                   @keydown.escape="open = false"
+                                                   placeholder="Nama detail (cth: Bahan)"
                                                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 min-w-0"/>
-                                            
-                                            {{-- Suggestions Dropdown --}}
-                                            <div x-show="showSuggestions" 
+                                            <div x-show="open"
                                                  x-cloak
-                                                 class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                                                 x-transition
+                                                 @mousedown.prevent
+                                                 class="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
                                                 <template x-for="(suggestion, idx) in suggestions" :key="idx">
                                                     <button type="button"
-                                                            @click="$wire.set('details.{{ $i }}.key', suggestion); showSuggestions = false"
+                                                            @click="$wire.set('details_id.{{ $i }}.key', suggestion); open = false"
                                                             class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-700 transition"
-                                                            x-text="suggestion">
-                                                    </button>
+                                                            x-text="suggestion"></button>
                                                 </template>
                                             </div>
                                         </div>
-                                        
-                                        <input type="text" wire:model="details.{{ $i }}.value"
-                                               placeholder="Nilai (cth: 200gr)"
+                                        <input type="text" wire:model.blur="details_id.{{ $i }}.value"
+                                               placeholder="Nilai (cth: Akrilik 5mm)"
                                                class="w-1/2 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 min-w-0"/>
-                                        <button type="button" wire:click="removeDetail({{ $i }})"
+                                        <button type="button" wire:click="removeDetailId({{ $i }})"
                                                 class="text-red-400 hover:text-red-600 transition shrink-0 w-8 h-8 flex items-center justify-center">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -312,12 +357,64 @@
                                         </button>
                                     </div>
                                 @endforeach
-                                <button type="button" wire:click="addDetail"
+                                <button type="button" wire:click="addDetailId"
                                         class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-600 hover:bg-gray-700 text-white text-xs font-medium rounded-lg transition">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                     </svg>
-                                    Add Detail
+                                    Tambah Detail (ID)
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Product Details (EN) --}}
+                        <div class="grid grid-cols-3 items-start gap-4">
+                            <label class="text-sm font-medium text-gray-700 pt-2.5">Detail Produk (EN):</label>
+                            <div class="col-span-2 space-y-2 min-w-0">
+                                @foreach ($details_en as $i => $detail)
+                                    <div wire:key="detail-en-{{ $editingId ?? 'create' }}-{{ $i }}"
+                                         class="flex items-center gap-2 w-full">
+                                        <div class="relative w-1/2"
+                                             x-data="{ open: false, suggestions: ['Material', 'Color', 'Size', 'Weight'] }"
+                                             @click.outside="open = false"
+                                             @keydown.escape.window="open = false">
+                                            <input type="text"
+                                                   wire:model.blur="details_en.{{ $i }}.key"
+                                                   @focus="open = true"
+                                                   @blur="setTimeout(() => open = false, 150)"
+                                                   @keydown.escape="open = false"
+                                                   placeholder="Detail name (e.g. Material)"
+                                                   class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 min-w-0"/>
+                                            <div x-show="open"
+                                                 x-cloak
+                                                 x-transition
+                                                 @mousedown.prevent
+                                                 class="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                                                <template x-for="(suggestion, idx) in suggestions" :key="idx">
+                                                    <button type="button"
+                                                            @click="$wire.set('details_en.{{ $i }}.key', suggestion); open = false"
+                                                            class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-700 transition"
+                                                            x-text="suggestion"></button>
+                                                </template>
+                                            </div>
+                                        </div>
+                                        <input type="text" wire:model.blur="details_en.{{ $i }}.value"
+                                               placeholder="Value (e.g. Acrylic 5mm)"
+                                               class="w-1/2 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100 min-w-0"/>
+                                        <button type="button" wire:click="removeDetailEn({{ $i }})"
+                                                class="text-red-400 hover:text-red-600 transition shrink-0 w-8 h-8 flex items-center justify-center">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                @endforeach
+                                <button type="button" wire:click="addDetailEn"
+                                        class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-600 hover:bg-gray-700 text-white text-xs font-medium rounded-lg transition">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                    </svg>
+                                    Add Detail (EN)
                                 </button>
                             </div>
                         </div>
@@ -420,27 +517,30 @@
                         </div>
 
                     </div>
+                </div>
+            </div>
 
-                    {{-- Footer --}}
-                    <div class="flex items-center gap-3 mt-5">
-                        <button type="submit" form="productForm"
-                                wire:loading.attr="disabled"
-                                class="px-5 py-2 bg-cyan-500 hover:bg-cyan-600 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition">
-                            <span wire:loading.remove wire:target="save">Save Product Data</span>
-                            <span wire:loading wire:target="save" class="flex items-center gap-2">
-                                <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                                </svg>
-                                Menyimpan...
-                            </span>
-                        </button>
-                        <button type="button" @click="$wire.closeModal()"
-                                class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-semibold rounded-lg transition">
-                            Cancel
-                        </button>
-                    </div>
-                </form>
+            {{-- Footer (di luar area scroll agar tombol selalu bisa diklik) --}}
+            <div class="flex items-center gap-3 px-6 py-4 border-t border-gray-100 shrink-0 bg-white rounded-b-xl">
+                <button type="button"
+                        wire:click="save"
+                        wire:loading.attr="disabled"
+                        wire:target="save"
+                        class="px-5 py-2 bg-cyan-500 hover:bg-cyan-600 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition">
+                    <span wire:loading.remove wire:target="save">Save Product Data</span>
+                    <span wire:loading wire:target="save" class="flex items-center gap-2">
+                        <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                        </svg>
+                        Menyimpan...
+                    </span>
+                </button>
+                <button type="button"
+                        wire:click="closeModal"
+                        class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-semibold rounded-lg transition">
+                    Cancel
+                </button>
             </div>
 
         </div>
