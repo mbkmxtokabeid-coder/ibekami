@@ -16,7 +16,7 @@ class Dashboard extends Component
 
     public int    $perPage   = 10;
     public string $search    = '';
-    public string $sortField = 'name';
+    public string $sortField = 'name_id';
     public string $sortDir   = 'asc';
 
     public function updatingSearch(): void
@@ -52,7 +52,10 @@ class Dashboard extends Component
         ])->get();
 
         $products = Product::query()
-            ->when($this->search, fn ($q) => $q->where('name', 'like', "%{$this->search}%"))
+            ->when($this->search, function ($q) {
+                $q->where('name_id', 'like', "%{$this->search}%")
+                  ->orWhere('name_en', 'like', "%{$this->search}%");
+            })
             ->orderBy($this->sortField, $this->sortDir)
             ->paginate($this->perPage);
 
