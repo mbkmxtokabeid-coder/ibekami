@@ -16,10 +16,8 @@ class Dashboard extends Component
 
     public int    $perPage   = 10;
     public string $search    = '';
-    public string $sortField = 'name_id';
+    public string $sortField = 'name';
     public string $sortDir   = 'asc';
-
-    private const SORTABLE_FIELDS = ['name_id', 'name_en', 'click_count', 'order_click_count'];
 
     public function updatingSearch(): void
     {
@@ -33,10 +31,6 @@ class Dashboard extends Component
 
     public function sort(string $field): void
     {
-        if (! in_array($field, self::SORTABLE_FIELDS, true)) {
-            return;
-        }
-
         if ($this->sortField === $field) {
             $this->sortDir = $this->sortDir === 'asc' ? 'desc' : 'asc';
         } else {
@@ -57,18 +51,9 @@ class Dashboard extends Component
             'products as total_order_clicks'   => fn ($q) => $q->select(\DB::raw('sum(order_click_count)')),
         ])->get();
 
-        $sortField = in_array($this->sortField, self::SORTABLE_FIELDS, true)
-            ? $this->sortField
-            : 'name_id';
-
         $products = Product::query()
-            ->when($this->search, function ($q) {
-                $q->where(function ($query) {
-                    $query->where('name_id', 'like', "%{$this->search}%")
-                        ->orWhere('name_en', 'like', "%{$this->search}%");
-                });
-            })
-            ->orderBy($sortField, $this->sortDir)
+            ->when($this->search, fn ($q) => $q->where('name', 'like', "%{$this->search}%"))
+            ->orderBy($this->sortField, $this->sortDir)
             ->paginate($this->perPage);
 
         return view('livewire.admin.dashboard', [
