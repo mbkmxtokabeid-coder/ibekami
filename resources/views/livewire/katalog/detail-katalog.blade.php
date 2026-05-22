@@ -40,13 +40,7 @@
                     <img src="{{ $image }}" class="w-full h-full object-cover" alt="Gambar {{ $index + 1 }}" onerror="this.src='https://via.placeholder.com/80x80?text={{ $index + 1 }}'">
                 </button>
                 @endforeach
-                
-                @if(count($productData['images']) < 4)
-                <div class="w-20 h-20 rounded-[20px] bg-white border-2 border-dashed border-[#ff9100]/20 flex flex-col items-center justify-center text-[10px] text-[#ff9100]/60 font-bold hover:border-[#ff9100] cursor-pointer transition-all">
-                    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="2.5" stroke-linecap="round"/></svg>
-                    {{ __('messages.others') }}
-                </div>
-                @endif
+
             </div>
         </section>
 
