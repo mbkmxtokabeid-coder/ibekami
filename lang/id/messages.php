@@ -94,7 +94,7 @@ return [
     'trusted_by_companies' => 'Dipercaya oleh Perusahaan Terkemuka',
     'we_proud_to_serve' => 'Kami bangga melayani',
     'bumn_partners' => 'Mitra BUMN',
-    'organization_partners' => 'Mitra Organisasi',
+    'organization_partners' => 'Mitra Perusahaan/Instansi/Universitas',
     'trusted_together' => 'Kepercayaan Bersama',
     'trusted_by_institutions' => 'Dipercaya oleh instansi, perusahaan, dan komunitas di seluruh Sumatera Utara',
     'no_partner_data' => 'Belum ada data mitra.',

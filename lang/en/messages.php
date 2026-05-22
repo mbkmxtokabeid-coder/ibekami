@@ -93,7 +93,7 @@ return [
     'trusted_by_companies' => 'Trusted by Leading Companies',
     'we_proud_to_serve' => 'We are proud to serve',
     'bumn_partners' => 'BUMN Partners',
-    'organization_partners' => 'Organization Partners',
+    'organization_partners' => 'Company/Institution/University Partners',
     'trusted_together' => 'Trusted Together',
     'trusted_by_institutions' => 'Trusted by institutions, companies, and communities throughout North Sumatra',
     'no_partner_data' => 'No partner data yet.',

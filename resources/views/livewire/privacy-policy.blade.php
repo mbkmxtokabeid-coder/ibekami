@@ -137,7 +137,7 @@ class="bg-[#F4F1EA] text-[#222222] font-sans antialiased min-h-screen py-12 lg:p
                                 <ul class="space-y-4">
                                     <li class="flex flex-col sm:flex-row items-baseline">
                                         <strong class="w-32 text-gray-800 shrink-0">{{ __('messages.email') }}:</strong>
-                                        <a href="mailto:ibeka1011@gmail.com" class="text-[#A65D3B] font-bold hover:underline">ibeka1011@gmail.com</a>
+                                        <a href="mailto:ikhtiarberkah1010@gmail.com" class="text-[#A65D3B] font-bold hover:underline">ikhtiarberkah1010@gmail.com</a>
                                     </li>
                                     <li class="flex flex-col sm:flex-row items-baseline">
                                         <strong class="w-32 text-gray-800 shrink-0">{{ __('messages.instagram') }}:</strong>
