@@ -49,7 +49,7 @@
                         <a href="mailto:{{ $email }}" class="hover:text-[#4a3728] transition-colors font-semibold">{{ $email }}</a>
                     </div>
                 </div>
-                <a href="{{ route('privacy-policy') }}" class="text-xs text-[#fdfaf7]/70 hover:text-[#4a3728] underline underline-offset-4 decoration-[#4a3728]/30 transition-all">
+                <a href="{{ route('privacy-policy') }}" wire:navigate class="text-xs text-[#fdfaf7]/70 hover:text-[#4a3728] underline underline-offset-4 decoration-[#4a3728]/30 transition-all">
                     {{ __('messages.privacy_policy_terms') }}
                 </a>
             </div>

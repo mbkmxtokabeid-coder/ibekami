@@ -39,7 +39,7 @@
              :class="scrolled ? 'bg-[#ffe8ca]/95 shadow-[0_12px_40px_rgba(255,145,0,0.08)]' : ''">
             
             <!-- 1. Logo Brand -->
-            <a href="/" class="flex items-center gap-2.5 group shrink-0 outline-none">
+            <a href="/" wire:navigate class="flex items-center gap-2.5 group shrink-0 outline-none">
                 <img src="{{ asset('storage/logos/logo ibekami (3).png') }}" 
                      alt="IBEKAMI Logo" 
                      class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300"
@@ -51,7 +51,7 @@
 
             <!-- 2. Desktop Links -->
             <div class="hidden lg:flex items-center gap-1 xl:gap-2">
-                <a href="{{ url('/') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
+                <a href="{{ url('/') }}" wire:navigate class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.home') }}
                 </a>
                 <a href="{{ url('/#hot-deals') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
@@ -76,10 +76,10 @@
                          x-transition:leave-start="transform opacity-100 scale-100 translate-y-0"
                          x-transition:leave-end="transform opacity-0 scale-95 -translate-y-2"
                          class="absolute top-full left-0 mt-4 w-56 bg-white/95 backdrop-blur-xl border border-white/60 rounded-2xl shadow-xl overflow-hidden z-50 p-2">
-                        <a href="{{ route('katalog') }}" class="block px-4 py-2.5 rounded-xl text-[14px] font-bold text-[#ff9100] bg-[#fff2e0]/50 hover:bg-[#fff2e0] transition-colors mb-1">{{ __('messages.all_products') }}</a>
+                        <a href="{{ route('katalog') }}" wire:navigate class="block px-4 py-2.5 rounded-xl text-[14px] font-bold text-[#ff9100] bg-[#fff2e0]/50 hover:bg-[#fff2e0] transition-colors mb-1">{{ __('messages.all_products') }}</a>
                         
                         @forelse($productTypes as $type)
-                            <a href="{{ route('katalog', ['type' => $type['slug']]) }}" 
+                            <a href="{{ route('katalog', ['type' => $type['slug']]) }}" wire:navigate
                                wire:key="desktop-type-{{ $type['id'] }}"
                                class="block px-4 py-2 rounded-xl text-[13px] font-medium text-[#5C3D28] hover:text-[#ff9100] hover:bg-black/5 transition-colors">
                                 {{ $type['name'] }}
@@ -90,7 +90,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('mesin') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
+                <a href="{{ route('mesin') }}" wire:navigate class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.our_machines') }}
                 </a>
                 <a href="{{ url('/#footer') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
@@ -199,7 +199,7 @@
          class="absolute top-[76px] sm:top-[86px] inset-x-4 lg:hidden">
         
         <div class="bg-white/95 backdrop-blur-2xl border border-white/50 shadow-2xl rounded-3xl p-5 flex flex-col gap-2 max-h-[75vh] overflow-y-auto">
-            <a href="{{ url('/') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
+            <a href="{{ url('/') }}" wire:navigate class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
             <a href="{{ url('/#hot-deals') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a>
             
             <!-- Katalog Dropdown (Mobile) -->
@@ -217,10 +217,10 @@
                      x-transition:leave-end="opacity-0 -translate-y-1"
                      class="px-4 pb-3 flex flex-col gap-2">
                     <div class="w-full h-px bg-black/5 mb-1"></div>
-                    <a href="{{ route('katalog') }}" class="px-3 py-2 rounded-xl bg-[#ff9100]/10 text-[14px] font-bold text-[#ff9100]">{{ __('messages.all_products') }}</a>
+                    <a href="{{ route('katalog') }}" wire:navigate class="px-3 py-2 rounded-xl bg-[#ff9100]/10 text-[14px] font-bold text-[#ff9100]">{{ __('messages.all_products') }}</a>
                     
                     @forelse($productTypes as $type)
-                        <a href="{{ route('katalog', ['type' => $type['slug']]) }}" 
+                        <a href="{{ route('katalog', ['type' => $type['slug']]) }}" wire:navigate
                            wire:key="mobile-type-{{ $type['id'] }}"
                            class="px-3 py-2 rounded-xl text-[14px] font-medium text-[#5C3D28] hover:bg-[#fff2e0]">
                             {{ $type['name'] }}
@@ -231,7 +231,7 @@
                 </div>
             </div>
 
-            <a href="{{ route('mesin') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.our_machines') }}</a>
+            <a href="{{ route('mesin') }}" wire:navigate class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.our_machines') }}</a>
             <a href="{{ url('/#footer') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.information') }}</a>
             
             <div class="w-full h-px bg-black/5 my-2"></div>
