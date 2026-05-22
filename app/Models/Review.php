@@ -19,6 +19,17 @@ class Review extends Model
         'review_date' => 'date',
     ];
 
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forget('homepage:reviews');
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forget('homepage:reviews');
+        });
+    }
+
     /**
      * Teks review sesuai locale aktif (id/en), dengan fallback.
      */

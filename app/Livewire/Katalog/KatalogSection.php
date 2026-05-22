@@ -122,7 +122,8 @@ class KatalogSection extends Component
 
     protected function getFilteredProducts(): array
     {
-        $cacheKey = 'katalog_products_' . md5(
+        $version = \Illuminate\Support\Facades\Cache::rememberForever('katalog_cache_version', fn() => time());
+        $cacheKey = 'katalog_products_v' . $version . '_' . md5(
             $this->activeCategory .
             $this->sortBy .
             $this->search .
@@ -132,7 +133,7 @@ class KatalogSection extends Component
             app()->getLocale()
         );
 
-        return cache()->remember($cacheKey, 300, function () {
+        return \Illuminate\Support\Facades\Cache::remember($cacheKey, 300, function () {
             $query = Product::with(['type', 'category']);
 
             // Multi-select filter (dari popup) — prioritas tertinggi

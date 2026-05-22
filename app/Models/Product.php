@@ -34,6 +34,16 @@ class Product extends Model
                 $product->product_id = (string) Str::uuid();
             }
         });
+
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forever('homepage_products_version', time());
+            \Illuminate\Support\Facades\Cache::forever('katalog_cache_version', time());
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forever('homepage_products_version', time());
+            \Illuminate\Support\Facades\Cache::forever('katalog_cache_version', time());
+        });
     }
 
     protected function name(): Attribute

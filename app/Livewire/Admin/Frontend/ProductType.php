@@ -141,8 +141,6 @@ class ProductType extends Component
             ]);
         }
 
-        Cache::forget('homepage:hot_deals');
-
         $this->closeModal();
     }
 
@@ -160,8 +158,6 @@ class ProductType extends Component
         }
 
         $type->delete();
-
-        Cache::forget('homepage:hot_deals');
 
         $this->dispatch('swal', [
             'type'  => 'success',

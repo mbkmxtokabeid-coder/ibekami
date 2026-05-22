@@ -140,14 +140,12 @@ class ReviewList extends Component
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Review berhasil ditambahkan.']);
         }
 
-        Cache::forget('homepage:reviews');
         $this->closeModal();
     }
 
     public function delete(int $id): void
     {
         Review::findOrFail($id)->delete();
-        Cache::forget('homepage:reviews');
         $this->dispatch('swal', ['type' => 'success', 'title' => 'Dihapus!', 'text' => 'Review berhasil dihapus.']);
     }
 

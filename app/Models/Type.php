@@ -9,6 +9,19 @@ class Type extends Model
 {
     protected $fillable = ['name_id', 'name_en', 'image_url'];
 
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forever('katalog_cache_version', time());
+            \Illuminate\Support\Facades\Cache::forget('homepage:hot_deals');
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forever('katalog_cache_version', time());
+            \Illuminate\Support\Facades\Cache::forget('homepage:hot_deals');
+        });
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class, 'product_type', 'id');

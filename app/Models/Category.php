@@ -9,6 +9,17 @@ class Category extends Model
 {
     protected $fillable = ['type_id', 'name_id', 'name_en'];
 
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forever('katalog_cache_version', time());
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forever('katalog_cache_version', time());
+        });
+    }
+
     public function type()
     {
         return $this->belongsTo(Type::class, 'type_id', 'id');

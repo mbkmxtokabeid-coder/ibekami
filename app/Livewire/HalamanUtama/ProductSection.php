@@ -53,8 +53,10 @@ class ProductSection extends Component
 
     public function loadProducts(): void
     {
+        $version = \Illuminate\Support\Facades\Cache::rememberForever('homepage_products_version', fn() => time());
+
         // Get total active products (cache biar TTFB lebih stabil)
-        $this->totalProducts = Cache::remember('homepage:active_products_count', now()->addMinutes(10), function () {
+        $this->totalProducts = \Illuminate\Support\Facades\Cache::remember("homepage:active_products_count:v{$version}", now()->addMinutes(10), function () {
             return Product::query()
                 ->where('status', 'Aktif')
                 ->count();
@@ -65,8 +67,8 @@ class ProductSection extends Component
 
         // Load products for current page
         // Order by activated_at DESC (terakhir diaktifkan muncul paling depan)
-        $cacheKey = sprintf('homepage:products:%d:%d:%d', $this->page, $this->perPage, $this->maxItems);
-        $products = Cache::remember($cacheKey, now()->addMinutes(10), function () {
+        $cacheKey = sprintf('homepage:products:v%s:%d:%d:%d', $version, $this->page, $this->perPage, $this->maxItems);
+        $products = \Illuminate\Support\Facades\Cache::remember($cacheKey, now()->addMinutes(10), function () {
             return Product::query()
                 ->with(['type', 'category'])
                 ->where('status', 'Aktif')

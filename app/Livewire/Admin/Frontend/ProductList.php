@@ -263,7 +263,6 @@ class ProductList extends Component
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Produk berhasil diperbarui.']);
         } else {
             Product::create($data);
-            $this->clearAllKatalogCache();
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Produk berhasil ditambahkan.']);
         }
 
@@ -370,50 +369,6 @@ class ProductList extends Component
             cache()->forget("product_detail_{$oldSlug}_{$locale}");
             cache()->forget("product_detail_{$newSlug}_{$locale}");
             cache()->forget("related_products_{$productId}_{$locale}");
-        }
-
-        $this->clearAllKatalogCache();
-        cache()->forget('homepage:active_products_count');
-        foreach ([1, 2, 3, 4] as $page) {
-            foreach ([4, 8] as $perPage) {
-                foreach ([12, 16] as $maxItems) {
-                    cache()->forget(sprintf('homepage:products:%d:%d:%d', $page, $perPage, $maxItems));
-                }
-            }
-        }
-    }
-
-    private function clearAllKatalogCache(): void
-    {
-        foreach (['id', 'en'] as $locale) {
-            foreach (['Semua Produk', 'All Products'] as $cat) {
-                foreach (['Terbaru', 'Newest', 'A - Z', 'Z - A', 'Terlama', 'Oldest'] as $sort) {
-                    $key = 'katalog_products_' . md5($cat . $sort . '' . '' . '' . '' . $locale);
-                    cache()->forget($key);
-                }
-            }
-        }
-
-        $cacheDir = storage_path('framework/cache/data');
-        if (!is_dir($cacheDir)) {
-            return;
-        }
-
-        try {
-            $iterator = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($cacheDir, \RecursiveDirectoryIterator::SKIP_DOTS)
-            );
-            foreach ($iterator as $file) {
-                if (!$file->isFile()) {
-                    continue;
-                }
-                $content = @file_get_contents($file->getRealPath());
-                if ($content && str_contains($content, 'katalog_products_')) {
-                    @unlink($file->getRealPath());
-                }
-            }
-        } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::warning('Cache clear failed: ' . $e->getMessage());
         }
     }
 
