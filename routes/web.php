@@ -67,6 +67,17 @@ Route::prefix('admin')
 
         Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('dashboard');
 
+        Route::post('/optimize-server', function () {
+            try {
+                \Illuminate\Support\Facades\Artisan::call('config:cache');
+                \Illuminate\Support\Facades\Artisan::call('route:cache');
+                \Illuminate\Support\Facades\Artisan::call('view:cache');
+                return back()->with('success', 'Optimasi server berhasil dijalankan! Konfigurasi, rute, dan blade view telah di-cache.');
+            } catch (\Exception $e) {
+                return back()->with('error', 'Gagal optimasi: ' . $e->getMessage());
+            }
+        })->name('optimize-server');
+
         // Frontend
         Route::prefix('frontend')->name('frontend.')->group(function () {
             Route::get('/product-type', \App\Livewire\Admin\Frontend\ProductType::class)->name('product-type');

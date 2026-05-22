@@ -1,18 +1,60 @@
 <div class="space-y-6">
 
-    {{-- Stat Cards --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    @if (session('success'))
+        <div class="flex items-center p-4 text-emerald-800 border border-emerald-200 rounded-xl bg-emerald-50" role="alert">
+            <svg class="flex-shrink-0 w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+            </svg>
+            <div class="text-sm font-medium">
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
 
-        <div class="rounded-xl p-5 text-white"
+    @if (session('error'))
+        <div class="flex items-center p-4 text-rose-800 border border-rose-200 rounded-xl bg-rose-50" role="alert">
+            <svg class="flex-shrink-0 w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+            </svg>
+            <div class="text-sm font-medium">
+                {{ session('error') }}
+            </div>
+        </div>
+    @endif
+
+    {{-- Stat Cards --}}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+        <div class="rounded-xl p-5 text-white flex flex-col justify-between"
              style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%)">
-            <p class="text-sm font-medium opacity-80">Total Product</p>
-            <p class="text-4xl font-bold mt-1">{{ number_format($totalProducts) }}</p>
+            <div>
+                <p class="text-sm font-medium opacity-80">Total Product</p>
+                <p class="text-4xl font-bold mt-1">{{ number_format($totalProducts) }}</p>
+            </div>
         </div>
 
-        <div class="rounded-xl p-5 text-white"
+        <div class="rounded-xl p-5 text-white flex flex-col justify-between"
              style="background: linear-gradient(135deg, #0f9b8e 0%, #00d2d3 100%)">
-            <p class="text-sm font-medium opacity-80">Total Partner</p>
-            <p class="text-4xl font-bold mt-1">{{ number_format($totalPartners) }}</p>
+            <div>
+                <p class="text-sm font-medium opacity-80">Total Partner</p>
+                <p class="text-4xl font-bold mt-1">{{ number_format($totalPartners) }}</p>
+            </div>
+        </div>
+
+        <div class="rounded-xl p-5 text-white flex flex-col justify-between"
+             style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%)">
+            <div>
+                <p class="text-sm font-semibold opacity-90">Server Optimizer</p>
+                <p class="text-xs opacity-75 mt-1">Lakukan caching konfigurasi, rute, dan view untuk performa maksimal di shared hosting.</p>
+            </div>
+            <div class="mt-4">
+                <form action="{{ route('admin.optimize-server') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full py-2 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-600 hover:to-emerald-600 text-white text-xs font-semibold rounded-lg shadow transition duration-200 transform hover:scale-[1.02] focus:outline-none">
+                        Optimalkan Server
+                    </button>
+                </form>
+            </div>
         </div>
 
     </div>

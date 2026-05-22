@@ -5,25 +5,25 @@
     {{-- Hero Section — above the fold, render langsung --}}
     <livewire:halaman-utama.hero />
 
-    {{-- Hot Deals — lazy: render setelah hero selesai --}}
-    <livewire:halaman-utama.hot-deals lazy />
+    {{-- Hot Deals — render langsung --}}
+    <livewire:halaman-utama.hot-deals />
 
-    {{-- Product Section — lazy --}}
-    <livewire:halaman-utama.product-section lazy />
+    {{-- Product Section — render langsung --}}
+    <livewire:halaman-utama.product-section />
 
-    {{-- Belanja Online — lazy --}}
-    <livewire:halaman-utama.belanja-online lazy />
+    {{-- Belanja Online — render langsung --}}
+    <livewire:halaman-utama.belanja-online />
 
-    {{-- Sosial Media — lazy --}}
-    <livewire:halaman-utama.sosial-media lazy />
+    {{-- Sosial Media — render langsung --}}
+    <livewire:halaman-utama.sosial-media />
 
-    {{-- Ulasan — lazy --}}
-    <livewire:halaman-utama.ulasan lazy />
+    {{-- Ulasan — render langsung --}}
+    <livewire:halaman-utama.ulasan />
 
-    {{-- Mitra — lazy --}}
-    <livewire:halaman-utama.mitra lazy />
+    {{-- Mitra — render langsung --}}
+    <livewire:halaman-utama.mitra />
 
-    {{-- Footer — lazy --}}
-    <livewire:footer lazy />
+    {{-- Footer — render langsung --}}
+    <livewire:footer />
 
 @endsection

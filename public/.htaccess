@@ -1,3 +1,72 @@
+# ─── 1. GZIP COMPRESSION (Mengurangi Ukuran Transfer Aset) ───
+<IfModule mod_deflate.c>
+    # Aktifkan kompresi
+    SetOutputFilter DEFLATE
+    
+    # Tentukan tipe file yang dikompres
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/x-httpd-php
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE image/x-icon
+    AddOutputFilterByType DEFLATE font/woff
+    AddOutputFilterByType DEFLATE font/woff2
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE font/otf
+    
+    # Mengatasi bug browser jadul
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
+
+# ─── 2. BROWSER CACHING (Menyimpan Aset Statis di Browser Pengunjung) ───
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Default expiry: 1 minggu
+    ExpiresDefault "access plus 1 week"
+    
+    # CSS dan JavaScript: 1 tahun (Vite menggunakan hashing nama file, aman di-cache lama)
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType application/x-javascript "access plus 1 year"
+    
+    # Gambar & Favicon: 1 tahun
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    
+    # WebM/MP4 Video: 1 bulan
+    ExpiresByType video/webm "access plus 1 month"
+    ExpiresByType video/mp4 "access plus 1 month"
+    
+    # Web Fonts (WOFF2, TTF): 1 tahun
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+</IfModule>
+
+# Hapus ETag untuk optimasi HTTP Header size
+<IfModule mod_headers.c>
+    Header unset ETag
+</IfModule>
+FileETag None
+
 <IfModule mod_headers.c>
     # Security Headers
     Header set X-Frame-Options "SAMEORIGIN"
