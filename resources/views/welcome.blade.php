@@ -11,9 +11,6 @@
     {{-- Product Section — render langsung --}}
     <livewire:halaman-utama.product-section />
 
-    {{-- Belanja Online — render langsung --}}
-    <livewire:halaman-utama.belanja-online />
-
     {{-- Sosial Media — render langsung --}}
     <livewire:halaman-utama.sosial-media />
 
