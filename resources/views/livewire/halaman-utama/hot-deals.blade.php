@@ -78,7 +78,7 @@
                     
                     <img src="{{ $deal->image_full_url }}" 
                          alt="{{ $deal->name }}" 
-                         loading="lazy" 
+                         @if($index >= 4) loading="lazy" @endif 
                          decoding="async"
                          width="400"
                          height="300"
