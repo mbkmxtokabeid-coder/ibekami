@@ -69,16 +69,38 @@ Route::prefix('admin')
 
         Route::post('/optimize-server', function () {
             try {
+                // ── 1. SELF-HEALING SYMLINK STORAGE ──
+                $storageLinkPath = public_path('storage');
+                if (is_link($storageLinkPath)) {
+                    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                        rmdir($storageLinkPath);
+                    } else {
+                        unlink($storageLinkPath);
+                    }
+                } elseif (is_dir($storageLinkPath)) {
+                    // Jika public/storage adalah folder biasa, hapus jika kosong atau backup jika ada isinya
+                    $files = array_diff(scandir($storageLinkPath), array('.', '..'));
+                    if (empty($files)) {
+                        rmdir($storageLinkPath);
+                    } else {
+                        rename($storageLinkPath, public_path('storage_backup_' . time()));
+                    }
+                }
+
+                // Re-create storage symlink
+                \Illuminate\Support\Facades\Artisan::call('storage:link');
+
+                // ── 2. OPTIMASI CONFIG & ROUTE CACHE ──
                 \Illuminate\Support\Facades\Artisan::call('config:cache');
                 \Illuminate\Support\Facades\Artisan::call('route:cache');
                 \Illuminate\Support\Facades\Artisan::call('view:cache');
 
-                // Pemindaian & Konversi WebP Otomatis untuk Logo Kemitraan (PNG/JPG Lama)
-                $partnerships = \App\Models\Partnership::all();
-                $convertedCount = 0;
+                // ── 3. AUTO-CONVERSION & DATABASE WEBP SYNC ──
+                $partners = \App\Models\Partnership::all();
                 $compressor = new \App\Services\ImageCompressor();
+                $convertedCount = 0;
 
-                foreach ($partnerships as $partner) {
+                foreach ($partners as $partner) {
                     $imageUrl = $partner->image_url;
                     if (empty($imageUrl)) {
                         continue;
@@ -92,47 +114,70 @@ Route::prefix('admin')
                     $filename = basename($imageUrl);
                     $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
-                    // Abaikan jika sudah berformat webp atau svg
-                    if (in_array($extension, ['webp', 'svg'])) {
-                        continue;
-                    }
+                    if (in_array($extension, ['png', 'jpg', 'jpeg'])) {
+                        $oldRelativePath = 'gambar_partner/' . $filename;
+                        
+                        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($oldRelativePath)) {
+                            $oldAbsPath = \Illuminate\Support\Facades\Storage::disk('public')->path($oldRelativePath);
+                            
+                            // Generate WebP filename
+                            $newFilename = pathinfo($filename, PATHINFO_FILENAME) . '_' . uniqid() . '.webp';
+                            $newRelativePath = 'gambar_partner/' . $newFilename;
 
-                    // Periksa keberadaan file di public storage disk
-                    $oldRelativePath = 'gambar_partner/' . $filename;
-                    if (\Illuminate\Support\Facades\Storage::disk('public')->exists($oldRelativePath)) {
-                        $oldAbsPath = \Illuminate\Support\Facades\Storage::disk('public')->path($oldRelativePath);
-
-                        // Buat nama berkas webp baru
-                        $newFilename = pathinfo($filename, PATHINFO_FILENAME) . '.webp';
-                        $newRelativePath = 'gambar_partner/' . $newFilename;
-
-                        try {
-                            // Kompresi dan konversi ke webp
+                            // Compress and convert to webp
                             $compressor->compressToWebP($oldAbsPath, $newRelativePath);
 
-                            // Hapus berkas lama
+                            // Delete old PNG/JPG file
                             \Illuminate\Support\Facades\Storage::disk('public')->delete($oldRelativePath);
 
-                            // Perbarui kolom image_url di database
+                            // Update Database to WebP
                             $partner->update([
                                 'image_url' => $newFilename
                             ]);
 
                             $convertedCount++;
-                        } catch (\Exception $e) {
-                            \Illuminate\Support\Facades\Log::error("Gagal konversi gambar partner {$filename} ke webp: " . $e->getMessage());
+                        } else {
+                            // Fallback Sync: Cek jika versi WebP dari file ini sudah ada di folder
+                            $webpFilename = pathinfo($filename, PATHINFO_FILENAME) . '.webp';
+                            $webpRelativePath = 'gambar_partner/' . $webpFilename;
+                            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($webpRelativePath)) {
+                                $partner->update([
+                                    'image_url' => $webpFilename
+                                ]);
+                                $convertedCount++;
+                            } else {
+                                // Cek juga jika versi WebP dengan suffix uniqid ada
+                                $storagePath = \Illuminate\Support\Facades\Storage::disk('public')->path('gambar_partner');
+                                if (is_dir($storagePath)) {
+                                    $files = scandir($storagePath);
+                                    $pattern = '/^' . preg_quote(pathinfo($filename, PATHINFO_FILENAME), '/') . '.*\.webp$/i';
+                                    foreach ($files as $file) {
+                                        if (preg_match($pattern, $file)) {
+                                            $partner->update([
+                                                'image_url' => $file
+                                            ]);
+                                            $convertedCount++;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
 
-                $message = 'Optimasi server berhasil dijalankan! Konfigurasi, rute, dan blade view telah di-cache.';
+                $message = 'Server cache optimized & Storage Symlink repaired successfully!';
                 if ($convertedCount > 0) {
-                    $message .= " Berhasil mengonversi {$convertedCount} logo mitra lama menjadi format WebP modern.";
+                    $message .= " Serta berhasil mensinkronisasi {$convertedCount} logo mitra ke format WebP!";
                 }
+
+                // Naikkan versi cache dinamis & hapus cache partners
+                \Illuminate\Support\Facades\Cache::forever('homepage_products_version', time());
+                \Illuminate\Support\Facades\Cache::forget('homepage:partners');
 
                 return back()->with('success', $message);
             } catch (\Exception $e) {
-                return back()->with('error', 'Gagal optimasi: ' . $e->getMessage());
+                return back()->with('error', 'Gagal optimasi dan perbaikan: ' . $e->getMessage());
             }
         })->name('optimize-server');
 
