@@ -72,7 +72,65 @@ Route::prefix('admin')
                 \Illuminate\Support\Facades\Artisan::call('config:cache');
                 \Illuminate\Support\Facades\Artisan::call('route:cache');
                 \Illuminate\Support\Facades\Artisan::call('view:cache');
-                return back()->with('success', 'Optimasi server berhasil dijalankan! Konfigurasi, rute, dan blade view telah di-cache.');
+
+                // Pemindaian & Konversi WebP Otomatis untuk Logo Kemitraan (PNG/JPG Lama)
+                $partnerships = \App\Models\Partnership::all();
+                $convertedCount = 0;
+                $compressor = new \App\Services\ImageCompressor();
+
+                foreach ($partnerships as $partner) {
+                    $imageUrl = $partner->image_url;
+                    if (empty($imageUrl)) {
+                        continue;
+                    }
+
+                    // Abaikan jika berupa URL eksternal
+                    if (filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+                        continue;
+                    }
+
+                    $filename = basename($imageUrl);
+                    $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+
+                    // Abaikan jika sudah berformat webp atau svg
+                    if (in_array($extension, ['webp', 'svg'])) {
+                        continue;
+                    }
+
+                    // Periksa keberadaan file di public storage disk
+                    $oldRelativePath = 'gambar_partner/' . $filename;
+                    if (\Illuminate\Support\Facades\Storage::disk('public')->exists($oldRelativePath)) {
+                        $oldAbsPath = \Illuminate\Support\Facades\Storage::disk('public')->path($oldRelativePath);
+
+                        // Buat nama berkas webp baru
+                        $newFilename = pathinfo($filename, PATHINFO_FILENAME) . '.webp';
+                        $newRelativePath = 'gambar_partner/' . $newFilename;
+
+                        try {
+                            // Kompresi dan konversi ke webp
+                            $compressor->compressToWebP($oldAbsPath, $newRelativePath);
+
+                            // Hapus berkas lama
+                            \Illuminate\Support\Facades\Storage::disk('public')->delete($oldRelativePath);
+
+                            // Perbarui kolom image_url di database
+                            $partner->update([
+                                'image_url' => $newFilename
+                            ]);
+
+                            $convertedCount++;
+                        } catch (\Exception $e) {
+                            \Illuminate\Support\Facades\Log::error("Gagal konversi gambar partner {$filename} ke webp: " . $e->getMessage());
+                        }
+                    }
+                }
+
+                $message = 'Optimasi server berhasil dijalankan! Konfigurasi, rute, dan blade view telah di-cache.';
+                if ($convertedCount > 0) {
+                    $message .= " Berhasil mengonversi {$convertedCount} logo mitra lama menjadi format WebP modern.";
+                }
+
+                return back()->with('success', $message);
             } catch (\Exception $e) {
                 return back()->with('error', 'Gagal optimasi: ' . $e->getMessage());
             }
@@ -100,3 +158,8 @@ Route::prefix('admin')
 
         Route::get('/user-list', \App\Livewire\Admin\UserList::class)->name('user-list');
     });
+
+// ─── Public REST API Endpoint ──────────────────────────────────────────────────
+Route::get('/api/v1/homepage/products', [\App\Http\Controllers\Api\v1\HomepageProductController::class, 'index'])
+    ->name('api.v1.homepage.products')
+    ->middleware('throttle:60,1');

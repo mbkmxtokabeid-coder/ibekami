@@ -95,13 +95,17 @@ FileETag None
 
     RewriteEngine On
 
-    # ── HTTPS redirect DINONAKTIFKAN ─────────────────────────────────────────
-    # Hostinger sudah handle HTTPS redirect di level Nginx/server.
-    # Jangan tambahkan redirect HTTPS di sini — akan menyebabkan redirect loop
-    # karena PHP menerima request sebagai HTTP dari proxy internal Hostinger.
-    #
-    # Jika ingin force HTTPS, aktifkan di hPanel → SSL → Force HTTPS.
-    # ─────────────────────────────────────────────────────────────────────────
+    # ── FORCE HTTPS & NON-WWW (Single-Hop 301 Redirect) ───────────────────────────
+    # Redirect www to non-www (Direct to HTTPS)
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+    # Redirect HTTP to HTTPS (Non-www canonical)
+    # Checks both standard HTTPS port and Hostinger's proxy header
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+    # ─────────────────────────────────────────────────────────────────────────────
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

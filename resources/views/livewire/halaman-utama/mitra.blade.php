@@ -33,9 +33,19 @@
                         lastTime: null,
                         
                         init() {
-                            requestAnimationFrame(() => {
-                                this.totalWidth = this.$refs.track.scrollWidth / 2;
-                                this.startAutoScroll();
+                            this.$nextTick(() => {
+                                // DOM Cloning untuk efek infinite scroll tanpa download request gambar ganda
+                                const track = this.$refs.track;
+                                const items = Array.from(track.children);
+                                items.forEach(item => {
+                                    const clone = item.cloneNode(true);
+                                    track.appendChild(clone);
+                                });
+
+                                requestAnimationFrame(() => {
+                                    this.totalWidth = track.scrollWidth / 2;
+                                    this.startAutoScroll();
+                                });
                             });
                         },
                         
@@ -61,12 +71,7 @@
                     @mouseleave="isPaused = false"
                     class="relative">
                         <div x-ref="track" class="flex gap-4">
-                            @php
-                                // Duplikasi 2x untuk infinite loop
-                                $bumnLoop = array_merge($partnersBumn, $partnersBumn);
-                            @endphp
-                            
-                            @foreach($bumnLoop as $index => $partner)
+                            @foreach($partnersBumn as $index => $partner)
                             <div wire:key="bumn-{{ $partner['id'] }}-{{ $index }}" 
                                  class="w-36 h-20 shrink-0 bg-white rounded-xl border border-[#ff9100]/10 flex items-center justify-center p-4 hover:border-[#ff9100] hover:shadow-lg hover:shadow-[#ff9100]/10 transition-all group">
                                 <img src="{{ $partner['image'] }}" 
@@ -100,10 +105,20 @@
                         lastTime: null,
                         
                         init() {
-                            requestAnimationFrame(() => {
-                                this.totalWidth = this.$refs.track.scrollWidth / 2;
-                                this.scrollPosition = this.totalWidth;
-                                this.startAutoScroll();
+                            this.$nextTick(() => {
+                                // DOM Cloning untuk efek infinite scroll tanpa download request gambar ganda
+                                const track = this.$refs.track;
+                                const items = Array.from(track.children);
+                                items.forEach(item => {
+                                    const clone = item.cloneNode(true);
+                                    track.appendChild(clone);
+                                });
+
+                                requestAnimationFrame(() => {
+                                    this.totalWidth = track.scrollWidth / 2;
+                                    this.scrollPosition = this.totalWidth;
+                                    this.startAutoScroll();
+                                });
                             });
                         },
                         
@@ -129,12 +144,7 @@
                     @mouseleave="isPaused = false"
                     class="relative">
                         <div x-ref="track" class="flex gap-4">
-                            @php
-                                // Duplikasi 2x untuk infinite loop
-                                $orgLoop = array_merge($partnersOrganization, $partnersOrganization);
-                            @endphp
-                            
-                            @foreach($orgLoop as $index => $partner)
+                            @foreach($partnersOrganization as $index => $partner)
                             <div wire:key="org-{{ $partner['id'] }}-{{ $index }}" 
                                  class="w-36 h-20 shrink-0 bg-white rounded-xl border border-[#ff9100]/10 flex items-center justify-center p-4 hover:border-[#ff9100] hover:shadow-lg hover:shadow-[#ff9100]/10 transition-all group">
                                 <img src="{{ $partner['image'] }}" 

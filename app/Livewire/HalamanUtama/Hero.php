@@ -42,7 +42,12 @@ class Hero extends Component
         }
 
         if (Storage::disk('public')->exists($path)) {
-            return asset('storage/' . $path);
+            $url = asset('storage/' . $path);
+            $parsed = parse_url($url);
+            if (isset($parsed['host']) && in_array($parsed['host'], ['localhost', '127.0.0.1'])) {
+                return ($parsed['path'] ?? '') . (isset($parsed['query']) ? '?' . $parsed['query'] : '');
+            }
+            return $url;
         }
 
         return 'https://ibekami.id/storage/' . ltrim($path, '/');

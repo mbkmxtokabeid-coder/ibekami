@@ -21,7 +21,13 @@ class HotDeals extends Component
                 ->map(function ($deal) {
                     // Cek apakah file ada di local storage
                     if (Storage::disk('public')->exists($deal->image_url)) {
-                        $deal->image_full_url = asset('storage/' . $deal->image_url);
+                        $url = asset('storage/' . $deal->image_url);
+                        $parsed = parse_url($url);
+                        if (isset($parsed['host']) && in_array($parsed['host'], ['localhost', '127.0.0.1'])) {
+                            $deal->image_full_url = ($parsed['path'] ?? '') . (isset($parsed['query']) ? '?' . $parsed['query'] : '');
+                        } else {
+                            $deal->image_full_url = $url;
+                        }
                     } else {
                         // Fallback ke ibekami.id
                         $deal->image_full_url = 'https://ibekami.id/storage/' . $deal->image_url;

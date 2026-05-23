@@ -33,12 +33,16 @@
     @endif
 
     <title>@yield('title', 'IBEKAMI - Digital Printing & Souvenir Custom Medan')</title>
+    
+    {{-- Dynamic canonical URL to prevent search engines and crawlers from indexing redirecting URLs --}}
+    <link rel="canonical" href="{{ request()->url() }}">
 
     <link rel="icon" type="image/webp" href="{{ asset('storage/logos/logo ibekami (3).webp') }}">
     {{-- apple-touch-icon dihapus: sinyal PWA yang tidak diperlukan --}}
 
-    {{-- Preload critical fonts for better performance --}}
+    {{-- Preload critical fonts for better performance (Network Dependency Tree optimization) --}}
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/instrument-sans-latin-400-normal.woff2') }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/instrument-sans-latin-500-normal.woff2') }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/instrument-sans-latin-600-normal.woff2') }}" crossorigin>
     
     {{-- Self-hosted fonts (faster than CDN) --}}
