@@ -70,105 +70,134 @@ Route::prefix('admin')
         Route::post('/optimize-server', function () {
             try {
                 // ── 1. SELF-HEALING SYMLINK STORAGE ──
-                $storageLinkPath = public_path('storage');
-                if (is_link($storageLinkPath)) {
-                    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                        rmdir($storageLinkPath);
-                    } else {
-                        unlink($storageLinkPath);
+                $storageError = null;
+                try {
+                    $storageLinkPath = public_path('storage');
+                    if (is_link($storageLinkPath)) {
+                        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                            @rmdir($storageLinkPath);
+                        } else {
+                            @unlink($storageLinkPath);
+                        }
+                    } elseif (is_dir($storageLinkPath)) {
+                        // Jika public/storage adalah folder biasa, hapus jika kosong atau backup jika ada isinya
+                        $files = array_diff(scandir($storageLinkPath), array('.', '..'));
+                        if (empty($files)) {
+                            @rmdir($storageLinkPath);
+                        } else {
+                            @rename($storageLinkPath, public_path('storage_backup_' . time()));
+                        }
                     }
-                } elseif (is_dir($storageLinkPath)) {
-                    // Jika public/storage adalah folder biasa, hapus jika kosong atau backup jika ada isinya
-                    $files = array_diff(scandir($storageLinkPath), array('.', '..'));
-                    if (empty($files)) {
-                        rmdir($storageLinkPath);
+
+                    // Re-create storage symlink (jika fungsi symlink aktif)
+                    if (function_exists('symlink')) {
+                        \Illuminate\Support\Facades\Artisan::call('storage:link');
                     } else {
-                        rename($storageLinkPath, public_path('storage_backup_' . time()));
+                        $storageError = 'Fungsi symlink() dinonaktifkan di hosting Anda. Hubungi penyedia hosting untuk mengaktifkannya atau buat storage link secara manual.';
                     }
+                } catch (\Throwable $e) {
+                    $storageError = 'Gagal memproses storage link: ' . $e->getMessage();
                 }
 
-                // Re-create storage symlink
-                \Illuminate\Support\Facades\Artisan::call('storage:link');
-
-                // ── 2. OPTIMASI CONFIG & ROUTE CACHE ──
-                \Illuminate\Support\Facades\Artisan::call('config:cache');
-                \Illuminate\Support\Facades\Artisan::call('route:cache');
-                \Illuminate\Support\Facades\Artisan::call('view:cache');
+                // ── 2. OPTIMASI CONFIG & ROUTE CACHE (CLEAR AGAR TIDAK ERROR 500 DI SHARED HOSTING) ──
+                // Caching config & route di web request sering kali error karena absolute paths / closure serialization.
+                // Pembersihan (clear) adalah opsi paling aman dan stabil untuk shared hosting!
+                \Illuminate\Support\Facades\Artisan::call('config:clear');
+                \Illuminate\Support\Facades\Artisan::call('route:clear');
+                \Illuminate\Support\Facades\Artisan::call('view:cache'); // Caching blade views aman & meningkatkan performa
 
                 // ── 3. AUTO-CONVERSION & DATABASE WEBP SYNC ──
-                $partners = \App\Models\Partnership::all();
-                $compressor = new \App\Services\ImageCompressor();
                 $convertedCount = 0;
+                $imageError = null;
 
-                foreach ($partners as $partner) {
-                    $imageUrl = $partner->image_url;
-                    if (empty($imageUrl)) {
-                        continue;
-                    }
+                try {
+                    if (\App\Services\ImageCompressor::isAvailable()) {
+                        $partners = \App\Models\Partnership::all();
+                        $compressor = new \App\Services\ImageCompressor();
 
-                    // Abaikan jika berupa URL eksternal
-                    if (filter_var($imageUrl, FILTER_VALIDATE_URL)) {
-                        continue;
-                    }
+                        foreach ($partners as $partner) {
+                            $imageUrl = $partner->image_url;
+                            if (empty($imageUrl)) {
+                                continue;
+                            }
 
-                    $filename = basename($imageUrl);
-                    $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                            // Abaikan jika berupa URL eksternal
+                            if (filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+                                continue;
+                            }
 
-                    if (in_array($extension, ['png', 'jpg', 'jpeg'])) {
-                        $oldRelativePath = 'gambar_partner/' . $filename;
-                        
-                        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($oldRelativePath)) {
-                            $oldAbsPath = \Illuminate\Support\Facades\Storage::disk('public')->path($oldRelativePath);
-                            
-                            // Generate WebP filename
-                            $newFilename = pathinfo($filename, PATHINFO_FILENAME) . '_' . uniqid() . '.webp';
-                            $newRelativePath = 'gambar_partner/' . $newFilename;
+                            $filename = basename($imageUrl);
+                            $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
-                            // Compress and convert to webp
-                            $compressor->compressToWebP($oldAbsPath, $newRelativePath);
+                            if (in_array($extension, ['png', 'jpg', 'jpeg'])) {
+                                $oldRelativePath = 'gambar_partner/' . $filename;
+                                
+                                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($oldRelativePath)) {
+                                    $oldAbsPath = \Illuminate\Support\Facades\Storage::disk('public')->path($oldRelativePath);
+                                    
+                                    // Generate WebP filename
+                                    $newFilename = pathinfo($filename, PATHINFO_FILENAME) . '_' . uniqid() . '.webp';
+                                    $newRelativePath = 'gambar_partner/' . $newFilename;
 
-                            // Delete old PNG/JPG file
-                            \Illuminate\Support\Facades\Storage::disk('public')->delete($oldRelativePath);
+                                    try {
+                                        // Compress and convert to webp
+                                        $compressor->compressToWebP($oldAbsPath, $newRelativePath);
 
-                            // Update Database to WebP
-                            $partner->update([
-                                'image_url' => $newFilename
-                            ]);
+                                        // Delete old PNG/JPG file
+                                        \Illuminate\Support\Facades\Storage::disk('public')->delete($oldRelativePath);
 
-                            $convertedCount++;
-                        } else {
-                            // Fallback Sync: Cek jika versi WebP dari file ini sudah ada di folder
-                            $webpFilename = pathinfo($filename, PATHINFO_FILENAME) . '.webp';
-                            $webpRelativePath = 'gambar_partner/' . $webpFilename;
-                            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($webpRelativePath)) {
-                                $partner->update([
-                                    'image_url' => $webpFilename
-                                ]);
-                                $convertedCount++;
-                            } else {
-                                // Cek juga jika versi WebP dengan suffix uniqid ada
-                                $storagePath = \Illuminate\Support\Facades\Storage::disk('public')->path('gambar_partner');
-                                if (is_dir($storagePath)) {
-                                    $files = scandir($storagePath);
-                                    $pattern = '/^' . preg_quote(pathinfo($filename, PATHINFO_FILENAME), '/') . '.*\.webp$/i';
-                                    foreach ($files as $file) {
-                                        if (preg_match($pattern, $file)) {
-                                            $partner->update([
-                                                'image_url' => $file
-                                            ]);
-                                            $convertedCount++;
-                                            break;
+                                        // Update Database to WebP
+                                        $partner->update([
+                                            'image_url' => $newFilename
+                                        ]);
+
+                                        $convertedCount++;
+                                    } catch (\Throwable $e) {
+                                        \Illuminate\Support\Facades\Log::error("Gagal kompresi logo partner {$filename}: " . $e->getMessage());
+                                    }
+                                } else {
+                                    // Fallback Sync: Cek jika versi WebP dari file ini sudah ada di folder
+                                    $webpFilename = pathinfo($filename, PATHINFO_FILENAME) . '.webp';
+                                    $webpRelativePath = 'gambar_partner/' . $webpFilename;
+                                    if (\Illuminate\Support\Facades\Storage::disk('public')->exists($webpRelativePath)) {
+                                        $partner->update([
+                                            'image_url' => $webpFilename
+                                        ]);
+                                        $convertedCount++;
+                                    } else {
+                                        // Cek juga jika versi WebP dengan suffix uniqid ada
+                                        $storagePath = \Illuminate\Support\Facades\Storage::disk('public')->path('gambar_partner');
+                                        if (is_dir($storagePath)) {
+                                            $files = scandir($storagePath);
+                                            $pattern = '/^' . preg_quote(pathinfo($filename, PATHINFO_FILENAME), '/') . '.*\.webp$/i';
+                                            foreach ($files as $file) {
+                                                if (preg_match($pattern, $file)) {
+                                                    $partner->update([
+                                                        'image_url' => $file
+                                                    ]);
+                                                    $convertedCount++;
+                                                    break;
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     }
+                } catch (\Throwable $e) {
+                    $imageError = 'Gagal memproses gambar mitra: ' . $e->getMessage();
                 }
 
-                $message = 'Server cache optimized & Storage Symlink repaired successfully!';
+                $message = 'Optimasi server dan cache berhasil dilakukan secara aman!';
                 if ($convertedCount > 0) {
-                    $message .= " Serta berhasil mensinkronisasi {$convertedCount} logo mitra ke format WebP!";
+                    $message .= " Berhasil mensinkronisasi {$convertedCount} logo mitra ke format WebP!";
+                }
+                if ($storageError) {
+                    $message .= " [Info Storage: {$storageError}]";
+                }
+                if ($imageError) {
+                    $message .= " [Info Gambar: {$imageError}]";
                 }
 
                 // Naikkan versi cache dinamis & hapus cache partners
@@ -176,8 +205,8 @@ Route::prefix('admin')
                 \Illuminate\Support\Facades\Cache::forget('homepage:partners');
 
                 return back()->with('success', $message);
-            } catch (\Exception $e) {
-                return back()->with('error', 'Gagal optimasi dan perbaikan: ' . $e->getMessage());
+            } catch (\Throwable $e) {
+                return back()->with('error', 'Gagal melakukan optimasi: ' . $e->getMessage());
             }
         })->name('optimize-server');
 

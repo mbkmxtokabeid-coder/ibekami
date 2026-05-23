@@ -1,5 +1,16 @@
 <?php
 
+// Self-healing: Hapus cache routes & config jika ada di hosting untuk mencegah error 500
+foreach ([
+    __DIR__.'/../bootstrap/cache/config.php',
+    __DIR__.'/../bootstrap/cache/routes-v7.php',
+    __DIR__.'/../bootstrap/cache/routes.php'
+] as $cacheFile) {
+    if (file_exists($cacheFile)) {
+        @unlink($cacheFile);
+    }
+}
+
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
