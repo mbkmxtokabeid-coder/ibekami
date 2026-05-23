@@ -237,3 +237,17 @@ Route::prefix('admin')
 Route::get('/api/v1/homepage/products', [\App\Http\Controllers\Api\v1\HomepageProductController::class, 'index'])
     ->name('api.v1.homepage.products')
     ->middleware('throttle:60,1');
+
+// ─── Storage Symlink Fallback for Shared Hosting ──────────────────────────────
+// Melayani file secara langsung dari storage/app/public jika fungsi symlink dinonaktifkan di hosting
+Route::get('/storage/{path}', function ($path) {
+    $path = str_replace(['../', '..\\'], '', $path); // Prevent directory traversal
+    $absPath = storage_path('app/public/' . $path);
+    
+    if (file_exists($absPath) && is_file($absPath)) {
+        return response()->file($absPath, [
+            'Cache-Control' => 'public, max-age=31536000',
+        ]);
+    }
+    abort(404);
+})->where('path', '.*')->name('storage.local_fallback');

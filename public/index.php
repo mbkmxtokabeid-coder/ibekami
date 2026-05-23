@@ -11,6 +11,12 @@ foreach ([
     }
 }
 
+// Self-healing: Hapus public/storage jika itu adalah symlink rusak untuk mengaktifkan fallback routing
+$publicStorage = __DIR__.'/storage';
+if (is_link($publicStorage) && !file_exists($publicStorage)) {
+    @unlink($publicStorage);
+}
+
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 

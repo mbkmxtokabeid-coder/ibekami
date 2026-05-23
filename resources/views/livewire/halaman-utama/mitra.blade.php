@@ -81,7 +81,7 @@
                                      height="80"
                                      alt="Partner BUMN"
                                      class="max-h-full max-w-full object-contain transition-all"
-                                     onerror="this.src='https://via.placeholder.com/150x80?text=BUMN'">
+                                     onerror="this.onerror=null; this.src='https://placehold.co/150x80?text=BUMN'">
                             </div>
                             @endforeach
                         </div>
@@ -154,7 +154,7 @@
                                      height="80"
                                      alt="Partner Organization"
                                      class="max-h-full max-w-full object-contain transition-all"
-                                     onerror="this.src='https://via.placeholder.com/150x80?text=Organization'">
+                                     onerror="this.onerror=null; this.src='https://placehold.co/150x80?text=Organization'">
                             </div>
                             @endforeach
                         </div>
