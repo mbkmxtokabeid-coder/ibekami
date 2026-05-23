@@ -23,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureRateLimiting();
+
+        // ── LOG VIEWER: AKSES PUBLIK (TANPA LOGIN) ──
+        \Illuminate\Support\Facades\Gate::define('viewLogViewer', function ($user = null) {
+            return true;
+        });
     }
 
     /**
