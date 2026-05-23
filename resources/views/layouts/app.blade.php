@@ -317,7 +317,7 @@
                     'url' => config('app.url'),
                     'telephone' => '+628170769999',
                     'priceRange' => 'Rp',
-                    'image' => asset('storage/logos/logo ibekami (3).png'),
+                    'image' => asset('storage/logos/logo ibekami (3).webp'),
                     'address' => [
                         '@type' => 'PostalAddress',
                         'addressLocality' => 'Medan',

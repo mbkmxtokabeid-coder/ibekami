@@ -40,7 +40,7 @@
             
             <!-- 1. Logo Brand -->
             <a href="/" wire:navigate class="flex items-center gap-2.5 group shrink-0 outline-none">
-                <img src="{{ asset('storage/logos/logo ibekami (3).png') }}" 
+                <img src="{{ asset('storage/logos/logo ibekami (3).webp') }}" 
                      alt="IBEKAMI Logo" 
                      class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">

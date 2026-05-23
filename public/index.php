@@ -11,10 +11,15 @@ foreach ([
     }
 }
 
-// Self-healing: Hapus public/storage jika itu adalah symlink rusak untuk mengaktifkan fallback routing
+// Self-healing: Hapus/rename public/storage agar fallback routing Laravel dapat bekerja jika symlink rusak/disabled di hosting
 $publicStorage = __DIR__.'/storage';
-if (is_link($publicStorage) && !file_exists($publicStorage)) {
-    @unlink($publicStorage);
+if (is_link($publicStorage)) {
+    if (!file_exists($publicStorage)) {
+        @unlink($publicStorage);
+    }
+} elseif (is_dir($publicStorage)) {
+    // Jika public/storage adalah folder fisik biasa (bukan symlink), rename agar Apache meneruskan request ke fallback route Laravel
+    @rename($publicStorage, __DIR__.'/storage_backup_' . time());
 }
 
 use Illuminate\Foundation\Application;
