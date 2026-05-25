@@ -186,7 +186,12 @@ class BannerList extends Component
     // ── Render ────────────────────────────────────────────────────
     public function render()
     {
-        $banners      = Banner::orderBy($this->sortField, $this->sortDir)->paginate($this->perPage);
+        $banners      = Banner::when($this->search, function ($query) {
+                            $query->where('media_url', 'like', '%' . $this->search . '%')
+                                  ->orWhere('media_type', 'like', '%' . $this->search . '%');
+                        })
+                        ->orderBy($this->sortField, $this->sortDir)
+                        ->paginate($this->perPage);
         $bannerCount  = Banner::count();
         $maxReached   = $bannerCount >= self::MAX_BANNERS;
 

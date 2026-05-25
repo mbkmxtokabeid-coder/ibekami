@@ -61,7 +61,7 @@
                 <tbody class="divide-y divide-gray-100">
                     @forelse ($banners as $banner)
                         <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-4 text-gray-700 font-medium">{{ $banner->id }}</td>
+                            <td class="px-6 py-4 text-gray-700 font-medium">{{ ($banners->currentPage() - 1) * $banners->perPage() + $loop->iteration }}</td>
                             <td class="px-6 py-4">
                                 @if ($banner->media_url)
                                     <img src="{{ Storage::url($banner->media_url) }}"
