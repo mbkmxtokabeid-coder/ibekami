@@ -21,15 +21,26 @@ class Hero extends Component
                 ->get();
         });
 
+        // 1. Validasi format cache: Jika null atau bukan Collection, hapus cache usang & ambil segar dari DB
+        if (!($rawBanners instanceof \Illuminate\Support\Collection)) {
+            Cache::forget('homepage:hero_banner');
+            $rawBanners = Banner::query()
+                ->orderBy('id', 'asc')
+                ->take(4)
+                ->get();
+        }
+
+        // 2. Ubah hasil mapping menjadi array murni agar aman diserialisasi oleh Livewire
         $this->banners = $rawBanners->map(function ($banner) {
             return [
                 'id'  => $banner->id,
                 'url' => $this->resolvePublicUrl($banner->media_url),
             ];
-        });
+        })->all();
 
-        if ($this->banners->isNotEmpty()) {
-            $this->preloadImageUrl = $this->banners->first()['url'];
+        // 3. Periksa isi array secara aman menggunakan empty()
+        if (!empty($this->banners)) {
+            $this->preloadImageUrl = $this->banners[0]['url'] ?? null;
         }
     }
 
