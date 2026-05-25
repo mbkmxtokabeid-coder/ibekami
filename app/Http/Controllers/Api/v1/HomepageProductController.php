@@ -47,7 +47,7 @@ class HomepageProductController extends Controller
                 ->take($perPage)
                 ->get();
 
-            $mappedProducts = $products->map(function ($product) {
+            $mappedProducts = $products->map(function (\App\Models\Product $product) {
                 $img = $product->getFirstImageUrl();
                 $parsed = parse_url($img);
                 if (isset($parsed['host']) && in_array($parsed['host'], ['localhost', '127.0.0.1'])) {
