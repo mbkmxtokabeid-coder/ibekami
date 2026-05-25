@@ -24,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureRateLimiting();
 
+        // Paksa skema HTTPS di server produksi untuk memperbaiki error 401 saat Livewire upload file
+        if (config('app.env') === 'production' || env('FORCE_HTTPS', false)) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         // ── LOG VIEWER: AKSES PUBLIK (TANPA LOGIN) ──
         \Illuminate\Support\Facades\Gate::define('viewLogViewer', function ($user = null) {
             return true;

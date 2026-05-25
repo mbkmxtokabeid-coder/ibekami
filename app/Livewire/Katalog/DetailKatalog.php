@@ -88,7 +88,7 @@ class DetailKatalog extends Component
                 ->orderBy('created_at', 'desc')
                 ->take(4)
                 ->get()
-                ->map(function ($relatedProduct) {
+                ->map(function (\App\Models\Product $relatedProduct) {
                     return [
                         'name' => $relatedProduct->name,
                         'cat' => $relatedProduct->type->name ?? $relatedProduct->category->name ?? 'Produk',
