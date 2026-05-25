@@ -17,7 +17,7 @@ class DetailKatalog extends Component
     {
         $this->slug = $slug;
         $this->version = cache()->get('katalog_cache_version', 0);
-        
+
         $redirect = $this->loadProduct();
         if ($redirect) {
             return $redirect;
@@ -40,7 +40,7 @@ class DetailKatalog extends Component
     {
         // Generate cache key berdasarkan slug dan locale
         $cacheKey = 'product_detail_' . $this->slug . '_' . app()->getLocale();
-        
+
         // Cache selama 10 menit (600 detik)
         // Detail produk jarang berubah, jadi aman di-cache lebih lama
         $this->product = cache()->remember($cacheKey, 600, function () {
@@ -66,7 +66,7 @@ class DetailKatalog extends Component
 
         // Load related products
         $this->loadRelatedProducts();
-        
+
         // Prepare product data
         $this->prepareProductData();
     }
@@ -75,7 +75,7 @@ class DetailKatalog extends Component
     {
         // Generate cache key untuk related products
         $cacheKey = 'related_products_' . $this->product->product_id . '_' . app()->getLocale();
-        
+
         // Cache selama 10 menit (600 detik)
         $this->relatedProducts = cache()->remember($cacheKey, 600, function () {
             // Load related products tanpa filter status
@@ -83,7 +83,7 @@ class DetailKatalog extends Component
                 ->where('product_id', '!=', $this->product->product_id)
                 ->where(function ($query) {
                     $query->where('category_type', $this->product->category_type)
-                          ->orWhere('product_type', $this->product->product_type);
+                        ->orWhere('product_type', $this->product->product_type);
                 })
                 ->orderBy('created_at', 'desc')
                 ->take(4)
