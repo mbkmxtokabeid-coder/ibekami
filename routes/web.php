@@ -225,9 +225,10 @@ Route::prefix('admin')
                     $message .= " [Info Log: {$logError}]";
                 }
 
-                // Naikkan versi cache dinamis & hapus cache partners
+                // Naikkan versi cache dinamis & hapus cache partners & hero banners
                 \Illuminate\Support\Facades\Cache::forever('homepage_products_version', time());
                 \Illuminate\Support\Facades\Cache::forget('homepage:partners');
+                \Illuminate\Support\Facades\Cache::forget('homepage:hero_banner');
 
                 return back()->with('success', $message);
             } catch (\Throwable $e) {
