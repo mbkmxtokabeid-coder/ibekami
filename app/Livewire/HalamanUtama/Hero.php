@@ -9,29 +9,27 @@ use Illuminate\Support\Facades\Storage;
 
 class Hero extends Component
 {
-    public $banner;
-    public $videoUrl;
-    public $imageUrl;
-    public $posterUrl;
+    public $banners = [];
     public $preloadImageUrl;
 
     public function mount()
     {
-        $this->banner = Cache::remember('homepage:hero_banner', now()->addMinutes(10), function () {
+        $rawBanners = Cache::remember('homepage:hero_banner', now()->addMinutes(10), function () {
             return Banner::query()
-                ->orderByDesc('id')
-                ->first();
+                ->orderBy('id', 'asc')
+                ->take(4)
+                ->get();
         });
 
-        if ($this->banner) {
-            if ($this->banner->media_type === 'video') {
-                $this->videoUrl = $this->resolvePublicUrl($this->banner->media_url);
-                $this->posterUrl = $this->resolvePublicUrl($this->banner->thumbnail_url);
-                $this->preloadImageUrl = $this->posterUrl;
-            } else {
-                $this->imageUrl = $this->resolvePublicUrl($this->banner->media_url);
-                $this->preloadImageUrl = $this->imageUrl;
-            }
+        $this->banners = $rawBanners->map(function ($banner) {
+            return [
+                'id'  => $banner->id,
+                'url' => $this->resolvePublicUrl($banner->media_url),
+            ];
+        });
+
+        if ($this->banners->isNotEmpty()) {
+            $this->preloadImageUrl = $this->banners->first()['url'];
         }
     }
 

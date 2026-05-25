@@ -11,14 +11,32 @@ class DetailKatalog extends Component
     public ?Product $product = null;
     public array $relatedProducts = [];
     public array $productData = [];
+    public int $version = 0;
 
-    public function mount(string $slug = ''): void
+    public function mount(string $slug = '')
     {
         $this->slug = $slug;
-        $this->loadProduct();
+        $this->version = cache()->get('katalog_cache_version', 0);
+        
+        $redirect = $this->loadProduct();
+        if ($redirect) {
+            return $redirect;
+        }
     }
 
-    private function loadProduct(): void
+    public function checkVersion()
+    {
+        $currentVersion = cache()->get('katalog_cache_version', 0);
+        if ($currentVersion > $this->version) {
+            $this->version = $currentVersion;
+            $redirect = $this->loadProduct();
+            if ($redirect) {
+                return $redirect;
+            }
+        }
+    }
+
+    private function loadProduct()
     {
         // Generate cache key berdasarkan slug dan locale
         $cacheKey = 'product_detail_' . $this->slug . '_' . app()->getLocale();
@@ -26,16 +44,24 @@ class DetailKatalog extends Component
         // Cache selama 10 menit (600 detik)
         // Detail produk jarang berubah, jadi aman di-cache lebih lama
         $this->product = cache()->remember($cacheKey, 600, function () {
-            // Cari produk berdasarkan slug (tanpa filter status)
+            // Cari produk berdasarkan slug Indonesia atau Inggris (tanpa filter status)
             return Product::with(['type', 'category'])
                 ->get()
                 ->first(function ($product) {
-                    return $product->getSlug() === $this->slug;
+                    $slugId = \Illuminate\Support\Str::slug($product->name_id);
+                    $slugEn = \Illuminate\Support\Str::slug($product->name_en);
+                    return $this->slug === $slugId || $this->slug === $slugEn;
                 });
         });
 
         if (!$this->product) {
             abort(404, 'Produk tidak ditemukan');
+        }
+
+        // Jika slug yang diakses berbeda dengan slug aktif saat ini, redirect ke slug aktif
+        $currentActiveSlug = $this->product->getSlug();
+        if ($currentActiveSlug !== $this->slug) {
+            return redirect()->route('katalog.detail', ['slug' => $currentActiveSlug]);
         }
 
         // Load related products

@@ -9,11 +9,9 @@ use Illuminate\Support\Facades\Storage;
 
 class HotDeals extends Component
 {
-    public $deals;
-
-    public function mount()
+    public function render()
     {
-        $this->deals = Cache::remember('homepage:hot_deals', now()->addMinutes(30), function () {
+        $deals = Cache::remember('homepage:hot_deals', now()->addMinutes(30), function () {
             // Ambil semua Type yang memiliki image_url
             return Type::query()
                 ->whereNotNull('image_url')
@@ -35,10 +33,9 @@ class HotDeals extends Component
                     return $deal;
                 });
         });
-    }
 
-    public function render()
-    {
-        return view('livewire.halaman-utama.hot-deals');
+        return view('livewire.halaman-utama.hot-deals', [
+            'deals' => $deals
+        ]);
     }
 }

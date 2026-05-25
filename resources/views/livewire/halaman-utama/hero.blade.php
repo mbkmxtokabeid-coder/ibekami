@@ -74,66 +74,62 @@
         <div class="lg:col-span-6 relative w-full flex items-center justify-center mt-6 lg:mt-0">
             
             <!-- Frame — aspect-square agar video 1:1 tampil penuh -->
-            <div x-data="{ showVideo: false, videoReady: false }"
-                 x-init="
-                    const startVideo = () => {
-                        if (window.requestIdleCallback) {
-                            window.requestIdleCallback(() => { showVideo = true; }, { timeout: 1200 });
-                        } else {
-                            setTimeout(() => { showVideo = true; }, 500);
-                        }
-                    };
-                    if (document.readyState === 'complete') startVideo();
-                    else window.addEventListener('load', startVideo, { once: true });
-                 "
+            <!-- Frame — aspect-square agar carousel 1:1 tampil penuh -->
+            <div x-data="{ 
+                     activeSlide: 0, 
+                     slidesCount: {{ count($banners) }},
+                     init() {
+                         if (this.slidesCount > 1) {
+                             setInterval(() => {
+                                 this.activeSlide = (this.activeSlide + 1) % this.slidesCount;
+                             }, 5000);
+                         }
+                     }
+                 }"
                  class="relative w-[85%] max-w-[480px] aspect-square bg-[#FFF2E0] rounded-2xl
             border border-white/60 shadow-lg shadow-[#FF9100]/10 overflow-hidden transition-transform duration-500">
 
-                @if($banner && $videoUrl)
-                    @if($posterUrl)
-                        <img src="{{ $posterUrl }}"
-                             alt="Banner utama IBEKAMI"
-                             width="960"
-                             height="960"
-                             loading="eager"
-                             fetchpriority="high"
-                             decoding="async"
-                             class="absolute inset-0 w-full h-full object-contain transition-opacity duration-300"
-                             :class="videoReady ? 'opacity-0' : 'opacity-100'">
-                    @endif
-
-                    <template x-if="showVideo">
-                        <video autoplay loop muted playsinline preload="none"
-                             @if($posterUrl) poster="{{ $posterUrl }}" @endif
-                             x-on:canplay="videoReady = true"
-                             class="w-full h-full object-contain">
-                            <source src="{{ $videoUrl }}" type="video/webm">
-                            <source src="{{ $videoUrl }}" type="video/mp4">
-                        </video>
-                    </template>
-                @elseif($banner && $imageUrl)
-                    <img src="{{ $imageUrl }}"
-                         alt="Banner utama IBEKAMI"
-                         width="960"
-                         height="960"
-                         loading="eager"
-                         fetchpriority="high"
-                         decoding="async"
-                         class="w-full h-full object-contain">
+                @if(count($banners) > 0)
+                    <!-- Sliding Wrapper -->
+                    <div class="flex w-full h-full transition-transform duration-1000 ease-out"
+                         :style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
+                        @foreach($banners as $index => $bannerItem)
+                            <div class="w-full h-full shrink-0">
+                                <img src="{{ $bannerItem['url'] }}"
+                                     alt="Banner utama IBEKAMI"
+                                     width="960"
+                                     height="960"
+                                     @if($index === 0) loading="eager" fetchpriority="high" @else loading="lazy" @endif
+                                     decoding="async"
+                                     class="w-full h-full object-cover">
+                            </div>
+                        @endforeach
+                    </div>
                 @else
-                    <!-- Fallback jika tidak ada video -->
+                    <!-- Fallback jika tidak ada banner -->
                     <div class="w-full h-full bg-gradient-to-br from-[#FF9100]/20 to-[#FFB066]/20 flex items-center justify-center">
                         <div class="text-center">
                             <svg class="w-20 h-20 mx-auto text-[#FF9100]/40 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
-                            <p class="text-[#5C3D28] text-sm">Video banner belum tersedia</p>
+                            <p class="text-[#5C3D28] text-sm">Banner belum tersedia</p>
                         </div>
                     </div>
                 @endif
 
-                <div class="absolute inset-0 bg-[#FF9100]/10 mix-blend-multiply pointer-events-none"></div>
+                <div class="absolute inset-0 bg-[#FF9100]/5 mix-blend-multiply pointer-events-none"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-[#FFF2E0] via-transparent to-transparent opacity-40 pointer-events-none"></div>
+
+                <!-- Carousel Indicators -->
+                @if(count($banners) > 1)
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 bg-black/10 backdrop-blur-md px-3 py-1.5 rounded-full">
+                        @foreach($banners as $index => $bannerItem)
+                            <button @click="activeSlide = {{ $index }}"
+                                    class="h-1.5 rounded-full transition-all duration-300"
+                                    :class="activeSlide === {{ $index }} ? 'w-5 bg-[#FF9100]' : 'w-1.5 bg-white/60 hover:bg-white'"></button>
+                        @endforeach
+                    </div>
+                @endif
             </div>
 
             <!-- Floating Card Rating -->

@@ -189,7 +189,29 @@ Route::prefix('admin')
                     $imageError = 'Gagal memproses gambar mitra: ' . $e->getMessage();
                 }
 
+                // ── 4. BERSIHKAN FILE LOG & CACHE LOG VIEWER ──
+                $logCleared = false;
+                $logError = null;
+                try {
+                    $logPath = storage_path('logs/laravel.log');
+                    if (file_exists($logPath)) {
+                        // Mengosongkan isi file laravel.log dengan aman
+                        file_put_contents($logPath, '');
+                        $logCleared = true;
+                    }
+
+                    // Bersihkan cache pencarian & indeks Log-Viewer jika package aktif
+                    if (class_exists(\Opcodes\LogViewer\Facades\LogViewer::class)) {
+                        \Opcodes\LogViewer\Facades\LogViewer::clearCache();
+                    }
+                } catch (\Throwable $e) {
+                    $logError = 'Gagal membersihkan berkas log: ' . $e->getMessage();
+                }
+
                 $message = 'Optimasi server dan cache berhasil dilakukan secara aman!';
+                if ($logCleared) {
+                    $message = 'Optimasi server, pembersihan cache, dan penyegaran log error berhasil dilakukan secara aman!';
+                }
                 if ($convertedCount > 0) {
                     $message .= " Berhasil mensinkronisasi {$convertedCount} logo mitra ke format WebP!";
                 }
@@ -198,6 +220,9 @@ Route::prefix('admin')
                 }
                 if ($imageError) {
                     $message .= " [Info Gambar: {$imageError}]";
+                }
+                if ($logError) {
+                    $message .= " [Info Log: {$logError}]";
                 }
 
                 // Naikkan versi cache dinamis & hapus cache partners

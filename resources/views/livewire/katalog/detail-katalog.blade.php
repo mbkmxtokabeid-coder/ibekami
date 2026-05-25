@@ -1,4 +1,4 @@
-<div class="bg-[#fff2e0] min-h-screen font-sans text-[#3d2b1f]">
+<div class="bg-[#fff2e0] min-h-screen font-sans text-[#3d2b1f]" wire:poll.10s="checkVersion">
     
     {{-- HERO SECTION --}}
     <section class="relative bg-[#fff2e0] overflow-hidden border-b border-[#ff9100]/10">
