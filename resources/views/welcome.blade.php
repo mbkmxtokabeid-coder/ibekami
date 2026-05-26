@@ -14,13 +14,13 @@
     {{-- Sosial Media — render langsung --}}
     <livewire:halaman-utama.sosial-media />
 
-    {{-- Ulasan — lazy loaded --}}
-    <livewire:halaman-utama.ulasan lazy />
+    {{-- Ulasan — render langsung --}}
+    <livewire:halaman-utama.ulasan />
 
-    {{-- Mitra — lazy loaded --}}
-    <livewire:halaman-utama.mitra lazy />
+    {{-- Mitra — render langsung --}}
+    <livewire:halaman-utama.mitra />
 
-    {{-- Footer — lazy loaded --}}
-    <livewire:footer lazy />
+    {{-- Footer — render langsung --}}
+    <livewire:footer />
 
 @endsection

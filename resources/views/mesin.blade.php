@@ -11,6 +11,6 @@
     <livewire:mesin.mesin-section lazy />
 
     {{-- Footer — lazy --}}
-    <livewire:footer lazy />
+    <livewire:footer />
 
 @endsection

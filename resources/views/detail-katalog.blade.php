@@ -6,6 +6,6 @@
 
     <livewire:katalog.detail-katalog :slug="$slug" />
 
-    <livewire:footer lazy />
+    <livewire:footer />
 
 @endsection
