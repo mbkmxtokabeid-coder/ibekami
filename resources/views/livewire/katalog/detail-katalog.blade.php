@@ -1,5 +1,10 @@
 <div class="bg-[#fff2e0] min-h-screen font-sans text-[#3d2b1f]" wire:poll.10s="checkVersion">
     
+    {{-- Preload primary LCP image for high-speed delivery --}}
+    @push('styles')
+        <link rel="preload" as="image" href="{{ $productData['images'][0] ?? $productData['image'] }}" fetchpriority="high">
+    @endpush
+    
     {{-- HERO SECTION --}}
     <section class="relative bg-[#fff2e0] overflow-hidden border-b border-[#ff9100]/10">
         <div class="absolute top-[-10%] left-[-5%] w-72 h-72 bg-[#ff9100] opacity-[0.08] rounded-full blur-[100px]"></div>
@@ -24,6 +29,9 @@
                      src="{{ $productData['images'][0] ?? $productData['image'] }}"
                      alt="{{ $productData['name'] }}" 
                      id="mainProductImage"
+                     loading="eager"
+                     fetchpriority="high"
+                     decoding="sync"
                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                      onerror="this.src='https://via.placeholder.com/400x300?text=Image+Not+Found'">
                 <span class="absolute top-6 left-6 bg-[#ff9100] text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg shadow-[#ff9100]/30">{{ $productData['category'] }}</span>

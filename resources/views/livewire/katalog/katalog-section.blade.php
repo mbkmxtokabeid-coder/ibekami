@@ -60,8 +60,14 @@
                     <div class="aspect-[4/3] bg-[#E8E3D8] relative overflow-hidden shrink-0">
                         <img src="{{ $product['img'] }}"
                              alt="{{ $product['name'] }}"
-                             loading="lazy"
-                             decoding="async"
+                             @if($loop->index < 4)
+                                 loading="eager"
+                                 fetchpriority="high"
+                                 decoding="sync"
+                             @else
+                                 loading="lazy"
+                                 decoding="async"
+                             @endif
                              width="400"
                              height="300"
                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">

@@ -58,6 +58,25 @@ class Ulasan extends Component
         return strtoupper(substr($name, 0, 2));
     }
 
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <div class="py-16 px-4 bg-[#fdfaf7] animate-pulse">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-10 text-center md:text-left">
+                    <div class="h-3 w-36 bg-[#ff9100]/20 rounded mb-2 mx-auto md:mx-0"></div>
+                    <div class="h-8 w-64 bg-[#2C1A0E]/20 rounded mx-auto md:mx-0"></div>
+                </div>
+                <div class="flex gap-6 overflow-hidden">
+                    <div class="w-[280px] md:w-[350px] bg-white p-6 rounded-2xl border border-[#ff9100]/5 h-48 flex-shrink-0"></div>
+                    <div class="w-[280px] md:w-[350px] bg-white p-6 rounded-2xl border border-[#ff9100]/5 h-48 flex-shrink-0"></div>
+                    <div class="w-[280px] md:w-[350px] bg-white p-6 rounded-2xl border border-[#ff9100]/5 h-48 flex-shrink-0"></div>
+                </div>
+            </div>
+        </div>
+        HTML;
+    }
+
     public function render()
     {
         return view('livewire.halaman-utama.ulasan');

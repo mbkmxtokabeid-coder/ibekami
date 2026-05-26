@@ -16,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
         // Tanpa ini Laravel tidak tahu request aslinya HTTPS → redirect loop.
         $middleware->prepend(\App\Http\Middleware\TrustProxies::class);
 
+        // ── Kompresi Respons ────────────────────────────────────────────────
+        // Menghasilkan kompresi gzip untuk semua file teks dokumen (HTML, JSON, dll.)
+        $middleware->prepend(\App\Http\Middleware\CompressResponse::class);
+
         // Redirect authenticated users to admin dashboard instead of /home
         $middleware->redirectGuestsTo(fn () => route('admin.login'));
         $middleware->redirectUsersTo(fn () => route('admin.dashboard'));

@@ -99,8 +99,7 @@
                                      alt="Banner utama IBEKAMI"
                                      width="960"
                                      height="960"
-                                     @if($index === 0) loading="eager" fetchpriority="high" @else loading="lazy" @endif
-                                     decoding="async"
+                                     @if($index === 0) loading="eager" fetchpriority="high" decoding="sync" @else loading="lazy" decoding="async" @endif
                                      class="w-full h-full object-cover">
                             </div>
                         @endforeach
