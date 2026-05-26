@@ -9,7 +9,7 @@
             ->orderBy('created_at', 'desc')
             ->take(12)
             ->get()
-            ->map(function ($product) {
+            ->map(function (\App\Models\Product $product) {
                 $img = $product->getFirstImageUrl();
                 $parsed = parse_url($img);
                 if (isset($parsed['host']) && in_array($parsed['host'], ['localhost', '127.0.0.1'])) {
