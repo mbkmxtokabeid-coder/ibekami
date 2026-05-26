@@ -54,6 +54,7 @@
 
             @foreach($this->paginatedData['items'] as $product)
                 <a href="{{ route('katalog.detail', ['slug' => $product['slug']]) }}"
+                   wire:navigate.hover
                    wire:key="product-{{ $product['id'] }}"
                    class="bg-[#FDFAF7] rounded-2xl overflow-hidden border border-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(44,26,14,0.1)] group cursor-pointer flex flex-col">
 

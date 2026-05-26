@@ -106,7 +106,8 @@
 
             <div class="flex flex-col sm:flex-row gap-4 w-full">
                 <a href="{{ route('katalog') }}" 
-                class="flex-1 bg-white border-2 border-[#ff9100] text-[#ff9100] py-5 rounded-[24px] flex items-center justify-center gap-2 font-black text-lg transition-all hover:bg-[#fff2e0] active:scale-[0.98] shadow-[0_10px_20px_rgba(255,145,0,0.05)]">
+                   wire:navigate.hover
+                   class="flex-1 bg-white border-2 border-[#ff9100] text-[#ff9100] py-5 rounded-[24px] flex items-center justify-center gap-2 font-black text-lg transition-all hover:bg-[#fff2e0] active:scale-[0.98] shadow-[0_10px_20px_rgba(255,145,0,0.05)]">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
@@ -134,7 +135,8 @@
             @forelse($relatedProducts as $item)
                 <a wire:key="related-{{ $item['slug'] }}"
                    href="{{ route('katalog.detail', ['slug' => $item['slug']]) }}"
-                class="bg-[#FDFAF7] rounded-2xl overflow-hidden border border-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(44,26,14,0.1)] group cursor-pointer flex flex-col">
+                   wire:navigate.hover
+                   class="bg-[#FDFAF7] rounded-2xl overflow-hidden border border-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(44,26,14,0.1)] group cursor-pointer flex flex-col">
 
                     <div class="aspect-[4/3] bg-[#E8E3D8] relative overflow-hidden shrink-0">
                         <img src="{{ $item['img'] }}"

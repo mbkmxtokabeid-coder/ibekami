@@ -1,6 +1,6 @@
 @php
     $version = Cache::rememberForever('homepage_products_version', fn() => time());
-    // SSR 12 produk pertama agar loading awal desktop langsung terisi penuh tanpa delay JS
+    // Ambil 12 produk pertama langsung dari cache
     $initialData = Cache::remember("homepage:ssr:products:v{$version}", now()->addMinutes(10), function() {
         return App\Models\Product::query()
             ->with(['type', 'category'])
@@ -25,67 +25,9 @@
                 ];
             })->toArray();
     });
-
-    $totalProducts = Cache::remember('homepage:active_products_count', now()->addMinutes(10), fn() => App\Models\Product::where('status', 'Aktif')->count());
-    // Max pages awal (Desktop 12 per halaman)
-    $maxPages = ceil(min($totalProducts, 48) / 12);
 @endphp
 
-<section id="katalog" class="py-14 md:py-20 px-4 bg-[#FFF2E0] relative overflow-hidden"
-    x-data="{
-        products: {{ json_encode($initialData) }},
-        page: 1,
-        maxPages: {{ $maxPages }},
-        viewport: 'desktop',
-        loading: false,
-
-        init() {
-            this.detectViewport();
-            
-            // Jika bukan desktop, fetch ulang agar jumlah pertamanya pas (Tablet 9, HP 6)
-            if (this.viewport !== 'desktop') {
-                this.fetchProducts(true);
-            }
-
-            window.addEventListener('resize', () => {
-                let oldViewport = this.viewport;
-                this.detectViewport();
-                if (oldViewport !== this.viewport) {
-                    this.fetchProducts(true);
-                }
-            });
-        },
-
-        detectViewport() {
-            if (window.innerWidth >= 1024) {
-                this.viewport = 'desktop';
-            } else if (window.innerWidth >= 768) {
-                this.viewport = 'tablet';
-            } else {
-                this.viewport = 'mobile';
-            }
-        },
-
-        async fetchProducts(reset = false) {
-            if (reset) {
-                this.page = 1;
-            }
-            this.loading = true;
-            try {
-                let response = await fetch(`/api/v1/homepage/products?page=${this.page}&viewport=${this.viewport}&v={{ $version }}`);
-                let resData = await response.json();
-                if (reset) {
-                    this.products = resData.products;
-                }
-                this.maxPages = resData.maxPages;
-                this.page = resData.page;
-            } catch (err) {
-                console.error('Failed to fetch products:', err);
-            }
-            this.loading = false;
-        }
-    }">
-
+<section id="katalog" class="py-14 md:py-20 px-4 bg-[#FFF2E0] relative overflow-hidden">
     <!-- Background Decorations -->
     <div class="absolute top-10 left-[-5%] w-72 h-72 bg-[#FF9100]/10 rounded-full blur-[80px] pointer-events-none"></div>
     <div class="absolute bottom-10 right-[-5%] w-64 h-64 bg-white/40 rounded-full blur-[60px] pointer-events-none"></div>
@@ -108,41 +50,44 @@
             </div>
         </div>
 
-        <!-- Product Grid -->
+        <!-- Product Grid — Direct Blade SSR rendering for zero-latency card load -->
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
-            <template x-for="(product, index) in products" :key="product.id">
-                <a :href="'/katalog/' + product.slug"
+            @foreach($initialData as $index => $product)
+                <a href="{{ route('katalog.detail', ['slug' => $product['slug']]) }}"
+                   wire:navigate.hover
                    class="group bg-white/90 rounded-3xl p-3 border border-black/5 
                           shadow-sm hover:shadow-md hover:shadow-[#FF9100]/10 
                           transition-all duration-300 ease-out 
-                          hover:-translate-y-1 flex flex-col cursor-pointer"
-                    :class="{
-                        'hidden lg:flex': page === 1 && index >= 9 && index < 12,
-                        'hidden md:flex': page === 1 && index >= 6 && index < 9,
-                        'hidden': page === 1 && index >= 12
-                    }">
+                          hover:-translate-y-1 flex flex-col cursor-pointer
+                          @if($index >= 9) hidden lg:flex @elseif($index >= 6) hidden md:flex @endif">
 
                     <!-- Image Container — dimensi eksplisit mencegah CLS -->
                     <div class="h-[130px] md:h-[180px] rounded-2xl overflow-hidden bg-gradient-to-br from-[#FFF2E0] to-[#FFE5C8] mb-3">
                         <img 
-                            :src="product.img"
-                            :alt="product.name"
-                            :loading="index >= 4 ? 'lazy' : 'eager'"
-                            decoding="async"
+                            src="{{ $product['img'] }}"
+                            alt="{{ $product['name'] }}"
+                            @if($index < 4)
+                                loading="eager"
+                                fetchpriority="high"
+                                decoding="sync"
+                            @else
+                                loading="lazy"
+                                decoding="async"
+                            @endif
                             width="400"
                             height="300"
                             class="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.04]"
-                            x-on:error="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=' + encodeURIComponent(product.name)"
+                            onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=' + encodeURIComponent('{{ $product['name'] }}')"
                         >
                     </div>
 
                     <!-- Product Info -->
                     <div>
-                        <div class="text-[10px] font-semibold text-[#FF9100] uppercase tracking-wide mb-1" x-text="product.cat"></div>
-                        <h3 class="text-[13px] md:text-sm font-semibold text-[#2C1A0E] leading-snug line-clamp-2" x-text="product.name"></h3>
+                        <div class="text-[10px] font-semibold text-[#FF9100] uppercase tracking-wide mb-1">{{ $product['cat'] }}</div>
+                        <h3 class="text-[13px] md:text-sm font-semibold text-[#2C1A0E] leading-snug line-clamp-2">{{ $product['name'] }}</h3>
                     </div>
                 </a>
-            </template>
+            @endforeach
         </div>
 
     </div>
