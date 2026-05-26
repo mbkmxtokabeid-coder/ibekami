@@ -72,28 +72,28 @@ Route::prefix('admin')
                 // ── 1. SELF-HEALING SYMLINK STORAGE ──
                 $storageError = null;
                 try {
-                    $storageLinkPath = public_path('storage');
-                    if (is_link($storageLinkPath)) {
-                        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                            @rmdir($storageLinkPath);
-                        } else {
-                            @unlink($storageLinkPath);
-                        }
-                    } elseif (is_dir($storageLinkPath)) {
-                        // Jika public/storage adalah folder biasa, hapus jika kosong atau backup jika ada isinya
-                        $files = array_diff(scandir($storageLinkPath), array('.', '..'));
-                        if (empty($files)) {
-                            @rmdir($storageLinkPath);
-                        } else {
-                            @rename($storageLinkPath, public_path('storage_backup_' . time()));
-                        }
-                    }
-
-                    // Re-create storage symlink (jika fungsi symlink aktif)
+                    // Hanya hapus dan buat ulang symlink jika fungsi symlink() aktif di PHP server!
                     if (function_exists('symlink')) {
+                        $storageLinkPath = public_path('storage');
+                        if (is_link($storageLinkPath)) {
+                            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                                @rmdir($storageLinkPath);
+                            } else {
+                                @unlink($storageLinkPath);
+                            }
+                        } elseif (is_dir($storageLinkPath)) {
+                            // Jika public/storage adalah folder biasa, hapus jika kosong atau backup jika ada isinya
+                            $files = array_diff(scandir($storageLinkPath), array('.', '..'));
+                            if (empty($files)) {
+                                @rmdir($storageLinkPath);
+                            } else {
+                                @rename($storageLinkPath, public_path('storage_backup_' . time()));
+                            }
+                        }
+                        
                         \Illuminate\Support\Facades\Artisan::call('storage:link');
                     } else {
-                        $storageError = 'Fungsi symlink() dinonaktifkan di hosting Anda. Hubungi penyedia hosting untuk mengaktifkannya atau buat storage link secara manual.';
+                        $storageError = 'Fungsi symlink() dinonaktifkan di hosting Anda. Folder storage di public_html dibiarkan utuh demi keamanan aset Anda.';
                     }
                 } catch (\Throwable $e) {
                     $storageError = 'Gagal memproses storage link: ' . $e->getMessage();
@@ -202,7 +202,10 @@ Route::prefix('admin')
 
                     // Bersihkan cache pencarian & indeks Log-Viewer jika package aktif
                     if (class_exists(\Opcodes\LogViewer\Facades\LogViewer::class)) {
-                        \Opcodes\LogViewer\Facades\LogViewer::clearCache();
+                        // LogViewer v3+ menggunakan clearFilesCache untuk membersihkan indeks berkas
+                        if (method_exists(\Opcodes\LogViewer\Facades\LogViewer::class, 'clearFilesCache')) {
+                            \Opcodes\LogViewer\Facades\LogViewer::clearFilesCache();
+                        }
                     }
                 } catch (\Throwable $e) {
                     $logError = 'Gagal membersihkan berkas log: ' . $e->getMessage();
