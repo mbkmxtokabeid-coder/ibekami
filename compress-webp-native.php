@@ -25,7 +25,7 @@ $directories = [
 ];
 
 // Target ukuran maksimum dalam bytes
-$maxSize = 250 * 1024;    // 250 KB
+$maxSize = 100 * 1024;    // 100 KB
 $targetMin = 50 * 1024;   // 50 KB
 $targetMax = 150 * 1024;  // 150 KB
 $maxDimension = 1200;     // Maksimum lebar/tinggi piksel untuk di atas viewport

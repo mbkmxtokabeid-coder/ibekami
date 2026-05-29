@@ -8,28 +8,28 @@
  * lalu langsung unregister dirinya sendiri.
  */
 
-self.addEventListener('install', function (event) {
+self.addEventListener('install', function(event) {
     // Skip waiting agar langsung aktif, tidak menunggu tab ditutup
     self.skipWaiting();
 });
 
-self.addEventListener('activate', function (event) {
+self.addEventListener('activate', function(event) {
     event.waitUntil(
         // Hapus semua cache yang dibuat SW lama
-        caches.keys().then(function (cacheNames) {
+        caches.keys().then(function(cacheNames) {
             return Promise.all(
-                cacheNames.map(function (cacheName) {
+                cacheNames.map(function(cacheName) {
                     return caches.delete(cacheName);
                 })
             );
-        }).then(function () {
+        }).then(function() {
             // Unregister diri sendiri
             return self.registration.unregister();
-        }).then(function () {
+        }).then(function() {
             // Paksa semua tab yang terbuka untuk reload dari server
             return self.clients.matchAll({ type: 'window' });
-        }).then(function (clients) {
-            clients.forEach(function (client) {
+        }).then(function(clients) {
+            clients.forEach(function(client) {
                 client.navigate(client.url);
             });
         })
