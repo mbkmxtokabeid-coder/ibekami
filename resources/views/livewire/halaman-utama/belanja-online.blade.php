@@ -18,6 +18,7 @@
             <a 
                 href="{{ $tokopediaUrl }}" 
                 target="_blank"
+                rel="noopener noreferrer"
                 @mouseenter="hoveredCard = 'tokopedia'"
                 @mouseleave="hoveredCard = null"
                 class="bg-white p-5 sm:p-6 rounded-3xl border border-[#ff9100]/10 flex items-center gap-5 sm:gap-6 group hover:border-[#ff9100]/40 hover:shadow-[0_8px_30px_rgba(255,145,0,0.12)] transition-all duration-300 hover:scale-[1.02] ease-out"
@@ -48,6 +49,7 @@
             <a 
                 href="{{ $shopeeUrl }}" 
                 target="_blank"
+                rel="noopener noreferrer"
                 @mouseenter="hoveredCard = 'shopee'"
                 @mouseleave="hoveredCard = null"
                 class="bg-white p-5 sm:p-6 rounded-3xl border border-[#ff9100]/10 flex items-center gap-5 sm:gap-6 group hover:border-[#ff9100]/40 hover:shadow-[0_8px_30px_rgba(255,145,0,0.12)] transition-all duration-300 hover:scale-[1.02] ease-out"

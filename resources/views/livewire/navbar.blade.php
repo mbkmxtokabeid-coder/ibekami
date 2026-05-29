@@ -39,9 +39,11 @@
              :class="scrolled ? 'bg-[#ffe8ca]/95 shadow-[0_12px_40px_rgba(255,145,0,0.08)]' : ''">
             
             <!-- 1. Logo Brand -->
-            <a href="/" wire:navigate class="flex items-center gap-2.5 group shrink-0 outline-none">
+            <a href="/" class="flex items-center gap-2.5 group shrink-0 outline-none">
                 <img src="{{ asset('storage/logos/logo ibekami (3).webp') }}" 
                      alt="IBEKAMI Logo" 
+                     width="36"
+                     height="36"
                      class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="w-8 h-8 sm:w-9 sm:h-9 bg-[#ff9100] rounded-full items-center justify-center hidden">
@@ -51,7 +53,7 @@
 
             <!-- 2. Desktop Links -->
             <div class="hidden lg:flex items-center gap-1 xl:gap-2">
-                <a href="{{ url('/') }}" wire:navigate.hover class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
+                <a href="{{ url('/') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.home') }}
                 </a>
                 <a href="{{ url('/#hot-deals') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
@@ -76,10 +78,10 @@
                          x-transition:leave-start="transform opacity-100 scale-100 translate-y-0"
                          x-transition:leave-end="transform opacity-0 scale-95 -translate-y-2"
                          class="absolute top-full left-0 mt-4 w-56 bg-white/95 backdrop-blur-xl border border-white/60 rounded-2xl shadow-xl overflow-hidden z-50 p-2">
-                        <a href="{{ route('katalog') }}" wire:navigate.hover class="block px-4 py-2.5 rounded-xl text-[14px] font-bold text-[#ff9100] bg-[#fff2e0]/50 hover:bg-[#fff2e0] transition-colors mb-1">{{ __('messages.all_products') }}</a>
+                        <a href="{{ route('katalog') }}" class="block px-4 py-2.5 rounded-xl text-[14px] font-bold text-[#ff9100] bg-[#fff2e0]/50 hover:bg-[#fff2e0] transition-colors mb-1">{{ __('messages.all_products') }}</a>
                         
                         @forelse($productTypes as $type)
-                            <a href="{{ route('katalog', ['type' => $type['slug']]) }}" wire:navigate.hover
+                            <a href="{{ route('katalog', ['type' => $type['slug']]) }}"
                                wire:key="desktop-type-{{ $type['id'] }}"
                                class="block px-4 py-2 rounded-xl text-[13px] font-medium text-[#5C3D28] hover:text-[#ff9100] hover:bg-black/5 transition-colors">
                                 {{ $type['name'] }}
@@ -90,7 +92,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('mesin') }}" wire:navigate.hover class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
+                <a href="{{ route('mesin') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.our_machines') }}
                 </a>
                 <a href="{{ url('/#footer') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
@@ -116,6 +118,7 @@
                 <!-- Language Dropdown -->
                 <div class="relative shrink-0">
                     <button @click="langMenuOpen = !langMenuOpen" @click.outside="langMenuOpen = false" 
+                            aria-label="Pilih Bahasa"
                             class="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/40 border border-white/50 text-[#5C3D28] hover:text-[#ff9100] hover:bg-white transition-all outline-none shadow-sm"
                             :class="langMenuOpen ? 'bg-white ring-2 ring-[#ff9100]/30' : ''">
                         <span class="text-base leading-none lg:hidden" x-text="currentLocale === 'id' ? '🇮🇩' : '🇺🇸'"></span>
@@ -148,19 +151,22 @@
                 <!-- CTA Button -->
                 <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
+                   rel="noopener"
                    @click.throttle.2000ms
-                   class="hidden md:flex items-center justify-center bg-[#ff9100] text-white px-5 xl:px-6 py-2 rounded-full text-[13px] font-bold shadow-[0_4px_14px_rgba(255,145,0,0.3)] hover:shadow-[0_6px_20px_rgba(255,145,0,0.4)] hover:-translate-y-0.5 hover:bg-[#e68200] transition-all duration-300 outline-none shrink-0">
+                   class="hidden md:flex items-center justify-center bg-[#ff9100] text-[#2C1A0E] px-5 xl:px-6 py-2 rounded-full text-[13px] font-bold shadow-[0_4px_14px_rgba(255,145,0,0.3)] hover:shadow-[0_6px_20px_rgba(255,145,0,0.4)] hover:-translate-y-0.5 hover:bg-[#e68200] transition-all duration-300 outline-none shrink-0">
                     {{ __('messages.order') }}
                 </a>
 
                 <!-- Search Toggle Button (Khusus Mobile) -->
                 <button @click="searchOpen = !searchOpen; mobileMenuOpen = false" 
+                        aria-label="Cari Produk"
                         class="md:hidden flex items-center justify-center w-9 h-9 rounded-full bg-white/50 text-[#5C3D28] hover:bg-white hover:text-[#ff9100] transition-colors outline-none shadow-sm">
                     <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </button>
 
                 <!-- Mobile Menu Toggle -->
                 <button @click="mobileMenuOpen = !mobileMenuOpen; searchOpen = false" 
+                        aria-label="Buka Menu"
                         class="lg:hidden flex items-center justify-center w-9 h-9 rounded-full bg-white/50 text-[#5C3D28] hover:bg-white hover:text-[#ff9100] transition-colors outline-none shadow-sm">
                     <svg x-show="!mobileMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     <svg x-show="mobileMenuOpen" x-cloak class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -199,7 +205,7 @@
          class="absolute top-[76px] sm:top-[86px] inset-x-4 lg:hidden">
         
         <div class="bg-white/95 backdrop-blur-2xl border border-white/50 shadow-2xl rounded-3xl p-5 flex flex-col gap-2 max-h-[75vh] overflow-y-auto">
-            <a href="{{ url('/') }}" wire:navigate.hover class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
+            <a href="{{ url('/') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
             <a href="{{ url('/#hot-deals') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a>
             
             <!-- Katalog Dropdown (Mobile) -->
@@ -217,10 +223,10 @@
                      x-transition:leave-end="opacity-0 -translate-y-1"
                      class="px-4 pb-3 flex flex-col gap-2">
                     <div class="w-full h-px bg-black/5 mb-1"></div>
-                    <a href="{{ route('katalog') }}" wire:navigate.hover class="px-3 py-2 rounded-xl bg-[#ff9100]/10 text-[14px] font-bold text-[#ff9100]">{{ __('messages.all_products') }}</a>
+                    <a href="{{ route('katalog') }}" class="px-3 py-2 rounded-xl bg-[#ff9100]/10 text-[14px] font-bold text-[#ff9100]">{{ __('messages.all_products') }}</a>
                     
                     @forelse($productTypes as $type)
-                        <a href="{{ route('katalog', ['type' => $type['slug']]) }}" wire:navigate.hover
+                        <a href="{{ route('katalog', ['type' => $type['slug']]) }}"
                            wire:key="mobile-type-{{ $type['id'] }}"
                            class="px-3 py-2 rounded-xl text-[14px] font-medium text-[#5C3D28] hover:bg-[#fff2e0]">
                             {{ $type['name'] }}
@@ -231,15 +237,16 @@
                 </div>
             </div>
 
-            <a href="{{ route('mesin') }}" wire:navigate.hover class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.our_machines') }}</a>
+            <a href="{{ route('mesin') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.our_machines') }}</a>
             <a href="{{ url('/#footer') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.information') }}</a>
             
             <div class="w-full h-px bg-black/5 my-2"></div>
             
             <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
+               rel="noopener"
                @click.throttle.2000ms
-               class="w-full py-3.5 bg-[#ff9100] text-white rounded-2xl font-bold text-[15px] shadow-lg shadow-[#ff9100]/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 outline-none">
+               class="w-full py-3.5 bg-[#ff9100] text-[#2C1A0E] rounded-2xl font-bold text-[15px] shadow-lg shadow-[#ff9100]/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 outline-none">
                 {{ __('messages.order_now') }}
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </a>

@@ -68,6 +68,11 @@
 FileETag None
 
 <IfModule mod_headers.c>
+    # Cache Control Header untuk Semua File Aset Statis (Gambar, CSS, JS, Fonts)
+    <FilesMatch "\.(css|js|gif|png|jpg|jpeg|webp|ico|svg|woff|woff2|ttf|otf)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
     # Security Headers
     Header set X-Frame-Options "SAMEORIGIN"
     Header set X-Content-Type-Options "nosniff"

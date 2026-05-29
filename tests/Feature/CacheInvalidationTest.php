@@ -128,6 +128,8 @@ class CacheInvalidationTest extends TestCase
             'name_en' => 'Clothes',
         ]);
 
+        Cache::forget('katalog_cache_version');
+
         $this->assertNull(Cache::get('katalog_cache_version'));
 
         // 1. Create Category

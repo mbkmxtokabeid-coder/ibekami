@@ -1,7 +1,10 @@
 <div>
 @if($preloadImageUrl)
-    @push('styles')
-        <link rel="preload" as="image" href="{{ $preloadImageUrl }}" fetchpriority="high">
+    @push('preload')
+        <link rel="preload" as="image" href="{{ $preloadImageUrl }}" 
+              imagesrcset="{{ $preloadImageMobileUrl }} 480w, {{ $preloadImageUrl }} 960w" 
+              imagesizes="(max-width: 640px) 480px, 960px" 
+              type="image/webp" fetchpriority="high">
     @endpush
 @endif
 
@@ -30,9 +33,9 @@
             <!-- Headline -->
             <h1 class="font-['Playfair_Display'] text-[38px] sm:text-[48px] lg:text-[60px] font-extrabold leading-[1.1] text-[#2C1A0E] tracking-tight">
                 {{ __('messages.make_ideas_real') }} <br class="hidden sm:block">
-                <span class="relative inline-block text-[#FF9100]">
+                <span class="relative inline-block text-[#A64E2F]">
                     {{ __('messages.real_work') }}
-                    <svg class="absolute w-full h-3 -bottom-2 left-0 text-[#FF9100]/20" viewBox="0 0 100 20" fill="currentColor">
+                    <svg class="absolute w-full h-3 -bottom-2 left-0 text-[#A64E2F]/20" viewBox="0 0 100 20" fill="currentColor">
                         <path d="M0 15 Q 25 5 50 15 T 100 15 L 100 20 L 0 20 Z"></path>
                     </svg>
                 </span>
@@ -49,8 +52,9 @@
                 <!-- Primary -->
                 <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
+                   rel="noopener noreferrer"
                    @click.throttle.2000ms
-                   class="group relative px-6 py-3 bg-[#FF9100] text-white rounded-xl font-semibold text-[13px] 
+                   class="group relative px-6 py-3 bg-[#FF9100] text-[#2C1A0E] rounded-xl font-semibold text-[13px] 
                    shadow-md hover:shadow-lg hover:-translate-y-[2px] transition-all duration-300 overflow-hidden text-center">
                     <span class="relative z-10 flex items-center justify-center gap-2">
                         {{ __('messages.start_custom') }}
@@ -62,8 +66,8 @@
 
                 <!-- Secondary -->
                 <a href="/katalog" 
-                   class="px-6 py-3 text-[#FF9100] border border-[#FF9100]/30 rounded-xl font-semibold text-[13px] 
-                   hover:bg-[#FF9100]/10 transition text-center">
+                   class="px-6 py-3 text-[#2C1A0E] border border-[#2C1A0E]/30 rounded-xl font-semibold text-[13px] 
+                   hover:bg-[#2C1A0E]/10 transition text-center">
                     {{ __('messages.view_catalog') }}
                 </a>
             </div>
@@ -96,6 +100,8 @@
                         @foreach($banners as $index => $bannerItem)
                             <div class="w-full h-full shrink-0">
                                 <img src="{{ $bannerItem['url'] }}"
+                                     srcset="{{ $bannerItem['mobile_url'] }} 480w, {{ $bannerItem['url'] }} 960w"
+                                     sizes="(max-width: 640px) 480px, 960px"
                                      alt="Banner utama IBEKAMI"
                                      width="960"
                                      height="960"
@@ -121,11 +127,15 @@
 
                 <!-- Carousel Indicators -->
                 @if(count($banners) > 1)
-                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 bg-black/10 backdrop-blur-md px-3 py-1.5 rounded-full">
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 bg-black/10 backdrop-blur-md px-3 py-1.5 rounded-full items-center">
                         @foreach($banners as $index => $bannerItem)
                             <button @click="activeSlide = {{ $index }}"
-                                    class="h-1.5 rounded-full transition-all duration-300"
-                                    :class="activeSlide === {{ $index }} ? 'w-5 bg-[#FF9100]' : 'w-1.5 bg-white/60 hover:bg-white'"></button>
+                                    aria-label="Slide {{ $index + 1 }}"
+                                    class="w-6 h-6 flex items-center justify-center transition-all duration-300 focus:outline-none shrink-0"
+                                    type="button">
+                                <span class="h-1.5 rounded-full transition-all duration-300"
+                                      :class="activeSlide === {{ $index }} ? 'w-5 bg-[#FF9100]' : 'w-1.5 bg-white/60 hover:bg-white'"></span>
+                            </button>
                         @endforeach
                     </div>
                 @endif

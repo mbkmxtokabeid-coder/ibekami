@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->boolean('is_active')->default(false)->after('order_click');
+            $table->boolean('is_active')->default(false)->after('order_click_count');
         });
     }
 

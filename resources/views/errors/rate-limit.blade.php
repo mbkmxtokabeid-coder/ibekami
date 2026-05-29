@@ -88,7 +88,7 @@
         <div class="text-center mt-6">
             <p class="text-[#8A6A54] text-sm">
                 Butuh bantuan? 
-                <a href="https://wa.me/6281707699999" target="_blank" class="text-[#ff9100] font-semibold hover:underline">
+                <a href="https://wa.me/6281707699999" target="_blank" rel="noopener noreferrer" class="text-[#ff9100] font-semibold hover:underline">
                     Hubungi Admin
                 </a>
             </p>

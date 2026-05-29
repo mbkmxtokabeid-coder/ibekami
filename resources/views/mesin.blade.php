@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Mesin Produksi - IBEKAMI')
+@section('meta_description', 'Lihat fasilitas mesin produksi digital printing modern dan presisi tinggi milik IBEKAMI di Medan untuk menjamin kualitas cetak terbaik.')
 
 @section('content')
 
@@ -11,6 +12,6 @@
     <livewire:mesin.mesin-section lazy />
 
     {{-- Footer — lazy --}}
-    <livewire:footer />
+    <livewire:footer lazy />
 
 @endsection

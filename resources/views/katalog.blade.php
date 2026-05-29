@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Katalog Produk - IBEKAMI')
+@section('meta_description', 'Temukan katalog lengkap produk digital printing dan souvenir custom berkualitas tinggi dari IBEKAMI di Medan. Spanduk, kaos, tumbler, plakat, dll.')
 
 @section('content')
 
@@ -56,6 +57,6 @@
 </div>
 
 {{-- Footer --}}
-<livewire:footer />
+<livewire:footer lazy />
 
 @endsection

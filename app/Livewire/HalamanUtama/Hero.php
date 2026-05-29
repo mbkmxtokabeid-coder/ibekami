@@ -11,6 +11,7 @@ class Hero extends Component
 {
     public $banners = [];
     public $preloadImageUrl;
+    public $preloadImageMobileUrl;
 
     public function mount()
     {
@@ -32,15 +33,27 @@ class Hero extends Component
 
         // 2. Ubah hasil mapping menjadi array murni agar aman diserialisasi oleh Livewire
         $this->banners = $rawBanners->map(function ($banner) {
+            $url = $this->resolvePublicUrl($banner->media_url);
+            
+            // Dapatkan path versi mobile dengan menambahkan suffix _mobile
+            $mobileUrl = null;
+            if ($banner->media_url) {
+                $pathInfo = pathinfo($banner->media_url);
+                $mobilePath = ($pathInfo['dirname'] === '.' ? '' : $pathInfo['dirname'] . '/') . $pathInfo['filename'] . '_mobile.webp';
+                $mobileUrl = $this->resolvePublicUrl($mobilePath);
+            }
+
             return [
-                'id'  => $banner->id,
-                'url' => $this->resolvePublicUrl($banner->media_url),
+                'id'         => $banner->id,
+                'url'        => $url,
+                'mobile_url' => $mobileUrl ?? $url,
             ];
         })->all();
 
         // 3. Periksa isi array secara aman menggunakan empty()
         if (!empty($this->banners)) {
             $this->preloadImageUrl = $this->banners[0]['url'] ?? null;
+            $this->preloadImageMobileUrl = $this->banners[0]['mobile_url'] ?? null;
         }
     }
 

@@ -9,7 +9,7 @@
             ->orderBy('created_at', 'desc')
             ->take(12)
             ->get()
-            ->map(function (\App\Models\Product $product) {
+            ->map(function ($product) {
                 $img = $product->getFirstImageUrl();
                 $parsed = parse_url($img);
                 if (isset($parsed['host']) && in_array($parsed['host'], ['localhost', '127.0.0.1'])) {
@@ -27,7 +27,7 @@
     });
 @endphp
 
-<section id="katalog" class="py-14 md:py-20 px-4 bg-[#FFF2E0] relative overflow-hidden">
+<section id="katalog" x-ignore class="py-14 md:py-20 px-4 bg-[#FFF2E0] relative overflow-hidden">
     <!-- Background Decorations -->
     <div class="absolute top-10 left-[-5%] w-72 h-72 bg-[#FF9100]/10 rounded-full blur-[80px] pointer-events-none"></div>
     <div class="absolute bottom-10 right-[-5%] w-64 h-64 bg-white/40 rounded-full blur-[60px] pointer-events-none"></div>
@@ -54,7 +54,6 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
             @foreach($initialData as $index => $product)
                 <a href="{{ route('katalog.detail', ['slug' => $product['slug']]) }}"
-                   wire:navigate.hover
                    class="group bg-white/90 rounded-3xl p-3 border border-black/5 
                           shadow-sm hover:shadow-md hover:shadow-[#FF9100]/10 
                           transition-all duration-300 ease-out 
@@ -66,14 +65,8 @@
                         <img 
                             src="{{ $product['img'] }}"
                             alt="{{ $product['name'] }}"
-                            @if($index < 4)
-                                loading="eager"
-                                fetchpriority="high"
-                                decoding="sync"
-                            @else
-                                loading="lazy"
-                                decoding="async"
-                            @endif
+                            loading="lazy"
+                            decoding="async"
                             width="400"
                             height="300"
                             class="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.04]"

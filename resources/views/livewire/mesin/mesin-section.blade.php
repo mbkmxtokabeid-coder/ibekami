@@ -21,6 +21,8 @@
                                 <img src="{{ $machine['image'] }}" 
                                      alt="{{ $machine['title'] }}"
                                      loading="lazy"
+                                     width="400"
+                                     height="400"
                                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                      onerror="this.src='https://via.placeholder.com/400x400?text={{ urlencode($machine['title']) }}'">
                             </div>
@@ -53,10 +55,11 @@
                     <p class="text-slate-400 text-sm italic">{{ __('messages.lets_build_together') }}</p>
                 </div>
             </div>
-            <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+            <a href="https://wa.me/62817076999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
+               rel="noopener noreferrer"
                @click.throttle.2000ms
-               class="w-full md:w-auto bg-[#ff9100] text-white px-10 py-5 rounded-[1.8rem] font-bold hover:bg-[#e07d00] transition-all duration-300 text-center uppercase tracking-widest text-xs shadow-lg shadow-[#ff9100]/30">
+               class="w-full md:w-auto bg-[#ff9100] text-[#2C1A0E] px-10 py-5 rounded-[1.8rem] font-bold hover:bg-[#e07d00] transition-all duration-300 text-center uppercase tracking-widest text-xs shadow-lg shadow-[#ff9100]/30">
                 {{ __('messages.contact_via_whatsapp') }}
             </a>
         </div>
@@ -64,8 +67,12 @@
     </div>
 </section>
 
+@push('styles')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+@endpush
+
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-    
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
 </style>

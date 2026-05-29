@@ -172,7 +172,7 @@
         </div>
 
         <!-- CTA Banner -->
-        <div class="mt-16 bg-[#ff9100] rounded-[32px] p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl shadow-[#ff9100]/20">
+        <div x-ignore class="mt-16 bg-[#ff9100] rounded-[32px] p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl shadow-[#ff9100]/20">
             <div class="text-center md:text-left text-white">
                 <div class="text-[11px] font-bold opacity-90 uppercase tracking-[2px] mb-2">{{ __('messages.join_us') }}</div>
                 <h3 class="font-['Playfair_Display'] text-2xl md:text-3xl font-bold mb-2 text-white">{{ __('messages.become_next_partner') }}</h3>
@@ -180,8 +180,9 @@
             </div>
             <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
+               rel="noopener noreferrer"
                @click.throttle.2000ms
-               class="bg-white text-[#ff9100] px-8 py-4 rounded-xl font-bold hover:bg-[#fff2e0] transition-all whitespace-nowrap shadow-md">
+               class="bg-white text-[#2C1A0E] px-8 py-4 rounded-xl font-bold hover:bg-[#fff2e0] transition-all whitespace-nowrap shadow-md">
                 {{ __('messages.contact_us') }} →
             </a>
         </div>

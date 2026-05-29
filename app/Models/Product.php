@@ -102,11 +102,13 @@ class Product extends Model
             return $filename;
         }
 
-        if (\Illuminate\Support\Facades\Storage::disk('public')->exists('products/' . $filename)) {
-            return asset('storage/products/' . rawurlencode($filename));
-        }
-
-        return asset('storage/gambar_produk/' . rawurlencode($filename));
+        // Cache the file existence check for 24 hours to eliminate slow Disk I/O overhead on shared hosting
+        return \Illuminate\Support\Facades\Cache::remember('prod_img_url:' . md5($filename), 86400, function () use ($filename) {
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists('products/' . $filename)) {
+                return asset('storage/products/' . rawurlencode($filename));
+            }
+            return asset('storage/gambar_produk/' . rawurlencode($filename));
+        });
     }
 
     public function getFirstImageUrl(): string

@@ -30,7 +30,32 @@ Route::get('/privacy-policy', \App\Livewire\PrivacyPolicy::class)
     ->name('privacy-policy');
 
 Route::get('/katalog/{slug}', function ($slug) {
-    return view('detail-katalog', ['slug' => $slug]);
+    // Generate cache key to prevent repetitive DB querying
+    $cacheKey = 'route_product_seo_' . $slug . '_' . app()->getLocale();
+    $product = cache()->remember($cacheKey, 600, function () use ($slug) {
+        return \App\Models\Product::with(['type', 'category'])
+            ->get()
+            ->first(function ($product) use ($slug) {
+                $slugId = \Illuminate\Support\Str::slug($product->name_id);
+                $slugEn = \Illuminate\Support\Str::slug($product->name_en);
+                return $slug === $slugId || $slug === $slugEn;
+            });
+    });
+
+    if (!$product) {
+        abort(404, 'Produk tidak ditemukan');
+    }
+
+    $title = $product->name . ' - IBEKAMI';
+    $desc = $product->description ?? 'Produk berkualitas tinggi dengan desain yang menarik dan fungsional.';
+    $desc = strip_tags(html_entity_decode($desc));
+    $desc = \Illuminate\Support\Str::limit($desc, 160);
+
+    return view('detail-katalog', [
+        'slug' => $slug,
+        'title' => $title,
+        'meta_description' => $desc
+    ]);
 })->name('katalog.detail')->middleware('throttle:product-detail');
 
 // ─── Language Switch ──────────────────────────────────────────────────────────
@@ -72,28 +97,27 @@ Route::prefix('admin')
                 // ── 1. SELF-HEALING SYMLINK STORAGE ──
                 $storageError = null;
                 try {
-                    // Hanya hapus dan buat ulang symlink jika fungsi symlink() aktif di PHP server!
-                    if (function_exists('symlink')) {
-                        $storageLinkPath = public_path('storage');
-                        if (is_link($storageLinkPath)) {
+                    $storageLinkPath = public_path('storage');
+                    
+                    // Cek apakah link rusak (is_link tapi target tidak ada)
+                    $isBrokenLink = is_link($storageLinkPath) && !file_exists($storageLinkPath);
+                    
+                    if (!file_exists($storageLinkPath) || $isBrokenLink) {
+                        if ($isBrokenLink) {
                             if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                                 @rmdir($storageLinkPath);
                             } else {
                                 @unlink($storageLinkPath);
                             }
-                        } elseif (is_dir($storageLinkPath)) {
-                            // Jika public/storage adalah folder biasa, hapus jika kosong atau backup jika ada isinya
-                            $files = array_diff(scandir($storageLinkPath), array('.', '..'));
-                            if (empty($files)) {
-                                @rmdir($storageLinkPath);
-                            } else {
-                                @rename($storageLinkPath, public_path('storage_backup_' . time()));
-                            }
                         }
                         
-                        \Illuminate\Support\Facades\Artisan::call('storage:link');
+                        if (function_exists('symlink')) {
+                            \Illuminate\Support\Facades\Artisan::call('storage:link');
+                        } else {
+                            $storageError = 'Folder public/storage tidak ditemukan (atau link rusak) dan fungsi symlink() dinonaktifkan di hosting Anda. Folder storage di public_html dibiarkan utuh demi keamanan aset Anda.';
+                        }
                     } else {
-                        $storageError = 'Fungsi symlink() dinonaktifkan di hosting Anda. Folder storage di public_html dibiarkan utuh demi keamanan aset Anda.';
+                        $storageError = 'Folder public/storage sudah ada dan berfungsi dengan baik. Dibiarkan utuh demi keamanan.';
                     }
                 } catch (\Throwable $e) {
                     $storageError = 'Gagal memproses storage link: ' . $e->getMessage();

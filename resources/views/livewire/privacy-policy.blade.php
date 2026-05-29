@@ -141,7 +141,7 @@ class="bg-[#F4F1EA] text-[#222222] font-sans antialiased min-h-screen py-12 lg:p
                                     </li>
                                     <li class="flex flex-col sm:flex-row items-baseline">
                                         <strong class="w-32 text-gray-800 shrink-0">{{ __('messages.instagram') }}:</strong>
-                                        <a href="https://www.instagram.com/ibekami.id/" target="_blank" class="text-[#A65D3B] font-bold hover:underline">@ibekami.id</a>
+                                        <a href="https://www.instagram.com/ibekami.id/" target="_blank" rel="noopener noreferrer" class="text-[#A65D3B] font-bold hover:underline">@ibekami.id</a>
                                     </li>
                                     <li class="flex flex-col sm:flex-row items-baseline">
                                         <strong class="w-32 text-gray-800 shrink-0">{{ __('messages.location') }}:</strong>

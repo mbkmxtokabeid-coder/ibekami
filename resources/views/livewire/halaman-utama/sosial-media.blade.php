@@ -32,6 +32,7 @@
                     <img src="{{ asset('icons/tiktok.svg') }}"
                          alt="TikTok"
                          width="32" height="32"
+                         loading="lazy"
                          class="w-8 h-8 invert">
                 </div>
 
@@ -65,6 +66,7 @@
                     <img src="{{ asset('icons/instagram.svg') }}"
                          alt="Instagram"
                          width="32" height="32"
+                         loading="lazy"
                          class="w-8 h-8 invert">
                 </div>
 

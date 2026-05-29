@@ -18,13 +18,13 @@
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-10 lg:mb-16">
             <div class="space-y-4">
-                <!-- Badge Penawaran Spesial (Gen Z Style) -->
-                <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#ff9100]/10 border border-[#ff9100]/20">
+                <!-- Badge Penawaran Spesial (Gen Z Style) - Optimized Contrast -->
+                <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#4a3728]/10 border border-[#4a3728]/20">
                     <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff9100] opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-[#ff9100]"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4a3728] opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-[#4a3728]"></span>
                     </span>
-                    <span class="text-[10px] font-bold text-[#ff9100] uppercase tracking-widest">{{ __('messages.special_offer') }}</span>
+                    <span class="text-[10px] font-bold text-[#4a3728] uppercase tracking-widest">{{ __('messages.special_offer') }}</span>
                 </div>
                 
                 <h2 class="font-['Playfair_Display'] text-3xl md:text-4xl lg:text-5xl font-black text-[#2C1A0E] tracking-tight">
@@ -39,6 +39,7 @@
             <!-- Tombol CTA Header -->
             <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
+               rel="noopener noreferrer"
                @click.throttle.2000ms
                class="shrink-0 bg-white/50 backdrop-blur-sm border-2 border-[#ff9100]/80 text-[#ff9100] px-5 sm:px-6 py-3 sm:py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-bold hover:bg-[#ff9100] hover:text-white hover:border-[#ff9100] hover:shadow-[0_8px_20px_rgba(255,145,0,0.25)] hover:-translate-y-1 transition-all duration-300 outline-none flex items-center justify-center gap-2 group w-full md:w-auto">
                 {{ __('messages.ask_via_wa') }}
@@ -67,6 +68,7 @@
             <a wire:key="deal-{{ $deal->id }}"
                href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20{{ urlencode($deal->name) }}%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F"
                target="_blank"
+               rel="noopener noreferrer"
                @click.throttle.2000ms
                @mouseenter="setHovered({{ $index }})"
                @mouseleave="clearHovered()"
@@ -78,7 +80,7 @@
                     
                     <img src="{{ $deal->image_full_url }}" 
                          alt="{{ $deal->name }}" 
-                         @if($index >= 4) loading="lazy" @endif 
+                         loading="lazy" 
                          decoding="async"
                          width="400"
                          height="300"
@@ -102,9 +104,9 @@
                 <!-- Konten Teks -->
                 <div class="px-2 pb-3 sm:px-4 sm:pb-5 flex flex-col flex-1">
                     
-                    <!-- Badge Hot Deal -->
+                    <!-- Badge Hot Deal - Optimized Contrast -->
                     <div class="mb-2 sm:mb-3" data-nosnippet>
-                        <span class="inline-block bg-[#ff9100] text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full uppercase tracking-widest shadow-md shadow-[#ff9100]/20">
+                        <span class="inline-block bg-[#4a3728] text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full uppercase tracking-widest shadow-md shadow-[#4a3728]/20">
                             {{ __('messages.hot_deal') }}
                         </span>
                     </div>
