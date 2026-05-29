@@ -15,7 +15,12 @@ Route::get('/offline.html', fn() => abort(404));
 // ─── Public Routes ────────────────────────────────────────────────────────────
 
 Route::get('/', function () {
-    return view('welcome');
+    $response = response(view('welcome'));
+    // Hanya berikan cache header untuk pengunjung (guest) agar tidak membebani server
+    if (!auth()->check()) {
+        $response->header('Cache-Control', 'public, max-age=300, stale-while-revalidate=60');
+    }
+    return $response;
 })->name('home');
 
 Route::get('/katalog', function () {
