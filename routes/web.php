@@ -256,6 +256,7 @@ Route::prefix('admin')
                 \Illuminate\Support\Facades\Cache::forever('homepage_products_version', time());
                 \Illuminate\Support\Facades\Cache::forget('homepage:partners');
                 \Illuminate\Support\Facades\Cache::forget('homepage:hero_banner');
+                \Illuminate\Support\Facades\Cache::forget('homepage:hero_banners_resolved');
 
                 return back()->with('success', $message);
             } catch (\Throwable $e) {
