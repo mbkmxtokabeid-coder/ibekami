@@ -5,7 +5,11 @@
  * Akses sekali: https://ibekami.id/debug.php
  */
 
-$logFile = __DIR__ . '/../ibekami_bckend/storage/logs/laravel.log';
+if (file_exists(__DIR__.'/../storage/logs/laravel.log')) {
+    $logFile = __DIR__.'/../storage/logs/laravel.log';
+} else {
+    $logFile = __DIR__.'/../ibekami_bckend/storage/logs/laravel.log';
+}
 
 echo '<body style="background:#1a1a1a;color:#eee;font-family:monospace;padding:20px;line-height:1.5;">';
 echo '<h2 style="color:#00ff00;border-bottom:1px solid #444;padding-bottom:10px;">=== IBEKAMI REAL ERROR LOG READER ===</h2>';

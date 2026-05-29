@@ -12,7 +12,11 @@ if ($secret !== 'ibekami2025') {
     die('Akses ditolak. Tambahkan ?key=ibekami2025 di URL');
 }
 
-$basePath = __DIR__ . '/../ibekami_bckend';
+if (file_exists(__DIR__ . '/../bootstrap/app.php')) {
+    $basePath = __DIR__ . '/..';
+} else {
+    $basePath = __DIR__ . '/../ibekami_bckend';
+}
 $results = [];
 
 echo '<pre style="font-family:monospace;background:#1a1a1a;color:#00ff00;padding:20px;margin:0;">';
