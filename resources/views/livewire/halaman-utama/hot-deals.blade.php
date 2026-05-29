@@ -41,7 +41,7 @@
                target="_blank"
                rel="noopener noreferrer"
                @click.throttle.2000ms
-               class="shrink-0 bg-white/50 backdrop-blur-sm border-2 border-[#ff9100]/80 text-[#ff9100] px-5 sm:px-6 py-3 sm:py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-bold hover:bg-[#ff9100] hover:text-white hover:border-[#ff9100] hover:shadow-[0_8px_20px_rgba(255,145,0,0.25)] hover:-translate-y-1 transition-all duration-300 outline-none flex items-center justify-center gap-2 group w-full md:w-auto">
+               class="shrink-0 bg-white/50 backdrop-blur-sm border-2 border-[#ff9100]/80 text-[#b35200] px-5 sm:px-6 py-3 sm:py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-bold hover:bg-[#ff9100] hover:text-[#2C1A0E] hover:border-[#ff9100] hover:shadow-[0_8px_20px_rgba(255,145,0,0.25)] hover:-translate-y-1 transition-all duration-300 outline-none flex items-center justify-center gap-2 group w-full md:w-auto">
                 {{ __('messages.ask_via_wa') }}
                 <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -117,7 +117,7 @@
                     </h3>
                     
                     <!-- Tautan Aksi -->
-                    <div class="mt-auto flex items-center text-[11px] sm:text-[12px] font-bold text-[#ff9100] group-hover:text-[#e68200] transition-colors">
+                    <div class="mt-auto flex items-center text-[11px] sm:text-[12px] font-bold text-[#b35200] group-hover:text-[#2C1A0E] transition-colors">
                         <span class="truncate">{{ __('messages.ask_price') }}</span> 
                         <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 ml-1 sm:ml-1.5 transform group-hover:translate-x-1.5 sm:group-hover:translate-x-2 transition-transform duration-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>

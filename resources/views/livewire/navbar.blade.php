@@ -78,12 +78,12 @@
                          x-transition:leave-start="transform opacity-100 scale-100 translate-y-0"
                          x-transition:leave-end="transform opacity-0 scale-95 -translate-y-2"
                          class="absolute top-full left-0 mt-4 w-56 bg-white/95 backdrop-blur-xl border border-white/60 rounded-2xl shadow-xl overflow-hidden z-50 p-2">
-                        <a href="{{ route('katalog') }}" class="block px-4 py-2.5 rounded-xl text-[14px] font-bold text-[#ff9100] bg-[#fff2e0]/50 hover:bg-[#fff2e0] transition-colors mb-1">{{ __('messages.all_products') }}</a>
+                        <a href="{{ route('katalog') }}" class="block px-4 py-2.5 rounded-xl text-[14px] font-bold text-[#b35200] bg-[#fff2e0]/50 hover:bg-[#fff2e0] transition-colors mb-1">{{ __('messages.all_products') }}</a>
                         
                         @forelse($productTypes as $type)
                             <a href="{{ route('katalog', ['type' => $type['slug']]) }}"
                                wire:key="desktop-type-{{ $type['id'] }}"
-                               class="block px-4 py-2 rounded-xl text-[13px] font-medium text-[#5C3D28] hover:text-[#ff9100] hover:bg-black/5 transition-colors">
+                               class="block px-4 py-2 rounded-xl text-[13px] font-medium text-[#5C3D28] hover:text-[#b35200] hover:bg-black/5 transition-colors">
                                 {{ $type['name'] }}
                             </a>
                         @empty
@@ -118,7 +118,7 @@
                 <!-- Language Dropdown -->
                 <div class="relative shrink-0">
                     <button @click="langMenuOpen = !langMenuOpen" @click.outside="langMenuOpen = false" 
-                            aria-label="Pilih Bahasa"
+                            :aria-label="currentLocale === 'id' ? 'ID - Pilih Bahasa' : 'EN - Choose Language'"
                             class="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/40 border border-white/50 text-[#5C3D28] hover:text-[#ff9100] hover:bg-white transition-all outline-none shadow-sm"
                             :class="langMenuOpen ? 'bg-white ring-2 ring-[#ff9100]/30' : ''">
                         <span class="text-base leading-none lg:hidden" x-text="currentLocale === 'id' ? '🇮🇩' : '🇺🇸'"></span>
@@ -135,13 +135,13 @@
                          class="absolute right-0 mt-3 w-36 bg-white/95 backdrop-blur-xl border border-white/60 rounded-2xl shadow-xl overflow-hidden z-50 p-2">
                         <button @click="debouncedChangeLanguage('id')" 
                                 class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold w-full transition-colors"
-                                :class="currentLocale === 'id' ? 'bg-[#fff2e0]/50 text-[#ff9100]' : 'hover:bg-black/5 text-[#5C3D28]'"
+                                :class="currentLocale === 'id' ? 'bg-[#fff2e0]/50 text-[#b35200]' : 'hover:bg-black/5 text-[#5C3D28]'"
                                 :disabled="isChangingLanguage">
                             <span class="text-base leading-none">🇮🇩</span> Indonesia
                         </button>
                         <button @click="debouncedChangeLanguage('en')" 
                                 class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold w-full transition-colors"
-                                :class="currentLocale === 'en' ? 'bg-[#fff2e0]/50 text-[#ff9100]' : 'hover:bg-black/5 text-[#5C3D28]'"
+                                :class="currentLocale === 'en' ? 'bg-[#fff2e0]/50 text-[#b35200]' : 'hover:bg-black/5 text-[#5C3D28]'"
                                 :disabled="isChangingLanguage">
                             <span class="text-base leading-none">🇺🇸</span> English
                         </button>
@@ -223,7 +223,7 @@
                      x-transition:leave-end="opacity-0 -translate-y-1"
                      class="px-4 pb-3 flex flex-col gap-2">
                     <div class="w-full h-px bg-black/5 mb-1"></div>
-                    <a href="{{ route('katalog') }}" class="px-3 py-2 rounded-xl bg-[#ff9100]/10 text-[14px] font-bold text-[#ff9100]">{{ __('messages.all_products') }}</a>
+                    <a href="{{ route('katalog') }}" class="px-3 py-2 rounded-xl bg-[#ff9100]/10 text-[14px] font-bold text-[#b35200]">{{ __('messages.all_products') }}</a>
                     
                     @forelse($productTypes as $type)
                         <a href="{{ route('katalog', ['type' => $type['slug']]) }}"
