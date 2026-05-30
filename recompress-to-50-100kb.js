@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Re-compress WebP images to 50-100KB target
+ * Re-compress WebP images to 20-50KB target
  * This script re-compresses existing WebP files to meet the new size target
  */
 
@@ -20,10 +20,10 @@ const folders = [
 ];
 
 // Target size range
-const MIN_SIZE = 50 * 1024;  // 50 KB
-const MAX_SIZE = 100 * 1024; // 100 KB
+const MIN_SIZE = 20 * 1024;  // 20 KB
+const MAX_SIZE = 50 * 1024;  // 50 KB
 
-console.log('🔄 Re-compressing WebP images to 50-100KB...\n');
+console.log('🔄 Re-compressing WebP images to 20-50KB...\n');
 
 let totalProcessed = 0;
 let totalSkipped = 0;

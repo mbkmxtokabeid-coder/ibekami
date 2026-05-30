@@ -2,7 +2,7 @@
 /**
  * IBEKAMI - Native WebP Image Optimization Script
  * 
- * Skrip ini memindai folder-folder aset gambar, mengompresi gambar WebP yang berukuran > 250KB,
+ * Skrip ini memindai folder-folder aset gambar, mengompresi gambar WebP yang berukuran > 50KB,
  * serta memperkecil dimensi gambar jika melebihi 1200px guna meningkatkan skor LCP secara maksimal.
  * 
  * Jalankan via terminal: php compress-webp-native.php
@@ -25,9 +25,9 @@ $directories = [
 ];
 
 // Target ukuran maksimum dalam bytes
-$maxSize = 100 * 1024;    // 100 KB
-$targetMin = 50 * 1024;   // 50 KB
-$targetMax = 150 * 1024;  // 150 KB
+$maxSize = 50 * 1024;     // 50 KB
+$targetMin = 20 * 1024;   // 20 KB
+$targetMax = 50 * 1024;   // 50 KB
 $maxDimension = 1200;     // Maksimum lebar/tinggi piksel untuk di atas viewport
 
 echo "===========================================================\n";
@@ -76,6 +76,11 @@ foreach ($directories as $dir) {
             continue;
         }
         
+        // Konversi gambar palette ke truecolor untuk menghindari error imagewebp
+        if (!imageistruecolor($img)) {
+            imagepalettetotruecolor($img);
+        }
+        
         $width = imagesx($img);
         $height = imagesy($img);
         $resized = false;
@@ -109,7 +114,7 @@ foreach ($directories as $dir) {
         $tempFile = $file . '.tmp';
         $optimizedSuccess = false;
         
-        while ($quality >= 40) {
+        while ($quality >= 30) {
             if (file_exists($tempFile)) {
                 unlink($tempFile);
             }
