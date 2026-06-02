@@ -106,7 +106,7 @@
                 j.async = true;
                 j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
                 f.parentNode.insertBefore(j, f);
-            })(window, document, 'script', 'dataLayer', 'GTM-WMSK4N53');
+            })(window, document, 'script', 'dataLayer', 'GTM-FVT5H5JH');
 
             // ── Google Analytics 4 (G-2DR31JFPHR) ─────────────────────────
             var ga1 = document.createElement('script');
@@ -145,7 +145,7 @@
     {{-- GTM noscript — wajib ada tepat setelah <body> untuk tracking tanpa JS --}}
     @if(config('app.env') === 'production')
     <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WMSK4N53"
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-FVT5H5JH"
                 height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
     @endif

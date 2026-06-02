@@ -56,7 +56,9 @@
                 <a href="{{ url('/') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.home') }}
                 </a>
-                <a href="{{ url('/#hot-deals') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
+                <a href="{{ url('/#hot-deals') }}" 
+                   @click="const el = document.getElementById('hot-deals'); if (el) { $event.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }"
+                   class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.hot_deals') }}
                 </a>
                 
@@ -95,7 +97,9 @@
                 <a href="{{ route('mesin') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.our_machines') }}
                 </a>
-                <a href="{{ url('/#footer') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
+                <a href="{{ url('/#footer') }}" 
+                   @click="const el = document.getElementById('footer'); if (el) { $event.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }"
+                   class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.information') }}
                 </a>
             </div>
@@ -205,8 +209,12 @@
          class="absolute top-[76px] sm:top-[86px] inset-x-4 lg:hidden">
         
         <div class="bg-white/95 backdrop-blur-2xl border border-white/50 shadow-2xl rounded-3xl p-5 flex flex-col gap-2 max-h-[75vh] overflow-y-auto">
-            <a href="{{ url('/') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
-            <a href="{{ url('/#hot-deals') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a>
+            <a href="{{ url('/') }}" 
+               @click="mobileMenuOpen = false;"
+               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
+            <a href="{{ url('/#hot-deals') }}" 
+               @click="mobileMenuOpen = false; const el = document.getElementById('hot-deals'); if (el) { $event.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }"
+               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a>
             
             <!-- Katalog Dropdown (Mobile) -->
             <div class="bg-[#fff2e0]/40 rounded-2xl">
@@ -237,8 +245,12 @@
                 </div>
             </div>
 
-            <a href="{{ route('mesin') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.our_machines') }}</a>
-            <a href="{{ url('/#footer') }}" class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.information') }}</a>
+            <a href="{{ route('mesin') }}" 
+               @click="mobileMenuOpen = false;"
+               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.our_machines') }}</a>
+            <a href="{{ url('/#footer') }}" 
+               @click="mobileMenuOpen = false; const el = document.getElementById('footer'); if (el) { $event.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }"
+               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.information') }}</a>
             
             <div class="w-full h-px bg-black/5 my-2"></div>
             
