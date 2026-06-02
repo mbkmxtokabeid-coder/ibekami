@@ -12,7 +12,7 @@ class HotDeals extends Component
     public function placeholder()
     {
         return <<<'HTML'
-        <div class="py-16 md:py-24 px-4 bg-[#fdfaf7] relative overflow-hidden animate-pulse">
+        <div id="hot-deals" class="py-16 md:py-24 px-4 bg-[#fdfaf7] relative overflow-hidden animate-pulse">
             <div class="max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-10 lg:mb-16">
                     <div class="space-y-4">

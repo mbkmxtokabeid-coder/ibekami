@@ -30,7 +30,7 @@ class Footer extends Component
     public function placeholder()
     {
         return <<<'HTML'
-        <footer class="bg-[#2c1a0e] text-white py-12 px-4 animate-pulse">
+        <footer id="footer" class="bg-[#2c1a0e] text-white py-12 px-4 animate-pulse">
             <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="space-y-4">
                     <div class="h-6 w-32 bg-white/20 rounded"></div>

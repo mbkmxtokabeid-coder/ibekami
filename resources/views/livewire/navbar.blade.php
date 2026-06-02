@@ -57,7 +57,7 @@
                     {{ __('messages.home') }}
                 </a>
                 <a href="{{ url('/#hot-deals') }}" 
-                   @click="const el = document.getElementById('hot-deals'); if (el) { $event.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }"
+                   @click="if (document.getElementById('hot-deals')) { $event.preventDefault(); document.getElementById('hot-deals').scrollIntoView({ behavior: 'smooth' }); }"
                    class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.hot_deals') }}
                 </a>
@@ -98,7 +98,7 @@
                     {{ __('messages.our_machines') }}
                 </a>
                 <a href="{{ url('/#footer') }}" 
-                   @click="const el = document.getElementById('footer'); if (el) { $event.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }"
+                   @click="if (document.getElementById('footer')) { $event.preventDefault(); document.getElementById('footer').scrollIntoView({ behavior: 'smooth' }); }"
                    class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.information') }}
                 </a>
@@ -213,7 +213,7 @@
                @click="mobileMenuOpen = false;"
                class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
             <a href="{{ url('/#hot-deals') }}" 
-               @click="mobileMenuOpen = false; const el = document.getElementById('hot-deals'); if (el) { $event.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }"
+               @click="mobileMenuOpen = false; if (document.getElementById('hot-deals')) { $event.preventDefault(); document.getElementById('hot-deals').scrollIntoView({ behavior: 'smooth' }); }"
                class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a>
             
             <!-- Katalog Dropdown (Mobile) -->
@@ -249,7 +249,7 @@
                @click="mobileMenuOpen = false;"
                class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.our_machines') }}</a>
             <a href="{{ url('/#footer') }}" 
-               @click="mobileMenuOpen = false; const el = document.getElementById('footer'); if (el) { $event.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }"
+               @click="mobileMenuOpen = false; if (document.getElementById('footer')) { $event.preventDefault(); document.getElementById('footer').scrollIntoView({ behavior: 'smooth' }); }"
                class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.information') }}</a>
             
             <div class="w-full h-px bg-black/5 my-2"></div>

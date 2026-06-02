@@ -383,5 +383,32 @@
 
     {{-- Instant Page: Prefetch pages on hover for SPA-like navigation speed --}}
     <script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.js" type="module" defer></script>
+
+    {{-- Handle smooth scroll on page load for lazy-loaded hash elements --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.location.hash) {
+                const hash = window.location.hash;
+                const targetId = hash.substring(1);
+                
+                let attempts = 0;
+                const scrollInterval = setInterval(() => {
+                    const el = document.getElementById(targetId);
+                    attempts++;
+                    
+                    if (el) {
+                        clearInterval(scrollInterval);
+                        setTimeout(() => {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 200);
+                    }
+                    
+                    if (attempts > 50) {
+                        clearInterval(scrollInterval);
+                    }
+                }, 100);
+            }
+        });
+    </script>
 </body>
 </html>
