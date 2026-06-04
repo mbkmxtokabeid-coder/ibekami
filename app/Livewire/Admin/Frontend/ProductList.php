@@ -211,25 +211,67 @@ class ProductList extends Component
             throw $e;
         }
 
-        $imagePaths = $this->existingImages;
+        // 1. Get or generate the Product ID
+        if ($this->isEditing) {
+            $productId = $this->editingId;
+            $product = Product::findOrFail($productId);
+        } else {
+            $productId = (string) \Illuminate\Support\Str::uuid();
+        }
 
+        // 2. Slugify the product name (using name_id or falling back to name_en)
+        $slug = \Illuminate\Support\Str::slug($this->name_id ?: $this->name_en ?: 'product');
+
+        // 3. Process existing images (rename them to match the new SEO slug structure if needed)
+        $imagePaths = [];
+        if ($this->isEditing) {
+            foreach ($this->existingImages as $i => $oldFilename) {
+                // Determine target SEO filename for this image index
+                $newFilename = $this->getUniqueSeoFilename($slug, $i, $productId, $oldFilename);
+                
+                if ($oldFilename !== $newFilename) {
+                    $oldPath = 'products/' . $oldFilename;
+                    $newPath = 'products/' . $newFilename;
+                    
+                    try {
+                        if (Storage::disk('public')->exists($oldPath)) {
+                            Storage::disk('public')->move($oldPath, $newPath);
+                        }
+                        // Clear search/resolve cache for both filenames
+                        \Illuminate\Support\Facades\Cache::forget('prod_img_url:' . md5($oldFilename));
+                        \Illuminate\Support\Facades\Cache::forget('prod_img_url:' . md5($newFilename));
+                        $imagePaths[] = $newFilename;
+                    } catch (\Exception $moveEx) {
+                        \Illuminate\Support\Facades\Log::error('Failed to move image from ' . $oldPath . ' to ' . $newPath . ': ' . $moveEx->getMessage());
+                        // Fallback to the old name if rename fails
+                        $imagePaths[] = $oldFilename;
+                    }
+                } else {
+                    $imagePaths[] = $oldFilename;
+                }
+            }
+        }
+
+        // 4. Process new uploaded images
         foreach ($this->images as $img) {
+            $newImageIndex = count($imagePaths);
+            $filename = $this->getUniqueSeoFilename($slug, $newImageIndex, $productId);
+            $storagePath = 'products/' . $filename;
+            
             try {
                 if (ImageCompressor::isAvailable()) {
                     $compressor = new ImageCompressor();
-                    $filename = uniqid('product_', true) . '.webp';
-                    $storagePath = 'products/' . $filename;
                     $compressor->compressToWebP($img->getRealPath(), $storagePath);
                     $imagePaths[] = $filename;
                 } else {
-                    $path = $img->store('products', 'public');
+                    $path = $img->storeAs('products', $filename, 'public');
                     $imagePaths[] = basename($path);
                     \Illuminate\Support\Facades\Log::warning('Image saved without compression: GD extension not available');
                 }
             } catch (\Exception $e) {
                 \Illuminate\Support\Facades\Log::error('Image processing failed: ' . $e->getMessage());
                 try {
-                    $path = $img->store('products', 'public');
+                    $path = $img->storeAs('products', $filename, 'public');
                     $imagePaths[] = basename($path);
                 } catch (\Exception $e2) {
                     $this->dispatch('swal', [
@@ -256,18 +298,66 @@ class ProductList extends Component
         ];
 
         if ($this->isEditing) {
-            $product = Product::findOrFail($this->editingId);
             $oldSlug = $product->getSlug();
             $product->update($data);
             $this->clearProductCache($product->product_id, $oldSlug, $product->getSlug());
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Produk berhasil diperbarui.']);
         } else {
+            $data['product_id'] = $productId;
             Product::create($data);
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Produk berhasil ditambahkan.']);
         }
 
         $this->closeModal();
     }
+
+    private function generateSeoFilename(string $slug, int $index, string $productId): string
+    {
+        $patterns = [
+            "cetak-{$slug}-terdekat-di-medan",
+            "cetak-{$slug}-satuan-di-medan",
+            "cetak-{$slug}-express-di-medan",
+            "cetak-{$slug}-grosiran-di-medan",
+            "cetak-{$slug}-partai-besar-di-medan",
+            "cetak-{$slug}-partai-kecil-di-medan",
+            "cetak-{$slug}-custom-di-medan",
+            "tempat-cetak-{$slug}-di-medan",
+            "jasa-cetak-{$slug}-di-medan",
+            "percetakan-{$slug}-di-medan"
+        ];
+
+        $totalPatterns = count($patterns);
+        $startIndex = abs(crc32($productId)) % $totalPatterns;
+        $patternIndex = ($startIndex + $index) % $totalPatterns;
+        
+        return $patterns[$patternIndex];
+    }
+
+    private function getUniqueSeoFilename(string $slug, int $index, string $productId, ?string $currentFilename = null): string
+    {
+        $baseName = $this->generateSeoFilename($slug, $index, $productId);
+        $filename = $baseName . '.webp';
+        
+        // If the filename matches the current filename of this image, keep it
+        if ($currentFilename && $currentFilename === $filename) {
+            return $filename;
+        }
+        
+        // Loop until we find a name that doesn't exist in products/ directory
+        $counter = 1;
+        while (Storage::disk('public')->exists('products/' . $filename)) {
+            $filename = $baseName . '-' . $counter . '.webp';
+            
+            // If the generated filename with counter matches the current filename, keep it
+            if ($currentFilename && $currentFilename === $filename) {
+                return $filename;
+            }
+            $counter++;
+        }
+        
+        return $filename;
+    }
+
 
     public function delete(string $id): void
     {
