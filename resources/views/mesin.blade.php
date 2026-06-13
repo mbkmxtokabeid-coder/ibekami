@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Mesin Produksi - IBEKAMI')
-@section('meta_description', 'Lihat fasilitas mesin produksi digital printing modern dan presisi tinggi milik IBEKAMI di Medan untuk menjamin kualitas cetak terbaik.')
+@section('title', 'Percetakan Express Terdekat di Medan | Souvenir Custom Murah')
+@section('meta_description', 'Percetakan & produsen souvenir custom terdekat di Medan. Proses cetak cepat & express partai besar/grosiran dengan mesin sendiri, harga tetap terjangkau.')
+@section('og_image', asset('storage/banners/ac0534a0-7e84-41ae-805f-8bb46f52a951.webp'))
 
 @section('content')
 

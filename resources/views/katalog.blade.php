@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Katalog Produk - IBEKAMI')
-@section('meta_description', 'Temukan katalog lengkap produk digital printing dan souvenir custom berkualitas tinggi dari IBEKAMI di Medan. Spanduk, kaos, tumbler, plakat, dll.')
+@section('title', 'Cetak Souvenir Custom Terdekat di Medan | Cepat & Terjangkau')
+@section('meta_description', 'Katalog produk percetakan express & souvenir custom terdekat di Medan. Melayani pesanan satuan, grosiran, partai besar & kecil cepat & harga terjangkau.')
+@section('og_image', asset('storage/banners/e840d922-8a26-4f10-98a3-80f53fb62364.webp'))
 
 @section('content')
 

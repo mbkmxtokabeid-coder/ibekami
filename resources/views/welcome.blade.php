@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'IBEKAMI - Percetakan & Souvenir Kreatif Terbaik Medan')
-@section('meta_description', 'IBEKAMI - Percetakan dan souvenir kreatif terbaik di Medan. Melayani plakat, digital printing, dan merchandise custom dengan kualitas premium.')
+@section('title', 'Percetakan Express Terdekat di Medan | Souvenir Custom Satuan')
+@section('meta_description', 'Butuh cetak cepat? IBEKAMI adalah percetakan express terdekat di Medan untuk souvenir custom terjangkau. Melayani partai besar, partai kecil, dan satuan.')
+@section('og_image', asset('storage/banners/428f232a-c988-4731-8cf7-ceec4874496c.webp'))
 
 @section('content')
 

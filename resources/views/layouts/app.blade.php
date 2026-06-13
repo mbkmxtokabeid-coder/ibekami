@@ -30,7 +30,26 @@
 
     <title>@yield('title', 'IBEKAMI - Digital Printing & Souvenir Custom Medan')</title>
     <meta name="description" content="@yield('meta_description', 'IBEKAMI - Percetakan dan souvenir kreatif terbaik di Medan. Melayani plakat, digital printing, dan merchandise custom dengan kualitas premium.')">
-    
+    <meta name="keywords" content="@yield('meta_keywords', 'percetakan Medan, souvenir custom Medan, merchandise perusahaan Medan, digital printing Medan, goodie bag Medan, acrylic Medan')">
+
+    <!-- Open Graph (Facebook / Instagram / WhatsApp) -->
+    <meta property="og:type"        content="website">
+    <meta property="og:site_name"   content="IBEKAMI">
+    <meta property="og:locale"      content="id_ID">
+    <meta property="og:url"         content="{{ request()->url() }}">
+    <meta property="og:title"       content="@yield('title', 'IBEKAMI – Percetakan & Souvenir Custom Terbaik di Medan')">
+    <meta property="og:description" content="@yield('meta_description', 'Souvenir custom, plakat, tumbler, dan digital printing berkualitas di Medan.')">
+    <meta property="og:image"       content="@yield('og_image', asset('storage/logos/logo ibekami (3).webp'))">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt"    content="@yield('title', 'IBEKAMI – Percetakan & Souvenir Custom Medan')">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="@yield('title', 'IBEKAMI – Percetakan & Souvenir Custom Terbaik di Medan')">
+    <meta name="twitter:description" content="@yield('meta_description', 'Souvenir custom, plakat, tumbler, dan digital printing berkualitas di Medan.')">
+    <meta name="twitter:image"       content="@yield('og_image', asset('storage/logos/logo ibekami (3).webp'))">
+
     @stack('preload')
 
     {{-- Dynamic canonical URL to prevent search engines and crawlers from indexing redirecting URLs --}}
@@ -337,45 +356,82 @@
     {{-- Structured Data: LocalBusiness + WebSite (non-blocking, di bawah body) --}}
     @if(config('app.env') === 'production')
     @php
+        $graph = [];
+
+        // Halaman Utama: sertakan LocalBusiness dengan detail lengkap dan teroptimasi SEO
+        if (request()->routeIs('home')) {
+            $graph[] = [
+                '@type' => 'LocalBusiness',
+                '@id' => config('app.url') . '/#business',
+                'name' => 'IBEKAMI',
+                'alternateName' => [
+                    'Ibekami Medan',
+                    'Percetakan Ibekami',
+                    'Ibekami Souvenir & Printing',
+                    'Digital Printing Ibekami'
+                ],
+                'description' => 'Jasa percetakan express & produsen souvenir custom murah terdekat di Medan. Melayani cetak plakat akrilik, tumbler, banner, stiker, kaos, dan merchandise custom untuk satuan maupun grosir dengan proses cepat.',
+                'url' => config('app.url'),
+                'logo' => asset('storage/logos/logo ibekami (3).webp'),
+                'image' => asset('storage/banners/428f232a-c988-4731-8cf7-ceec4874496c.webp'),
+                'telephone' => '+62817076999',
+                'priceRange' => 'Rp',
+                'currenciesAccepted' => 'IDR',
+                'paymentAccepted' => 'Transfer Bank, Cash, WhatsApp Order',
+                'address' => [
+                    '@type' => 'PostalAddress',
+                    'streetAddress' => 'Komplek Setia Budi Point, Jl. Setia Budi No.D-10, Tj. Sari, Kec. Medan Selayang',
+                    'addressLocality' => 'Medan',
+                    'addressRegion' => 'Sumatera Utara',
+                    'postalCode' => '20132',
+                    'addressCountry' => 'ID',
+                ],
+                'geo' => [
+                    '@type' => 'GeoCoordinates',
+                    'latitude' => 3.562946,
+                    'longitude' => 98.636926,
+                ],
+                'areaServed' => ['Medan', 'Sumatera Utara', 'Indonesia'],
+                'hasOfferCatalog' => [
+                    '@type' => 'OfferCatalog',
+                    'name' => 'Katalog Produk IBEKAMI',
+                    'url' => route('katalog'),
+                ],
+                'sameAs' => [
+                    'https://wa.me/62817076999',
+                    'https://www.instagram.com/ibekami.id',
+                    'https://www.tiktok.com/@ibekami.id',
+                ],
+                'openingHoursSpecification' => [
+                    [
+                        '@type' => 'OpeningHoursSpecification',
+                        'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                        'opens' => '08:30',
+                        'closes' => '17:00',
+                    ]
+                ],
+                'aggregateRating' => [
+                    '@type' => 'AggregateRating',
+                    'ratingValue' => '5.0',
+                    'bestRating' => '5',
+                    'worstRating' => '1',
+                    'ratingCount' => '1',
+                ]
+            ];
+        }
+
+        // WebSite schema (selalu ada di setiap halaman)
+        $graph[] = [
+            '@type' => 'WebSite',
+            '@id' => config('app.url') . '/#website',
+            'url' => config('app.url'),
+            'name' => 'IBEKAMI',
+            'publisher' => ['@id' => config('app.url') . '/#business'],
+        ];
+
         $globalSchema = [
             '@context' => 'https://schema.org',
-            '@graph' => [
-                [
-                    '@type' => 'LocalBusiness',
-                    '@id' => config('app.url') . '/#business',
-                    'name' => 'IBEKAMI',
-                    'description' => 'Jasa digital printing dan souvenir custom berkualitas tinggi di Medan. Melayani cetak banner, spanduk, kaos, mug, dan berbagai produk custom lainnya.',
-                    'url' => config('app.url'),
-                    'telephone' => '+628170769999',
-                    'priceRange' => 'Rp',
-                    'image' => asset('storage/logos/logo ibekami (3).webp'),
-                    'address' => [
-                        '@type' => 'PostalAddress',
-                        'addressLocality' => 'Medan',
-                        'addressRegion' => 'Sumatera Utara',
-                        'addressCountry' => 'ID',
-                    ],
-                    'geo' => [
-                        '@type' => 'GeoCoordinates',
-                        'latitude' => 3.5952,
-                        'longitude' => 98.6722,
-                    ],
-                    'openingHoursSpecification' => [
-                        '@type' => 'OpeningHoursSpecification',
-                        'dayOfWeek' => ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-                        'opens' => '08:00',
-                        'closes' => '17:00',
-                    ],
-                    'sameAs' => ['https://wa.me/628170769999'],
-                ],
-                [
-                    '@type' => 'WebSite',
-                    '@id' => config('app.url') . '/#website',
-                    'url' => config('app.url'),
-                    'name' => 'IBEKAMI',
-                    'publisher' => ['@id' => config('app.url') . '/#business'],
-                ],
-            ],
+            '@graph' => $graph,
         ];
     @endphp
     <script type="application/ld+json">{!! json_encode($globalSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
