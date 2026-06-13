@@ -188,4 +188,29 @@ return [
     // Common
     'indonesia' => 'Indonesia',
     'english' => 'English',
+
+    // FAQ & About Section
+    'faq_badge' => 'FAQ',
+    'faq_title' => 'Frequently Asked Questions',
+    'faq_subtitle' => 'Find answers to common questions about ordering custom acrylic plaques, corporate merchandise, and our express printing services in Medan.',
+    'about_title' => 'Trusted Custom Souvenir Manufacturer & Printing in Medan',
+    'about_desc' => 'IBEKAMI (Ikhtiar Berkah, Ekonomi Kreatif Asli Medan Indonesia) is a leading custom printing and corporate souvenir vendor based in Medan, North Sumatra. We specialize in producing custom acrylic plaques, laser-engraved tumblers, corporate gift sets, business cards, brochures, banners, stickers, and other promotional items. Equipped with high-tech flatbed UV printers and precision laser cutting machines, we deliver sharp print quality, quick turnaround times, and competitive pricing for individuals, BUMN, government institutions, and private enterprises.',
+    
+    'faq_q1' => 'How can I order custom acrylic plaques at IBEKAMI?',
+    'faq_a1' => 'Ordering is easy! Simply click the "Start Custom" or "Ask Now" buttons to connect directly with our WhatsApp admin. You can consult on design preferences, plaque types, material thickness, and order quantity. Our design team will provide free design consultations until you approve the layouts before production.',
+    
+    'faq_q2' => 'Can I order custom souvenirs in single quantities?',
+    'faq_a2' => 'Yes, absolutely! IBEKAMI supports local creators, individuals, and organizations by offering single-unit custom printing for select products like acrylic plaques, tumblers, mugs, keychains, and custom t-shirts, as well as bulk quantities for corporate orders with special pricing.',
+    
+    'faq_q3' => 'What types of plaque materials are available?',
+    'faq_a3' => 'We manufacture high-quality plaques using clear/colored premium acrylic, wood with metal/acrylic plates, resin/crystal, and marble. All plaques are cut using laser-cutting technology to ensure smooth, precise edges.',
+    
+    'faq_q4' => 'How long does the printing and merchandise production take?',
+    'faq_a4' => 'For standard express items like standard plaques, banners, or documents, production takes only 1-2 business days after design approval. For bulk corporate orders or large merchandise volumes, production times range from 3-7 business days depending on the current production queue.',
+    
+    'faq_q5' => 'Does IBEKAMI ship outside Medan?',
+    'faq_a5' => 'Yes, we ship to all areas in North Sumatra (such as Deli Serdang, Binjai, Tebing Tinggi, Siantar, Toba) as well as nationwide across Indonesia using trusted logistics partners. All products are safely packaged with thick bubble wrap and wooden crates when necessary.',
+    
+    'faq_q6' => 'Why should I choose IBEKAMI as my custom printing vendor?',
+    'faq_a6' => 'IBEKAMI combines advanced UV flatbed printing technology, high-precision laser cutters, professional designers, and premium materials. We guarantee precise prints, quick express completion times, friendly customer service, and competitive pricing for both individual and corporate clients.',
 ];

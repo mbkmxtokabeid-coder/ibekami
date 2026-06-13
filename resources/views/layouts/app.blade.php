@@ -53,7 +53,7 @@
     @stack('preload')
 
     {{-- Dynamic canonical URL to prevent search engines and crawlers from indexing redirecting URLs --}}
-    <link rel="canonical" href="{{ request()->url() }}">
+    <link rel="canonical" href="@yield('canonical', request()->url())">
 
     <link rel="icon" type="image/webp" href="{{ asset('storage/logos/logo ibekami (3).webp') }}">
     <link rel="preload" as="image" href="{{ asset('storage/logos/logo ibekami (3).webp') }}" type="image/webp" fetchpriority="high">
