@@ -29,7 +29,7 @@
             <h1 class="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-[#2C1A0E] leading-tight">
                 {{ __('messages.product_catalog') }}
             </h1>
-            <p class="text-[13px] text-[#8A6A54] mt-1">
+            <p class="text-[13px] text-[#886852] mt-1">
                 {{ __('messages.catalog_subtitle') }}
             </p>
         </div>

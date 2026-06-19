@@ -26,7 +26,7 @@ class HotDeals extends Component
                         <h2 class="font-['Playfair_Display'] text-3xl md:text-4xl lg:text-5xl font-black text-[#2C1A0E] tracking-tight">
                             {{ __('messages.hot_deals_this_month') }}
                         </h2>
-                        <p class="text-[13px] sm:text-[14px] md:text-[15px] text-[#8A6A54] font-medium max-w-md leading-relaxed">
+                        <p class="text-[13px] sm:text-[14px] md:text-[15px] text-[#886852] font-medium max-w-md leading-relaxed">
                             {{ __('messages.best_price_all_categories') }}
                         </p>
                     </div>

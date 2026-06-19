@@ -46,27 +46,29 @@
                      height="36"
                      class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="w-8 h-8 sm:w-9 sm:h-9 bg-[#ff9100] rounded-full items-center justify-center hidden">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 bg-[#b35200] rounded-full items-center justify-center hidden">
                     <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white" viewBox="0 0 20 20"><path d="M10 2L3 7v11h5v-5h4v5h5V7z"/></svg>
                 </div>
             </a>
 
             <!-- 2. Desktop Links -->
             <div class="hidden lg:flex items-center gap-1 xl:gap-2">
-                <a href="{{ url('/') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
+                <a href="{{ url('/') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.home') }}
                 </a>
                 <a href="{{ url('/#hot-deals') }}" 
                    @click="if (document.getElementById('hot-deals')) { $event.preventDefault(); document.getElementById('hot-deals').scrollIntoView({ behavior: 'smooth' }); }"
-                   class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
+                   class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.hot_deals') }}
                 </a>
                 
                 <!-- Katalog Dropdown (Desktop) -->
                 <div class="relative">
                     <button @click="catalogMenuOpen = !catalogMenuOpen" @click.outside="catalogMenuOpen = false" 
-                            class="flex items-center gap-1.5 px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none"
-                            :class="catalogMenuOpen ? 'bg-white/60 text-[#ff9100] shadow-sm' : ''">
+                            aria-label="{{ __('messages.catalog') }}, {{ app()->getLocale() === 'id' ? 'buka menu' : 'open menu' }}"
+                            :aria-expanded="catalogMenuOpen ? 'true' : 'false'"
+                            class="flex items-center gap-1.5 px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none"
+                            :class="catalogMenuOpen ? 'bg-white/60 text-[#b35200] shadow-sm' : ''">
                         {{ __('messages.catalog') }}
                         <svg class="w-3.5 h-3.5 transition-transform duration-300" :class="{'rotate-180': catalogMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                     </button>
@@ -94,12 +96,12 @@
                     </div>
                 </div>
 
-                <a href="{{ route('mesin') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
+                <a href="{{ route('mesin') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.our_machines') }}
                 </a>
                 <a href="{{ url('/#footer') }}" 
                    @click="if (document.getElementById('footer')) { $event.preventDefault(); document.getElementById('footer').scrollIntoView({ behavior: 'smooth' }); }"
-                   class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#ff9100] hover:bg-white/50 transition-all outline-none">
+                   class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.information') }}
                 </a>
             </div>
@@ -110,21 +112,21 @@
                 <!-- Search Bar (Desktop & Tablet) -->
                 <div class="relative hidden md:block group">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                        <svg class="w-4 h-4 text-[#8A6A54] group-focus-within:text-[#ff9100] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0Z"/></svg>
+                        <svg class="w-4 h-4 text-[#8A6A54] group-focus-within:text-[#b35200] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0Z"/></svg>
                     </div>
                     <input type="text" 
                            wire:model.live.debounce.350ms="search"
                            wire:keydown.enter="performSearch"
-                           class="block w-32 xl:w-44 p-2 pl-9 text-[12px] font-medium text-[#2C1A0E] bg-white/40 border border-white/50 rounded-full focus:ring-2 focus:ring-[#ff9100]/30 focus:bg-white outline-none placeholder-[#8A6A54] transition-all shadow-inner" 
+                           class="block w-32 xl:w-44 p-2 pl-9 text-[12px] font-medium text-[#2C1A0E] bg-white/40 border border-white/50 rounded-full focus:ring-2 focus:ring-[#b35200]/30 focus:bg-white outline-none placeholder-[#8A6A54] transition-all shadow-inner" 
                            placeholder="{{ __('messages.search') }}...">
                 </div>
 
                 <!-- Language Dropdown -->
                 <div class="relative shrink-0">
                     <button @click="langMenuOpen = !langMenuOpen" @click.outside="langMenuOpen = false" 
-                            :aria-label="currentLocale === 'id' ? 'ID - Pilih Bahasa' : 'EN - Choose Language'"
-                            class="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/40 border border-white/50 text-[#5C3D28] hover:text-[#ff9100] hover:bg-white transition-all outline-none shadow-sm"
-                            :class="langMenuOpen ? 'bg-white ring-2 ring-[#ff9100]/30' : ''">
+                            aria-label="{{ app()->getLocale() === 'id' ? 'ID - Pilih Bahasa' : 'EN - Choose Language' }}"
+                            class="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/40 border border-white/50 text-[#5C3D28] hover:text-[#b35200] hover:bg-white transition-all outline-none shadow-sm"
+                            :class="langMenuOpen ? 'bg-white ring-2 ring-[#b35200]/30' : ''">
                         <span class="text-base leading-none lg:hidden" x-text="currentLocale === 'id' ? '🇮🇩' : '🇺🇸'"></span>
                         <span class="hidden lg:inline text-[12px] font-bold tracking-wide" x-text="currentLocale.toUpperCase()"></span>
                         <svg class="w-3 h-3 transition-transform duration-300" :class="{'rotate-180': langMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
@@ -163,15 +165,17 @@
 
                 <!-- Search Toggle Button (Khusus Mobile) -->
                 <button @click="searchOpen = !searchOpen; mobileMenuOpen = false" 
-                        aria-label="Cari Produk"
-                        class="md:hidden flex items-center justify-center w-9 h-9 rounded-full bg-white/50 text-[#5C3D28] hover:bg-white hover:text-[#ff9100] transition-colors outline-none shadow-sm">
+                        aria-label="{{ __('messages.search_products') }}"
+                        :aria-expanded="searchOpen ? 'true' : 'false'"
+                        class="md:hidden flex items-center justify-center w-9 h-9 rounded-full bg-white/50 text-[#5C3D28] hover:bg-white hover:text-[#b35200] transition-colors outline-none shadow-sm">
                     <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </button>
 
                 <!-- Mobile Menu Toggle -->
                 <button @click="mobileMenuOpen = !mobileMenuOpen; searchOpen = false" 
-                        aria-label="Buka Menu"
-                        class="lg:hidden flex items-center justify-center w-9 h-9 rounded-full bg-white/50 text-[#5C3D28] hover:bg-white hover:text-[#ff9100] transition-colors outline-none shadow-sm">
+                        aria-label="{{ app()->getLocale() === 'id' ? 'Buka Menu Navigasi' : 'Toggle Navigation' }}"
+                        :aria-expanded="mobileMenuOpen ? 'true' : 'false'"
+                        class="lg:hidden flex items-center justify-center w-9 h-9 rounded-full bg-white/50 text-[#5C3D28] hover:bg-white hover:text-[#b35200] transition-colors outline-none shadow-sm">
                     <svg x-show="!mobileMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     <svg x-show="mobileMenuOpen" x-cloak class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
@@ -194,7 +198,7 @@
                 <input type="text" 
                        wire:model.live.debounce.350ms="search"
                        wire:keydown.enter="performSearch"
-                       class="block w-full p-3.5 pl-10 text-[14px] font-medium text-[#2C1A0E] bg-[#fff2e0]/60 rounded-xl border-none focus:ring-2 focus:ring-[#ff9100]/40 outline-none placeholder-[#8A6A54]" 
+                       class="block w-full p-3.5 pl-10 text-[14px] font-medium text-[#2C1A0E] bg-[#fff2e0]/60 rounded-xl border-none focus:ring-2 focus:ring-[#b35200]/40 outline-none placeholder-[#8A6A54]" 
                        placeholder="{{ __('messages.search_placeholder') }}">
             </div>
         </div>
@@ -211,16 +215,19 @@
         <div class="bg-white/95 backdrop-blur-2xl border border-white/50 shadow-2xl rounded-3xl p-5 flex flex-col gap-2 max-h-[75vh] overflow-y-auto">
             <a href="{{ url('/') }}" 
                @click="mobileMenuOpen = false;"
-               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
+               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
             <a href="{{ url('/#hot-deals') }}" 
                @click="mobileMenuOpen = false; if (document.getElementById('hot-deals')) { $event.preventDefault(); document.getElementById('hot-deals').scrollIntoView({ behavior: 'smooth' }); }"
-               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a>
+               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a>
             
             <!-- Katalog Dropdown (Mobile) -->
             <div class="bg-[#fff2e0]/40 rounded-2xl">
-                <button @click="catalogMenuOpen = !catalogMenuOpen" class="w-full flex justify-between items-center px-4 py-3 text-[15px] font-semibold text-[#2C1A0E] outline-none">
+                <button @click="catalogMenuOpen = !catalogMenuOpen" 
+                        aria-label="{{ __('messages.catalog') }}, {{ app()->getLocale() === 'id' ? 'buka menu' : 'open menu' }}"
+                        :aria-expanded="catalogMenuOpen ? 'true' : 'false'"
+                        class="w-full flex justify-between items-center px-4 py-3 text-[15px] font-semibold text-[#2C1A0E] outline-none">
                     {{ __('messages.catalog') }}
-                    <svg class="w-5 h-5 transition-transform duration-300 text-[#ff9100]" :class="{'rotate-180': catalogMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    <svg class="w-5 h-5 transition-transform duration-300 text-[#b35200]" :class="{'rotate-180': catalogMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 <div x-show="catalogMenuOpen" x-cloak 
                      x-transition:enter="transition ease-out duration-200"
@@ -231,7 +238,7 @@
                      x-transition:leave-end="opacity-0 -translate-y-1"
                      class="px-4 pb-3 flex flex-col gap-2">
                     <div class="w-full h-px bg-black/5 mb-1"></div>
-                    <a href="{{ route('katalog') }}" class="px-3 py-2 rounded-xl bg-[#ff9100]/10 text-[14px] font-bold text-[#b35200]">{{ __('messages.all_products') }}</a>
+                    <a href="{{ route('katalog') }}" class="px-3 py-2 rounded-xl bg-[#b35200]/10 text-[14px] font-bold text-[#b35200]">{{ __('messages.all_products') }}</a>
                     
                     @forelse($productTypes as $type)
                         <a href="{{ route('katalog', ['type' => $type['slug']]) }}"
@@ -247,10 +254,10 @@
 
             <a href="{{ route('mesin') }}" 
                @click="mobileMenuOpen = false;"
-               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.our_machines') }}</a>
+               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.our_machines') }}</a>
             <a href="{{ url('/#footer') }}" 
                @click="mobileMenuOpen = false; if (document.getElementById('footer')) { $event.preventDefault(); document.getElementById('footer').scrollIntoView({ behavior: 'smooth' }); }"
-               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#ff9100] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.information') }}</a>
+               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.information') }}</a>
             
             <div class="w-full h-px bg-black/5 my-2"></div>
             

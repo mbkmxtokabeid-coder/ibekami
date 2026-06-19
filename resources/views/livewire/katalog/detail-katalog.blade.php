@@ -166,7 +166,7 @@
                 </a>
             @empty
                 <div class="col-span-full text-center py-12">
-                    <p class="text-[#8A6A54] text-sm">{{ __('messages.no_related_products') }}</p>
+                    <p class="text-[#886852] text-sm">{{ __('messages.no_related_products') }}</p>
                 </div>
             @endforelse
         </div>

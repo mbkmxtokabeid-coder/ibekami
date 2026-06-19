@@ -1,9 +1,9 @@
 <section class="py-16 px-4 bg-[#fdfaf7] overflow-hidden">
     <div class="max-w-7xl mx-auto">
         <div class="mb-10 text-center md:text-left">
-            <div class="flex items-center justify-center md:justify-start gap-2 text-[11px] font-bold text-[#ff9100] uppercase tracking-widest mb-2">
+            <div class="flex items-center justify-center md:justify-start gap-2 text-[11px] font-bold text-[#b35200] uppercase tracking-widest mb-2">
                 {{ __('messages.customer_reviews') }}
-                <span class="w-10 h-[1px] bg-[#ff9100]"></span>
+                <span class="w-10 h-[1px] bg-[#b35200]"></span>
             </div>
             <h2 class="font-['Playfair_Display'] text-3xl font-bold text-[#2C1A0E]">
                 {{ __('messages.what_they_say') }}
@@ -57,13 +57,13 @@
 
                 @foreach($loop as $index => $review)
                 <div wire:key="review-{{ $review['id'] }}-{{ $index }}" 
-                     class="w-[280px] md:w-[350px] flex-shrink-0 bg-white p-6 rounded-2xl border border-[#ff9100]/10 flex flex-col justify-between shadow-sm hover:shadow-lg hover:border-[#ff9100]/30 transition-all duration-300">
+                     class="w-[280px] md:w-[350px] flex-shrink-0 bg-white p-6 rounded-2xl border border-[#b35200]/10 flex flex-col justify-between shadow-sm hover:shadow-lg hover:border-[#b35200]/30 transition-all duration-300">
                     
                     <div>
                         <!-- Rating Stars -->
                         <div class="flex gap-1 mb-4">
                             @for($i = 0; $i < ($review['rating'] ?? 5); $i++)
-                                <div class="w-3 h-3 bg-[#ff9100]"
+                                <div class="w-3 h-3 bg-[#b35200]"
                                      style="clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)">
                                 </div>
                             @endfor
@@ -77,14 +77,14 @@
 
                     <!-- User Info -->
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-[#ff9100] text-white font-bold rounded-full flex items-center justify-center text-xs shadow-md">
+                        <div class="w-10 h-10 bg-[#b35200] text-white font-bold rounded-full flex items-center justify-center text-xs shadow-md">
                             {{ $review['initials'] }}
                         </div>
                         <div>
                             <div class="text-[12px] font-bold text-[#2C1A0E]">
                                 {{ $review['name'] }}
                             </div>
-                            <div class="text-[11px] text-[#8A6A54]">
+                            <div class="text-[11px] text-[#886852]">
                                 {{ $review['date'] }}
                             </div>
                         </div>
@@ -101,9 +101,9 @@
 
         <!-- Indicator -->
         <div class="flex justify-center gap-2 mt-8">
-            <div class="w-2 h-2 rounded-full bg-[#ff9100] animate-pulse"></div>
-            <div class="w-2 h-2 rounded-full bg-[#ff9100]/30"></div>
-            <div class="w-2 h-2 rounded-full bg-[#ff9100]/30"></div>
+            <div class="w-2 h-2 rounded-full bg-[#b35200] animate-pulse"></div>
+            <div class="w-2 h-2 rounded-full bg-[#b35200]/30"></div>
+            <div class="w-2 h-2 rounded-full bg-[#b35200]/30"></div>
         </div>
     </div>
 </section>

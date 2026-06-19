@@ -1,10 +1,10 @@
 <section class="py-16 px-4 bg-[#fff2e0] overflow-hidden">
     <div class="max-w-7xl mx-auto">
         <div class="text-center max-w-lg mx-auto mb-10">
-            <div class="flex items-center justify-center gap-3 text-[11px] font-bold text-[#ff9100] uppercase tracking-widest mb-2">
-                <span class="w-10 h-[1px] bg-[#ff9100]"></span>
+            <div class="flex items-center justify-center gap-3 text-[11px] font-bold text-[#b35200] uppercase tracking-widest mb-2">
+                <span class="w-10 h-[1px] bg-[#b35200]"></span>
                 {{ __('messages.trusted_together') }}
-                <span class="w-10 h-[1px] bg-[#ff9100]"></span>
+                <span class="w-10 h-[1px] bg-[#b35200]"></span>
             </div>
             <h2 class="font-['Playfair_Display'] text-3xl font-bold text-[#3d2b1f]">{{ __('messages.our_partners') }}</h2>
             <p class="text-[13px] text-[#7a6452] mt-2">{{ __('messages.trusted_by_institutions') }}</p>
@@ -21,7 +21,7 @@
                 @if(count($partnersBumn) > 0)
                 <div class="space-y-2">
                     <div class="text-center">
-                        <span class="inline-block px-4 py-1 bg-[#ff9100]/10 text-[#ff9100] text-xs font-bold uppercase tracking-wider rounded-full border border-[#ff9100]/20">
+                        <span class="inline-block px-4 py-1 bg-[#b35200]/10 text-[#b35200] text-xs font-bold uppercase tracking-wider rounded-full border border-[#b35200]/20">
                             {{ __('messages.bumn_partners') }}
                         </span>
                     </div>
@@ -73,7 +73,7 @@
                         <div x-ref="track" class="flex gap-4">
                             @foreach($partnersBumn as $index => $partner)
                             <div wire:key="bumn-{{ $partner['id'] }}-{{ $index }}" 
-                                 class="w-36 h-20 shrink-0 bg-white rounded-xl border border-[#ff9100]/10 flex items-center justify-center p-4 hover:border-[#ff9100] hover:shadow-lg hover:shadow-[#ff9100]/10 transition-all group">
+                                 class="w-36 h-20 shrink-0 bg-white rounded-xl border border-[#b35200]/10 flex items-center justify-center p-4 hover:border-[#b35200] hover:shadow-lg hover:shadow-[#b35200]/10 transition-all group">
                                 <img src="{{ $partner['image'] }}" 
                                      loading="lazy"
                                      decoding="async"
@@ -93,7 +93,7 @@
                 @if(count($partnersOrganization) > 0)
                 <div class="space-y-2">
                     <div class="text-center">
-                        <span class="inline-block px-4 py-1 bg-[#ff9100]/10 text-[#ff9100] text-xs font-bold uppercase tracking-wider rounded-full border border-[#ff9100]/20">
+                        <span class="inline-block px-4 py-1 bg-[#b35200]/10 text-[#b35200] text-xs font-bold uppercase tracking-wider rounded-full border border-[#b35200]/20">
                             {{ __('messages.organization_partners') }}
                         </span>
                     </div>
@@ -146,7 +146,7 @@
                         <div x-ref="track" class="flex gap-4">
                             @foreach($partnersOrganization as $index => $partner)
                             <div wire:key="org-{{ $partner['id'] }}-{{ $index }}" 
-                                 class="w-36 h-20 shrink-0 bg-white rounded-xl border border-[#ff9100]/10 flex items-center justify-center p-4 hover:border-[#ff9100] hover:shadow-lg hover:shadow-[#ff9100]/10 transition-all group">
+                                 class="w-36 h-20 shrink-0 bg-white rounded-xl border border-[#b35200]/10 flex items-center justify-center p-4 hover:border-[#b35200] hover:shadow-lg hover:shadow-[#b35200]/10 transition-all group">
                                 <img src="{{ $partner['image'] }}" 
                                      loading="lazy"
                                      decoding="async"
@@ -172,13 +172,13 @@
         </div>
 
         <!-- CTA Banner -->
-        <div x-ignore class="mt-16 bg-[#ff9100] rounded-[32px] p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl shadow-[#ff9100]/20">
+        <div x-ignore class="mt-16 bg-[#b35200] rounded-[32px] p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl shadow-[#b35200]/20">
             <div class="text-center md:text-left text-white">
                 <div class="text-[11px] font-bold opacity-90 uppercase tracking-[2px] mb-2">{{ __('messages.join_us') }}</div>
                 <h3 class="font-['Playfair_Display'] text-2xl md:text-3xl font-bold mb-2 text-white">{{ __('messages.become_next_partner') }}</h3>
                 <p class="text-sm text-white/80">{{ __('messages.collaboration_best_solution') }}</p>
             </div>
-            <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+            <a href="https://wa.me/62817076999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
                rel="noopener noreferrer"
                @click.throttle.2000ms

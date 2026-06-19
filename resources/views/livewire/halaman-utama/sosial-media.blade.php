@@ -3,14 +3,14 @@
 
         {{-- Header --}}
         <div class="mb-10 sm:mb-12">
-            <div class="flex items-center gap-3 text-xs sm:text-[13px] font-bold text-[#ff9100] uppercase tracking-[0.2em] mb-3">
+            <div class="flex items-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-3">
                 {{ __('messages.social_media') }}
-                <span class="w-12 h-[2px] bg-[#ff9100]/50 rounded-full"></span>
+                <span class="w-12 h-[2px] bg-[#b35200]/50 rounded-full"></span>
             </div>
             <h2 class="font-['Playfair_Display'] text-3xl sm:text-4xl font-bold text-[#2C1A0E] leading-tight tracking-tight">
                 Follow Us
             </h2>
-            <p class="text-sm sm:text-base text-[#8A6A54] mt-3 font-medium leading-relaxed max-w-xl opacity-90">
+            <p class="text-sm sm:text-base text-[#866b59] mt-3 font-medium leading-relaxed max-w-xl">
                 Ikuti kami untuk update produk terbaru, inspirasi desain, dan promo eksklusif.
             </p>
         </div>
@@ -40,12 +40,12 @@
                     <div class="font-['Playfair_Display'] text-lg sm:text-xl font-bold text-[#2C1A0E] group-hover:text-[#010101] transition-colors duration-300">
                         TikTok
                     </div>
-                    <div class="text-xs sm:text-sm text-[#8A6A54]/80 mt-1 font-medium tracking-wide truncate">
+                    <div class="text-xs sm:text-sm text-[#866b59] mt-1 font-medium tracking-wide truncate">
                         @ibekami.id
                     </div>
                 </div>
 
-                <svg class="w-5 h-5 text-[#8A6A54]/40 group-hover:text-[#010101] group-hover:translate-x-1 transition-all duration-300 shrink-0"
+                <svg class="w-5 h-5 text-[#866b59]/40 group-hover:text-[#010101] group-hover:translate-x-1 transition-all duration-300 shrink-0"
                      fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                 </svg>
@@ -74,12 +74,12 @@
                     <div class="font-['Playfair_Display'] text-lg sm:text-xl font-bold text-[#2C1A0E] group-hover:text-[#E1306C] transition-colors duration-300">
                         Instagram
                     </div>
-                    <div class="text-xs sm:text-sm text-[#8A6A54]/80 mt-1 font-medium tracking-wide truncate">
+                    <div class="text-xs sm:text-sm text-[#866b59] mt-1 font-medium tracking-wide truncate">
                         @ibekami.id
                     </div>
                 </div>
 
-                <svg class="w-5 h-5 text-[#8A6A54]/40 group-hover:text-[#E1306C] group-hover:translate-x-1 transition-all duration-300 shrink-0"
+                <svg class="w-5 h-5 text-[#866b59]/40 group-hover:text-[#E1306C] group-hover:translate-x-1 transition-all duration-300 shrink-0"
                      fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                 </svg>

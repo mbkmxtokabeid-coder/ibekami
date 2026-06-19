@@ -37,14 +37,14 @@
         <!-- Header -->
         <div class="mb-10 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6">
             <div>
-                <div class="inline-flex items-center gap-2 text-[10px] font-semibold text-[#FF9100] uppercase tracking-[0.2em] mb-3">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#FF9100] animate-pulse"></span>
+                <div class="inline-flex items-center gap-2 text-[10px] font-semibold text-[#b35200] uppercase tracking-[0.2em] mb-3">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#b35200] animate-pulse"></span>
                     {{ __('messages.our_collection') }}
                 </div>
                 <h2 class="text-2xl md:text-4xl font-extrabold text-[#2C1A0E] leading-tight">
                     {{ __('messages.available_products') }}
                 </h2>
-                <p class="text-[12px] md:text-sm text-[#8A6A54] mt-2 max-w-md leading-relaxed">
+                <p class="text-[12px] md:text-sm text-[#886852] mt-2 max-w-md leading-relaxed">
                     {{ __('messages.made_with_love') }}
                 </p>
             </div>
@@ -55,7 +55,7 @@
             @foreach($initialData as $index => $product)
                 <a href="{{ route('katalog.detail', ['slug' => $product['slug']]) }}"
                    class="group bg-white/90 rounded-3xl p-3 border border-black/5 
-                          shadow-sm hover:shadow-md hover:shadow-[#FF9100]/10 
+                          shadow-sm hover:shadow-md hover:shadow-[#b35200]/10 
                           transition-all duration-300 ease-out 
                           hover:-translate-y-1 flex flex-col cursor-pointer
                           @if($index >= 9) hidden lg:flex @elseif($index >= 6) hidden md:flex @endif">
@@ -76,7 +76,7 @@
 
                     <!-- Product Info -->
                     <div>
-                        <div class="text-[10px] font-semibold text-[#FF9100] uppercase tracking-wide mb-1">{{ $product['cat'] }}</div>
+                        <div class="text-[10px] font-semibold text-[#b35200] uppercase tracking-wide mb-1">{{ $product['cat'] }}</div>
                         <h3 class="text-[13px] md:text-sm font-semibold text-[#2C1A0E] leading-snug line-clamp-2">{{ $product['name'] }}</h3>
                     </div>
                 </a>

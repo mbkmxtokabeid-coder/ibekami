@@ -58,7 +58,7 @@
                     <h2 class="font-['Playfair_Display'] text-2xl sm:text-3xl font-black text-[#2C1A0E] tracking-tight mt-3">
                         {{ __('messages.faq_title') }}
                     </h2>
-                    <p class="text-[12px] sm:text-[13px] text-[#8A6A54] font-medium mt-2 leading-relaxed">
+                    <p class="text-[12px] sm:text-[13px] text-[#886852] font-medium mt-2 leading-relaxed">
                         {{ __('messages.faq_subtitle') }}
                     </p>
                 </div>
@@ -66,20 +66,20 @@
                 {{-- Loop 6 FAQ Items --}}
                 @foreach(range(1, 6) as $i)
                     <div class="bg-white rounded-2xl border border-black/5 overflow-hidden transition-all duration-300 shadow-sm"
-                         :class="activeFaq === {{ $i }} ? 'border-[#ff9100]/30 shadow-md shadow-[#ff9100]/5' : 'hover:border-[#ff9100]/20'">
+                          :class="activeFaq === {{ $i }} ? 'border-[#b35200]/30 shadow-md shadow-[#b35200]/5' : 'hover:border-[#b35200]/20'">
                         
                         {{-- Question Button --}}
                         <button type="button" 
                                 @click="activeFaq = (activeFaq === {{ $i }} ? null : {{ $i }})"
                                 class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 outline-none focus:outline-none select-none">
                             <span class="text-[13px] sm:text-[14px] font-bold text-[#2C1A0E] transition-colors duration-300"
-                                  :class="activeFaq === {{ $i }} ? 'text-[#ff9100]' : 'group-hover:text-[#ff9100]'">
+                                  :class="activeFaq === {{ $i }} ? 'text-[#b35200]' : 'group-hover:text-[#b35200]'">
                                 {{ __("messages.faq_q{$i}") }}
                             </span>
                             
                             {{-- Chevron Icon with Rotation --}}
                             <svg class="w-4 h-4 text-[#8A6A54] transition-transform duration-300 shrink-0" 
-                                 :class="activeFaq === {{ $i }} ? 'rotate-180 text-[#ff9100]' : ''" 
+                                 :class="activeFaq === {{ $i }} ? 'rotate-180 text-[#b35200]' : ''" 
                                  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
                             </svg>
@@ -93,7 +93,7 @@
                              x-transition:leave="transition ease-in duration-150"
                              x-transition:leave-start="opacity-100 max-h-[500px]"
                              x-transition:leave-end="opacity-0 max-h-0"
-                             class="border-t border-[#ff9100]/10 bg-gradient-to-b from-[#fdfaf7]/50 to-[#fff2e0]/20"
+                             class="border-t border-[#b35200]/10 bg-gradient-to-b from-[#fdfaf7]/50 to-[#fff2e0]/20"
                              style="display: none;">
                             <div class="px-5 py-4 sm:px-6 sm:py-5 text-[12px] sm:text-[13px] text-[#5C3D28] leading-relaxed">
                                 {{ __("messages.faq_a{$i}") }}

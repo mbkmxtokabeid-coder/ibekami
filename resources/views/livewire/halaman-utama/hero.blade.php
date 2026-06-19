@@ -2,8 +2,8 @@
 @if($preloadImageUrl)
     @push('preload')
         <link rel="preload" as="image" href="{{ $preloadImageUrl }}" 
-              imagesrcset="{{ $preloadImageMobileUrl }} 480w, {{ $preloadImageUrl }} 960w" 
-              imagesizes="(max-width: 640px) 480px, 960px" 
+              imagesrcset="{{ $preloadImageMobileUrl }} 480w, {{ $preloadImageUrl }} 800w" 
+              imagesizes="(max-width: 640px) 480px, 800px" 
               type="image/webp" fetchpriority="high">
     @endpush
 @endif
@@ -50,7 +50,7 @@
             <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto pt-2">
                 
                 <!-- Primary -->
-                <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+                <a href="https://wa.me/62817076999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
                    rel="noopener noreferrer"
                    @click.throttle.2000ms
@@ -85,11 +85,12 @@
                      init() {
                          if (this.slidesCount > 1) {
                              setInterval(() => {
-                                 this.activeSlide = (this.activeSlide + 1) % this.slidesCount;
+                                  this.activeSlide = (this.activeSlide + 1) % this.slidesCount;
                              }, 5000);
                          }
                      }
                  }"
+                 style="aspect-ratio: 1/1;"
                  class="relative w-[85%] max-w-[480px] aspect-square bg-[#FFF2E0] rounded-2xl
             border border-white/60 shadow-lg shadow-[#FF9100]/10 overflow-hidden transition-transform duration-500">
 
@@ -100,11 +101,11 @@
                         @foreach($banners as $index => $bannerItem)
                             <div class="w-full h-full shrink-0">
                                 <img src="{{ $bannerItem['url'] }}"
-                                     srcset="{{ $bannerItem['mobile_url'] }} 480w, {{ $bannerItem['url'] }} 960w"
-                                     sizes="(max-width: 640px) 480px, 960px"
+                                     srcset="{{ $bannerItem['mobile_url'] }} 480w, {{ $bannerItem['url'] }} 800w"
+                                     sizes="(max-width: 640px) 480px, 800px"
                                      alt="Banner utama IBEKAMI"
-                                     width="960"
-                                     height="960"
+                                     width="800"
+                                     height="800"
                                      @if($index === 0) loading="eager" fetchpriority="high" decoding="sync" @else loading="lazy" decoding="async" @endif
                                      class="w-full h-full object-cover">
                             </div>
@@ -146,7 +147,7 @@
                 <div class="flex items-center gap-2">
                     <div class="w-8 h-8 bg-yellow-300/30 rounded-lg flex items-center justify-center">★</div>
                     <div>
-                        <p class="text-[9px] font-semibold text-[#8A6A54] uppercase">{{ __('messages.rating') }}</p>
+                        <p class="text-[9px] font-semibold text-[#886852] uppercase">{{ __('messages.rating') }}</p>
                         <p class="text-[13px] font-bold text-[#2C1A0E]">5.0</p>
                     </div>
                 </div>

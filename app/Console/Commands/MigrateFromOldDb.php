@@ -67,13 +67,54 @@ class MigrateFromOldDb extends Command
             return;
         }
 
+        // Map row array if needed due to schema changes
+        $mappedRows = array_map(function($row) use ($table) {
+            $data = (array) $row;
+            if ($table === 'types') {
+                if (isset($data['name'])) {
+                    $data['name_id'] = $data['name'];
+                    $data['name_en'] = $data['name'];
+                    unset($data['name']);
+                }
+            } elseif ($table === 'categories') {
+                if (isset($data['name'])) {
+                    $data['name_id'] = $data['name'];
+                    $data['name_en'] = $data['name'];
+                    unset($data['name']);
+                }
+            } elseif ($table === 'products') {
+                if (isset($data['name'])) {
+                    $data['name_id'] = $data['name'];
+                    $data['name_en'] = $data['name'];
+                    unset($data['name']);
+                }
+                if (isset($data['description'])) {
+                    $data['description_id'] = $data['description'];
+                    $data['description_en'] = $data['description'];
+                    unset($data['description']);
+                }
+                if (isset($data['detail'])) {
+                    $data['detail_id'] = $data['detail'];
+                    $data['detail_en'] = $data['detail'];
+                    unset($data['detail']);
+                }
+            } elseif ($table === 'reviews') {
+                if (isset($data['review'])) {
+                    $data['review_id'] = $data['review'];
+                    $data['review_en'] = $data['review'];
+                    unset($data['review']);
+                }
+            }
+            return $data;
+        }, $rows);
+
         // Truncate dulu agar tidak duplikat
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table($table)->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Insert dalam batch 100
-        $chunks = array_chunk(array_map(fn($r) => (array) $r, $rows), 100);
+        $chunks = array_chunk($mappedRows, 100);
         $bar    = $this->output->createProgressBar($count);
         $bar->start();
 

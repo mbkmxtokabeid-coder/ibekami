@@ -37,7 +37,7 @@
                 {{ $sortBy }}
                 <button wire:click="resetFilters" class="hover:text-[#8C4126] focus:outline-none">&times;</button>
             </span>
-            <button wire:click="resetFilters" class="text-[12px] font-semibold text-[#8A6A54] hover:text-[#A64E2F] transition-colors px-1 outline-none">
+            <button wire:click="resetFilters" class="text-[12px] font-semibold text-[#886852] hover:text-[#A64E2F] transition-colors px-1 outline-none">
                 {{ __('messages.reset_filters') }}
             </button>
         </div>
@@ -109,7 +109,7 @@
                                 {{ $i }}
                             </button>
                         @elseif(abs($i - $this->paginatedData['currentPage']) == 2)
-                            <span class="w-6 text-center text-[#8A6A54] font-bold">...</span>
+                            <span class="w-6 text-center text-[#886852] font-bold">...</span>
                         @endif
                     @endfor
                 </div>
@@ -131,7 +131,7 @@
             <svg class="w-12 h-12 text-[#C4B9A8] mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <p class="text-[#8A6A54] font-semibold text-[14px]">{{ __('messages.no_products_found') }}</p>
+            <p class="text-[#886852] font-semibold text-[14px]">{{ __('messages.no_products_found') }}</p>
             <button wire:click="resetFilters" class="mt-3 text-[#A64E2F] text-[13px] font-bold hover:underline outline-none">
                 {{ __('messages.reset_all_filters') }}
             </button>
