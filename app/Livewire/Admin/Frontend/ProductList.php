@@ -299,11 +299,17 @@ class ProductList extends Component
 
         if ($this->isEditing) {
             $oldSlug = $product->getSlug();
+            if ($product->status !== 'Aktif' && $this->status === 'Aktif') {
+                $data['activated_at'] = now();
+            }
             $product->update($data);
             $this->clearProductCache($product->product_id, $oldSlug, $product->getSlug());
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Produk berhasil diperbarui.']);
         } else {
             $data['product_id'] = $productId;
+            if ($this->status === 'Aktif') {
+                $data['activated_at'] = now();
+            }
             Product::create($data);
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Produk berhasil ditambahkan.']);
         }
