@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" class="h-full">
 <head>
-    {{-- CRITICAL: Unregister semua Service Worker SEBELUM apapun di-load --}}
-    {{-- SW lama bisa intercept request dan menyebabkan halaman blank + permission popup --}}
+    
+    
     <script>
         (function() {
             if ('serviceWorker' in navigator) {
@@ -20,61 +20,61 @@
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-    {{-- Anti-PWA: tag ini sengaja dihapus total, bukan di-set ke "no" --}}
-    {{-- Kehadiran tag apple-mobile-web-app-capable & mobile-web-app-capable --}}
-    {{-- meski content="no" tetap bisa dideteksi sebagai sinyal PWA oleh browser --}}
+    
+    
+    
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
-    <title>@yield('title', 'IBEKAMI - Digital Printing & Souvenir Custom Medan')</title>
-    <meta name="description" content="@yield('meta_description', 'IBEKAMI - Percetakan dan souvenir kreatif terbaik di Medan. Melayani plakat, digital printing, dan merchandise custom dengan kualitas premium.')">
-    <meta name="keywords" content="@yield('meta_keywords', 'percetakan Medan, souvenir custom Medan, merchandise perusahaan Medan, digital printing Medan, goodie bag Medan, acrylic Medan')">
+    <title><?php echo $__env->yieldContent('title', 'IBEKAMI - Digital Printing & Souvenir Custom Medan'); ?></title>
+    <meta name="description" content="<?php echo $__env->yieldContent('meta_description', 'IBEKAMI - Percetakan dan souvenir kreatif terbaik di Medan. Melayani plakat, digital printing, dan merchandise custom dengan kualitas premium.'); ?>">
+    <meta name="keywords" content="<?php echo $__env->yieldContent('meta_keywords', 'percetakan Medan, souvenir custom Medan, merchandise perusahaan Medan, digital printing Medan, goodie bag Medan, acrylic Medan'); ?>">
 
     <!-- Open Graph (Facebook / Instagram / WhatsApp) -->
     <meta property="og:type"        content="website">
     <meta property="og:site_name"   content="IBEKAMI">
     <meta property="og:locale"      content="id_ID">
-    <meta property="og:url"         content="{{ request()->url() }}">
-    <meta property="og:title"       content="@yield('title', 'IBEKAMI – Percetakan & Souvenir Custom Terbaik di Medan')">
-    <meta property="og:description" content="@yield('meta_description', 'Souvenir custom, plakat, tumbler, dan digital printing berkualitas di Medan.')">
-    <meta property="og:image"       content="@yield('og_image', asset('storage/logos/logo ibekami (3).webp'))">
+    <meta property="og:url"         content="<?php echo e(request()->url()); ?>">
+    <meta property="og:title"       content="<?php echo $__env->yieldContent('title', 'IBEKAMI – Percetakan & Souvenir Custom Terbaik di Medan'); ?>">
+    <meta property="og:description" content="<?php echo $__env->yieldContent('meta_description', 'Souvenir custom, plakat, tumbler, dan digital printing berkualitas di Medan.'); ?>">
+    <meta property="og:image"       content="<?php echo $__env->yieldContent('og_image', asset('storage/logos/logo ibekami (3).webp')); ?>">
     <meta property="og:image:width"  content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt"    content="@yield('title', 'IBEKAMI – Percetakan & Souvenir Custom Medan')">
+    <meta property="og:image:alt"    content="<?php echo $__env->yieldContent('title', 'IBEKAMI – Percetakan & Souvenir Custom Medan'); ?>">
 
     <!-- Twitter / X Card -->
     <meta name="twitter:card"        content="summary_large_image">
-    <meta name="twitter:title"       content="@yield('title', 'IBEKAMI – Percetakan & Souvenir Custom Terbaik di Medan')">
-    <meta name="twitter:description" content="@yield('meta_description', 'Souvenir custom, plakat, tumbler, dan digital printing berkualitas di Medan.')">
-    <meta name="twitter:image"       content="@yield('og_image', asset('storage/logos/logo ibekami (3).webp'))">
+    <meta name="twitter:title"       content="<?php echo $__env->yieldContent('title', 'IBEKAMI – Percetakan & Souvenir Custom Terbaik di Medan'); ?>">
+    <meta name="twitter:description" content="<?php echo $__env->yieldContent('meta_description', 'Souvenir custom, plakat, tumbler, dan digital printing berkualitas di Medan.'); ?>">
+    <meta name="twitter:image"       content="<?php echo $__env->yieldContent('og_image', asset('storage/logos/logo ibekami (3).webp')); ?>">
 
-    @stack('preload')
+    <?php echo $__env->yieldPushContent('preload'); ?>
 
-    {{-- Dynamic canonical URL to prevent search engines and crawlers from indexing redirecting URLs --}}
-    <link rel="canonical" href="@yield('canonical', request()->url())">
-
-    {{-- Favicon & Google Search Icon (Google requires PNG/ICO format, minimum 48x48px) --}}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('favicon-48x48.png') }}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon-96x96.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
-
-    {{-- Preload critical fonts for better performance (Network Dependency Tree optimization) --}}
-    <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/instrument-sans-latin-400-normal.woff2') }}" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/instrument-sans-latin-500-normal.woff2') }}" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/instrument-sans-latin-600-normal.woff2') }}" crossorigin>
     
-    {{-- Inlined Self-hosted fonts CSS to eliminate a render-blocking HTTP request --}}
+    <link rel="canonical" href="<?php echo $__env->yieldContent('canonical', request()->url()); ?>">
+
+    
+    <link rel="icon" type="image/x-icon" href="<?php echo e(asset('favicon.ico')); ?>">
+    <link rel="icon" type="image/png" sizes="48x48" href="<?php echo e(asset('favicon-48x48.png')); ?>">
+    <link rel="icon" type="image/png" sizes="96x96" href="<?php echo e(asset('favicon-96x96.png')); ?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(asset('favicon-32x32.png')); ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo e(asset('apple-touch-icon.png')); ?>">
+
+    
+    <link rel="preload" as="font" type="font/woff2" href="<?php echo e(asset('fonts/instrument-sans-latin-400-normal.woff2')); ?>" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="<?php echo e(asset('fonts/instrument-sans-latin-500-normal.woff2')); ?>" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="<?php echo e(asset('fonts/instrument-sans-latin-600-normal.woff2')); ?>" crossorigin>
+    
+    
     <style>
         @font-face {
             font-family: 'Instrument Sans';
             font-style: normal;
             font-weight: 400;
             font-display: swap;
-            src: url('{{ asset('fonts/instrument-sans-latin-400-normal.woff2') }}') format('woff2');
+            src: url('<?php echo e(asset('fonts/instrument-sans-latin-400-normal.woff2')); ?>') format('woff2');
             unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         @font-face {
@@ -82,7 +82,7 @@
             font-style: normal;
             font-weight: 500;
             font-display: swap;
-            src: url('{{ asset('fonts/instrument-sans-latin-500-normal.woff2') }}') format('woff2');
+            src: url('<?php echo e(asset('fonts/instrument-sans-latin-500-normal.woff2')); ?>') format('woff2');
             unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         @font-face {
@@ -90,21 +90,18 @@
             font-style: normal;
             font-weight: 600;
             font-display: swap;
-            src: url('{{ asset('fonts/instrument-sans-latin-600-normal.woff2') }}') format('woff2');
+            src: url('<?php echo e(asset('fonts/instrument-sans-latin-600-normal.woff2')); ?>') format('woff2');
             unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
     </style>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
-    @stack('styles')
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
+    <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::styles(); ?>
 
-    {{-- ── Google Analytics & Tag Manager — production only ───────────────────
-         Load on first user interaction (scroll/click/touch) untuk menghindari
-         TBT (Total Blocking Time) yang merusak Core Web Vitals.
-         Fallback: muat otomatis setelah 5 detik jika user tidak interaksi.
-    ──────────────────────────────────────────────────────────────────────── --}}
-    @if(config('app.env') === 'production')
+    <?php echo $__env->yieldPushContent('styles'); ?>
+
+    
+    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(config('app.env') === 'production'): ?>
     <script>
     (function () {
         // Mencegah pemuatan script pelacakan berat saat pengujian performa otomatis (Lighthouse, Bot, hPanel Speed Test)
@@ -160,64 +157,91 @@
         setTimeout(loadAnalytics, 10000);
     })();
     </script>
-    @endif
+    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 </head>
 <body class="min-h-screen text-gray-900 dark:text-gray-100 antialiased">
 
-    {{-- GTM noscript — wajib ada tepat setelah <body> untuk tracking tanpa JS --}}
-    @if(config('app.env') === 'production')
+    
+    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(config('app.env') === 'production'): ?>
     <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-FVT5H5JH"
                 height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
-    @endif
+    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-    <livewire:navbar />
+    <?php
+$__split = function ($name, $params = []) {
+    return [$name, $params];
+};
+[$__name, $__params] = $__split('navbar', []);
 
-    @hasSection('header')
+$__keyOuter = $__key ?? null;
+
+$__key = null;
+$__componentSlots = [];
+
+$__key ??= \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::generateKey('lw-1801393554-0', $__key);
+
+$__html = app('livewire')->mount($__name, $__params, $__key, $__componentSlots);
+
+echo $__html;
+
+unset($__html);
+unset($__key);
+$__key = $__keyOuter;
+unset($__keyOuter);
+unset($__name);
+unset($__params);
+unset($__componentSlots);
+unset($__split);
+?>
+
+    <?php if (! empty(trim($__env->yieldContent('header')))): ?>
         <header class="bg-white dark:bg-gray-800 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                @yield('header')
+                <?php echo $__env->yieldContent('header'); ?>
             </div>
         </header>
-    @endif
+    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-    @if (session()->has('success') || session()->has('error') || session()->has('info'))
+    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session()->has('success') || session()->has('error') || session()->has('info')): ?>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 space-y-2">
-            @if (session('success'))
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('success')): ?>
                 <div x-data="{ show: true }" x-show="show" x-cloak x-transition
                      class="flex items-center justify-between px-4 py-3 rounded-lg bg-green-50 border border-green-200 text-green-800 text-sm">
-                    <span>{{ session('success') }}</span>
+                    <span><?php echo e(session('success')); ?></span>
                     <button @click="show = false" class="ml-4 text-green-600 hover:text-green-800">&times;</button>
                 </div>
-            @endif
-            @if (session('error'))
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('error')): ?>
                 <div x-data="{ show: true }" x-show="show" x-cloak x-transition
                      class="flex items-center justify-between px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">
-                    <span>{{ session('error') }}</span>
+                    <span><?php echo e(session('error')); ?></span>
                     <button @click="show = false" class="ml-4 text-red-600 hover:text-red-800">&times;</button>
                 </div>
-            @endif
-            @if (session('info'))
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('info')): ?>
                 <div x-data="{ show: true }" x-show="show" x-cloak x-transition
                      class="flex items-center justify-between px-4 py-3 rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-sm">
-                    <span>{{ session('info') }}</span>
+                    <span><?php echo e(session('info')); ?></span>
                     <button @click="show = false" class="ml-4 text-blue-600 hover:text-blue-800">&times;</button>
                 </div>
-            @endif
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
         </div>
-    @endif
+    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
     <main>
-        @yield('content')
-        {{ $slot ?? '' }}
+        <?php echo $__env->yieldContent('content'); ?>
+        <?php echo e($slot ?? ''); ?>
+
     </main>
 
-    {{-- Livewire Scripts with defer attribute for performance optimization --}}
-    @livewireScriptConfig(['defer' => true])
-    @stack('scripts')
+    
+    <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scriptConfig(['defer' => true]); ?>
 
-    {{-- ── Global Filter Popup — di sini agar fixed positioning bekerja di semua device ── --}}
+    <?php echo $__env->yieldPushContent('scripts'); ?>
+
+    
     <div id="global-filter-popup"
          x-data="{
              open: false,
@@ -264,7 +288,7 @@
              }
          }">
 
-        {{-- Backdrop --}}
+        
         <div x-show="open"
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0"
@@ -276,7 +300,7 @@
              style="display:none; z-index:99998;">
         </div>
 
-        {{-- Bottom Sheet Panel --}}
+        
         <div x-show="open"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="translate-y-full"
@@ -286,12 +310,12 @@
              class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl flex flex-col"
              style="display:none; z-index:99999; max-height:75vh;">
 
-            {{-- Handle bar --}}
+            
             <div class="flex justify-center pt-3 pb-0 shrink-0">
                 <div class="w-10 h-1 bg-gray-300 rounded-full"></div>
             </div>
 
-            {{-- Header --}}
+            
             <div class="flex items-center justify-between px-5 py-3 shrink-0 border-b border-gray-100">
                 <h3 class="text-[17px] font-black text-[#3d2b1f]">Pilih Filter</h3>
                 <button @click="closeModal()"
@@ -300,7 +324,7 @@
                 </button>
             </div>
 
-            {{-- Scrollable content --}}
+            
             <div class="flex-1 overflow-y-auto px-5 py-4 space-y-5">
 
                 <template x-if="allTypes.length > 0">
@@ -341,7 +365,7 @@
 
             </div>
 
-            {{-- Footer --}}
+            
             <div class="shrink-0 px-5 py-4 border-t border-gray-100 flex gap-3">
                 <button @click="reset()"
                     class="flex-1 py-3.5 rounded-2xl border-2 border-[#ff9100] text-[#2C1A0E] font-bold text-[14px] hover:bg-[#fff2e0] transition-colors">
@@ -356,9 +380,9 @@
         </div>
     </div>
 
-    {{-- Structured Data: LocalBusiness + WebSite (non-blocking, di bawah body) --}}
-    @if(config('app.env') === 'production')
-    @php
+    
+    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(config('app.env') === 'production'): ?>
+    <?php
         $graph = [];
 
         // Halaman Utama: sertakan LocalBusiness dengan detail lengkap dan teroptimasi SEO
@@ -436,14 +460,14 @@
             '@context' => 'https://schema.org',
             '@graph' => $graph,
         ];
-    @endphp
-    <script type="application/ld+json">{!! json_encode($globalSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
-    @endif
+    ?>
+    <script type="application/ld+json"><?php echo json_encode($globalSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?></script>
+    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-    {{-- Instant Page: Prefetch pages on hover for SPA-like navigation speed --}}
+    
     <script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.js" type="module" defer></script>
 
-    {{-- Handle smooth scroll on page load for lazy-loaded hash elements --}}
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             if (window.location.hash) {
@@ -470,4 +494,4 @@
         });
     </script>
 </body>
-</html>
+</html><?php /**PATH E:\3 MAGANG\IBEKAMI\ibekami_bckend\resources\views/layouts/app.blade.php ENDPATH**/ ?>

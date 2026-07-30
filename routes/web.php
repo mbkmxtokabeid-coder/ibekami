@@ -14,6 +14,12 @@ Route::get('/offline.html', fn() => abort(404));
 
 // ─── Public Routes ────────────────────────────────────────────────────────────
 
+// Shortlink WA Admin
+Route::get('/wadmin', function () {
+    $text = request('text', 'Halo Admin, saya ingin bertanya info lebih lanjut');
+    return redirect()->away('https://wa.me/628170769999?text=' . urlencode($text));
+})->name('wadmin');
+
 Route::get('/', function () {
     $response = response(view('welcome'));
     // Hanya berikan cache header untuk pengunjung (guest) agar tidak membebani server
