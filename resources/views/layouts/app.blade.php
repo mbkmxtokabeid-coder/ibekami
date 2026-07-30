@@ -27,6 +27,7 @@
     {{-- meski content="no" tetap bisa dideteksi sebagai sinyal PWA oleh browser --}}
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="google-site-verification" content="googleebaff0cf2f04e3b7">
 
     <title>@yield('title', 'IBEKAMI - Digital Printing & Souvenir Custom Medan')</title>
     <meta name="description" content="@yield('meta_description', 'IBEKAMI - Percetakan dan souvenir kreatif terbaik di Medan. Melayani plakat, digital printing, dan merchandise custom dengan kualitas premium.')">
