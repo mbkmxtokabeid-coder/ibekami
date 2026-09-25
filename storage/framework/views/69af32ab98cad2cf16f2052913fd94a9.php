@@ -1,0 +1,124 @@
+<section class="py-16 px-4 bg-[#fdfaf7] overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-10 text-center md:text-left">
+            <div class="flex items-center justify-center md:justify-start gap-2 text-[11px] font-bold text-[#b35200] uppercase tracking-widest mb-2">
+                <?php echo e(__('messages.customer_reviews')); ?>
+
+                <span class="w-10 h-[1px] bg-[#b35200]"></span>
+            </div>
+            <h2 class="font-['Playfair_Display'] text-3xl font-bold text-[#2C1A0E]">
+                <?php echo e(__('messages.what_they_say')); ?>
+
+            </h2>
+        </div>
+
+        <!-- Auto-scroll Carousel with Alpine.js -->
+        <div class="relative w-full overflow-hidden"
+             x-data="{
+                scrollPosition: 0,
+                isPaused: false,
+                totalWidth: 0,
+                animFrame: null,
+                lastTime: null,
+                
+                init() {
+                    // Defer layout reads to after paint — avoids forced reflow on init
+                    requestAnimationFrame(() => {
+                        this.totalWidth = this.$refs.track.scrollWidth / 3;
+                        this.startAutoScroll();
+                    });
+                },
+                
+                startAutoScroll() {
+                    const step = (timestamp) => {
+                        if (!this.lastTime) this.lastTime = timestamp;
+                        const delta = timestamp - this.lastTime;
+                        this.lastTime = timestamp;
+
+                        if (!this.isPaused) {
+                            this.scrollPosition += delta * 0.04; // ~1px per 25ms
+                            if (this.scrollPosition >= this.totalWidth) {
+                                this.scrollPosition = 0;
+                            }
+                            this.$refs.track.style.transform = `translateX(-${this.scrollPosition}px)`;
+                        }
+                        this.animFrame = requestAnimationFrame(step);
+                    };
+                    this.animFrame = requestAnimationFrame(step);
+                }
+             }"
+             @mouseenter="isPaused = true"
+             @mouseleave="isPaused = false">
+            
+            <!-- Slider Track -->
+            <div x-ref="track" class="flex gap-6 transition-transform duration-100 ease-linear">
+                <?php
+                    // Duplikasi 3x untuk infinite loop
+                    $loop = array_merge($reviews, $reviews, $reviews);
+                ?>
+
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $loop; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $review): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+                <div <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::$currentLoop['key'] = 'review-'.e($review['id']).'-'.e($index).''; ?>wire:key="review-<?php echo e($review['id']); ?>-<?php echo e($index); ?>" 
+                     class="w-[280px] md:w-[350px] flex-shrink-0 bg-white p-6 rounded-2xl border border-[#b35200]/10 flex flex-col justify-between shadow-sm hover:shadow-lg hover:border-[#b35200]/30 transition-all duration-300">
+                    
+                    <div>
+                        <!-- Rating Stars -->
+                        <div class="flex gap-1 mb-4">
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php for($i = 0; $i < ($review['rating'] ?? 5); $i++): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+                                <div class="w-3 h-3 bg-[#b35200]"
+                                     style="clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)">
+                                </div>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endfor; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+                        </div>
+
+                        <!-- Review Text -->
+                        <p class="text-[12px] md:text-[13px] italic text-[#5C3D28] leading-relaxed mb-6">
+                            "<?php echo e($review['text']); ?>"
+                        </p>
+                    </div>
+
+                    <!-- User Info -->
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-[#b35200] text-white font-bold rounded-full flex items-center justify-center text-xs shadow-md">
+                            <?php echo e($review['initials']); ?>
+
+                        </div>
+                        <div>
+                            <div class="text-[12px] font-bold text-[#2C1A0E]">
+                                <?php echo e($review['name']); ?>
+
+                            </div>
+                            <div class="text-[11px] text-[#886852]">
+                                <?php echo e($review['date']); ?>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+            </div>
+
+            <!-- Gradient Overlays -->
+            <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#fdfaf7] to-transparent pointer-events-none z-10"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#fdfaf7] to-transparent pointer-events-none z-10"></div>
+        </div>
+
+        <!-- Indicator -->
+        <div class="flex justify-center gap-2 mt-8">
+            <div class="w-2 h-2 rounded-full bg-[#b35200] animate-pulse"></div>
+            <div class="w-2 h-2 rounded-full bg-[#b35200]/30"></div>
+            <div class="w-2 h-2 rounded-full bg-[#b35200]/30"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Prevent text selection during scroll */
+.flex-shrink-0 {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+</style>
+<?php /**PATH D:\Ibekami\ibekami\resources\views/livewire/halaman-utama/ulasan.blade.php ENDPATH**/ ?>

@@ -1,0 +1,172 @@
+<div>
+<?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($preloadImageUrl): ?>
+    <?php $__env->startPush('preload'); ?>
+        <link rel="preload" as="image" href="<?php echo e($preloadImageUrl); ?>" 
+              imagesrcset="<?php echo e($preloadImageMobileUrl); ?> 480w, <?php echo e($preloadImageUrl); ?> 800w" 
+              imagesizes="(max-width: 640px) 480px, 800px" 
+              type="image/webp" fetchpriority="high">
+    <?php $__env->stopPush(); ?>
+<?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+<section class="relative bg-[#FFF2E0] min-h-[85vh] flex items-center justify-center overflow-hidden px-4 py-16 lg:py-20 pt-28 lg:pt-32">
+    
+    <!-- Background Blurs (lebih ringan & subtle) -->
+    <div class="absolute top-0 right-[-10%] w-[40vw] max-w-[420px] h-[40vw] max-h-[420px] bg-[#FF9100]/10 blur-[80px] rounded-full animate-[pulse_6s_ease-in-out_infinite]"></div>
+    <div class="absolute bottom-[-10%] left-[-10%] w-[38vw] max-w-[380px] h-[38vw] max-h-[380px] bg-[#FF9100]/5 blur-[100px] rounded-full animate-[pulse_8s_ease-in-out_infinite]"></div>
+
+    <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-6 items-center relative z-10">
+        
+        <!-- KONTEN KIRI -->
+        <div class="lg:col-span-6 flex flex-col items-start space-y-6 lg:pr-8">
+            
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/60 border border-white/50 backdrop-blur-sm shadow-sm">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF9100] opacity-70"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-[#FF9100]"></span>
+                </span>
+                <span class="text-[10px] sm:text-[11px] font-semibold tracking-[0.15em] uppercase text-[#5C3D28]">
+                    <?php echo e(__('messages.made_in_medan')); ?>
+
+                </span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="font-['Playfair_Display'] text-[38px] sm:text-[48px] lg:text-[60px] font-extrabold leading-[1.1] text-[#2C1A0E] tracking-tight">
+                <?php echo e(__('messages.make_ideas_real')); ?> <br class="hidden sm:block">
+                <span class="relative inline-block text-[#A64E2F]">
+                    <?php echo e(__('messages.real_work')); ?>
+
+                    <svg class="absolute w-full h-3 -bottom-2 left-0 text-[#A64E2F]/20" viewBox="0 0 100 20" fill="currentColor">
+                        <path d="M0 15 Q 25 5 50 15 T 100 15 L 100 20 L 0 20 Z"></path>
+                    </svg>
+                </span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="text-[14px] sm:text-[15px] text-[#5C3D28] leading-relaxed max-w-[460px] opacity-90">
+                <?php echo e(__('messages.custom_souvenir')); ?>
+
+            </p>
+
+            <!-- CTA -->
+            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto pt-2">
+                
+                <!-- Primary -->
+                <a href="https://wa.me/62817076999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   @click.throttle.2000ms
+                   class="group relative px-6 py-3 bg-[#FF9100] text-[#2C1A0E] rounded-xl font-semibold text-[13px] 
+                   shadow-md hover:shadow-lg hover:-translate-y-[2px] transition-all duration-300 overflow-hidden text-center">
+                    <span class="relative z-10 flex items-center justify-center gap-2">
+                        <?php echo e(__('messages.start_custom')); ?>
+
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+                            <path stroke-width="2" d="M14 5l7 7-7 7M21 12H3"/>
+                        </svg>
+                    </span>
+                </a>
+
+                <!-- Secondary -->
+                <a href="/katalog" 
+                   class="px-6 py-3 text-[#2C1A0E] border border-[#2C1A0E]/30 rounded-xl font-semibold text-[13px] 
+                   hover:bg-[#2C1A0E]/10 transition text-center">
+                    <?php echo e(__('messages.view_catalog')); ?>
+
+                </a>
+            </div>
+
+        </div>
+
+        <!-- KONTEN KANAN -->
+        <div class="lg:col-span-6 relative w-full flex items-center justify-center mt-6 lg:mt-0">
+            
+            <!-- Frame — aspect-square agar video 1:1 tampil penuh -->
+            <!-- Frame — aspect-square agar carousel 1:1 tampil penuh -->
+            <div x-data="{ 
+                     activeSlide: 0, 
+                     slidesCount: <?php echo e(count($banners)); ?>,
+                     init() {
+                         if (this.slidesCount > 1) {
+                             setInterval(() => {
+                                  this.activeSlide = (this.activeSlide + 1) % this.slidesCount;
+                             }, 5000);
+                         }
+                     }
+                 }"
+                 style="aspect-ratio: 1/1;"
+                 class="relative w-[85%] max-w-[480px] aspect-square bg-[#FFF2E0] rounded-2xl
+            border border-white/60 shadow-lg shadow-[#FF9100]/10 overflow-hidden transition-transform duration-500">
+
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(count($banners) > 0): ?>
+                    <!-- Sliding Wrapper -->
+                    <div class="flex w-full h-full transition-transform duration-1000 ease-out"
+                         :style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $bannerItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+                            <div class="w-full h-full shrink-0">
+                                <img src="<?php echo e($bannerItem['url']); ?>"
+                                     srcset="<?php echo e($bannerItem['mobile_url']); ?> 480w, <?php echo e($bannerItem['url']); ?> 800w"
+                                     sizes="(max-width: 640px) 480px, 800px"
+                                     alt="Banner utama IBEKAMI"
+                                     width="800"
+                                     height="800"
+                                     <?php if($index === 0): ?> loading="eager" fetchpriority="high" decoding="sync" <?php else: ?> loading="lazy" decoding="async" <?php endif; ?>
+                                     class="w-full h-full object-cover">
+                            </div>
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+                    </div>
+                <?php else: ?>
+                    <!-- Fallback jika tidak ada banner -->
+                    <div class="w-full h-full bg-gradient-to-br from-[#FF9100]/20 to-[#FFB066]/20 flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-20 h-20 mx-auto text-[#FF9100]/40 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <p class="text-[#5C3D28] text-sm">Banner belum tersedia</p>
+                        </div>
+                    </div>
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                <div class="absolute inset-0 bg-[#FF9100]/5 mix-blend-multiply pointer-events-none"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#FFF2E0] via-transparent to-transparent opacity-40 pointer-events-none"></div>
+
+                <!-- Carousel Indicators -->
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(count($banners) > 1): ?>
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 bg-black/10 backdrop-blur-md px-3 py-1.5 rounded-full items-center">
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $bannerItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+                            <button @click="activeSlide = <?php echo e($index); ?>"
+                                    aria-label="Slide <?php echo e($index + 1); ?>"
+                                    class="w-6 h-6 flex items-center justify-center transition-all duration-300 focus:outline-none shrink-0"
+                                    type="button">
+                                <span class="h-1.5 rounded-full transition-all duration-300"
+                                      :class="activeSlide === <?php echo e($index); ?> ? 'w-5 bg-[#FF9100]' : 'w-1.5 bg-white/60 hover:bg-white'"></span>
+                            </button>
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+                    </div>
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+            </div>
+
+            <!-- Floating Card Rating -->
+            <div class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-md border border-white/60 p-3 rounded-xl shadow-md animate-[float_5s_ease-in-out_infinite_reverse]">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-yellow-300/30 rounded-lg flex items-center justify-center">★</div>
+                    <div>
+                        <p class="text-[9px] font-semibold text-[#886852] uppercase"><?php echo e(__('messages.rating')); ?></p>
+                        <p class="text-[13px] font-bold text-[#2C1A0E]">5.0</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+@keyframes float {
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
+}
+</style>
+</div>
+<?php /**PATH D:\Ibekami\ibekami\resources\views/livewire/halaman-utama/hero.blade.php ENDPATH**/ ?>

@@ -1,4 +1,5 @@
-<div class="bg-[#fff2e0] min-h-screen font-sans text-[#3d2b1f]" wire:poll.10s="checkVersion">
+<!-- <div class="bg-[#fff2e0] min-h-screen font-sans text-[#3d2b1f]" wire:poll.10s="checkVersion"> -->
+<div class="bg-[#fff2e0] min-h-screen font-sans text-[#3d2b1f]" @production wire:poll.30s="checkVersion" @endproduction>
     
     {{-- Preload primary LCP image for high-speed delivery --}}
     @push('preload')

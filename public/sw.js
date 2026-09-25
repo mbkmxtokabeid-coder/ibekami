@@ -25,13 +25,14 @@ self.addEventListener('activate', function(event) {
         }).then(function() {
             // Unregister diri sendiri
             return self.registration.unregister();
-        }).then(function() {
-            // Paksa semua tab yang terbuka untuk reload dari server
-            return self.clients.matchAll({ type: 'window' });
-        }).then(function(clients) {
-            clients.forEach(function(client) {
-                client.navigate(client.url);
-            });
         })
+        // .then(function() {
+        //     // Paksa semua tab yang terbuka untuk reload dari server
+        //     return self.clients.matchAll({ type: 'window' });
+        // }).then(function(clients) {
+        //     clients.forEach(function(client) {
+        //         client.navigate(client.url);
+        //     });
+        // })
     );
 });
