@@ -17,4 +17,4 @@
         </div>
         <div class="h-48 bg-white/10 rounded-xl"></div>
     </div>
-</footer><?php /**PATH D:\Ibekami\ibekami\storage\framework\views/830f917f7240dcc75ef72498a7a20bc0.blade.php ENDPATH**/ ?>
+</footer><?php /**PATH D:\MAGANG REHAN\ibekami_baru\ibekami\storage\framework\views/830f917f7240dcc75ef72498a7a20bc0.blade.php ENDPATH**/ ?>

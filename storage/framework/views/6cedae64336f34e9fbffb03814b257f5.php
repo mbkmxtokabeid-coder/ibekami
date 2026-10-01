@@ -1,14 +1,14 @@
-<section class="py-16 px-4 bg-[#fdfaf7] overflow-hidden">
+<section class="py-10 md:py-14 px-4 bg-[#fdfaf7] dark:bg-[#1A120B] overflow-hidden transition-colors duration-200">
     <div class="max-w-7xl mx-auto">
         <div class="mb-10 relative flex flex-col md:block">
             <div class="text-center max-w-lg mx-auto">
-                <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-2 sm:mb-3">
-                    <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
+                <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.2em] mb-2 sm:mb-3">
+                    <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
                     <?php echo e(__('messages.customer_reviews')); ?>
 
-                    <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
+                    <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
                 </div>
-                <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] tracking-tight leading-tight">
+                <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight leading-tight">
                     <?php echo e(__('messages.what_they_say')); ?>
 
                 </h2>
@@ -16,17 +16,18 @@
 
             <!-- Card Rating -->
             <div class="mt-4 md:mt-0 md:absolute md:right-0 md:bottom-0 flex items-center justify-end shrink-0">
-                <div class="bg-white border border-[#b35200]/15 px-4 py-2.5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-3">
+                <div class="bg-white dark:bg-[#231811] border border-[#b35200]/15 dark:border-white/10 px-4 py-2.5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-3">
                     <div class="w-9 h-9 bg-yellow-400/20 text-yellow-500 rounded-xl flex items-center justify-center text-lg font-bold">★</div>
                     <div>
-                        <p class="text-[10px] font-semibold text-[#886852] uppercase tracking-wider"><?php echo e(__('messages.rating')); ?></p>
+                        <p class="text-[10px] font-semibold text-[#886852] dark:text-[#9E8B7D] uppercase tracking-wider"><?php echo e(__('messages.rating')); ?></p>
                         <div class="flex items-center gap-1.5">
-                            <span class="text-[15px] font-bold text-[#2C1A0E] leading-none">5.0</span>
+                            <span class="text-[15px] font-bold text-[#2C1A0E] dark:text-[#FDF5EC] leading-none">5.0</span>
                             <div class="flex text-yellow-400 text-xs">★★★★★</div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
 
         <!-- Auto-scroll Carousel with Alpine.js -->
@@ -76,7 +77,7 @@
 
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $loop; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $review): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
                 <div <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::$currentLoop['key'] = 'review-'.e($review['id']).'-'.e($index).''; ?>wire:key="review-<?php echo e($review['id']); ?>-<?php echo e($index); ?>" 
-                     class="w-[280px] md:w-[350px] flex-shrink-0 bg-white p-6 rounded-2xl border border-[#b35200]/10 flex flex-col justify-between shadow-sm hover:shadow-lg hover:border-[#b35200]/30 transition-all duration-300">
+                     class="w-[280px] md:w-[350px] flex-shrink-0 bg-white dark:bg-[#231811] p-6 rounded-2xl border border-[#b35200]/10 dark:border-[#b35200]/20 flex flex-col justify-between shadow-sm hover:shadow-lg hover:border-[#b35200]/30 transition-all duration-300">
                     
                     <div>
                         <!-- Rating Stars -->
@@ -89,7 +90,7 @@
                         </div>
 
                         <!-- Review Text -->
-                        <p class="text-[12px] md:text-[13px] italic text-[#5C3D28] leading-relaxed mb-6">
+                        <p class="text-[12px] md:text-[13px] italic text-[#5C3D28] dark:text-[#D8C6B6] leading-relaxed mb-6">
                             "<?php echo e($review['text']); ?>"
                         </p>
                     </div>
@@ -101,11 +102,11 @@
 
                         </div>
                         <div>
-                            <div class="text-[12px] font-bold text-[#2C1A0E]">
+                            <div class="text-[12px] font-bold text-[#2C1A0E] dark:text-[#FDF5EC]">
                                 <?php echo e($review['name']); ?>
 
                             </div>
-                            <div class="text-[11px] text-[#886852]">
+                            <div class="text-[11px] text-[#886852] dark:text-[#9E8B7D]">
                                 <?php echo e($review['date']); ?>
 
                             </div>
@@ -116,9 +117,9 @@
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
             </div>
 
-            <!-- Gradient Overlays -->
-            <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#fdfaf7] to-transparent pointer-events-none z-10"></div>
-            <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#fdfaf7] to-transparent pointer-events-none z-10"></div>
+            <!-- Gradient Overlays (Fade left & right matching section background) -->
+            <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#fdfaf7] dark:from-[#1A120B] to-transparent pointer-events-none z-10"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#fdfaf7] dark:from-[#1A120B] to-transparent pointer-events-none z-10"></div>
         </div>
 
         <!-- Indicator -->
@@ -138,4 +139,4 @@
     -moz-user-select: none;
 }
 </style>
-<?php /**PATH D:\Ibekami\ibekami\resources\views/livewire/halaman-utama/ulasan.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\MAGANG REHAN\ibekami_baru\ibekami\resources\views/livewire/halaman-utama/ulasan.blade.php ENDPATH**/ ?>

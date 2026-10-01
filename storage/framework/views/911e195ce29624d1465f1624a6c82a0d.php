@@ -7,6 +7,17 @@
         scrolled: false,
         currentLocale: '<?php echo e(app()->getLocale()); ?>',
         isChangingLanguage: false,
+        isDark: document.documentElement.classList.contains('dark'),
+        toggleTheme() {
+            this.isDark = !this.isDark;
+            if (this.isDark) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        },
         debouncedChangeLanguage(locale) {
             if (this.isChangingLanguage || this.currentLocale === locale) return;
             this.isChangingLanguage = true;
@@ -161,12 +172,28 @@
                     </div>
                 </div>
 
+                <!-- Dark Mode Toggle Button (Desktop & Mobile) -->
+                <button @click="toggleTheme()" 
+                        type="button"
+                        aria-label="Toggle Dark / Light Mode"
+                        class="flex items-center justify-center w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-full bg-white/40 border border-white/50 text-[#5C3D28] hover:text-[#b35200] hover:bg-white transition-all outline-none shadow-sm hover:scale-105 active:scale-95 shrink-0"
+                        :title="isDark ? 'Mode Terang' : 'Mode Gelap'">
+                    <!-- Sun icon: shown when dark (click to switch to light) -->
+                    <svg x-show="isDark" x-cloak class="w-4.5 h-4.5 text-[#FFA026]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <!-- Moon icon: shown when light (click to switch to dark) -->
+                    <svg x-show="!isDark" class="w-4 h-4 text-[#5C3D28]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+
                 <!-- CTA Button -->
                 <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
                    rel="noopener"
                    @click.throttle.2000ms
-                   class="hidden md:flex items-center justify-center bg-[#ff9100] text-[#2C1A0E] px-5 xl:px-6 py-2 rounded-full text-[13px] font-bold shadow-[0_4px_14px_rgba(255,145,0,0.3)] hover:shadow-[0_6px_20px_rgba(255,145,0,0.4)] hover:-translate-y-0.5 hover:bg-[#e68200] transition-all duration-300 outline-none shrink-0">
+                   class="hidden md:flex items-center justify-center bg-[#ff9100] dark:bg-[#b35200] text-[#2C1A0E] dark:text-white px-5 xl:px-6 py-2 rounded-full text-[13px] font-bold shadow-[0_4px_14px_rgba(255,145,0,0.3)] dark:shadow-[0_4px_14px_rgba(179,82,0,0.3)] hover:shadow-[0_6px_20px_rgba(255,145,0,0.4)] dark:hover:shadow-[0_6px_20px_rgba(179,82,0,0.4)] hover:-translate-y-0.5 hover:bg-[#e07d00] dark:hover:bg-[#994500] transition-all duration-300 outline-none shrink-0">
                     <?php echo e(__('messages.order')); ?>
 
                 </a>
@@ -269,13 +296,33 @@
                @click="mobileMenuOpen = false; if (document.getElementById('footer')) { $event.preventDefault(); document.getElementById('footer').scrollIntoView({ behavior: 'smooth' }); }"
                class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors"><?php echo e(__('messages.information')); ?></a>
             
+            <!-- Mobile Theme Switcher Row -->
+            <div @click="toggleTheme()" class="flex items-center justify-between px-4 py-2.5 rounded-2xl bg-[#fff2e0]/60 dark:bg-[#2c1d15] my-1 cursor-pointer select-none transition-colors">
+                <span class="text-[14px] font-semibold text-[#5C3D28] dark:text-[#FDF5EC] flex items-center gap-2.5">
+                    <span class="text-base" x-text="isDark ? '🌙' : '☀️'"></span>
+                    <span>Mode Gelap</span>
+                </span>
+                <button type="button" 
+                        role="switch"
+                        :aria-checked="isDark"
+                        aria-label="Toggle Mode Gelap"
+                        class="relative inline-flex h-7 w-[52px] shrink-0 cursor-pointer rounded-full p-0.5 transition-colors duration-300 ease-in-out focus:outline-none shadow-inner"
+                        :class="isDark ? 'bg-[#b35200]' : 'bg-[#d8c5b5]'">
+                    <span class="pointer-events-none inline-flex items-center justify-center h-6 w-6 transform rounded-full bg-white shadow-md transition-transform duration-300 ease-in-out text-[8px] font-black uppercase tracking-wider"
+                          :class="isDark ? 'translate-x-[24px] text-[#b35200]' : 'translate-x-0 text-[#7a6452]'">
+                        <span x-show="isDark">ON</span>
+                        <span x-show="!isDark">OFF</span>
+                    </span>
+                </button>
+            </div>
+
             <div class="w-full h-px bg-black/5 my-2"></div>
             
             <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
                rel="noopener"
                @click.throttle.2000ms
-               class="w-full py-3.5 bg-[#ff9100] text-[#2C1A0E] rounded-2xl font-bold text-[15px] shadow-lg shadow-[#ff9100]/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 outline-none">
+               class="w-full py-3.5 bg-[#ff9100] dark:bg-[#b35200] text-[#2C1A0E] dark:text-white rounded-2xl font-bold text-[15px] shadow-lg shadow-[#ff9100]/25 dark:shadow-[#b35200]/25 active:scale-[0.98] hover:bg-[#e07d00] dark:hover:bg-[#994500] transition-all flex items-center justify-center gap-2 outline-none">
                 <?php echo e(__('messages.order_now')); ?>
 
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
@@ -288,4 +335,4 @@
     /* Mencegah kedipan saat load dengan AlpineJS */
     [x-cloak] { display: none !important; }
 </style>
-<?php /**PATH D:\Ibekami\ibekami\resources\views/livewire/navbar.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\MAGANG REHAN\ibekami_baru\ibekami\resources\views/livewire/navbar.blade.php ENDPATH**/ ?>

@@ -26,4 +26,4 @@
             <div class="bg-white rounded-3xl p-2.5 h-[280px] sm:h-[380px] border border-black/5"></div>
         </div>
     </div>
-</div><?php /**PATH D:\Ibekami\ibekami\storage\framework\views/48d9ce7689e6b8b9afee01a08e27554e.blade.php ENDPATH**/ ?>
+</div><?php /**PATH D:\MAGANG REHAN\ibekami_baru\ibekami\storage\framework\views/48d9ce7689e6b8b9afee01a08e27554e.blade.php ENDPATH**/ ?>

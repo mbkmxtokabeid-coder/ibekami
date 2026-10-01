@@ -7,7 +7,7 @@
                     Ulasan Pelanggan
                     <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
                 </div>
-                <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-black text-[#2C1A0E] tracking-tighter leading-none">
+                <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] tracking-tight leading-tight">
                     Apa Kata Mereka?
                 </h2>
             </div>
@@ -32,4 +32,4 @@
             <div class="w-[280px] md:w-[350px] bg-white p-6 rounded-2xl border border-[#b35200]/5 h-48 flex-shrink-0"></div>
         </div>
     </div>
-</div>
+</div><?php /**PATH D:\MAGANG REHAN\ibekami_baru\ibekami\storage\framework\views/013651cfc95b7ccd96e5668628f391e9.blade.php ENDPATH**/ ?>

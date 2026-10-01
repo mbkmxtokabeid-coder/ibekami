@@ -9,7 +9,7 @@
             wire:click="setCategory('{{ $type['name'] }}')"
             class="shrink-0 px-3 py-2 rounded-xl text-[12px] font-semibold border transition-all
                 {{ $activeCategory === $type['name']
-                    ? 'bg-[#ff9100] text-white border-[#ff9100] shadow-md'
+                    ? 'bg-[#ff9100] dark:bg-[#b35200] text-white border-[#ff9100] dark:border-[#b35200] shadow-md'
                     : 'bg-white text-[#7a5d48] border-[#e8d5c4]' }}">
             {{ $type['name'] }}
         </button>
@@ -27,8 +27,8 @@
         })"
         class="relative shrink-0 flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl border transition-all
             {{ count($selectedTypes) > 0 || count($selectedCategories) > 0
-                ? 'bg-[#ff9100] text-white border-[#ff9100] shadow-md'
-                : 'bg-white text-[#ff9100] border-[#ff9100]/40' }}">
+                ? 'bg-[#ff9100] dark:bg-[#b35200] text-white border-[#ff9100] dark:border-[#b35200] shadow-md'
+                : 'bg-white text-[#ff9100] dark:text-[#b35200] border-[#ff9100]/40 dark:border-[#b35200]/40' }}">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
         </svg>

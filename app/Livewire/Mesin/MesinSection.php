@@ -48,8 +48,7 @@ class MesinSection extends Component
         $localFilePath = public_path('storage/machine_picture/' . $filename);
         
         if (file_exists($localFilePath)) {
-            // File ada di lokal, gunakan asset()
-            return asset('storage/machine_picture/' . $filename);
+            return '/storage/machine_picture/' . $filename;
         } else {
             // File tidak ada di lokal, gunakan URL ibekami.id sebagai fallback
             return 'https://ibekami.id/storage/machine_picture/' . $filename;

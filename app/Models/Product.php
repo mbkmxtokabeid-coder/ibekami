@@ -104,10 +104,16 @@ class Product extends Model
 
         // Cache the file existence check for 24 hours to eliminate slow Disk I/O overhead on shared hosting
         return \Illuminate\Support\Facades\Cache::remember('prod_img_url:' . md5($filename), 86400, function () use ($filename) {
-            if (\Illuminate\Support\Facades\Storage::disk('public')->exists('products/' . $filename)) {
-                return asset('storage/products/' . rawurlencode($filename));
+            $path = 'products/' . $filename;
+            if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+                $path = 'gambar_produk/' . $filename;
             }
-            return asset('storage/gambar_produk/' . rawurlencode($filename));
+            $url = asset('storage/' . $path);
+            $parsed = parse_url($url);
+            if (isset($parsed['host']) && in_array($parsed['host'], ['localhost', '127.0.0.1'])) {
+                return ($parsed['path'] ?? '') . (isset($parsed['query']) ? '?' . $parsed['query'] : '');
+            }
+            return $url;
         });
     }
 

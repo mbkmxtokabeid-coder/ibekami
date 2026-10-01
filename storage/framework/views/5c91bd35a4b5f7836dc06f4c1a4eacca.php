@@ -1,15 +1,15 @@
 <div>
 
-<section id="hot-deals" class="py-16 md:py-24 px-4 bg-[#fdfaf7] relative overflow-hidden">
+<section id="hot-deals" class="py-10 md:py-14 px-4 bg-[#fdfaf7] relative overflow-hidden">
     
     <!-- Dekorasi Background Ringan (CSS Blur Blob) -->
-    <div class="absolute top-0 right-[-5%] w-72 h-72 bg-[#ff9100]/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-0 left-[-5%] w-80 h-80 bg-[#ff9100]/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-0 right-[-5%] w-72 h-72 bg-[#b35200]/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-[-5%] w-80 h-80 bg-[#b35200]/5 rounded-full blur-3xl pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto relative z-10">
         
         <!-- Header Section -->
-        <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-10 lg:mb-16">
+        <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-6 sm:mb-8">
             <div class="space-y-4">
                 <!-- Badge Penawaran Spesial (Gen Z Style) - Optimized Contrast -->
                 <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#4a3728]/10 border border-[#4a3728]/20">
@@ -20,12 +20,12 @@
                     <span class="text-[10px] font-bold text-[#4a3728] uppercase tracking-widest"><?php echo e(__('messages.special_offer')); ?></span>
                 </div>
                 
-                <h2 class="font-['Playfair_Display'] text-3xl md:text-4xl lg:text-5xl font-black text-[#2C1A0E] tracking-tight">
+                <h2 class="font-['Playfair_Display'] text-3xl md:text-4xl lg:text-5xl font-black text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight">
                     <?php echo e(__('messages.hot_deals_this_month')); ?>
 
                 </h2>
                 
-                <p class="text-[13px] sm:text-[14px] md:text-[15px] text-[#886852] font-medium max-w-md leading-relaxed">
+                <p class="text-[13px] sm:text-[14px] md:text-[15px] text-[#886852] dark:text-[#9E8B7D] font-medium max-w-md leading-relaxed">
                     <?php echo e(__('messages.best_price_all_categories')); ?>
 
                 </p>
@@ -140,4 +140,4 @@
     </div>
 </section>
 </div>
-<?php /**PATH D:\Ibekami\ibekami\resources\views/livewire/halaman-utama/hot-deals.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\MAGANG REHAN\ibekami_baru\ibekami\resources\views/livewire/halaman-utama/hot-deals.blade.php ENDPATH**/ ?>

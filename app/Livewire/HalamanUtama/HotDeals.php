@@ -50,9 +50,16 @@ class HotDeals extends Component
                 ->whereNotNull('image_url')
                 ->get()
                 ->map(function ($deal) {
-                    // Cek apakah file ada di local storage
-                    if (Storage::disk('public')->exists($deal->image_url)) {
-                        $url = asset('storage/' . $deal->image_url);
+                    $path = $deal->image_url;
+                    if (!Storage::disk('public')->exists($path)) {
+                        if (Storage::disk('public')->exists('gambar_jenis/' . $path)) {
+                            $path = 'gambar_jenis/' . $path;
+                        } elseif (Storage::disk('public')->exists('types/' . $path)) {
+                            $path = 'types/' . $path;
+                        }
+                    }
+                    if (Storage::disk('public')->exists($path)) {
+                        $url = asset('storage/' . $path);
                         $parsed = parse_url($url);
                         if (isset($parsed['host']) && in_array($parsed['host'], ['localhost', '127.0.0.1'])) {
                             $deal->image_full_url = ($parsed['path'] ?? '') . (isset($parsed['query']) ? '?' . $parsed['query'] : '');

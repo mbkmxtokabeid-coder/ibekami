@@ -27,9 +27,9 @@
     });
 ?>
 
-<section id="katalog" x-ignore class="py-14 md:py-20 px-4 bg-[#FFF2E0] relative overflow-hidden">
+<section id="katalog" x-ignore class="py-10 md:py-14 px-4 bg-[#FFF2E0] relative overflow-hidden">
     <!-- Background Decorations -->
-    <div class="absolute top-10 left-[-5%] w-72 h-72 bg-[#FF9100]/10 rounded-full blur-[80px] pointer-events-none"></div>
+    <div class="absolute top-10 left-[-5%] w-72 h-72 bg-[#b35200]/10 rounded-full blur-[80px] pointer-events-none"></div>
     <div class="absolute bottom-10 right-[-5%] w-64 h-64 bg-white/40 rounded-full blur-[60px] pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto relative z-10">
@@ -56,14 +56,12 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $initialData; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
                 <a href="<?php echo e(route('katalog.detail', ['slug' => $product['slug']])); ?>"
-                   class="group bg-white/90 rounded-3xl p-3 border border-black/5 
-                          shadow-sm hover:shadow-md hover:shadow-[#b35200]/10 
-                          transition-all duration-300 ease-out 
-                          hover:-translate-y-1 flex flex-col cursor-pointer
+                   class="card-glow group bg-white/90 dark:bg-[#231811] rounded-3xl p-3 sm:p-3.5 border border-black/5 dark:border-white/10 
+                          flex flex-col cursor-pointer
                           <?php if($index >= 9): ?> hidden lg:flex <?php elseif($index >= 6): ?> hidden md:flex <?php endif; ?>">
 
                     <!-- Image Container — dimensi eksplisit mencegah CLS -->
-                    <div class="h-[130px] md:h-[180px] rounded-2xl overflow-hidden bg-gradient-to-br from-[#FFF2E0] to-[#FFE5C8] mb-3">
+                    <div class="relative z-10 h-[130px] md:h-[180px] rounded-2xl overflow-hidden bg-gradient-to-br from-[#FFF2E0] to-[#FFE5C8] dark:from-[#2A1C14] dark:to-[#1E140D] mb-3">
                         <img 
                             src="<?php echo e($product['img']); ?>"
                             alt="<?php echo e($product['name']); ?>"
@@ -71,15 +69,19 @@
                             decoding="async"
                             width="400"
                             height="300"
-                            class="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.04]"
+                            class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
                             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=' + encodeURIComponent('<?php echo e($product['name']); ?>')"
                         >
+                        <!-- Soft inner light ring on image hover -->
+                        <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/5 dark:ring-white/10 group-hover:ring-[#ff9100]/40 dark:group-hover:ring-[#b35200]/40 transition-all duration-300 pointer-events-none"></div>
                     </div>
 
                     <!-- Product Info -->
-                    <div>
-                        <div class="text-[10px] font-semibold text-[#b35200] uppercase tracking-wide mb-1"><?php echo e($product['cat']); ?></div>
-                        <h3 class="text-[13px] md:text-sm font-semibold text-[#2C1A0E] leading-snug line-clamp-2"><?php echo e($product['name']); ?></h3>
+                    <div class="relative z-10 flex flex-col flex-1 justify-between">
+                        <div>
+                            <div class="text-[10px] font-bold text-[#ff9100] dark:text-[#b35200] uppercase tracking-wide mb-1 group-hover:text-[#e07d00] dark:group-hover:text-[#b35200] transition-colors duration-200"><?php echo e($product['cat']); ?></div>
+                            <h3 class="text-[13px] md:text-sm font-semibold text-[#2C1A0E] dark:text-[#FDF5EC] group-hover:text-[#ff9100] dark:group-hover:text-[#b35200] leading-snug line-clamp-2 transition-colors duration-200"><?php echo e($product['name']); ?></h3>
+                        </div>
                     </div>
                 </a>
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
@@ -102,4 +104,4 @@
         overflow: hidden;
     }
 </style>
-<?php /**PATH D:\Ibekami\ibekami\resources\views/livewire/halaman-utama/product-section.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\MAGANG REHAN\ibekami_baru\ibekami\resources\views/livewire/halaman-utama/product-section.blade.php ENDPATH**/ ?>

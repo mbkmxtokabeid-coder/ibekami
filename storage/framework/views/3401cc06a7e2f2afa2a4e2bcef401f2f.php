@@ -2,6 +2,19 @@
 <html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" class="h-full">
 <head>
     
+    <script>
+        (function() {
+            try {
+                const theme = localStorage.getItem('theme');
+                if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    
     
     <script>
         (function() {
@@ -69,35 +82,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     
-    <link rel="preload" as="font" type="font/woff2" href="<?php echo e(asset('fonts/instrument-sans-latin-400-normal.woff2')); ?>" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="<?php echo e(asset('fonts/instrument-sans-latin-500-normal.woff2')); ?>" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="<?php echo e(asset('fonts/instrument-sans-latin-600-normal.woff2')); ?>" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="<?php echo e(asset('fonts/plus-jakarta-sans-latin.woff2')); ?>" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="<?php echo e(asset('fonts/playfair-display-latin.woff2')); ?>" crossorigin>
     
     
     <style>
         @font-face {
-            font-family: 'Instrument Sans';
+            font-family: 'Plus Jakarta Sans';
             font-style: normal;
-            font-weight: 400;
+            font-weight: 200 800;
             font-display: swap;
-            src: url('<?php echo e(asset('fonts/instrument-sans-latin-400-normal.woff2')); ?>') format('woff2');
+            src: url('<?php echo e(asset('fonts/plus-jakarta-sans-latin.woff2')); ?>') format('woff2-variations'),
+                 url('<?php echo e(asset('fonts/plus-jakarta-sans-latin.woff2')); ?>') format('woff2');
             unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         @font-face {
-            font-family: 'Instrument Sans';
+            font-family: 'Playfair Display';
             font-style: normal;
-            font-weight: 500;
+            font-weight: 400 900;
             font-display: swap;
-            src: url('<?php echo e(asset('fonts/instrument-sans-latin-500-normal.woff2')); ?>') format('woff2');
-            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+            src: url('<?php echo e(asset('fonts/playfair-display-latin.woff2')); ?>') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         @font-face {
-            font-family: 'Instrument Sans';
-            font-style: normal;
-            font-weight: 600;
+            font-family: 'Playfair Display';
+            font-style: italic;
+            font-weight: 400 900;
             font-display: swap;
-            src: url('<?php echo e(asset('fonts/instrument-sans-latin-600-normal.woff2')); ?>') format('woff2');
-            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+            src: url('<?php echo e(asset('fonts/playfair-display-italic-latin.woff2')); ?>') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
     </style>
 
@@ -186,7 +199,7 @@ $__keyOuter = $__key ?? null;
 $__key = null;
 $__componentSlots = [];
 
-$__key ??= \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::generateKey('lw-3214591059-0', $__key);
+$__key ??= \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::generateKey('lw-3835054357-0', $__key);
 
 $__html = app('livewire')->mount($__name, $__params, $__key, $__componentSlots);
 
@@ -340,8 +353,8 @@ unset($__split);
                             <template x-for="type in allTypes" :key="type.name">
                                 <button @click="toggleType(type.name)"
                                     :class="tempTypes.includes(type.name)
-                                        ? 'bg-[#ff9100] text-[#2C1A0E] border-[#ff9100]'
-                                        : 'bg-white text-[#3d2b1f] border-[#c4a882] hover:border-[#ff9100] hover:text-[#ff9100]'"
+                                        ? 'bg-[#ff9100] dark:bg-[#b35200] text-[#2C1A0E] dark:text-white border-[#ff9100] dark:border-[#b35200]'
+                                        : 'bg-white text-[#3d2b1f] border-[#c4a882] hover:border-[#ff9100] dark:hover:border-[#b35200] hover:text-[#ff9100] dark:hover:text-[#b35200]'"
                                     class="px-4 py-2 rounded-2xl text-[13px] font-semibold border-2 transition-all">
                                     <span x-text="type.name"></span>
                                     <span class="ml-1 text-[11px] opacity-60" x-text="'(' + type.count + ')'"></span>
@@ -374,11 +387,11 @@ unset($__split);
             
             <div class="shrink-0 px-5 py-4 border-t border-gray-100 flex gap-3">
                 <button @click="reset()"
-                    class="flex-1 py-3.5 rounded-2xl border-2 border-[#ff9100] text-[#2C1A0E] font-bold text-[14px] hover:bg-[#fff2e0] transition-colors">
+                    class="flex-1 py-3.5 rounded-2xl border-2 border-[#ff9100] dark:border-[#b35200] text-[#2C1A0E] font-bold text-[14px] hover:bg-[#fff2e0] transition-colors">
                     Atur Ulang
                 </button>
                 <button @click="apply()"
-                    class="flex-1 py-3.5 rounded-2xl bg-[#ff9100] text-[#2C1A0E] font-bold text-[14px] hover:bg-[#e07d00] transition-colors shadow-md">
+                    class="flex-1 py-3.5 rounded-2xl bg-[#ff9100] dark:bg-[#b35200] text-[#2C1A0E] dark:text-white font-bold text-[14px] hover:bg-[#e07d00] dark:hover:bg-[#994500] transition-colors shadow-md">
                     Terapkan
                 </button>
             </div>
@@ -500,4 +513,4 @@ unset($__split);
         });
     </script>
 </body>
-</html><?php /**PATH D:\Ibekami\ibekami\resources\views/layouts/app.blade.php ENDPATH**/ ?>
+</html><?php /**PATH D:\MAGANG REHAN\ibekami_baru\ibekami\resources\views/layouts/app.blade.php ENDPATH**/ ?>

@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -9,9 +11,301 @@
     --font-sans: 'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
     --font-poppins: 'Poppins', sans-serif;
+    --font-heading: 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-serif: 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-playfair: 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif;
+}
+
+.font-heading,
+.font-playfair,
+.font-\[\'Playfair_Display\'\],
+[class*="font-['Playfair_Display']"] {
+    font-family: 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif !important;
 }
 
 /* Alpine.js x-cloak directive */
 [x-cloak] {
     display: none !important;
 }
+
+/* ========================================================
+   IBEKAMI Dark Mode Color System (Dark Espresso & Amber)
+   Zero Performance Cost - Pure Hardware Accelerated CSS
+======================================================== */
+:root {
+    --bg-main: #FFF2E0;
+    --bg-section: #FDFAF7;
+    --bg-card: #FFFFFF;
+    --text-heading: #2C1A0E;
+    --text-body: #5C3D28;
+    --text-muted: #886852;
+}
+
+.dark {
+    --bg-main: #130D08;
+    --bg-section: #1A120B;
+    --bg-card: #231811;
+    --text-heading: #FDF5EC;
+    --text-body: #D8C6B6;
+    --text-muted: #9E8B7D;
+}
+
+/* Global Dark Mode Smooth Transition */
+html {
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+html.dark {
+    background-color: #130D08;
+    color: #D8C6B6;
+    color-scheme: dark;
+}
+
+/* Background overrides in dark mode */
+html.dark .bg-\[\#fff2e0\],
+html.dark .bg-\[\#FFF2E0\],
+html.dark [class*="bg-[#fff2e0]"],
+html.dark [class*="bg-[#FFF2E0]"] {
+    background-color: #130D08 !important;
+}
+
+html.dark .bg-\[\#fdfaf7\],
+html.dark .bg-\[\#FDFAF7\],
+html.dark [class*="bg-[#fdfaf7]"],
+html.dark [class*="bg-[#FDFAF7]"] {
+    background-color: #231811 !important;
+}
+
+html.dark [class*="bg-[#E8E3D8]"],
+html.dark [class*="bg-[#e8e3d8]"] {
+    background-color: #1E140D !important;
+}
+
+html.dark [class*="bg-[#ffdbac]"],
+html.dark [class*="bg-[#ffe8ca]"] {
+    background-color: rgba(30, 20, 13, 0.92) !important;
+    border-color: rgba(255, 242, 224, 0.12) !important;
+}
+
+html.dark .bg-white {
+    background-color: #231811 !important;
+}
+
+html.dark .bg-white\/30,
+html.dark .bg-white\/40,
+html.dark .bg-white\/50,
+html.dark .bg-white\/60,
+html.dark .bg-white\/70,
+html.dark .bg-white\/80,
+html.dark .bg-white\/90,
+html.dark .bg-white\/95 {
+    background-color: rgba(35, 24, 17, 0.88) !important;
+    border-color: rgba(255, 242, 224, 0.12) !important;
+}
+
+/* Gradient overrides in dark mode to prevent white haze */
+html.dark .from-\[\#fff2e0\],
+html.dark .from-\[\#FFF2E0\],
+html.dark [class*="from-[#fff2e0]"],
+html.dark [class*="from-[#FFF2E0]"] {
+    --tw-gradient-from: #130D08 var(--tw-gradient-from-position) !important;
+}
+
+html.dark .from-\[\#fdfaf7\],
+html.dark [class*="from-[#fdfaf7]"] {
+    --tw-gradient-from: #1A120B var(--tw-gradient-from-position) !important;
+}
+
+html.dark .to-\[\#FFE5C8\],
+html.dark [class*="to-[#FFE5C8]"] {
+    --tw-gradient-to: #2A1C14 var(--tw-gradient-to-position) !important;
+}
+
+/* Fallback placeholder images invert filter in dark mode */
+html.dark img[src*="placehold.co"],
+html.dark img[src*="placeholder.com"] {
+    filter: invert(0.88) hue-rotate(180deg) brightness(0.9);
+    border-radius: 8px;
+}
+
+/* Text color overrides */
+html.dark .text-\[\#2C1A0E\],
+html.dark .text-\[\#2c1a0e\],
+html.dark [class*="text-[#2C1A0E]"],
+html.dark [class*="text-[#2c1a0e]"] {
+    color: #FDF5EC !important;
+}
+
+html.dark .text-\[\#5C3D28\],
+html.dark .text-\[\#5c3d28\],
+html.dark .text-\[\#4A3728\],
+html.dark .text-\[\#4a3728\],
+html.dark [class*="text-[#5C3D28]"],
+html.dark [class*="text-[#4A3728]"] {
+    color: #D8C6B6 !important;
+}
+
+html.dark .text-\[\#886852\],
+html.dark .text-\[\#8A6A54\],
+html.dark .text-\[\#8a6a54\],
+html.dark [class*="text-[#886852]"],
+html.dark [class*="text-[#8A6A54]"] {
+    color: #9E8B7D !important;
+}
+
+/* Slate and dark text colors in dark mode (Mesin, Katalog, Detail) */
+html.dark .text-slate-900,
+html.dark [class*="text-slate-900"],
+html.dark .text-\[\#3d2b1f\],
+html.dark [class*="text-[#3d2b1f]"],
+html.dark .text-\[\#2D241E\],
+html.dark [class*="text-[#2D241E]"] {
+    color: #FDF5EC !important;
+}
+
+html.dark .text-slate-800,
+html.dark [class*="text-slate-800"],
+html.dark .text-slate-700,
+html.dark [class*="text-slate-700"] {
+    color: #E6D8CB !important;
+}
+
+html.dark .text-slate-600,
+html.dark [class*="text-slate-600"],
+html.dark .text-slate-500,
+html.dark [class*="text-slate-500"],
+html.dark .text-\[\#7a6452\],
+html.dark [class*="text-[#7a6452]"] {
+    color: #D8C6B6 !important;
+}
+
+html.dark .text-slate-400,
+html.dark [class*="text-slate-400"] {
+    color: #9E8B7D !important;
+}
+
+html.dark .text-\[\#8B5E3C\],
+html.dark [class*="text-[#8B5E3C]"] {
+    color: #FF9100 !important;
+}
+
+html.dark .bg-slate-100,
+html.dark [class*="bg-slate-100"] {
+    background-color: #1E140D !important;
+}
+
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark [class*="border-slate-100"],
+html.dark [class*="border-slate-200"] {
+    border-color: rgba(255, 145, 0, 0.15) !important;
+}
+
+/* Borders in dark mode */
+html.dark .border-black\/5,
+html.dark .border-black\/10,
+html.dark .border-white\/50,
+html.dark .border-white\/60 {
+    border-color: rgba(255, 242, 224, 0.1) !important;
+}
+
+/* Navbar glass effect in dark mode */
+html.dark nav,
+html.dark header,
+html.dark .backdrop-blur-md,
+html.dark .backdrop-blur-xl {
+    border-color: rgba(255, 242, 224, 0.08) !important;
+}
+
+/* Inputs & Search */
+html.dark input[type="text"],
+html.dark input[type="search"],
+html.dark textarea,
+html.dark select {
+    background-color: rgba(35, 24, 17, 0.95) !important;
+    color: #FDF5EC !important;
+    border-color: rgba(255, 242, 224, 0.15) !important;
+}
+
+html.dark input::placeholder {
+    color: #9E8B7D !important;
+}
+
+/* Dropdown menus & cards */
+html.dark .shadow-sm,
+html.dark .shadow-md,
+html.dark .shadow-lg,
+html.dark .shadow-xl,
+html.dark .shadow-2xl {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Footer White Action Buttons (Always White Background + Black Text in all modes) */
+#footer .btn-white-action,
+html.dark #footer .btn-white-action {
+    background-color: #FFFFFF !important;
+    color: #130D08 !important;
+}
+
+#footer .btn-white-action *,
+html.dark #footer .btn-white-action * {
+    color: #130D08 !important;
+    fill: #130D08 !important;
+}
+
+/* ========================================================
+   Ultra-Smooth Hardware-Accelerated Glow Effect for Product Cards
+   Zero JS overhead - 100% GPU compositor thread
+======================================================== */
+.card-glow {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform, box-shadow;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                border-color 0.25s ease;
+}
+
+.card-glow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 140px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255, 145, 0, 0.32) 0%, rgba(255, 145, 0, 0) 75%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    z-index: 1;
+    border-radius: inherit;
+}
+
+.card-glow:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 145, 0, 0.45) !important;
+    box-shadow: 0 16px 36px -8px rgba(255, 145, 0, 0.22), 
+                0 0 20px 0 rgba(255, 145, 0, 0.14) !important;
+}
+
+.card-glow:hover::before {
+    opacity: 1;
+}
+
+html.dark .card-glow {
+    border-color: rgba(255, 242, 224, 0.1) !important;
+}
+
+html.dark .card-glow::before {
+    background: radial-gradient(ellipse at 50% 0%, rgba(179, 82, 0, 0.45) 0%, rgba(179, 82, 0, 0) 75%);
+}
+
+html.dark .card-glow:hover {
+    border-color: rgba(179, 82, 0, 0.65) !important;
+    box-shadow: 0 20px 42px -10px rgba(0, 0, 0, 0.8), 
+                0 0 32px 2px rgba(179, 82, 0, 0.3) !important;
+}
+

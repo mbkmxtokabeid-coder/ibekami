@@ -50,6 +50,7 @@ return [
     'made_in_medan' => 'Ikhtiar Berkah, Creative Economy from Medan Indonesia (IBEKAMI)',
     'make_ideas_real' => 'Turn Ideas Into',
     'real_work' => 'Real Work',
+
     
     // Hot Deals
     'special_offers' => 'Special Offers For You',

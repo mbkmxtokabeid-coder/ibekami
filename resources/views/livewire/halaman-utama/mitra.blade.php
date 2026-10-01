@@ -1,27 +1,27 @@
-<section class="py-16 px-4 bg-[#fff2e0] overflow-hidden">
+<section class="py-10 md:py-14 px-4 bg-[#fff2e0] dark:bg-[#130D08] overflow-hidden transition-colors duration-200">
     <div class="max-w-7xl mx-auto">
         <div class="text-center max-w-lg mx-auto mb-10">
-            <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-2 sm:mb-3">
-                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
+            <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.2em] mb-2 sm:mb-3">
+                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
                 {{ __('messages.trusted_together') }}
-                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
+                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
             </div>
-            <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] tracking-tight leading-tight">{{ __('messages.our_partners') }}</h2>
-            <p class="text-[13px] text-[#7a6452] mt-2">{{ __('messages.trusted_by_institutions') }}</p>
+            <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight leading-tight">{{ __('messages.our_partners') }}</h2>
+            <p class="text-[13px] text-[#7a6452] dark:text-[#9E8B7D] mt-2">{{ __('messages.trusted_by_institutions') }}</p>
         </div>
 
         <!-- Marquee Track with Alpine.js -->
-        <div class="relative mt-8 overflow-hidden">
-            <!-- Gradient Overlay -->
-            <div class="absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-[#fff2e0] to-transparent z-10 pointer-events-none"></div>
-            <div class="absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-[#fff2e0] to-transparent z-10 pointer-events-none"></div>
+        <div class="relative mt-5 overflow-hidden">
+            <!-- Gradient Overlay (Fade left & right matching background) -->
+            <div class="absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-[#fff2e0] dark:from-[#130D08] to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-[#fff2e0] dark:from-[#130D08] to-transparent z-10 pointer-events-none"></div>
             
             <div class="flex flex-col gap-6">
                 {{-- Baris 1: BUMN - Bergeser ke KANAN --}}
                 @if(count($partnersBumn) > 0)
                 <div class="space-y-2">
                     <div class="text-center">
-                        <span class="inline-block px-4 py-1 bg-[#b35200]/10 text-[#b35200] text-xs font-bold uppercase tracking-wider rounded-full border border-[#b35200]/20">
+                        <span class="inline-block px-4 py-1 bg-[#ff9100]/10 dark:bg-[#b35200]/25 text-[#ff9100] dark:text-[#b35200] text-xs font-bold uppercase tracking-wider rounded-full border border-[#ff9100]/20 dark:border-[#b35200]/40">
                             {{ __('messages.bumn_partners') }}
                         </span>
                     </div>
@@ -73,7 +73,7 @@
                         <div x-ref="track" class="flex gap-4">
                             @foreach($partnersBumn as $index => $partner)
                             <div wire:key="bumn-{{ $partner['id'] }}-{{ $index }}" 
-                                 class="w-36 h-20 shrink-0 bg-white rounded-xl border border-[#b35200]/10 flex items-center justify-center p-4 hover:border-[#b35200] hover:shadow-lg hover:shadow-[#b35200]/10 transition-all group">
+                                 class="w-36 h-20 shrink-0 bg-white dark:bg-[#231811] rounded-xl border border-[#b35200]/10 dark:border-[#b35200]/20 flex items-center justify-center p-4 hover:border-[#b35200] hover:shadow-lg hover:shadow-[#b35200]/10 transition-all group">
                                 <img src="{{ $partner['image'] }}" 
                                      loading="lazy"
                                      decoding="async"
@@ -81,7 +81,7 @@
                                      height="80"
                                      alt="Partner BUMN"
                                      class="max-h-full max-w-full object-contain transition-all"
-                                     onerror="this.onerror=null; this.src='https://placehold.co/150x80?text=BUMN'">
+                                     onerror="this.onerror=null; this.closest('.shrink-0').style.display='none';">
                             </div>
                             @endforeach
                         </div>
@@ -93,7 +93,7 @@
                 @if(count($partnersOrganization) > 0)
                 <div class="space-y-2">
                     <div class="text-center">
-                        <span class="inline-block px-4 py-1 bg-[#b35200]/10 text-[#b35200] text-xs font-bold uppercase tracking-wider rounded-full border border-[#b35200]/20">
+                        <span class="inline-block px-4 py-1 bg-[#ff9100]/10 dark:bg-[#b35200]/25 text-[#ff9100] dark:text-[#b35200] text-xs font-bold uppercase tracking-wider rounded-full border border-[#ff9100]/20 dark:border-[#b35200]/40">
                             {{ __('messages.organization_partners') }}
                         </span>
                     </div>
@@ -146,7 +146,7 @@
                         <div x-ref="track" class="flex gap-4">
                             @foreach($partnersOrganization as $index => $partner)
                             <div wire:key="org-{{ $partner['id'] }}-{{ $index }}" 
-                                 class="w-36 h-20 shrink-0 bg-white rounded-xl border border-[#b35200]/10 flex items-center justify-center p-4 hover:border-[#b35200] hover:shadow-lg hover:shadow-[#b35200]/10 transition-all group">
+                                 class="w-36 h-20 shrink-0 bg-white dark:bg-[#231811] rounded-xl border border-[#b35200]/10 dark:border-[#b35200]/20 flex items-center justify-center p-4 hover:border-[#b35200] hover:shadow-lg hover:shadow-[#b35200]/10 transition-all group">
                                 <img src="{{ $partner['image'] }}" 
                                      loading="lazy"
                                      decoding="async"
@@ -154,7 +154,7 @@
                                      height="80"
                                      alt="Partner Organization"
                                      class="max-h-full max-w-full object-contain transition-all"
-                                     onerror="this.onerror=null; this.src='https://placehold.co/150x80?text=Organization'">
+                                     onerror="this.onerror=null; this.closest('.shrink-0').style.display='none';">
                             </div>
                             @endforeach
                         </div>
@@ -172,17 +172,17 @@
         </div>
 
         <!-- CTA Banner -->
-        <div x-ignore class="mt-16 bg-[#b35200] rounded-[32px] p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl shadow-[#b35200]/20">
+        <div x-ignore class="mt-16 bg-[#ff9100] dark:bg-[#b35200] rounded-[32px] p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl shadow-[#ff9100]/25 dark:shadow-[#b35200]/20 transition-colors duration-200">
             <div class="text-center md:text-left text-white">
                 <div class="text-[11px] font-bold opacity-90 uppercase tracking-[2px] mb-2">{{ __('messages.join_us') }}</div>
-                <h3 class="font-['Playfair_Display'] text-2xl md:text-3xl font-bold mb-2 text-white">{{ __('messages.become_next_partner') }}</h3>
+                <h3 class="text-2xl md:text-3xl font-extrabold mb-2 text-white tracking-tight">{{ __('messages.become_next_partner') }}</h3>
                 <p class="text-sm text-white/80">{{ __('messages.collaboration_best_solution') }}</p>
             </div>
             <a href="https://wa.me/62817076999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
                rel="noopener noreferrer"
                @click.throttle.2000ms
-               class="bg-white text-[#2C1A0E] px-8 py-4 rounded-xl font-bold hover:bg-[#fff2e0] transition-all whitespace-nowrap shadow-md">
+               class="bg-white dark:bg-[#231811] text-[#2C1A0E] dark:text-[#FDF5EC] px-8 py-4 rounded-xl font-bold hover:bg-[#fff2e0] dark:hover:bg-[#2c1d15] transition-all whitespace-nowrap shadow-md">
                 {{ __('messages.contact_us') }} →
             </a>
         </div>

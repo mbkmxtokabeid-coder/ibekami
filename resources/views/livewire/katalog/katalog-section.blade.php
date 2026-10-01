@@ -12,7 +12,7 @@
             clearTimeout(this.resizeDebounceTimer);
             this.resizeDebounceTimer = setTimeout(() => {
                 let newLimit = window.innerWidth < 768 ? 8 : 9;
-                if (this.currentLimit !== newLimit) {
+                if  (this.currentLimit !== newLimit) {
                     this.currentLimit = newLimit;
                     $wire.setPerPage(newLimit);
                 }
@@ -48,16 +48,16 @@
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 relative">
             
             {{-- Loading Indicator --}}
-            <div wire:loading wire:target="nextPage, previousPage, setPage, setPerPage, resetFilters" class="absolute inset-0 bg-[#D6CFBF]/60 backdrop-blur-sm z-20 rounded-2xl flex items-center justify-center">
+            <div wire:loading wire:target="nextPage, previousPage, setPage, setPerPage, resetFilters" class="absolute inset-0 bg-[#D6CFBF]/60 dark:bg-black/60 backdrop-blur-sm z-20 rounded-2xl flex items-center justify-center">
                 <span class="w-8 h-8 rounded-full border-4 border-[#A64E2F]/30 border-t-[#A64E2F] animate-spin"></span>
             </div>
 
             @foreach($this->paginatedData['items'] as $product)
                 <a href="{{ route('katalog.detail', ['slug' => $product['slug']]) }}"
                    wire:key="product-{{ $product['id'] }}"
-                   class="bg-[#FDFAF7] rounded-2xl overflow-hidden border border-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(44,26,14,0.1)] group cursor-pointer flex flex-col">
+                   class="card-glow bg-[#FDFAF7] dark:bg-[#231811] rounded-2xl overflow-hidden border border-black/5 dark:border-[#b35200]/20 group cursor-pointer flex flex-col">
 
-                    <div class="aspect-[4/3] bg-[#E8E3D8] relative overflow-hidden shrink-0">
+                    <div class="aspect-[4/3] bg-[#E8E3D8] dark:bg-[#1E140D] relative overflow-hidden shrink-0 z-10">
                         <img src="{{ $product['img'] }}"
                              alt="{{ $product['name'] }}"
                              @if($loop->index < 4)
@@ -70,20 +70,20 @@
                              @endif
                              width="400"
                              height="300"
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                             class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105">
                         
-                        <div class="absolute inset-0 bg-[#2C1A0E]/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <span class="bg-white text-[#A64E2F] font-bold px-4 py-2 rounded-lg text-xs translate-y-3 group-hover:translate-y-0 transition-transform duration-300 shadow-lg">
+                        <div class="absolute inset-0 bg-[#2C1A0E]/35 dark:bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="bg-white dark:bg-[#1A120B] text-[#A64E2F] dark:text-[#b35200] font-bold px-4 py-2 rounded-lg text-xs translate-y-3 group-hover:translate-y-0 transition-transform duration-300 shadow-lg">
                                 {{ __('messages.view_details') }}
                             </span>
                         </div>
                     </div>
 
-                    <div class="p-4 flex-1 flex flex-col justify-start">
-                        <p class="text-[10px] font-bold text-[#A64E2F] uppercase tracking-wider mb-1">
+                    <div class="p-4 flex-1 flex flex-col justify-start relative z-10">
+                        <p class="text-[10px] font-bold text-[#A64E2F] dark:text-[#b35200] uppercase tracking-wider mb-1 group-hover:text-[#ff9100] dark:group-hover:text-[#b35200] transition-colors duration-200">
                             {{ $product['cat'] }}
                         </p>
-                        <h3 class="text-[13px] font-bold text-[#2C1A0E] leading-snug line-clamp-2">
+                        <h3 class="text-[13px] font-bold text-[#2C1A0E] dark:text-[#FDF5EC] group-hover:text-[#ff9100] dark:group-hover:text-[#b35200] leading-snug line-clamp-2 transition-colors duration-200">
                             {{ $product['name'] }}
                         </h3>
                     </div>

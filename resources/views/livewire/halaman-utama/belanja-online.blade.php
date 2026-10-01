@@ -1,13 +1,13 @@
 <div>
-<section class="py-16 sm:py-20 px-5 sm:px-6 lg:px-8 bg-[#fff2e0]">
+<section class="py-16 sm:py-20 px-5 sm:px-6 lg:px-8 bg-[#fff2e0] dark:bg-[#130D08] transition-colors duration-200">
     <div class="max-w-7xl mx-auto">
         <div class="mb-10 sm:mb-12">
-            <div class="flex items-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-3">
+            <div class="flex items-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.2em] mb-3">
                 {{ __('messages.shop_online') }}
-                <span class="w-12 h-[2px] bg-[#b35200]/50 rounded-full"></span>
+                <span class="w-12 h-[2px] bg-[#b35200]/50 dark:bg-[#ff9100]/50 rounded-full"></span>
             </div>
-            <h2 class="font-['Playfair_Display'] text-3xl sm:text-4xl font-bold text-[#2C1A0E] leading-tight tracking-tight">{{ __('messages.official_marketplace') }}</h2>
-            <p class="text-sm sm:text-base text-[#886852] mt-3 font-medium leading-relaxed max-w-xl">{{ __('messages.get_free_shipping') }}</p>
+            <h2 class="font-['Playfair_Display'] text-3xl sm:text-4xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] leading-tight tracking-tight">{{ __('messages.official_marketplace') }}</h2>
+            <p class="text-sm sm:text-base text-[#886852] dark:text-[#9E8B7D] mt-3 font-medium leading-relaxed max-w-xl">{{ __('messages.get_free_shipping') }}</p>
         </div>
 
         <div 
@@ -33,8 +33,8 @@
                          loading="lazy">
                 </div>
                 <div class="flex-1">
-                    <div class="font-['Playfair_Display'] text-lg sm:text-xl font-bold text-[#2C1A0E] group-hover:text-[#03AC0E] transition-colors duration-300">Tokopedia</div>
-                    <div class="text-xs sm:text-sm text-[#886852] mt-1 font-medium tracking-wide">{{ __('messages.free_shipping_buy_now') }}</div>
+                    <div class="text-lg sm:text-xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] group-hover:text-[#03AC0E] transition-colors duration-300">Tokopedia</div>
+                    <div class="text-xs sm:text-sm text-[#886852] dark:text-[#9E8B7D] mt-1 font-medium tracking-wide">{{ __('messages.free_shipping_buy_now') }}</div>
                 </div>
                 <span 
                     class="text-[#b35200]/40 font-bold text-xl group-hover:text-[#03AC0E] group-hover:translate-x-1.5 transition-all duration-300 ease-out"
@@ -64,8 +64,8 @@
                          loading="lazy">
                 </div>
                 <div class="flex-1">
-                    <div class="font-['Playfair_Display'] text-lg sm:text-xl font-bold text-[#2C1A0E] group-hover:text-[#EE4D2D] transition-colors duration-300">Shopee</div>
-                    <div class="text-xs sm:text-sm text-[#886852] mt-1 font-medium tracking-wide">{{ __('messages.free_shipping_ikhtiar_berkah') }}</div>
+                    <div class="text-lg sm:text-xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] group-hover:text-[#EE4D2D] transition-colors duration-300">Shopee</div>
+                    <div class="text-xs sm:text-sm text-[#886852] dark:text-[#9E8B7D] mt-1 font-medium tracking-wide">{{ __('messages.free_shipping_ikhtiar_berkah') }}</div>
                 </div>
                 <span 
                     class="text-[#b35200]/40 font-bold text-xl group-hover:text-[#EE4D2D] group-hover:translate-x-1.5 transition-all duration-300 ease-out"

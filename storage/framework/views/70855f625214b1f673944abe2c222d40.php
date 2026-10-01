@@ -7,7 +7,7 @@
 
                 <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
             </div>
-            <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-black text-[#2C1A0E] tracking-tighter leading-none">
+            <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] tracking-tight leading-tight">
                 <?php echo e(__('messages.follow_us')); ?>
 
             </h2>
@@ -21,4 +21,4 @@
             <div class="bg-white rounded-3xl p-6 h-28 border border-black/5"></div>
         </div>
     </div>
-</div><?php /**PATH D:\Ibekami\ibekami\storage\framework\views/b6a9433058afd5108df13778c59308d8.blade.php ENDPATH**/ ?>
+</div><?php /**PATH D:\MAGANG REHAN\ibekami_baru\ibekami\storage\framework\views/defdedfe01196e4e59e680e04af6d532.blade.php ENDPATH**/ ?>

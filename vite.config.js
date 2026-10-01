@@ -6,8 +6,10 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: true,
-            // refresh: ['resources/views/**'], // hanya watch Blade views
+            refresh: [
+                'resources/views/**',
+                'routes/**',
+            ],
         }),
         tailwindcss(),
     ],
@@ -32,7 +34,11 @@ export default defineConfig({
         // host: '0.0.0.0',
         // hmr: { host: '192.168.3.83' },
         watch: {
-            ignored: ['**/storage/framework/views/**'],
+            ignored: [
+                '**/storage/**',
+                '**/database/**',
+                '**/public/storage/**',
+            ],
         },
     },
 });
