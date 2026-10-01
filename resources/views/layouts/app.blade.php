@@ -63,6 +63,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
 
+    {{-- Google Fonts: Poppins & Plus Jakarta Sans --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
     {{-- Preload critical fonts for better performance (Network Dependency Tree optimization) --}}
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/instrument-sans-latin-400-normal.woff2') }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/instrument-sans-latin-500-normal.woff2') }}" crossorigin>

@@ -2,16 +2,17 @@
     <div class="max-w-7xl mx-auto">
 
         {{-- Header --}}
-        <div class="mb-10 sm:mb-12">
-            <div class="flex items-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-3">
+        <div class="text-center max-w-xl mx-auto mb-10 sm:mb-12">
+            <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-2 sm:mb-3">
+                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
                 {{ __('messages.social_media') }}
-                <span class="w-12 h-[2px] bg-[#b35200]/50 rounded-full"></span>
+                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
             </div>
-            <h2 class="font-['Playfair_Display'] text-3xl sm:text-4xl font-bold text-[#2C1A0E] leading-tight tracking-tight">
-                Follow Us
+            <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] tracking-tight leading-tight">
+                {{ __('messages.follow_us') }}
             </h2>
-            <p class="text-sm sm:text-base text-[#866b59] mt-3 font-medium leading-relaxed max-w-xl">
-                Ikuti kami untuk update produk terbaru, inspirasi desain, dan promo eksklusif.
+            <p class="text-sm sm:text-base text-[#866b59] mt-2 sm:mt-3 font-medium leading-relaxed">
+                {{ __('messages.follow_us_desc') }}
             </p>
         </div>
 

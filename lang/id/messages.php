@@ -3,7 +3,7 @@
 return [
     // Navbar
     'home' => 'Beranda',
-    'hot_deals' => 'Hot Deals',
+    'hot_deals' => 'Promo',
     'catalog' => 'Katalog',
     'all_products' => 'Semua Produk',
     'our_machines' => 'Mesin Kami',
@@ -54,10 +54,10 @@ return [
     // Hot Deals
     'special_offers' => 'Penawaran Spesial Untuk Anda',
     'dont_miss_deals' => 'Jangan lewatkan penawaran eksklusif kami',
-    'hot_deals_this_month' => 'Hot Deals Bulan Ini',
+    'hot_deals_this_month' => 'Promo Bulan Ini',
     'best_price_all_categories' => 'Dapatkan harga terbaik untuk semua kategori produk custom kami. Jangan sampai kehabisan!',
     'ask_price' => 'Tanya Harga',
-    'hot_deal' => 'Hot Deal',
+    'hot_deal' => 'Promo',
     'no_product_types' => 'Belum ada jenis produk tersedia.',
     'ask_via_wa' => 'Tanya via WA',
     'special_offer' => 'Penawaran Spesial',
@@ -113,7 +113,7 @@ return [
     'production_machine' => 'Mesin Produksi',
     'no_machines_added' => 'Belum ada mesin yang ditambahkan',
     'start_your_project' => 'Mulai Projek Kamu?',
-    'lets_build_together' => '"Let\'s build something aesthetic together"',
+    'lets_build_together' => '"Ayo bangun sesuatu yang estetik bersama"',
     'contact_via_whatsapp' => 'Hubungi via WhatsApp',
     'our_technology' => 'Teknologi Kami',
     'production_machines' => 'Mesin',
@@ -125,6 +125,8 @@ return [
     
     // Footer
     'social_media' => 'Media Sosial',
+    'follow_us' => 'Ikuti Kami',
+    'follow_us_desc' => 'Ikuti kami untuk update produk terbaru, inspirasi desain, dan promo eksklusif.',
     'contact' => 'Kontak',
     'operating_hours' => 'Jam Operasional',
     'location' => 'Lokasi',
@@ -135,10 +137,14 @@ return [
     'privacy_policy_terms' => 'Kebijakan Privasi & Ketentuan',
     'ask_now' => 'Tanya Sekarang',
     'monday_saturday' => 'Senin - Sabtu',
+    'operating_hours_time' => '08:30 - 17:00 WIB',
+    'public_holiday' => 'Hari Libur / Nasional',
     'sunday' => 'Minggu',
     'closed' => 'Tutup',
     'about_us' => 'Tentang Kami',
     'company_description' => 'Kami adalah perusahaan digital printing yang berkomitmen memberikan produk berkualitas terbaik.',
+    'address_line1' => 'KOMPLEK SETIA BUDI POINT',
+    'address_line2' => 'Jl. Setia Budi No.D-10, Tj. Sari, Kec. Medan Selayang, Kota Medan',
     
     // Privacy Policy
     'privacy_policy' => 'Kebijakan Privasi',

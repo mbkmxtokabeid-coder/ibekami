@@ -124,6 +124,8 @@ return [
     
     // Footer
     'social_media' => 'Social Media',
+    'follow_us' => 'Follow Us',
+    'follow_us_desc' => 'Follow us for the latest product updates, design inspiration, and exclusive promos.',
     'contact' => 'Contact',
     'operating_hours' => 'Operating Hours',
     'location' => 'Location',
@@ -134,6 +136,8 @@ return [
     'privacy_policy_terms' => 'Privacy Policy & Terms',
     'ask_now' => 'Ask Now',
     'monday_saturday' => 'Monday - Saturday',
+    'operating_hours_time' => '8:30 AM - 5:00 PM',
+    'public_holiday' => 'Public Holiday / National',
     'sunday' => 'Sunday',
     'closed' => 'Closed',
     
@@ -188,6 +192,11 @@ return [
     // Common
     'indonesia' => 'Indonesia',
     'english' => 'English',
+    'about_us' => 'About Us',
+    
+    // Address
+    'address_line1' => 'SETIA BUDI POINT COMPLEX',
+    'address_line2' => 'Setia Budi Street No. D-10, Tj. Sari, Medan Selayang District, Medan City',
 
     // FAQ & About Section
     'faq_badge' => 'FAQ',

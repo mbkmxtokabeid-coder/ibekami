@@ -28,6 +28,9 @@ export default defineConfig({
         cssCodeSplit: true,
     },
     server: {
+        host: 'localhost',
+        // host: '0.0.0.0',
+        // hmr: { host: '192.168.3.83' },
         watch: {
             ignored: ['**/storage/framework/views/**'],
         },

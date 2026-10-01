@@ -109,7 +109,7 @@
                         <!-- Info Overlay -->
                         <div class="absolute bottom-0 left-0 right-0 bg-[#2C1A0E]/80 backdrop-blur-md p-5 text-[#fdfaf7]">
                             <p class="font-bold text-sm leading-tight"><?php echo e($addressLine1); ?></p>
-                            <p class="text-xs opacity-80 mt-1"><?php echo e($addressLine2); ?>, <?php echo e($addressLine3); ?></p>
+                            <p class="text-xs opacity-80 mt-1"><?php echo e($addressLine2); ?></p>
                         </div>
 
                         <!-- Float Button -->

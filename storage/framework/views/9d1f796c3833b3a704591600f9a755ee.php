@@ -64,6 +64,11 @@
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo e(asset('apple-touch-icon.png')); ?>">
 
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    
     <link rel="preload" as="font" type="font/woff2" href="<?php echo e(asset('fonts/instrument-sans-latin-400-normal.woff2')); ?>" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="<?php echo e(asset('fonts/instrument-sans-latin-500-normal.woff2')); ?>" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="<?php echo e(asset('fonts/instrument-sans-latin-600-normal.woff2')); ?>" crossorigin>

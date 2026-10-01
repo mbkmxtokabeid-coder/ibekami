@@ -34,12 +34,9 @@
             <!-- Headline -->
             <h1 class="font-['Playfair_Display'] text-[38px] sm:text-[48px] lg:text-[60px] font-extrabold leading-[1.1] text-[#2C1A0E] tracking-tight">
                 <?php echo e(__('messages.make_ideas_real')); ?> <br class="hidden sm:block">
-                <span class="relative inline-block text-[#A64E2F]">
+                <span class="text-[#A64E2F]">
                     <?php echo e(__('messages.real_work')); ?>
 
-                    <svg class="absolute w-full h-3 -bottom-2 left-0 text-[#A64E2F]/20" viewBox="0 0 100 20" fill="currentColor">
-                        <path d="M0 15 Q 25 5 50 15 T 100 15 L 100 20 L 0 20 Z"></path>
-                    </svg>
                 </span>
             </h1>
 
@@ -80,22 +77,21 @@
         </div>
 
         <!-- KONTEN KANAN -->
-        <div class="lg:col-span-6 relative w-full flex items-center justify-center mt-6 lg:mt-0">
-            
-            <!-- Frame — aspect-square agar video 1:1 tampil penuh -->
-            <!-- Frame — aspect-square agar carousel 1:1 tampil penuh -->
-            <div x-data="{ 
-                     activeSlide: 0, 
-                     slidesCount: <?php echo e(count($banners)); ?>,
-                     init() {
-                         if (this.slidesCount > 1) {
-                             setInterval(() => {
-                                  this.activeSlide = (this.activeSlide + 1) % this.slidesCount;
-                             }, 5000);
-                         }
+        <div class="lg:col-span-6 relative w-full flex flex-col items-center justify-center mt-6 lg:mt-0"
+             x-data="{ 
+                 activeSlide: 0, 
+                 slidesCount: <?php echo e(count($banners)); ?>,
+                 init() {
+                     if (this.slidesCount > 1) {
+                         setInterval(() => {
+                              this.activeSlide = (this.activeSlide + 1) % this.slidesCount;
+                         }, 5000);
                      }
-                 }"
-                 style="aspect-ratio: 1/1;"
+                 }
+             }">
+            
+            <!-- Frame — aspect-square agar carousel 1:1 tampil penuh -->
+            <div style="aspect-ratio: 1/1;"
                  class="relative w-[85%] max-w-[480px] aspect-square bg-[#FFF2E0] rounded-2xl
             border border-white/60 shadow-lg shadow-[#FF9100]/10 overflow-hidden transition-transform duration-500">
 
@@ -129,44 +125,25 @@
                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
                 <div class="absolute inset-0 bg-[#FF9100]/5 mix-blend-multiply pointer-events-none"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-[#FFF2E0] via-transparent to-transparent opacity-40 pointer-events-none"></div>
-
-                <!-- Carousel Indicators -->
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(count($banners) > 1): ?>
-                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 bg-black/10 backdrop-blur-md px-3 py-1.5 rounded-full items-center">
-                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $bannerItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <button @click="activeSlide = <?php echo e($index); ?>"
-                                    aria-label="Slide <?php echo e($index + 1); ?>"
-                                    class="w-6 h-6 flex items-center justify-center transition-all duration-300 focus:outline-none shrink-0"
-                                    type="button">
-                                <span class="h-1.5 rounded-full transition-all duration-300"
-                                      :class="activeSlide === <?php echo e($index); ?> ? 'w-5 bg-[#FF9100]' : 'w-1.5 bg-white/60 hover:bg-white'"></span>
-                            </button>
-                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
-                    </div>
-                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </div>
 
-            <!-- Floating Card Rating -->
-            <div class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-md border border-white/60 p-3 rounded-xl shadow-md animate-[float_5s_ease-in-out_infinite_reverse]">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-yellow-300/30 rounded-lg flex items-center justify-center">★</div>
-                    <div>
-                        <p class="text-[9px] font-semibold text-[#886852] uppercase"><?php echo e(__('messages.rating')); ?></p>
-                        <p class="text-[13px] font-bold text-[#2C1A0E]">5.0</p>
-                    </div>
+            <!-- Carousel Indicators (di bawah container foto) -->
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(count($banners) > 1): ?>
+                <div class="flex gap-1.5 mt-4 bg-[#FF9100] border border-white/30 px-3.5 py-1.5 rounded-full items-center shadow-md shadow-[#FF9100]/25 z-20">
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $bannerItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+                        <button @click="activeSlide = <?php echo e($index); ?>"
+                                aria-label="Slide <?php echo e($index + 1); ?>"
+                                class="w-6 h-6 flex items-center justify-center transition-all duration-300 focus:outline-none shrink-0"
+                                type="button">
+                            <span class="h-2 rounded-full transition-all duration-300"
+                                  :class="activeSlide === <?php echo e($index); ?> ? 'w-6 bg-white shadow-sm' : 'w-2 bg-white/45 hover:bg-white'"></span>
+                        </button>
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                 </div>
-            </div>
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
         </div>
     </div>
 </section>
-
-<style>
-@keyframes float {
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
-}
-</style>
 </div>
 <?php /**PATH D:\Ibekami\ibekami\resources\views/livewire/halaman-utama/hero.blade.php ENDPATH**/ ?>

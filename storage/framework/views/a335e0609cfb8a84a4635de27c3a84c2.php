@@ -1,13 +1,13 @@
 <section class="py-16 px-4 bg-[#fff2e0] overflow-hidden">
     <div class="max-w-7xl mx-auto">
         <div class="text-center max-w-lg mx-auto mb-10">
-            <div class="flex items-center justify-center gap-3 text-[11px] font-bold text-[#b35200] uppercase tracking-widest mb-2">
-                <span class="w-10 h-[1px] bg-[#b35200]"></span>
+            <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-2 sm:mb-3">
+                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
                 <?php echo e(__('messages.trusted_together')); ?>
 
-                <span class="w-10 h-[1px] bg-[#b35200]"></span>
+                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
             </div>
-            <h2 class="font-['Playfair_Display'] text-3xl font-bold text-[#3d2b1f]"><?php echo e(__('messages.our_partners')); ?></h2>
+            <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] tracking-tight leading-tight"><?php echo e(__('messages.our_partners')); ?></h2>
             <p class="text-[13px] text-[#7a6452] mt-2"><?php echo e(__('messages.trusted_by_institutions')); ?></p>
         </div>
 

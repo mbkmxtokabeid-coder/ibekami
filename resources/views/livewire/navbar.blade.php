@@ -127,8 +127,7 @@
                             aria-label="{{ app()->getLocale() === 'id' ? 'ID - Pilih Bahasa' : 'EN - Choose Language' }}"
                             class="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/40 border border-white/50 text-[#5C3D28] hover:text-[#b35200] hover:bg-white transition-all outline-none shadow-sm"
                             :class="langMenuOpen ? 'bg-white ring-2 ring-[#b35200]/30' : ''">
-                        <span class="text-base leading-none lg:hidden" x-text="currentLocale === 'id' ? '🇮🇩' : '🇺🇸'"></span>
-                        <span class="hidden lg:inline text-[12px] font-bold tracking-wide" x-text="currentLocale.toUpperCase()"></span>
+                        <span class="text-[12px] font-bold tracking-wide" x-text="currentLocale.toUpperCase()"></span>
                         <svg class="w-3 h-3 transition-transform duration-300" :class="{'rotate-180': langMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     
@@ -140,16 +139,18 @@
                          x-transition:leave="transition ease-in duration-150"
                          class="absolute right-0 mt-3 w-36 bg-white/95 backdrop-blur-xl border border-white/60 rounded-2xl shadow-xl overflow-hidden z-50 p-2">
                         <button @click="debouncedChangeLanguage('id')" 
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold w-full transition-colors"
+                                class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold w-full transition-colors"
                                 :class="currentLocale === 'id' ? 'bg-[#fff2e0]/50 text-[#b35200]' : 'hover:bg-black/5 text-[#5C3D28]'"
                                 :disabled="isChangingLanguage">
-                            <span class="text-base leading-none">🇮🇩</span> Indonesia
+                            <span class="text-[12px] font-bold tracking-wider w-6 text-left">ID</span>
+                            <span>Indonesia</span>
                         </button>
                         <button @click="debouncedChangeLanguage('en')" 
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold w-full transition-colors"
+                                class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold w-full transition-colors"
                                 :class="currentLocale === 'en' ? 'bg-[#fff2e0]/50 text-[#b35200]' : 'hover:bg-black/5 text-[#5C3D28]'"
                                 :disabled="isChangingLanguage">
-                            <span class="text-base leading-none">🇺🇸</span> English
+                            <span class="text-[12px] font-bold tracking-wider w-6 text-left">EN</span>
+                            <span>English</span>
                         </button>
                     </div>
                 </div>
