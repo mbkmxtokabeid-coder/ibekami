@@ -43,7 +43,7 @@
                     {{ __('messages.about_title') }}
                 </h2>
 
-                <p class="text-xs sm:text-[14px] text-[#5C3D28] dark:text-[#D8C6B6] leading-relaxed opacity-95 text-justify">
+                <p class="text-xs sm:text-[14px] text-[#5C3D28] dark:text-[#D8C6B6] leading-relaxed opacity-95 text-justify" style="text-align: justify;">
                     {{ __('messages.about_desc') }}
                 </p>
             </div>
