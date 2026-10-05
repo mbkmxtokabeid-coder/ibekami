@@ -16,7 +16,7 @@ Route::get('/offline.html', fn() => abort(404));
 
 // Shortlink WA Admin
 Route::get('/wadmin', function () {
-    $text = request('text', 'Halo Admin, saya ingin bertanya info lebih lanjut');
+    $text = request('text', 'Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?');
     return redirect()->away('https://wa.me/628170769999?text=' . urlencode($text));
 })->name('wadmin');
 
