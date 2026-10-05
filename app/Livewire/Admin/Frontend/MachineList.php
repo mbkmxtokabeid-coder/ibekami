@@ -27,6 +27,8 @@ class MachineList extends Component
 
     // ── Form fields ──────────────────────────────────────────────
     public string  $title         = '';
+    public string  $title_id      = '';
+    public string  $title_en      = '';
     public         $image         = null;
     public ?string $existingImage = null;
 
@@ -53,7 +55,9 @@ class MachineList extends Component
     {
         $machine             = Machine::findOrFail($id);
         $this->editingId     = $id;
-        $this->title         = $machine->title;
+        $this->title_id      = $machine->title_id ?? $machine->title;
+        $this->title_en      = $machine->title_en ?? '';
+        $this->title         = $this->title_id;
         $this->existingImage = $machine->image_url;
         $this->image         = null;
         $this->isEditing     = true;
@@ -69,6 +73,8 @@ class MachineList extends Component
     private function resetForm(): void
     {
         $this->title         = '';
+        $this->title_id      = '';
+        $this->title_en      = '';
         $this->image         = null;
         $this->existingImage = null;
         $this->editingId     = null;
@@ -79,7 +85,8 @@ class MachineList extends Component
     protected function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:200'],
+            'title_id' => ['required', 'string', 'max:200'],
+            'title_en' => ['nullable', 'string', 'max:200'],
             'image' => $this->isEditing
                 ? ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048']
                 : ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
@@ -89,11 +96,12 @@ class MachineList extends Component
     protected function messages(): array
     {
         return [
-            'title.required' => 'Judul mesin wajib diisi.',
-            'title.max'      => 'Judul maksimal 200 karakter.',
-            'image.image'    => 'File harus berupa gambar.',
-            'image.mimes'    => 'Format: jpg, jpeg, png, webp.',
-            'image.max'      => 'Ukuran gambar maksimal 2MB.',
+            'title_id.required' => 'Judul mesin (Bahasa Indonesia) wajib diisi.',
+            'title_id.max'      => 'Judul maksimal 200 karakter.',
+            'title_en.max'      => 'Judul English maksimal 200 karakter.',
+            'image.image'       => 'File harus berupa gambar.',
+            'image.mimes'       => 'Format: jpg, jpeg, png, webp.',
+            'image.max'         => 'Ukuran gambar maksimal 2MB.',
         ];
     }
 
@@ -122,17 +130,19 @@ class MachineList extends Component
             $imagePath = $filename;
         }
 
+        $titleEn = !empty($this->title_en) ? $this->title_en : $this->title_id;
+        $data = [
+            'title'     => $this->title_id,
+            'title_id'  => $this->title_id,
+            'title_en'  => $titleEn,
+            'image_url' => $imagePath,
+        ];
+
         if ($this->isEditing) {
-            Machine::findOrFail($this->editingId)->update([
-                'title'     => $this->title,
-                'image_url' => $imagePath,
-            ]);
+            Machine::findOrFail($this->editingId)->update($data);
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Data mesin berhasil diperbarui.']);
         } else {
-            Machine::create([
-                'title'     => $this->title,
-                'image_url' => $imagePath,
-            ]);
+            Machine::create($data);
             $this->dispatch('swal', ['type' => 'success', 'title' => 'Berhasil!', 'text' => 'Data mesin berhasil ditambahkan.']);
         }
 
@@ -160,7 +170,9 @@ class MachineList extends Component
     public function render()
     {
         $machines = Machine::query()
-            ->when($this->search, fn ($q) => $q->where('title', 'like', "%{$this->search}%"))
+            ->when($this->search, fn ($q) => $q->where('title_id', 'like', "%{$this->search}%")
+                                                ->orWhere('title_en', 'like', "%{$this->search}%")
+                                                ->orWhere('title', 'like', "%{$this->search}%"))
             ->orderBy($this->sortField, $this->sortDir)
             ->paginate($this->perPage);
 

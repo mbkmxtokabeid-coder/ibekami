@@ -11,16 +11,17 @@
     --font-sans: 'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
     --font-poppins: 'Poppins', sans-serif;
-    --font-heading: 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif;
-    --font-serif: 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif;
-    --font-playfair: 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-heading: Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-playfair: Georgia, Cambria, 'Times New Roman', Times, serif;
 }
 
 .font-heading,
 .font-playfair,
+.font-serif,
 .font-\[\'Playfair_Display\'\],
 [class*="font-['Playfair_Display']"] {
-    font-family: 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif !important;
+    font-family: Georgia, Cambria, 'Times New Roman', Times, serif !important;
 }
 
 /* Alpine.js x-cloak directive */

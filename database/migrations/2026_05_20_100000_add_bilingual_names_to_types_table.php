@@ -10,22 +10,28 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('types', function (Blueprint $table) {
-            $table->string('name_id', 100)->nullable()->after('id');
-            $table->string('name_en', 100)->nullable()->after('name_id');
+            if (!Schema::hasColumn('types', 'name_id')) {
+                $table->string('name_id', 100)->nullable()->after('id');
+            }
+            if (!Schema::hasColumn('types', 'name_en')) {
+                $table->string('name_en', 100)->nullable()->after('name_id');
+            }
         });
 
-        foreach (DB::table('types')->get() as $type) {
-            DB::table('types')
-                ->where('id', $type->id)
-                ->update([
-                    'name_id' => $type->name,
-                    'name_en' => $type->name,
-                ]);
+        if (Schema::hasColumn('types', 'name')) {
+            foreach (DB::table('types')->get() as $type) {
+                DB::table('types')
+                    ->where('id', $type->id)
+                    ->update([
+                        'name_id' => $type->name_id ?? $type->name,
+                        'name_en' => $type->name_en ?? $type->name,
+                    ]);
+            }
+
+            Schema::table('types', function (Blueprint $table) {
+                $table->dropColumn('name');
+            });
         }
-
-        Schema::table('types', function (Blueprint $table) {
-            $table->dropColumn('name');
-        });
     }
 
     public function down(): void

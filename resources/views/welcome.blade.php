@@ -43,14 +43,14 @@
                     {{ __('messages.about_title') }}
                 </h2>
 
-                <p class="text-xs sm:text-[14px] text-[#5C3D28] dark:text-[#D8C6B6] leading-relaxed opacity-95 text-justify">
+                <p class="text-[13px] sm:text-[14px] text-[#5C3D28] dark:text-[#D8C6B6] leading-relaxed opacity-95">
                     {{ __('messages.about_desc') }}
                 </p>
             </div>
 
             {{-- KONTEN KANAN: FAQ ACCORDION --}}
             <div class="lg:col-span-7 w-full flex flex-col space-y-4" x-data="{ activeFaq: null }">
-                <div class="mb-2 sm:mb-4">
+                <div class="mb-4">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff9100]/10 dark:bg-[#b35200]/15 border border-[#ff9100]/20 dark:border-[#b35200]/30">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#ff9100] dark:bg-[#b35200]"></span>
                         <span class="text-[10px] font-bold text-[#ff9100] dark:text-[#ff9100] uppercase tracking-widest">{{ __('messages.faq_badge') }}</span>
@@ -58,7 +58,7 @@
                     <h2 class="font-['Playfair_Display'] text-2xl sm:text-3xl font-black text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight mt-2 sm:mt-3">
                         {{ __('messages.faq_title') }}
                     </h2>
-                    <p class="text-xs sm:text-[13px] text-[#886852] dark:text-[#9E8B7D] font-medium mt-1.5 sm:mt-2 leading-relaxed">
+                    <p class="text-[12px] sm:text-[13px] text-[#8A6A54] dark:text-[#9E8B7D] font-medium mt-2 leading-relaxed">
                         {{ __('messages.faq_subtitle') }}
                     </p>
                 </div>

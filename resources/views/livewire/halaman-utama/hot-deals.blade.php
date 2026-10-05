@@ -27,7 +27,7 @@
                     <span class="text-[10px] font-bold text-[#4a3728] uppercase tracking-widest">{{ __('messages.special_offer') }}</span>
                 </div>
                 
-                <h2 class="font-['Playfair_Display'] text-3xl md:text-4xl lg:text-5xl font-black text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight">
+                <h2 class="font-playfair text-3xl md:text-4xl lg:text-5xl font-black text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight">
                     {{ __('messages.hot_deals_this_month') }}
                 </h2>
                 
@@ -37,7 +37,7 @@
             </div>
             
             <!-- Tombol CTA Header -->
-            <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+            <a href="https://wa.me/628170769999?text={{ rawurlencode('Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?') }}" 
                target="_blank"
                rel="noopener noreferrer"
                @click.throttle.2000ms
@@ -66,7 +66,7 @@
             @forelse($deals as $index => $deal)
             <!-- Kartu Individu -->
             <a wire:key="deal-{{ $deal->id }}"
-               href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20{{ urlencode($deal->name) }}%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F"
+               href="https://wa.me/628170769999?text={{ rawurlencode('Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?') }}"
                target="_blank"
                rel="noopener noreferrer"
                @click.throttle.2000ms

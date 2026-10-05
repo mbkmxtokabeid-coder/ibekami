@@ -31,7 +31,7 @@
             </div>
 
             <!-- Headline -->
-            <h1 class="font-['Playfair_Display'] text-[38px] sm:text-[48px] lg:text-[60px] font-extrabold leading-[1.1] text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight">
+            <h1 class="font-playfair text-[38px] sm:text-[48px] lg:text-[60px] font-extrabold leading-[1.1] text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight">
                 {{ __('messages.make_ideas_real') }} <br class="hidden sm:block">
                 <span class="relative inline-block text-[#A64E2F] dark:text-[#ff9100]">
                     {{ __('messages.real_work') }}
@@ -50,7 +50,10 @@
             <div class="flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto pt-2">
                 
                 <!-- Primary -->
-                <a href="https://wa.me/62817076999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+                @php
+                    $heroWaText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
+                @endphp
+                <a href="https://wa.me/628170769999?text={{ rawurlencode($heroWaText) }}" 
                    target="_blank"
                    rel="noopener noreferrer"
                    @click.throttle.2000ms

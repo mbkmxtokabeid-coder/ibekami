@@ -6,7 +6,7 @@
                 {{ __('messages.shop_online') }}
                 <span class="w-12 h-[2px] bg-[#b35200]/50 dark:bg-[#ff9100]/50 rounded-full"></span>
             </div>
-            <h2 class="font-['Playfair_Display'] text-3xl sm:text-4xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] leading-tight tracking-tight">{{ __('messages.official_marketplace') }}</h2>
+            <h2 class="font-playfair text-3xl sm:text-4xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] leading-tight tracking-tight">{{ __('messages.official_marketplace') }}</h2>
             <p class="text-sm sm:text-base text-[#886852] dark:text-[#9E8B7D] mt-3 font-medium leading-relaxed max-w-xl">{{ __('messages.get_free_shipping') }}</p>
         </div>
 

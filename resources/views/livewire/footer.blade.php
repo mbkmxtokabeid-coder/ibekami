@@ -25,7 +25,10 @@
             
             <div class="mt-8">
                 <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-4 opacity-95">{{ __('messages.need_help') }}</h4>
-                <a href="https://wa.me/{{ $whatsappNumber }}?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+                @php
+                    $footerWaText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
+                @endphp
+                <a href="https://wa.me/{{ $whatsappNumber }}?text={{ rawurlencode($footerWaText) }}" 
                    target="_blank"
                    rel="noopener noreferrer"
                    class="btn-white-action inline-flex items-center gap-3 !bg-white !text-black px-6 py-3.5 rounded-2xl text-sm font-extrabold shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
@@ -133,7 +136,7 @@
     </div>
 
     {{-- WhatsApp Floating Button --}}
-    <a href="https://wa.me/{{ $whatsappNumber }}?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+    <a href="https://wa.me/{{ $whatsappNumber }}?text={{ rawurlencode($footerWaText) }}" 
        target="_blank"
        rel="noopener noreferrer"
        aria-label="Chat via WhatsApp"

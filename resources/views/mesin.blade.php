@@ -9,10 +9,10 @@
     {{-- Hero mesin — above the fold, render langsung --}}
     <livewire:mesin.hero-mesin />
 
-    {{-- Mesin Section — lazy --}}
-    <livewire:mesin.mesin-section lazy />
+    {{-- Mesin Section --}}
+    <livewire:mesin.mesin-section />
 
-    {{-- Footer — lazy --}}
-    <livewire:footer lazy />
+    {{-- Footer --}}
+    <livewire:footer />
 
 @endsection

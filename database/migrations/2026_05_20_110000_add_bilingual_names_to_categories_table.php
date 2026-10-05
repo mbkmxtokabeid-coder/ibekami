@@ -10,22 +10,28 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->string('name_id', 150)->nullable()->after('type_id');
-            $table->string('name_en', 150)->nullable()->after('name_id');
+            if (!Schema::hasColumn('categories', 'name_id')) {
+                $table->string('name_id', 150)->nullable()->after('type_id');
+            }
+            if (!Schema::hasColumn('categories', 'name_en')) {
+                $table->string('name_en', 150)->nullable()->after('name_id');
+            }
         });
 
-        foreach (DB::table('categories')->get() as $category) {
-            DB::table('categories')
-                ->where('id', $category->id)
-                ->update([
-                    'name_id' => $category->name,
-                    'name_en' => $category->name,
-                ]);
+        if (Schema::hasColumn('categories', 'name')) {
+            foreach (DB::table('categories')->get() as $category) {
+                DB::table('categories')
+                    ->where('id', $category->id)
+                    ->update([
+                        'name_id' => $category->name_id ?? $category->name,
+                        'name_en' => $category->name_en ?? $category->name,
+                    ]);
+            }
+
+            Schema::table('categories', function (Blueprint $table) {
+                $table->dropColumn('name');
+            });
         }
-
-        Schema::table('categories', function (Blueprint $table) {
-            $table->dropColumn('name');
-        });
     }
 
     public function down(): void

@@ -175,10 +175,13 @@
         <div x-ignore class="mt-16 bg-[#ff9100] dark:bg-[#b35200] rounded-[32px] p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl shadow-[#ff9100]/25 dark:shadow-[#b35200]/20 transition-colors duration-200">
             <div class="text-center md:text-left text-white">
                 <div class="text-[11px] font-bold opacity-90 uppercase tracking-[2px] mb-2">{{ __('messages.join_us') }}</div>
-                <h3 class="text-2xl md:text-3xl font-extrabold mb-2 text-white tracking-tight">{{ __('messages.become_next_partner') }}</h3>
+                <h3 class="font-['Playfair_Display'] text-2xl md:text-3xl font-bold mb-2 text-white tracking-tight">{{ __('messages.become_next_partner') }}</h3>
                 <p class="text-sm text-white/80">{{ __('messages.collaboration_best_solution') }}</p>
             </div>
-            <a href="https://wa.me/62817076999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+            @php
+                $mitraWaText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
+            @endphp
+            <a href="https://wa.me/628170769999?text={{ rawurlencode($mitraWaText) }}" 
                target="_blank"
                rel="noopener noreferrer"
                @click.throttle.2000ms

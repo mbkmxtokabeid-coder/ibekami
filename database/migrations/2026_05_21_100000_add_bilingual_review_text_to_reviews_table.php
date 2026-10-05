@@ -10,22 +10,28 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('reviews', function (Blueprint $table) {
-            $table->text('review_id')->nullable()->after('name');
-            $table->text('review_en')->nullable()->after('review_id');
+            if (!Schema::hasColumn('reviews', 'review_id')) {
+                $table->text('review_id')->nullable()->after('name');
+            }
+            if (!Schema::hasColumn('reviews', 'review_en')) {
+                $table->text('review_en')->nullable()->after('review_id');
+            }
         });
 
-        foreach (DB::table('reviews')->get() as $review) {
-            DB::table('reviews')
-                ->where('id', $review->id)
-                ->update([
-                    'review_id' => $review->review,
-                    'review_en' => $review->review,
-                ]);
+        if (Schema::hasColumn('reviews', 'review')) {
+            foreach (DB::table('reviews')->get() as $review) {
+                DB::table('reviews')
+                    ->where('id', $review->id)
+                    ->update([
+                        'review_id' => $review->review_id ?? $review->review,
+                        'review_en' => $review->review_en ?? $review->review,
+                    ]);
+            }
+
+            Schema::table('reviews', function (Blueprint $table) {
+                $table->dropColumn('review');
+            });
         }
-
-        Schema::table('reviews', function (Blueprint $table) {
-            $table->dropColumn('review');
-        });
     }
 
     public function down(): void

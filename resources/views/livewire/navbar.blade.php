@@ -183,7 +183,10 @@
                 </button>
 
                 <!-- CTA Button -->
-                <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+                @php
+                    $navWaText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
+                @endphp
+                <a href="https://wa.me/628170769999?text={{ rawurlencode($navWaText) }}" 
                    target="_blank"
                    rel="noopener"
                    @click.throttle.2000ms
@@ -309,7 +312,7 @@
 
             <div class="w-full h-px bg-black/5 my-2"></div>
             
-            <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+            <a href="https://wa.me/628170769999?text={{ rawurlencode($navWaText) }}" 
                target="_blank"
                rel="noopener"
                @click.throttle.2000ms

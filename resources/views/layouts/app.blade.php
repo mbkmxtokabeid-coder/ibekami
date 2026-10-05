@@ -83,7 +83,6 @@
 
     {{-- Preload critical fonts for better performance (Network Dependency Tree optimization) --}}
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/plus-jakarta-sans-latin.woff2') }}" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/playfair-display-latin.woff2') }}" crossorigin>
     
     {{-- Inlined Self-hosted fonts CSS to eliminate a render-blocking HTTP request --}}
     <style>
@@ -95,22 +94,6 @@
             src: url('{{ asset('fonts/plus-jakarta-sans-latin.woff2') }}') format('woff2-variations'),
                  url('{{ asset('fonts/plus-jakarta-sans-latin.woff2') }}') format('woff2');
             unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-        }
-        @font-face {
-            font-family: 'Playfair Display';
-            font-style: normal;
-            font-weight: 400 900;
-            font-display: swap;
-            src: url('{{ asset('fonts/playfair-display-latin.woff2') }}') format('woff2');
-            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-        }
-        @font-face {
-            font-family: 'Playfair Display';
-            font-style: italic;
-            font-weight: 400 900;
-            font-display: swap;
-            src: url('{{ asset('fonts/playfair-display-italic-latin.woff2') }}') format('woff2');
-            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
     </style>
 
@@ -396,7 +379,7 @@
                 'url' => config('app.url'),
                 'logo' => asset('storage/logos/logo ibekami (3).webp'),
                 'image' => asset('storage/banners/428f232a-c988-4731-8cf7-ceec4874496c.webp'),
-                'telephone' => '+62817076999',
+                'telephone' => '+628170769999',
                 'priceRange' => 'Rp',
                 'currenciesAccepted' => 'IDR',
                 'paymentAccepted' => 'Transfer Bank, Cash, WhatsApp Order',
@@ -420,7 +403,7 @@
                     'url' => route('katalog'),
                 ],
                 'sameAs' => [
-                    'https://wa.me/62817076999',
+                    'https://wa.me/628170769999',
                     'https://www.instagram.com/ibekami.id',
                     'https://www.tiktok.com/@ibekami.id',
                 ],
