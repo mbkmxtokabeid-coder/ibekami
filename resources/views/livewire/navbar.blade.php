@@ -65,20 +65,20 @@
             <!-- 1. Logo Brand -->
             <a href="/" class="flex items-center gap-2.5 group shrink-0 outline-none">
                 {{-- Logo Mode Terang (Teks Ibekami Gelap) --}}
-                <img src="{{ asset('logos/logo-ibekami.webp') }}" 
+                <img src="{{ asset('storage/logos/logo ibekami (3).webp') }}" 
                      alt="IBEKAMI Logo" 
                      width="36"
                      height="36"
                      class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300 block dark:hidden"
-                     onerror="this.onerror=null; this.src='{{ asset('storage/logos/logo%20ibekami%20(3).webp') }}';">
+                     onerror="this.style.display='none'; document.getElementById('navbar-logo-fallback')?.classList.remove('hidden');">
 
                 {{-- Logo Mode Gelap (Teks Ibekami Putih) --}}
-                <img src="{{ asset('logos/logo-ibekami-dark.webp') }}" 
+                <img src="{{ asset('storage/logos/logo-ibekami-dark.webp') }}" 
                      alt="IBEKAMI Logo" 
                      width="36"
                      height="36"
                      class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300 hidden dark:block"
-                     onerror="this.onerror=null; this.src='{{ asset('storage/logos/logo%20ibekami%20(3).webp') }}';">
+                     onerror="this.style.display='none'; document.getElementById('navbar-logo-fallback')?.classList.remove('hidden');">
 
                 <div id="navbar-logo-fallback" class="w-8 h-8 sm:w-9 sm:h-9 bg-[#b35200] rounded-full items-center justify-center hidden">
                     <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white" viewBox="0 0 20 20"><path d="M10 2L3 7v11h5v-5h4v5h5V7z"/></svg>
@@ -206,7 +206,7 @@
                 </button>
 
                 <!-- CTA Button -->
-                <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+                <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
                    rel="noopener"
                    @click.throttle.2000ms
@@ -349,7 +349,7 @@
 
             <div class="w-full h-px bg-black/5 my-2"></div>
             
-            <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+            <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
                rel="noopener"
                @click.throttle.2000ms

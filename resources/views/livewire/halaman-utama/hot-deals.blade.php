@@ -36,7 +36,7 @@
             
             <!-- Tombol CTA Header — Diposisikan ke Kanan & Ringkas (w-auto) -->
             <div class="mt-4 md:mt-0 md:absolute md:right-0 md:bottom-0 flex items-center justify-end shrink-0">
-                <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+                <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
                    rel="noopener noreferrer"
                    @click.throttle.2000ms
@@ -66,7 +66,7 @@
             @forelse($deals as $index => $deal)
             <!-- Kartu Individu -->
             <a wire:key="deal-{{ $deal->id }}"
-               href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20{{ urlencode($deal->name) }}%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F"
+               href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20{{ urlencode($deal->name) }}%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F"
                target="_blank"
                rel="noopener noreferrer"
                @click.throttle.2000ms
