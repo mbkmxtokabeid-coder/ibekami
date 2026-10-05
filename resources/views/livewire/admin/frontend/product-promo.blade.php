@@ -5,10 +5,10 @@
 
         {{-- Title + Add Button --}}
         <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-            <h2 class="text-base font-semibold text-gray-800">Daftar Jenis Produk yang Tersedia</h2>
+            <h2 class="text-base font-semibold text-gray-800">Daftar Promo Produk yang Tersedia</h2>
             <button wire:click="openCreate"
                     class="px-5 py-2 bg-cyan-500 hover:bg-cyan-600 text-white text-sm font-semibold rounded-lg transition shadow-sm">
-                + Tambah Jenis
+                + Tambah Promo Produk
             </button>
         </div>
 
@@ -28,7 +28,7 @@
                 <label>Search:</label>
                 <input type="text"
                        wire:model.live.debounce.300ms="search"
-                       placeholder="Cari jenis produk..."
+                       placeholder="Cari promo produk..."
                        class="border border-gray-300 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-300 w-52"/>
             </div>
         </div>
@@ -66,17 +66,17 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
-                    @forelse ($types as $type)
+                    @forelse ($promos as $promo)
                         <tr class="hover:bg-gray-50 transition">
                             <td class="px-6 py-4 text-gray-700 font-medium">
-                                {{ ($types->currentPage() - 1) * $types->perPage() + $loop->iteration }}
+                                {{ ($promos->currentPage() - 1) * $promos->perPage() + $loop->iteration }}
                             </td>
-                            <td class="px-6 py-4 text-gray-800">{{ $type->name_id }}</td>
-                            <td class="px-6 py-4 text-gray-800">{{ $type->name_en }}</td>
+                            <td class="px-6 py-4 text-gray-800">{{ $promo->name_id }}</td>
+                            <td class="px-6 py-4 text-gray-800">{{ $promo->name_en }}</td>
                             <td class="px-6 py-4">
-                                @if ($type->image_url)
-                                    <img src="{{ Storage::url($type->image_url) }}"
-                                         alt="{{ $type->name_id }}"
+                                @if ($promo->image_url)
+                                    <img src="{{ Storage::url($promo->image_url) }}"
+                                         alt="{{ $promo->name_id }}"
                                          class="w-20 h-20 object-cover rounded-full border border-gray-200 shadow-sm"/>
                                 @else
                                     <div class="w-20 h-20 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center">
@@ -90,7 +90,7 @@
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
                                     {{-- Edit --}}
-                                    <button wire:click="openEdit({{ $type->id }})"
+                                    <button wire:click="openEdit({{ $promo->id }})"
                                             class="w-8 h-8 flex items-center justify-center rounded border border-cyan-400 text-cyan-500
                                                    hover:bg-cyan-50 transition" title="Edit">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +99,7 @@
                                         </svg>
                                     </button>
                                     {{-- Delete --}}
-                                    <button onclick="confirmDelete({{ $type->id }}, '{{ addslashes($type->name_id) }}')"
+                                    <button onclick="confirmDelete({{ $promo->id }}, '{{ addslashes($promo->name_id) }}')"
                                             class="w-8 h-8 flex items-center justify-center rounded border border-red-400 text-red-500
                                                    hover:bg-red-50 transition" title="Hapus">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,7 +113,7 @@
                     @empty
                         <tr>
                             <td colspan="5" class="px-6 py-12 text-center text-gray-400">
-                                Tidak ada data jenis produk.
+                                Tidak ada data promo produk.
                             </td>
                         </tr>
                     @endforelse
@@ -124,21 +124,21 @@
         {{-- Pagination --}}
         <div class="px-6 py-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-3 text-sm text-gray-600">
             <span>
-                @if($types->total() > 0)
-                    Showing {{ $types->firstItem() }} to {{ $types->lastItem() }} of {{ $types->total() }} entries
+                @if($promos->total() > 0)
+                    Showing {{ $promos->firstItem() }} to {{ $promos->lastItem() }} of {{ $promos->total() }} entries
                 @else
                     Showing 0 entries
                 @endif
             </span>
             <div class="flex items-center gap-1">
-                <button wire:click="previousPage" @disabled($types->onFirstPage())
+                <button wire:click="previousPage" @disabled($promos->onFirstPage())
                         class="px-3 py-1.5 rounded border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition">
                     Previous
                 </button>
 
                 @php
-                    $cur  = $types->currentPage();
-                    $last = $types->lastPage();
+                    $cur  = $promos->currentPage();
+                    $last = $promos->lastPage();
                     $from = max(1, $cur - 2);
                     $to   = min($last, $cur + 2);
                 @endphp
@@ -161,7 +161,7 @@
                     <button wire:click="gotoPage({{ $last }})" class="px-3 py-1.5 rounded border border-gray-300 hover:bg-gray-50 transition">{{ $last }}</button>
                 @endif
 
-                <button wire:click="nextPage" @disabled(!$types->hasMorePages())
+                <button wire:click="nextPage" @disabled(!$promos->hasMorePages())
                         class="px-3 py-1.5 rounded border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition">
                     Next
                 </button>
@@ -196,7 +196,7 @@
             {{-- Modal Header --}}
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
                 <h3 class="text-base font-semibold text-gray-800">
-                    {{ $isEditing ? 'Edit Jenis Produk' : 'Tambah Jenis Produk' }}
+                    {{ $isEditing ? 'Edit Promo Produk' : 'Tambah Promo Produk' }}
                 </h3>
                 <button @click="$wire.closeModal()"
                         class="text-gray-400 hover:text-gray-600 transition">
@@ -212,7 +212,7 @@
                 {{-- Nama Bahasa Indonesia --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1.5">
-                        Nama Jenis Produk (Bahasa Indonesia) <span class="text-red-500">*</span>
+                        Nama Promo Produk (Bahasa Indonesia) <span class="text-red-500">*</span>
                     </label>
                     <input type="text"
                            wire:model="name_id"
@@ -228,7 +228,7 @@
                 {{-- Nama English --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1.5">
-                        Nama Jenis Produk (English) <span class="text-red-500">*</span>
+                        Nama Promo Produk (English) <span class="text-red-500">*</span>
                     </label>
                     <input type="text"
                            wire:model="name_en"
@@ -244,7 +244,7 @@
                 {{-- Gambar --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1.5">
-                        Gambar Jenis Produk
+                        Gambar Promo Produk
                     </label>
 
                     {{-- Preview gambar existing (saat edit) --}}
@@ -299,11 +299,11 @@
 
                 {{-- Footer --}}
                 <div class="flex items-center justify-end gap-3 pt-2 border-t border-gray-100">
-                    <button type="button" @click="$wire.closeModal()"
+                    <button promo="button" @click="$wire.closeModal()"
                             class="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                         Batal
                     </button>
-                    <button type="submit"
+                    <button promo="submit"
                             wire:loading.attr="disabled"
                             class="px-5 py-2 bg-cyan-500 hover:bg-cyan-600 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition">
                         <span wire:loading.remove wire:target="save">Simpan Data</span>
@@ -330,7 +330,7 @@
         Livewire.on('swal', (params) => {
             const p = Array.isArray(params) ? params[0] : params;
             Swal.fire({
-                icon:              p.type  || 'info',
+                icon:              p.promo  || 'info',
                 title:             p.title || '',
                 text:              p.text  || '',
                 timer:             2500,
@@ -344,8 +344,8 @@
     // ── Delete confirmation ───────────────────────────────────────
     function confirmDelete(id, name) {
         Swal.fire({
-            title:              'Hapus Jenis Produk?',
-            html:               `Jenis produk <strong>${name}</strong> akan dihapus permanen.`,
+            title:              'Hapus Promo Produk?',
+            html:               `Promo produk <strong>${name}</strong> akan dihapus permanen.`,
             icon:               'warning',
             showCancelButton:   true,
             confirmButtonColor: '#ef4444',

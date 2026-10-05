@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\Frontend;
 
-use App\Models\Type;
+use App\Models\Promo;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -10,7 +10,7 @@ use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 #[Layout('layouts.admin')]
-class ProductType extends Component
+class PromoProduct extends Component
 {
     use WithFileUploads, WithPagination;
 
@@ -70,11 +70,11 @@ class ProductType extends Component
 
     public function openEdit(int $id): void
     {
-        $type = Type::findOrFail($id);
+        $promo = Promo::findOrFail($id);
         $this->editingId = $id;
-        $this->name_id = $type->name_id ?? '';
-        $this->name_en = $type->name_en ?? '';
-        $this->existingImage = $type->image_url;
+        $this->name_id = $promo->name_id ?? '';
+        $this->name_en = $promo->name_en ?? '';
+        $this->existingImage = $promo->image_url;
         $this->image = null;
         $this->isEditing = true;
         $this->showModal = true;
@@ -109,9 +109,9 @@ class ProductType extends Component
     protected function messages(): array
     {
         return [
-            'name_id.required' => 'Nama jenis produk (Bahasa Indonesia) wajib diisi.',
+            'name_id.required' => 'Nama promo produk (Bahasa Indonesia) wajib diisi.',
             'name_id.max' => 'Nama Indonesia maksimal 100 karakter.',
-            'name_en.required' => 'Nama jenis produk (English) wajib diisi.',
+            'name_en.required' => 'Nama promo produk (English) wajib diisi.',
             'name_en.max' => 'Nama English maksimal 100 karakter.',
             'image.image' => 'File harus berupa gambar.',
             'image.mimes' => 'Format gambar: jpg, jpeg, png, webp.',
@@ -130,7 +130,7 @@ class ProductType extends Component
             if ($this->isEditing && $this->existingImage) {
                 Storage::disk('public')->delete($this->existingImage);
             }
-            $imagePath = $this->image->store('types', 'public');
+            $imagePath = $this->image->store('promo', 'public');
         }
 
         $data = [
@@ -140,18 +140,18 @@ class ProductType extends Component
         ];
 
         if ($this->isEditing) {
-            Type::findOrFail($this->editingId)->update($data);
+            Promo::findOrFail($this->editingId)->update($data);
             $this->dispatch('swal', [
                 'type' => 'success',
                 'title' => 'Berhasil!',
-                'text' => 'Jenis produk berhasil diperbarui.',
+                'text' => 'Promo produk berhasil diperbarui.',
             ]);
         } else {
-            Type::create($data);
+            Promo::create($data);
             $this->dispatch('swal', [
                 'type' => 'success',
                 'title' => 'Berhasil!',
-                'text' => 'Jenis produk berhasil ditambahkan.',
+                'text' => 'Promo produk berhasil ditambahkan.',
             ]);
         }
 
@@ -165,36 +165,36 @@ class ProductType extends Component
 
     public function delete(int $id): void
     {
-        $type = Type::findOrFail($id);
+        $promo = Promo::findOrFail($id);
 
-        if ($type->image_url) {
-            Storage::disk('public')->delete($type->image_url);
+        if ($promo->image_url) {
+            Storage::disk('public')->delete($promo->image_url);
         }
 
-        $type->delete();
+        $promo->delete();
 
         $this->dispatch('swal', [
             'type' => 'success',
             'title' => 'Dihapus!',
-            'text' => 'Jenis produk berhasil dihapus.',
+            'text' => 'Promo produk berhasil dihapus.',
         ]);
     }
 
     // ── Render ────────────────────────────────────────────────────
-    // public function render()
-    // {
-    //     $types = Type::query()
-    //         ->when($this->search, function ($q) {
-    //             $q->where(function ($query) {
-    //                 $query->where('name_id', 'like', "%{$this->search}%")
-    //                     ->orWhere('name_en', 'like', "%{$this->search}%");
-    //             });
-    //         })
-    //         ->orderBy($this->sortField, $this->sortDir)
-    //         ->paginate($this->perPage);
+    public function render()
+    {
+        $promos = Promo::query()
+            ->when($this->search, function ($q) {
+                $q->where(function ($query) {
+                    $query->where('name_id', 'like', "%{$this->search}%")
+                        ->orWhere('name_en', 'like', "%{$this->search}%");
+                });
+            })
+            ->orderBy($this->sortField, $this->sortDir)
+            ->paginate($this->perPage);
 
-    //     return view('livewire.admin.frontend.product-type', [
-    //         'types' => $types,
-    //     ]);
-    // }
+        return view('livewire.admin.frontend.product-promo', [
+            'promos' => $promos,
+        ]);
+    }
 }

@@ -80,14 +80,15 @@
                  class="mt-1 ml-4 space-y-0.5 border-l border-white/10 pl-3">
                 @php
                     $frontendLinks = [
-                        ['route' => 'admin.frontend.product-type',     'label' => 'Product Type'],
+                        ['route' => 'admin.frontend.product-promo',     'label' => 'Product Promo'],
                         ['route' => 'admin.frontend.product-category', 'label' => 'Product Category'],
                         ['route' => 'admin.frontend.product-list',     'label' => 'Product List'],
                         ['route' => 'admin.frontend.machine-list',     'label' => 'Machine List'],
                     ];
                 @endphp
                 @foreach ($frontendLinks as $link)
-                    <a href="{{ route($link['route']) }}"
+                    @php $routeName = $link['route']; @endphp
+                    <a href="{{ route($routeName) }}" 
                        class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition
                               {{ request()->routeIs($link['route'])
                                     ? 'text-white bg-white/10'
@@ -142,7 +143,8 @@
                     ];
                 @endphp
                 @foreach ($backendLinks as $link)
-                    <a href="{{ route($link['route']) }}"
+                    @php $routeName = $link['route']; @endphp
+                    <a href="{{ route($routeName) }}"
                        class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition
                               {{ request()->routeIs($link['route'])
                                     ? 'text-white bg-white/10'

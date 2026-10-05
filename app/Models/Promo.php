@@ -4,34 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
 
-class Type extends Model
+class Promo extends Model
 {
+    protected $table = 'promo';
+
     protected $fillable = ['name_id', 'name_en', 'image_url'];
 
     protected static function booted(): void
     {
         static::saved(function () {
-            Cache::forget('navbar:product_types');
+            \Illuminate\Support\Facades\Cache::forever('katalog_cache_version', time());
+            \Illuminate\Support\Facades\Cache::forget('homepage:hot_deals');
         });
+
         static::deleted(function () {
-            Cache::forget('navbar:product_types');
+            \Illuminate\Support\Facades\Cache::forever('katalog_cache_version', time());
+            \Illuminate\Support\Facades\Cache::forget('homepage:hot_deals');
         });
-    }
-
-    public function categories()
-    {
-        return $this->hasMany(Category::class, 'type_id', 'id');
-    }
-
-    public function products()
-    {
-        return $this->hasMany(Product::class, 'product_type', 'id');
     }
 
     /**
-     * Nama jenis produk sesuai locale aktif (id/en), dengan fallback.
+     * Nama promo sesuai locale aktif (id/en), dengan fallback.
      */
     protected function name(): Attribute
     {

@@ -3,7 +3,7 @@
 namespace App\Livewire\HalamanUtama;
 
 use Livewire\Component;
-use App\Models\Type;
+use App\Models\Promo;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,16 +46,16 @@ class HotDeals extends Component
     {
         $deals = Cache::remember('homepage:hot_deals', now()->addMinutes(30), function () {
             // Ambil semua Type yang memiliki image_url
-            return Type::query()
+            return Promo::query()
                 ->whereNotNull('image_url')
                 ->get()
                 ->map(function ($deal) {
                     $path = $deal->image_url;
                     if (!Storage::disk('public')->exists($path)) {
-                        if (Storage::disk('public')->exists('gambar_jenis/' . $path)) {
-                            $path = 'gambar_jenis/' . $path;
-                        } elseif (Storage::disk('public')->exists('types/' . $path)) {
-                            $path = 'types/' . $path;
+                        if (Storage::disk('public')->exists('gambar_promo/' . $path)) {
+                            $path = 'gambar_promo/' . $path;
+                        } elseif (Storage::disk('public')->exists('promo/' . $path)) {
+                            $path = 'promo/' . $path;
                         }
                     }
                     if (Storage::disk('public')->exists($path)) {

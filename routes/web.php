@@ -285,6 +285,8 @@ Route::prefix('admin')
         Route::prefix('frontend')->name('frontend.')->group(function () {
             Route::get('/product-type', \App\Livewire\Admin\Frontend\ProductType::class)->name('product-type');
 
+            Route::get('/product-promo', \App\Livewire\Admin\Frontend\PromoProduct::class)->name('product-promo');
+
             Route::get('/product-category', \App\Livewire\Admin\Frontend\ProductCategory::class)->name('product-category');
 
             Route::get('/product-list', \App\Livewire\Admin\Frontend\ProductList::class)->name('product-list');
