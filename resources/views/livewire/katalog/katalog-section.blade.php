@@ -26,21 +26,7 @@
         <p class="text-[14px] text-[#5C3D28]">
             {{ __('messages.showing') }} <strong class="text-[#2C1A0E]">{{ $this->paginatedData['total'] }} {{ __('messages.products') }}</strong>
         </p>
-
-        {{-- Active filter chips --}}
-        <div class="flex flex-wrap items-center gap-2">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#A64E2F]/30 text-[#A64E2F] text-[12px] font-semibold rounded-full shadow-sm">
-                {{ $activeCategory }}
-                <button wire:click="resetFilters" class="hover:text-[#8C4126] focus:outline-none">&times;</button>
-            </span>
-            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#A64E2F]/30 text-[#A64E2F] text-[12px] font-semibold rounded-full shadow-sm">
-                {{ $sortBy }}
-                <button wire:click="resetFilters" class="hover:text-[#8C4126] focus:outline-none">&times;</button>
-            </span>
-            <button wire:click="resetFilters" class="text-[12px] font-semibold text-[#886852] hover:text-[#A64E2F] transition-colors px-1 outline-none">
-                {{ __('messages.reset_filters') }}
-            </button>
-        </div>
+        
     </div>
 
     {{-- Product Grid --}}

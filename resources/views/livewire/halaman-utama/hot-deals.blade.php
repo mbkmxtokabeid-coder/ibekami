@@ -16,37 +16,37 @@
     <div class="max-w-7xl mx-auto relative z-10">
         
         <!-- Header Section -->
-        <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-6 sm:mb-8">
-            <div class="space-y-4">
-                <!-- Badge Penawaran Spesial (Gen Z Style) - Optimized Contrast -->
-                <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#4a3728]/10 border border-[#4a3728]/20">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4a3728] opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-[#4a3728]"></span>
-                    </span>
-                    <span class="text-[10px] font-bold text-[#4a3728] uppercase tracking-widest">{{ __('messages.special_offer') }}</span>
+        <div class="mb-6 sm:mb-8 relative flex flex-col md:block">
+            <!-- Label + Judul — tetap di tengah -->
+            <div class="text-center max-w-xl mx-auto">
+                <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.2em] mb-2 sm:mb-3">
+                    <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
+                    {{ __('messages.special_offer') }}
+                    <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
                 </div>
                 
-                <h2 class="font-playfair text-3xl md:text-4xl lg:text-5xl font-black text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight">
+                <h2 class="font-['Playfair_Display'] text-3xl md:text-4xl lg:text-5xl font-black text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight">
                     {{ __('messages.hot_deals_this_month') }}
                 </h2>
-                
-                <p class="text-[13px] sm:text-[14px] md:text-[15px] text-[#886852] dark:text-[#9E8B7D] font-medium max-w-md leading-relaxed">
+                <!-- Subtitle 1 baris di tengah -->
+                <p class="text-[12px] md:text-sm text-[#886852] dark:text-[#9E8B7D] mt-2 leading-relaxed sm:whitespace-nowrap">
                     {{ __('messages.best_price_all_categories') }}
                 </p>
             </div>
             
-            <!-- Tombol CTA Header -->
-            <a href="https://wa.me/628170769999?text={{ rawurlencode('Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?') }}" 
-               target="_blank"
-               rel="noopener noreferrer"
-               @click.throttle.2000ms
-               class="shrink-0 bg-white/50 backdrop-blur-sm border-2 border-[#b35200]/80 text-[#b35200] px-5 sm:px-6 py-3 sm:py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-bold hover:bg-[#b35200] hover:text-white hover:border-[#b35200] hover:shadow-[0_8px_20px_rgba(179,82,0,0.25)] hover:-translate-y-1 transition-all duration-300 outline-none flex items-center justify-center gap-2 group w-full md:w-auto">
-                {{ __('messages.ask_via_wa') }}
-                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                </svg>
-            </a>
+            <!-- Tombol CTA Header — Diposisikan ke Kanan -->
+            <div class="mt-4 md:mt-0 md:absolute md:right-0 md:bottom-0 flex items-center justify-end shrink-0">
+                <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   @click.throttle.2000ms
+                   class="inline-flex items-center justify-center gap-2 bg-white/50 dark:bg-[#231811]/60 backdrop-blur-sm border-2 border-[#b35200]/80 dark:border-[#ff9100]/80 text-[#b35200] dark:text-[#ff9100] px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[12px] sm:text-[13px] font-bold hover:bg-[#b35200] hover:text-white dark:hover:bg-[#ff9100] dark:hover:text-[#2C1A0E] hover:border-[#b35200] hover:shadow-[0_8px_20px_rgba(179,82,0,0.25)] hover:-translate-y-0.5 transition-all duration-300 outline-none group w-auto">
+                    <span>{{ __('messages.ask_via_wa') }}</span>
+                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                </a>
+            </div>
         </div>
 
         <!-- Area Kartu Produk (Grid) dengan Alpine.js -->

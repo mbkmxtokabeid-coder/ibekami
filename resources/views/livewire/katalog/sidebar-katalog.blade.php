@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            {{-- Kategori Section — desktop only, di mobile pakai popup filter --}}
+            {{-- Kategori Section 2-Tingkat — desktop only, di mobile pakai popup filter --}}
             <div class="hidden lg:block" x-data="{
                 open: true,
                 debounceTimer: null,
@@ -56,6 +56,7 @@
                      x-transition:leave-end="opacity-0 -translate-y-2"
                      class="space-y-1">
 
+                    {{-- Semua Produk --}}
                     @foreach($categories as $cat)
                         @if($cat['group'] === 'all')
                         <button
@@ -75,99 +76,76 @@
                         @endif
                     @endforeach
 
-                    @php $types = array_filter($categories, fn($c) => $c['group'] === 'type'); @endphp
-                    @if(count($types) > 0)
-                    <div x-data="{ openType: true }" class="pt-1">
-                        <button @click="openType = !openType"
-                            class="w-full flex items-center justify-between px-5 py-2 text-[10px] font-black tracking-[0.12em] uppercase text-[#ff9100] dark:text-[#b35200] outline-none">
-                            <span>Tipe Produk</span>
-                            <svg class="w-3 h-3 transition-transform duration-200" :class="openType ? 'rotate-180' : ''"
-                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </button>
-                        <div x-show="openType" x-transition class="space-y-1 mt-1">
-                            @foreach($categories as $cat)
-                                @if($cat['group'] === 'type')
-                                <button
-                                    @click="debouncedSetCategory('{{ $cat['name'] }}')"
-                                    class="w-full flex items-center justify-between px-5 py-2.5 rounded-2xl text-[13px] font-semibold transition-all
-                                        {{ $activeCategory === $cat['name']
-                                            ? 'bg-white text-[#ff9100] dark:text-[#b35200] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 dark:border-[#b35200]/10 scale-[1.02]'
-                                            : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}">
-                                    <span class="flex items-center gap-3 text-left flex-1">
-                                        <span class="w-2 h-2 rounded-full shrink-0 {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100] dark:bg-[#b35200]' : 'bg-[#d1c2b4]' }}"></span>
-                                        <span class="leading-tight">{{ $cat['name'] }}</span>
-                                    </span>
-                                    <span class="text-[11px] font-black px-2 py-0.5 rounded-full {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100]/10 dark:bg-[#b35200]/10 text-[#ff9100] dark:text-[#b35200]' : 'bg-[#f5ede8] text-[#a89584]' }}">
-                                        {{ $cat['count'] }}
-                                    </span>
-                                </button>
-                                @endif
+                    {{-- 2-Tingkat: Setiap Type punya sub-kategori di bawahnya --}}
+                    @foreach($typesWithCategories as $typeItem)
+                    @php
+                        $typeActive = $activeCategory === $typeItem['name'];
+                        $hasActiveSub = collect($typeItem['categories'])->contains('name', $activeCategory);
+                        $isExpanded  = $typeActive || $hasActiveSub;
+                    @endphp
+                    <div x-data="{ openType: {{ $isExpanded ? 'true' : 'false' }} }" class="pt-0.5">
+
+                        {{-- Baris Type (Tingkat 1): bisa diklik untuk filter + expand/collapse --}}
+                        <div class="flex items-center gap-1">
+                            {{-- Tombol filter by type --}}
+                            <button
+                                @click="debouncedSetCategory('{{ $typeItem['name'] }}')"
+                                class="flex-1 flex items-center justify-between px-5 py-2.5 rounded-2xl text-[13px] font-bold transition-all
+                                    {{ $typeActive
+                                        ? 'bg-white text-[#ff9100] dark:text-[#b35200] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 dark:border-[#b35200]/10 scale-[1.02]'
+                                        : ($hasActiveSub ? 'bg-white/60 text-[#b35200] dark:text-[#ff9100]' : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1') }}">
+                                <span class="flex items-center gap-3 text-left flex-1">
+                                    <span class="w-2 h-2 rounded-full shrink-0 {{ ($typeActive || $hasActiveSub) ? 'bg-[#ff9100] dark:bg-[#b35200]' : 'bg-[#d1c2b4]' }}"></span>
+                                    <span class="leading-tight">{{ $typeItem['name'] }}</span>
+                                </span>
+                                <span class="text-[11px] font-black px-2 py-0.5 rounded-full {{ $typeActive ? 'bg-[#ff9100]/10 dark:bg-[#b35200]/10 text-[#ff9100] dark:text-[#b35200]' : 'bg-[#f5ede8] text-[#a89584]' }}">
+                                    {{ $typeItem['count'] }}
+                                </span>
+                            </button>
+                            {{-- Tombol expand/collapse sub-kategori --}}
+                            @if(count($typeItem['categories']) > 0)
+                            <button @click="openType = !openType"
+                                class="p-2 rounded-xl text-[#b35200] hover:bg-white/50 transition-all outline-none shrink-0">
+                                <svg class="w-3.5 h-3.5 transition-transform duration-200" :class="openType ? 'rotate-180' : ''"
+                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                            @endif
+                        </div>
+
+                        {{-- Sub-kategori (Tingkat 2) --}}
+                        @if(count($typeItem['categories']) > 0)
+                        <div x-show="openType"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 -translate-y-1"
+                             x-transition:enter-end="opacity-100 translate-y-0"
+                             x-transition:leave="transition ease-in duration-150"
+                             x-transition:leave-end="opacity-0 -translate-y-1"
+                             class="ml-4 mt-1 space-y-0.5 border-l-2 border-[#f0d9c8] dark:border-[#b35200]/30 pl-3">
+                            @foreach($typeItem['categories'] as $subCat)
+                            @php $subActive = $activeCategory === $subCat['name']; @endphp
+                            <button
+                                @click="debouncedSetCategory('{{ $subCat['name'] }}')"
+                                class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-[12px] font-semibold transition-all
+                                    {{ $subActive
+                                        ? 'bg-white text-[#ff9100] dark:text-[#b35200] shadow-[0_4px_10px_rgba(0,0,0,0.07)] border border-[#ff9100]/10 dark:border-[#b35200]/10'
+                                        : 'text-[#a89584] hover:bg-white/50 hover:text-[#6b4f3a]' }}">
+                                <span class="flex items-center gap-2.5 text-left flex-1">
+                                    <span class="w-1.5 h-1.5 rounded-full shrink-0 {{ $subActive ? 'bg-[#ff9100] dark:bg-[#b35200]' : 'bg-[#d1c2b4]' }}"></span>
+                                    <span class="leading-tight">{{ $subCat['name'] }}</span>
+                                </span>
+                                <span class="text-[10px] font-black px-1.5 py-0.5 rounded-full {{ $subActive ? 'bg-[#ff9100]/10 dark:bg-[#b35200]/10 text-[#ff9100] dark:text-[#b35200]' : 'bg-[#f5ede8] text-[#a89584]' }}">
+                                    {{ $subCat['count'] }}
+                                </span>
+                            </button>
                             @endforeach
                         </div>
+                        @endif
+
                     </div>
-                    @endif
-
-                    @php $cats = array_filter($categories, fn($c) => $c['group'] === 'category'); @endphp
-                    @if(count($cats) > 0)
-                    <div x-data="{ openCat: false }" class="pt-1">
-                        <button @click="openCat = !openCat"
-                            class="w-full flex items-center justify-between px-5 py-2 text-[10px] font-black tracking-[0.12em] uppercase text-[#7a5d48] outline-none">
-                            <span>Kategori</span>
-                            <svg class="w-3 h-3 transition-transform duration-200" :class="openCat ? 'rotate-180' : ''"
-                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </button>
-                        <div x-show="openCat" x-transition class="space-y-1 mt-1">
-                            @foreach($categories as $cat)
-                                @if($cat['group'] === 'category')
-                                <button
-                                    @click="debouncedSetCategory('{{ $cat['name'] }}')"
-                                    class="w-full flex items-center justify-between px-5 py-2.5 rounded-2xl text-[13px] font-semibold transition-all
-                                        {{ $activeCategory === $cat['name']
-                                            ? 'bg-white text-[#ff9100] dark:text-[#b35200] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 dark:border-[#b35200]/10 scale-[1.02]'
-                                            : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}">
-                                    <span class="flex items-center gap-3 text-left flex-1">
-                                        <span class="w-2 h-2 rounded-full shrink-0 {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100] dark:bg-[#b35200]' : 'bg-[#d1c2b4]' }}"></span>
-                                        <span class="leading-tight">{{ $cat['name'] }}</span>
-                                    </span>
-                                    <span class="text-[11px] font-black px-2 py-0.5 rounded-full {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100]/10 dark:bg-[#b35200]/10 text-[#ff9100] dark:text-[#b35200]' : 'bg-[#f5ede8] text-[#a89584]' }}">
-                                        {{ $cat['count'] }}
-                                    </span>
-                                </button>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                    @endif
-
-                </div>
-            </div>
-
-            {{-- Urutkan Section — desktop only --}}
-            <div class="hidden lg:block" x-data="{
-                debounceTimer: null,
-                debouncedSetSort(sortValue) {
-                    clearTimeout(this.debounceTimer);
-                    this.debounceTimer = setTimeout(() => {
-                        $wire.setSort(sortValue);
-                    }, 400);
-                }
-            }">
-                <p class="text-[11px] font-black tracking-[0.15em] uppercase text-[#7a5d48] mb-4 ml-1">{{ __('messages.sort_by') }}</p>
-                <div class="space-y-2">
-                    @foreach([__('messages.newest'), __('messages.oldest'), __('messages.name_az'), __('messages.name_za')] as $sort)
-                        <button
-                            @click="debouncedSetSort('{{ $sort }}')"
-                            class="w-full text-left px-5 py-3.5 rounded-2xl text-[14px] font-bold transition-all
-                                   {{ $sortBy === $sort
-                                        ? 'bg-[#3d2b1f] text-white shadow-[0_10px_20px_rgba(61,43,31,0.3)] scale-[1.02]'
-                                        : 'text-[#8c7664] hover:bg-white/40' }}">
-                            {{ $sort }}
-                        </button>
                     @endforeach
+
                 </div>
             </div>
 

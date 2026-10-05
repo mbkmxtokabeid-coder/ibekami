@@ -39,13 +39,15 @@ class LanguageController extends Controller
             'timestamp' => now(),
         ]);
 
+        $cookie = cookie()->forever('locale', $locale);
+
         // If AJAX / JSON request
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
                 'locale' => $locale,
                 'message' => 'Language switched successfully.',
-            ]);
+            ])->withCookie($cookie);
         }
 
         // For non-AJAX direct requests, perform a safe, single-hop canonical redirect
@@ -68,6 +70,6 @@ class LanguageController extends Controller
             $backUrl = 'https://' . $host . $path . $query;
         }
 
-        return redirect()->to($backUrl, 302);
+        return redirect()->to($backUrl, 302)->withCookie($cookie);
     }
 }

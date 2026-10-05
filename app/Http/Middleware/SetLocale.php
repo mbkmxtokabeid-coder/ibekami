@@ -15,12 +15,25 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Get locale from session, default to 'id' (Indonesian)
-        $locale = session('locale', 'id');
+        // Get locale from session or cookie, default to 'id' (Indonesian)
+        $locale = $request->cookie('locale') ?? session('locale', 'id');
         
-        // Set application locale
+        if (!in_array($locale, ['id', 'en'])) {
+            $locale = 'id';
+        }
+        
+        if ($request->hasSession()) {
+            session(['locale' => $locale]);
+        }
+        
         app()->setLocale($locale);
         
-        return $next($request);
+        $response = $next($request);
+
+        if ($request->cookie('locale') !== $locale && method_exists($response, 'withCookie')) {
+            $response->withCookie(cookie()->forever('locale', $locale));
+        }
+        
+        return $response;
     }
 }

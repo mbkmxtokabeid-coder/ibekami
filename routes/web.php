@@ -40,6 +40,12 @@ Route::get('/mesin', function () {
 Route::get('/privacy-policy', \App\Livewire\PrivacyPolicy::class)
     ->name('privacy-policy');
 
+// Custom 404 Error Page Direct Route
+Route::get('/404', function () {
+    abort(404);
+})->name('error.404');
+
+
 Route::get('/katalog/{slug}', function ($slug) {
     // Generate cache key to prevent repetitive DB querying
     $cacheKey = 'route_product_seo_' . $slug . '_' . app()->getLocale();
@@ -316,3 +322,10 @@ Route::get('/storage/{path}', function ($path) {
     }
     abort(404);
 })->where('path', '.*')->name('storage.local_fallback');
+
+// ─── Fallback Route ──────────────────────────────────────────────────────────
+// Menangani semua endpoint/URL yang tidak terdaftar melalui pipeline middleware web
+// sehingga session & SetLocale tetap aktif dan bahasa ID/EN berfungsi normal
+Route::fallback(function () {
+    abort(404);
+});

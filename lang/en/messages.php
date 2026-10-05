@@ -228,4 +228,18 @@ return [
     
     'faq_q6' => 'Why should I choose IBEKAMI as my custom printing vendor?',
     'faq_a6' => 'IBEKAMI combines advanced UV flatbed printing technology, high-precision laser cutters, professional designers, and premium materials. We guarantee precise prints, quick express completion times, friendly customer service, and competitive pricing for both individual and corporate clients.',
+
+    // 404 Error Page
+    'error_404_badge' => 'ERROR 404 • PAGE NOT FOUND',
+    'error_404_title' => 'Oops! Page Not Found',
+    'error_404_desc' => 'The page or link you are looking for might have been moved, removed, or the URL entered is incorrect. Don\'t worry, you can return to the homepage or search for products you need.',
+    'back_to_home' => 'Back to Home',
+    'explore_catalog' => 'Explore Catalog',
+    'back_to_previous' => 'Previous Page',
+    'search_product_404' => 'Search for products you need...',
+    'search_button' => 'Search',
+    'popular_recommendations' => 'Popular Pages',
+    'need_help_404' => 'Need quick assistance or order consultation?',
+    'contact_admin' => 'Contact Admin on WhatsApp',
 ];
+

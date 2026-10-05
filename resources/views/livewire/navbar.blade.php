@@ -67,11 +67,11 @@
                 <a href="{{ url('/') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.home') }}
                 </a>
-                <a href="{{ url('/#hot-deals') }}" 
+                <!-- <a href="{{ url('/#hot-deals') }}" 
                    @click="if (document.getElementById('hot-deals')) { $event.preventDefault(); document.getElementById('hot-deals').scrollIntoView({ behavior: 'smooth' }); }"
                    class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none">
                     {{ __('messages.hot_deals') }}
-                </a>
+                </a> -->
                 
                 <!-- Katalog Dropdown (Desktop) -->
                 <div class="relative">
@@ -121,7 +121,7 @@
             <div class="flex items-center gap-2 xl:gap-3">
                 
                 <!-- Search Bar (Desktop & Tablet) -->
-                <div class="relative hidden md:block group">
+                <!-- <div class="relative hidden md:block group">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                         <svg class="w-4 h-4 text-[#8A6A54] group-focus-within:text-[#b35200] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0Z"/></svg>
                     </div>
@@ -130,7 +130,7 @@
                            wire:keydown.enter="performSearch"
                            class="block w-32 xl:w-44 p-2 pl-9 text-[12px] font-medium text-[#2C1A0E] bg-white/40 border border-white/50 rounded-full focus:ring-2 focus:ring-[#b35200]/30 focus:bg-white outline-none placeholder-[#8A6A54] transition-all shadow-inner" 
                            placeholder="{{ __('messages.search') }}...">
-                </div>
+                </div> -->
 
                 <!-- Language Dropdown -->
                 <div class="relative shrink-0">
@@ -195,12 +195,12 @@
                 </a>
 
                 <!-- Search Toggle Button (Khusus Mobile) -->
-                <button @click="searchOpen = !searchOpen; mobileMenuOpen = false" 
+                <!-- <button @click="searchOpen = !searchOpen; mobileMenuOpen = false" 
                         aria-label="{{ __('messages.search_products') }}"
                         :aria-expanded="searchOpen ? 'true' : 'false'"
                         class="md:hidden flex items-center justify-center w-9 h-9 rounded-full bg-white/50 text-[#5C3D28] hover:bg-white hover:text-[#b35200] transition-colors outline-none shadow-sm">
                     <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                </button>
+                </button> -->
 
                 <!-- Mobile Menu Toggle -->
                 <button @click="mobileMenuOpen = !mobileMenuOpen; searchOpen = false" 
@@ -247,9 +247,9 @@
             <a href="{{ url('/') }}" 
                @click="mobileMenuOpen = false;"
                class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
-            <a href="{{ url('/#hot-deals') }}" 
+            <!-- <a href="{{ url('/#hot-deals') }}" 
                @click="mobileMenuOpen = false; if (document.getElementById('hot-deals')) { $event.preventDefault(); document.getElementById('hot-deals').scrollIntoView({ behavior: 'smooth' }); }"
-               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a>
+               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a> -->
             
             <!-- Katalog Dropdown (Mobile) -->
             <div class="bg-[#fff2e0]/40 rounded-2xl">

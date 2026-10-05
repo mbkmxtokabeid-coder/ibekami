@@ -39,11 +39,11 @@
                     <span class="text-[10px] font-bold text-[#4a3728] dark:text-[#D8C6B6] uppercase tracking-widest">{{ __('messages.about_us') }}</span>
                 </div>
                 
-                <h2 class="font-['Playfair_Display'] text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight">
+                <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight">
                     {{ __('messages.about_title') }}
                 </h2>
 
-                <p class="text-[13px] sm:text-[14px] text-[#5C3D28] dark:text-[#D8C6B6] leading-relaxed opacity-95">
+                <p class="text-xs sm:text-[14px] text-[#5C3D28] dark:text-[#D8C6B6] leading-relaxed opacity-95 text-justify">
                     {{ __('messages.about_desc') }}
                 </p>
             </div>
@@ -55,10 +55,10 @@
                         <span class="w-1.5 h-1.5 rounded-full bg-[#ff9100] dark:bg-[#b35200]"></span>
                         <span class="text-[10px] font-bold text-[#ff9100] dark:text-[#ff9100] uppercase tracking-widest">{{ __('messages.faq_badge') }}</span>
                     </div>
-                    <h2 class="font-['Playfair_Display'] text-2xl sm:text-3xl font-black text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight mt-2 sm:mt-3">
+                    <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight leading-tight mt-2 sm:mt-3">
                         {{ __('messages.faq_title') }}
                     </h2>
-                    <p class="text-[12px] sm:text-[13px] text-[#8A6A54] dark:text-[#9E8B7D] font-medium mt-2 leading-relaxed">
+                    <p class="text-xs sm:text-[13px] text-[#886852] dark:text-[#9E8B7D] font-medium mt-1.5 sm:mt-2 leading-relaxed">
                         {{ __('messages.faq_subtitle') }}
                     </p>
                 </div>

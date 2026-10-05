@@ -14,6 +14,9 @@ class SidebarKatalog extends Component
     public string $sortBy = '';
     public array $categories = [];
 
+    // Struktur 2 tingkat: Type → Categories
+    public array $typesWithCategories = [];
+
     // Multi-select filter state
     public array $selectedTypes = [];
     public array $selectedCategories = [];
@@ -34,38 +37,45 @@ class SidebarKatalog extends Component
         $this->categories = [];
         $this->allTypes = [];
         $this->allCategories = [];
+        $this->typesWithCategories = [];
 
         $totalProducts = Product::count();
         $this->categories[] = ['name' => __('messages.all_products'), 'count' => $totalProducts, 'group' => 'all'];
 
-        $dbTypes = Type::withCount('products')->get();
-        foreach ($dbTypes as $type) {
-            if ($type->products_count > 0) {
-                $this->categories[] = [
-                    'name' => $type->name,
-                    'count' => $type->products_count,
-                    'group' => 'type',
-                ];
-                $this->allTypes[] = [
-                    'id'    => $type->id,
-                    'name'  => $type->name,
-                    'count' => $type->products_count,
-                ];
-            }
-        }
-
+        // Load all categories grouped by type_id
         $dbCategories = Category::withCount('products')->get();
+        $categoriesByType = [];
         foreach ($dbCategories as $cat) {
             if ($cat->products_count > 0) {
-                $this->categories[] = [
-                    'name'  => $cat->name,
-                    'count' => $cat->products_count,
-                    'group' => 'category',
+                $categoriesByType[$cat->type_id][] = [
+                    'id'      => $cat->id,
+                    'name'    => $cat->name,
+                    'count'   => $cat->products_count,
+                    'type_id' => $cat->type_id,
                 ];
                 $this->allCategories[] = [
                     'id'    => $cat->id,
                     'name'  => $cat->name,
                     'count' => $cat->products_count,
+                ];
+            }
+        }
+
+        // Build 2-level structure: Type with nested categories
+        $dbTypes = Type::withCount('products')->get();
+        foreach ($dbTypes as $type) {
+            if ($type->products_count > 0) {
+                $this->allTypes[] = [
+                    'id'    => $type->id,
+                    'name'  => $type->name,
+                    'count' => $type->products_count,
+                ];
+
+                $this->typesWithCategories[] = [
+                    'id'         => $type->id,
+                    'name'       => $type->name,
+                    'count'      => $type->products_count,
+                    'categories' => $categoriesByType[$type->id] ?? [],
                 ];
             }
         }
