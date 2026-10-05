@@ -88,6 +88,18 @@ html.dark [class*="bg-[#ffe8ca]"] {
     border-color: rgba(255, 242, 224, 0.12) !important;
 }
 
+html.dark .bg-\[\#F4F1EA\],
+html.dark .bg-\[\#f4f1ea\],
+html.dark [class*="bg-[#F4F1EA]"],
+html.dark [class*="bg-[#f4f1ea]"] {
+    background-color: #130D08 !important;
+}
+
+html.dark .bg-white-pure,
+.bg-white-pure {
+    background-color: #ffffff !important;
+}
+
 html.dark .bg-white {
     background-color: #231811 !important;
 }
@@ -309,4 +321,22 @@ html.dark .card-glow:hover {
     box-shadow: 0 20px 42px -10px rgba(0, 0, 0, 0.8), 
                 0 0 32px 2px rgba(179, 82, 0, 0.3) !important;
 }
+
+/* Footer Map Container Background */
+.bg-map-container {
+    background-color: #FFF2E0;
+}
+
+.bg-map-container:hover {
+    background-color: #FFE5C8;
+}
+
+html.dark .bg-map-container {
+    background-color: #000000 !important;
+}
+
+html.dark .bg-map-container:hover {
+    background-color: #0a0a0a !important;
+}
+
 

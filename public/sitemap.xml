@@ -1,60 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    
-   <!-- Halaman Utama & Menu -->
+   <!-- 1. Halaman Utama (Mencakup Promo Hot Deals, Rekomendasi Produk, Informasi Kontak & Ulasan) -->
    <url>
       <loc>https://ibekami.id/</loc>
       <changefreq>daily</changefreq>
       <priority>1.0</priority>
    </url>
-   <url>
-      <loc>https://ibekami.id/hot-deals</loc>
-      <changefreq>weekly</changefreq>
-      <priority>0.9</priority>
-   </url>
+
+   <!-- 2. Halaman Katalog Lengkap & Kategori -->
    <url>
       <loc>https://ibekami.id/katalog</loc>
       <changefreq>weekly</changefreq>
       <priority>0.9</priority>
    </url>
-
-   <!-- Kategori Produk -->
    <url>
-      <loc>https://ibekami.id/kategori/acrylic</loc>
+      <loc>https://ibekami.id/katalog?type=souvenir-merchandise</loc>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
    <url>
-      <loc>https://ibekami.id/kategori/digital-printing</loc>
+      <loc>https://ibekami.id/katalog?type=acrylic</loc>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
    <url>
-      <loc>https://ibekami.id/kategori/plakat</loc>
+      <loc>https://ibekami.id/katalog?type=digital-printing</loc>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
    <url>
-      <loc>https://ibekami.id/kategori/souvenir</loc>
+      <loc>https://ibekami.id/katalog?type=plaque-plakat</loc>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
-   <!-- Halaman Informasi & Kontak -->
+   <!-- 3. Halaman Mesin Produksi -->
    <url>
-      <loc>https://ibekami.id/mesin-kami</loc>
-      <changefreq>monthly</changefreq>
-      <priority>0.7</priority>
-   </url>
-   <url>
-      <loc>https://ibekami.id/informasi</loc>
-      <changefreq>monthly</changefreq>
-      <priority>0.7</priority>
-   </url>
-   <url>
-      <loc>https://ibekami.id/pesan</loc>
+      <loc>https://ibekami.id/mesin</loc>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
+   </url>
+
+   <!-- 4. Halaman Kebijakan Privasi -->
+   <url>
+      <loc>https://ibekami.id/privacy-policy</loc>
+      <changefreq>yearly</changefreq>
+      <priority>0.5</priority>
    </url>
 
 </urlset>

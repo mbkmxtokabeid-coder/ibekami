@@ -15,7 +15,6 @@ class UserSeeder extends Seeder
             [
                 'name'     => 'Administrator',
                 'username' => 'admin',
-                'email'    => 'admin@ibeka.local',
                 'password' => Hash::make('ibeka-99!!adm'),
             ]
         );

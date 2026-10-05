@@ -115,10 +115,7 @@
                     {{ __('messages.catalog') }}
                 </a>
 
-                @php
-                    $productWaText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
-                @endphp
-                <a href="https://wa.me/628170769999?text={{ rawurlencode($productWaText) }}" 
+                <a href="https://wa.me/6281707699?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
                    rel="noopener noreferrer"
                    @click.throttle.2000ms

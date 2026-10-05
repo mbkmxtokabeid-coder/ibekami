@@ -50,10 +50,7 @@
             <div class="flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto pt-2">
                 
                 <!-- Primary -->
-                @php
-                    $heroWaText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
-                @endphp
-                <a href="https://wa.me/628170769999?text={{ rawurlencode($heroWaText) }}" 
+                <a href="https://wa.me/62817076999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
                    rel="noopener noreferrer"
                    @click.throttle.2000ms
@@ -135,14 +132,14 @@
 
             <!-- Carousel Indicators (di bawah container foto) -->
             @if(count($banners) > 1)
-                <div class="flex gap-1.5 mt-4 bg-[#FF9100] border border-white/30 px-3.5 py-1.5 rounded-full items-center shadow-md shadow-[#FF9100]/25 z-20">
+                <div class="flex gap-1.5 mt-4 bg-[#b35200] dark:bg-[#b35200] border border-white/25 dark:border-white/15 px-3.5 py-1.5 rounded-full items-center shadow-md shadow-[#b35200]/25 dark:shadow-black/40 z-20">
                     @foreach($banners as $index => $bannerItem)
                         <button @click="activeSlide = {{ $index }}"
                                 aria-label="Slide {{ $index + 1 }}"
                                 class="w-6 h-6 flex items-center justify-center transition-all duration-300 focus:outline-none shrink-0"
                                 type="button">
                             <span class="h-2 rounded-full transition-all duration-300"
-                                  :class="activeSlide === {{ $index }} ? 'w-6 bg-white shadow-sm' : 'w-2 bg-white/45 hover:bg-white'"></span>
+                                  :class="activeSlide === {{ $index }} ? 'w-6 bg-white-pure shadow-sm' : 'w-2 bg-white/45 hover:bg-white-pure'"></span>
                         </button>
                     @endforeach
                 </div>

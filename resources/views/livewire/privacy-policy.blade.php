@@ -24,17 +24,16 @@
         }
     });
 "
-class="bg-[#F4F1EA] text-[#222222] font-sans antialiased min-h-screen py-12 lg:py-20">
+class="bg-[#F4F1EA] dark:bg-[#130D08] text-[#222222] dark:text-[#D8C6B6] font-sans antialiased min-h-screen py-12 lg:py-20 transition-colors duration-200">
 
     <div class="container mx-auto px-4 max-w-7xl">
         
         <!-- Header Section -->
         <header class="text-center mb-12">
-            
-            <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
+            <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight mb-4 text-[#2C1A0E] dark:text-[#FDF5EC]">
                 {{ __('messages.privacy_policy_title') }}
             </h1>
-            <p class="text-gray-500 text-sm italic">
+            <p class="text-gray-500 dark:text-[#9E8B7D] text-sm italic">
                 {{ __('messages.last_updated') }}: {{ date('d F Y') }}
             </p>
         </header>
@@ -43,28 +42,28 @@ class="bg-[#F4F1EA] text-[#222222] font-sans antialiased min-h-screen py-12 lg:p
             
             <!-- Sidebar Nav (Desktop) -->
             <aside class="hidden lg:block w-1/4">
-                <div class="sticky top-24 bg-white border border-[#e0ddd5] rounded-lg p-6 shadow-sm">
-                    <h5 class="text-xs font-black uppercase tracking-widest text-[#A65D3B] mb-5">
+                <div class="sticky top-24 bg-white dark:bg-[#231811] border border-[#e0ddd5] dark:border-white/10 rounded-2xl p-6 shadow-sm">
+                    <h5 class="text-xs font-black uppercase tracking-widest text-[#A65D3B] dark:text-[#b35200] mb-5">
                         {{ __('messages.table_of_contents') }}
                     </h5>
                     <ul class="space-y-1">
-                        <li><a @click.prevent="scrollToSection('section-1')" :class="activeSection === 'section-1' ? 'text-[#A65D3B] font-bold pl-2' : 'text-gray-700 hover:text-[#A65D3B] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-50">1. {{ __('messages.section_1_title') }}</a></li>
-                        <li><a @click.prevent="scrollToSection('section-2')" :class="activeSection === 'section-2' ? 'text-[#A65D3B] font-bold pl-2' : 'text-gray-700 hover:text-[#A65D3B] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-50">2. {{ __('messages.section_2_title') }}</a></li>
-                        <li><a @click.prevent="scrollToSection('section-3')" :class="activeSection === 'section-3' ? 'text-[#A65D3B] font-bold pl-2' : 'text-gray-700 hover:text-[#A65D3B] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-50">3. {{ __('messages.section_3_title') }}</a></li>
-                        <li><a @click.prevent="scrollToSection('section-4')" :class="activeSection === 'section-4' ? 'text-[#A65D3B] font-bold pl-2' : 'text-gray-700 hover:text-[#A65D3B] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-50">4. {{ __('messages.section_4_title') }}</a></li>
-                        <li><a @click.prevent="scrollToSection('section-5')" :class="activeSection === 'section-5' ? 'text-[#A65D3B] font-bold pl-2' : 'text-gray-700 hover:text-[#A65D3B] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-50">5. {{ __('messages.section_5_title') }}</a></li>
-                        <li><a @click.prevent="scrollToSection('section-6')" :class="activeSection === 'section-6' ? 'text-[#A65D3B] font-bold pl-2' : 'text-gray-700 hover:text-[#A65D3B] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer">6. {{ __('messages.section_6_title') }}</a></li>
+                        <li><a @click.prevent="scrollToSection('section-1')" :class="activeSection === 'section-1' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-100 dark:border-white/5">1. {{ __('messages.section_1_title') }}</a></li>
+                        <li><a @click.prevent="scrollToSection('section-2')" :class="activeSection === 'section-2' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-100 dark:border-white/5">2. {{ __('messages.section_2_title') }}</a></li>
+                        <li><a @click.prevent="scrollToSection('section-3')" :class="activeSection === 'section-3' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-100 dark:border-white/5">3. {{ __('messages.section_3_title') }}</a></li>
+                        <li><a @click.prevent="scrollToSection('section-4')" :class="activeSection === 'section-4' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-100 dark:border-white/5">4. {{ __('messages.section_4_title') }}</a></li>
+                        <li><a @click.prevent="scrollToSection('section-5')" :class="activeSection === 'section-5' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-100 dark:border-white/5">5. {{ __('messages.section_5_title') }}</a></li>
+                        <li><a @click.prevent="scrollToSection('section-6')" :class="activeSection === 'section-6' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer">6. {{ __('messages.section_6_title') }}</a></li>
                     </ul>
                 </div>
             </aside>
 
             <!-- Main Content Area -->
             <main class="w-full lg:w-3/4">
-                <div class="bg-white rounded-lg shadow-sm p-8 lg:p-12 border border-white">
+                <div class="bg-white dark:bg-[#1A120B] rounded-2xl shadow-sm p-8 lg:p-12 border border-[#e0ddd5] dark:border-white/10">
                     
                     <!-- Section Intro -->
                     <div id="section-0" class="mb-12">
-                        <p class="text-lg font-medium text-gray-700 leading-relaxed">
+                        <p class="text-lg font-medium text-gray-700 dark:text-[#E8DDD3] leading-relaxed">
                             {{ __('messages.privacy_intro') }}
                         </p>
                     </div>
@@ -72,80 +71,80 @@ class="bg-[#F4F1EA] text-[#222222] font-sans antialiased min-h-screen py-12 lg:p
                     <div class="space-y-12">
                         <!-- Section 1 -->
                         <section id="section-1" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] pl-5 mb-6">
+                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
                                 1. {{ __('messages.section_1_title') }}
                             </h3>
-                            <p class="text-gray-600 leading-relaxed mb-4">{{ __('messages.section_1_intro') }}</p>
-                            <ul class="space-y-3 text-gray-600">
-                                <li class="flex items-start"><span class="text-[#A65D3B] font-bold mr-2">→</span> <span><strong>{{ __('messages.section_1_item_1') }}</strong> {{ __('messages.section_1_item_1_desc') }}</span></li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] font-bold mr-2">→</span> <span><strong>{{ __('messages.section_1_item_2') }}</strong> {{ __('messages.section_1_item_2_desc') }}</span></li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] font-bold mr-2">→</span> <span><strong>{{ __('messages.section_1_item_3') }}</strong> {{ __('messages.section_1_item_3_desc') }}</span></li>
+                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed mb-4">{{ __('messages.section_1_intro') }}</p>
+                            <ul class="space-y-3 text-gray-600 dark:text-[#D8C6B6]">
+                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> <span><strong class="text-gray-900 dark:text-[#FDF5EC]">{{ __('messages.section_1_item_1') }}</strong> {{ __('messages.section_1_item_1_desc') }}</span></li>
+                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> <span><strong class="text-gray-900 dark:text-[#FDF5EC]">{{ __('messages.section_1_item_2') }}</strong> {{ __('messages.section_1_item_2_desc') }}</span></li>
+                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> <span><strong class="text-gray-900 dark:text-[#FDF5EC]">{{ __('messages.section_1_item_3') }}</strong> {{ __('messages.section_1_item_3_desc') }}</span></li>
                             </ul>
                         </section>
 
                         <!-- Section 2 -->
                         <section id="section-2" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] pl-5 mb-6">
+                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
                                 2. {{ __('messages.section_2_title') }}
                             </h3>
-                            <p class="text-gray-600 leading-relaxed mb-4">{{ __('messages.section_2_intro') }}</p>
-                            <ul class="space-y-3 text-gray-600">
-                                <li class="flex items-start"><span class="text-[#A65D3B] font-bold mr-2">→</span> {{ __('messages.section_2_item_1') }}</li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] font-bold mr-2">→</span> {{ __('messages.section_2_item_2') }}</li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] font-bold mr-2">→</span> {{ __('messages.section_2_item_3') }}</li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] font-bold mr-2">→</span> {{ __('messages.section_2_item_4') }}</li>
+                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed mb-4">{{ __('messages.section_2_intro') }}</p>
+                            <ul class="space-y-3 text-gray-600 dark:text-[#D8C6B6]">
+                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_2_item_1') }}</li>
+                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_2_item_2') }}</li>
+                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_2_item_3') }}</li>
+                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_2_item_4') }}</li>
                             </ul>
                         </section>
 
                         <!-- Section 3 -->
                         <section id="section-3" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] pl-5 mb-6">
+                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
                                 3. {{ __('messages.section_3_title') }}
                             </h3>
-                            <p class="text-gray-600 leading-relaxed">{{ __('messages.section_3_content') }}</p>
+                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed">{{ __('messages.section_3_content') }}</p>
                         </section>
 
                         <!-- Section 4 -->
                         <section id="section-4" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] pl-5 mb-6">
+                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
                                 4. {{ __('messages.section_4_title') }}
                             </h3>
-                            <p class="text-gray-600 leading-relaxed">{{ __('messages.section_4_content') }}</p>
+                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed">{{ __('messages.section_4_content') }}</p>
                         </section>
 
                         <!-- Section 5 -->
                         <section id="section-5" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] pl-5 mb-6">
+                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
                                 5. {{ __('messages.section_5_title') }}
                             </h3>
-                            <p class="text-gray-600 leading-relaxed mb-4">{{ __('messages.section_5_intro') }}</p>
-                            <ul class="space-y-3 text-gray-600">
-                                <li class="flex items-start"><span class="text-[#A65D3B] font-bold mr-2">→</span> {{ __('messages.section_5_item_1') }}</li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] font-bold mr-2">→</span> {{ __('messages.section_5_item_2') }}</li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] font-bold mr-2">→</span> {{ __('messages.section_5_item_3') }}</li>
+                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed mb-4">{{ __('messages.section_5_intro') }}</p>
+                            <ul class="space-y-3 text-gray-600 dark:text-[#D8C6B6]">
+                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_5_item_1') }}</li>
+                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_5_item_2') }}</li>
+                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_5_item_3') }}</li>
                             </ul>
                         </section>
 
                         <!-- Section 6: Contact -->
                         <section id="section-6" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] pl-5 mb-6">
+                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
                                 6. {{ __('messages.section_6_title') }}
                             </h3>
-                            <p class="text-gray-600 leading-relaxed mb-8">{{ __('messages.section_6_intro') }}</p>
+                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed mb-8">{{ __('messages.section_6_intro') }}</p>
                             
-                            <div class="bg-[#fdfaf5] border border-[#e0ddd5] rounded-lg p-8 shadow-inner">
+                            <div class="bg-[#fdfaf5] dark:bg-[#231811] border border-[#e0ddd5] dark:border-white/10 rounded-xl p-8 shadow-inner">
                                 <ul class="space-y-4">
                                     <li class="flex flex-col sm:flex-row items-baseline">
-                                        <strong class="w-32 text-gray-800 shrink-0">{{ __('messages.email') }}:</strong>
-                                        <a href="mailto:ikhtiarberkah1010@gmail.com" class="text-[#A65D3B] font-bold hover:underline">ikhtiarberkah1010@gmail.com</a>
+                                        <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0">{{ __('messages.email') }}:</strong>
+                                        <a href="mailto:ikhtiarberkah1010@gmail.com" class="text-[#A65D3B] dark:text-[#b35200] font-bold hover:underline">ikhtiarberkah1010@gmail.com</a>
                                     </li>
                                     <li class="flex flex-col sm:flex-row items-baseline">
-                                        <strong class="w-32 text-gray-800 shrink-0">{{ __('messages.instagram') }}:</strong>
-                                        <a href="https://www.instagram.com/ibekami.id/" target="_blank" rel="noopener noreferrer" class="text-[#A65D3B] font-bold hover:underline">@ibekami.id</a>
+                                        <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0">{{ __('messages.instagram') }}:</strong>
+                                        <a href="https://www.instagram.com/ibekami.id/" target="_blank" rel="noopener noreferrer" class="text-[#A65D3B] dark:text-[#b35200] font-bold hover:underline">@ibekami.id</a>
                                     </li>
                                     <li class="flex flex-col sm:flex-row items-baseline">
-                                        <strong class="w-32 text-gray-800 shrink-0">{{ __('messages.location') }}:</strong>
-                                        <span class="text-gray-600">{{ __('messages.medan_indonesia') }}</span>
+                                        <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0">{{ __('messages.location') }}:</strong>
+                                        <span class="text-gray-600 dark:text-[#D8C6B6]">{{ __('messages.medan_indonesia') }}</span>
                                     </li>
                                 </ul>
                             </div>

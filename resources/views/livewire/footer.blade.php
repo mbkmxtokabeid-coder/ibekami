@@ -82,12 +82,12 @@
             
             <div x-data="{ mapLoaded: false }" class="relative group">
                 <div class="rounded-2xl overflow-hidden border-4 border-white/20 shadow-xl transition-all duration-500 group-hover:border-white/30">
-                    <div class="relative h-[300px] w-full bg-[#fdfaf7] dark:bg-[#1A120B] overflow-hidden transition-colors duration-200">
+                    <div class="relative h-[300px] w-full bg-map-container overflow-hidden transition-colors duration-200">
                         
                         <!-- Placeholder (z-10) -->
                         <div x-show="!mapLoaded"
                              @click="mapLoaded = true"
-                             class="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer bg-[#fdfaf7] dark:bg-[#1A120B] hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-[#2C1A0E] dark:text-white pb-14">
+                             class="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer bg-map-container transition-colors text-[#2C1A0E] dark:text-white pb-14">
                             <div class="mb-4 p-4 bg-[#2C1A0E]/10 dark:bg-white/10 rounded-full shadow-lg group-hover:scale-110 transition-transform duration-500 text-[#2C1A0E] dark:text-white">
                                 <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
                                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>

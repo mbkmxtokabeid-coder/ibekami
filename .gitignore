@@ -31,3 +31,10 @@ Thumbs.db
 /storage/framework/views/*
 /bootstrap/cache/*
 !/bootstrap/cache/.gitignore
+
+# Database dumps & raw database files
+*.sql
+*.frm
+*.ibd
+/database/orphaned_ibekami_baru_data/
+

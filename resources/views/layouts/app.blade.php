@@ -238,6 +238,16 @@
              wireId: null,
 
              init() {
+                 this.$watch('open', (value) => {
+                     if (value) {
+                         document.documentElement.style.overflow = 'hidden';
+                         document.body.style.overflow = 'hidden';
+                     } else {
+                         document.documentElement.style.overflow = '';
+                         document.body.style.overflow = '';
+                     }
+                 });
+
                  window.addEventListener('open-filter-modal', (e) => {
                      this.allTypes      = e.detail.allTypes      || [];
                      this.allCategories = e.detail.allCategories || [];
@@ -245,22 +255,40 @@
                      this.tempCategories= [...(e.detail.categories || [])];
                      this.wireId        = e.detail.wireId || null;
                      this.open = true;
-                     document.body.style.overflow = 'hidden';
                  });
              },
              closeModal() {
                  this.open = false;
-                 document.body.style.overflow = '';
              },
              toggleType(name) {
-                 const idx = this.tempTypes.indexOf(name);
-                 if (idx === -1) this.tempTypes.push(name);
-                 else this.tempTypes.splice(idx, 1);
+                 if (this.tempTypes.includes(name)) {
+                     this.tempTypes = [];
+                 } else {
+                     this.tempTypes = [name];
+                 }
+                 // Bersihkan kategori yang tidak sesuai dengan tipe yang baru dipilih
+                 if (this.tempTypes.length > 0) {
+                     const selectedType = this.allTypes.find(t => t.name === this.tempTypes[0]);
+                     if (selectedType) {
+                         this.tempCategories = this.tempCategories.filter(catName => {
+                             const catObj = this.allCategories.find(c => c.name === catName);
+                             return catObj && catObj.type_id === selectedType.id;
+                         });
+                     }
+                 }
              },
              toggleCategory(name) {
                  const idx = this.tempCategories.indexOf(name);
                  if (idx === -1) this.tempCategories.push(name);
                  else this.tempCategories.splice(idx, 1);
+             },
+             get filteredCategories() {
+                 if (!this.tempTypes || this.tempTypes.length === 0) {
+                     return this.allCategories;
+                 }
+                 const selectedType = this.allTypes.find(t => t.name === this.tempTypes[0]);
+                 if (!selectedType) return this.allCategories;
+                 return this.allCategories.filter(cat => cat.type_id === selectedType.id);
              },
              apply() {
                  if (this.wireId) {
@@ -276,73 +304,102 @@
 
         {{-- Backdrop --}}
         <div x-show="open"
-             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter="transition-opacity cubic-bezier(0.16, 1, 0.3, 1) duration-300"
              x-transition:enter-start="opacity-0"
              x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave="transition-opacity ease-in duration-200"
+             x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0"
              @click="closeModal()"
-             class="fixed inset-0 bg-black/50"
-             style="display:none; z-index:99998;">
+             @touchmove.prevent
+             class="fixed inset-0 bg-black/60 backdrop-blur-xs"
+             style="display:none; z-index:99998; touch-action: none;">
         </div>
 
-        {{-- Bottom Sheet Panel --}}
+        {{-- Bottom Sheet Panel (Responsive: full width on mobile, sleek floating dialog on sm/md/tablet) --}}
         <div x-show="open"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="translate-y-full"
-             x-transition:enter-end="translate-y-0"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-end="translate-y-full"
-             class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl flex flex-col"
-             style="display:none; z-index:99999; max-height:75vh;">
+             x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-350 transform"
+             x-transition:enter-start="opacity-0 translate-y-full sm:translate-y-8 sm:scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave="transition ease-in duration-200 transform"
+             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave-end="opacity-0 translate-y-full sm:translate-y-8 sm:scale-95"
+             class="fixed bottom-0 inset-x-0 sm:bottom-6 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-lg bg-[#FFF2E0]/95 dark:bg-[#1A120B]/95 backdrop-blur-2xl border-t sm:border border-[#e8d5c4] dark:border-white/10 rounded-t-3xl sm:rounded-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.15)] sm:shadow-[0_20px_60px_rgba(0,0,0,0.35)] flex flex-col transition-all duration-300"
+             style="display:none; z-index:99999; max-height:85vh; overscroll-behavior: contain;">
 
             {{-- Handle bar --}}
-            <div class="flex justify-center pt-3 pb-0 shrink-0">
-                <div class="w-10 h-1 bg-gray-300 rounded-full"></div>
+            <div class="flex justify-center pt-3 pb-1 shrink-0">
+                <div class="w-12 h-1.5 bg-[#c4a882]/50 dark:bg-white/20 rounded-full hover:bg-[#b35200] transition-colors cursor-pointer"></div>
             </div>
 
             {{-- Header --}}
-            <div class="flex items-center justify-between px-5 py-3 shrink-0 border-b border-gray-100">
-                <h3 class="text-[17px] font-black text-[#3d2b1f]">Pilih Filter</h3>
+            <div class="flex items-center justify-between px-5 sm:px-6 py-3 shrink-0 border-b border-[#e8d5c4] dark:border-white/10">
+                <div class="flex items-center gap-2">
+                    <h3 class="text-[17px] sm:text-[18px] font-black text-[#3d2b1f] dark:text-[#FDF5EC] tracking-tight">Pilih Filter</h3>
+                    <template x-if="tempTypes.length + tempCategories.length > 0">
+                        <span class="px-2 py-0.5 text-[11px] font-bold bg-[#ff9100]/15 dark:bg-[#b35200]/25 text-[#ff9100] dark:text-[#ff9100] rounded-full"
+                              x-text="(tempTypes.length + tempCategories.length) + ' aktif'"></span>
+                    </template>
+                </div>
                 <button @click="closeModal()"
-                    class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-[#3d2b1f] transition-all text-xl font-bold">
-                    &#x2715;
+                    aria-label="Tutup Filter"
+                    class="w-9 h-9 flex items-center justify-center rounded-full bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 text-[#3d2b1f] dark:text-[#FDF5EC] active:scale-90 hover:rotate-90 transition-all duration-200">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
                 </button>
             </div>
 
             {{-- Scrollable content --}}
-            <div class="flex-1 overflow-y-auto px-5 py-4 space-y-5">
+            <div class="flex-1 overflow-y-auto px-5 sm:px-6 py-4 space-y-5" style="overscroll-behavior: contain; -webkit-overflow-scrolling: touch;">
 
                 <template x-if="allTypes.length > 0">
                     <div>
-                        <p class="text-[13px] font-black text-[#3d2b1f] mb-3">Tipe Produk</p>
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-[13px] font-black text-[#3d2b1f] dark:text-[#FDF5EC]">Tipe Produk</p>
+                            <span class="text-[11px] text-[#886852] dark:text-[#9E8B7D] font-medium">(Pilih 1 tipe)</span>
+                        </div>
                         <div class="flex flex-wrap gap-2">
                             <template x-for="type in allTypes" :key="type.name">
                                 <button @click="toggleType(type.name)"
                                     :class="tempTypes.includes(type.name)
-                                        ? 'bg-[#ff9100] dark:bg-[#b35200] text-[#2C1A0E] dark:text-white border-[#ff9100] dark:border-[#b35200]'
-                                        : 'bg-white text-[#3d2b1f] border-[#c4a882] hover:border-[#ff9100] dark:hover:border-[#b35200] hover:text-[#ff9100] dark:hover:text-[#b35200]'"
-                                    class="px-4 py-2 rounded-2xl text-[13px] font-semibold border-2 transition-all">
+                                        ? 'bg-[#ff9100] dark:bg-[#b35200] text-white border-[#ff9100] dark:border-[#b35200] shadow-md shadow-[#ff9100]/20 scale-[1.02]'
+                                        : 'bg-white dark:bg-[#231811] text-[#3d2b1f] dark:text-[#D8C6B6] border-[#c4a882] dark:border-white/10 hover:border-[#ff9100] dark:hover:border-[#b35200] hover:bg-[#fff7ee] dark:hover:bg-[#2c1d15]'"
+                                    class="px-4 py-2 rounded-2xl text-[13px] font-semibold border-2 transition-all duration-200 active:scale-95 select-none inline-flex items-center gap-1.5 cursor-pointer">
                                     <span x-text="type.name"></span>
-                                    <span class="ml-1 text-[11px] opacity-60" x-text="'(' + type.count + ')'"></span>
+                                    <span class="text-[11px] opacity-80" x-text="'(' + type.count + ')'"></span>
+                                    <template x-if="tempTypes.includes(type.name)">
+                                        <svg class="w-3.5 h-3.5 ml-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </template>
                                 </button>
                             </template>
                         </div>
                     </div>
                 </template>
 
-                <template x-if="allCategories.length > 0">
+                <template x-if="filteredCategories.length > 0">
                     <div>
-                        <p class="text-[13px] font-black text-[#3d2b1f] mb-3">Kategori</p>
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-[13px] font-black text-[#3d2b1f] dark:text-[#FDF5EC]">Kategori</p>
+                            <span x-show="tempTypes.length > 0" class="text-[11px] text-[#ff9100] dark:text-[#b35200] font-semibold" x-text="'Khusus ' + tempTypes[0]"></span>
+                        </div>
                         <div class="flex flex-wrap gap-2">
-                            <template x-for="cat in allCategories" :key="cat.name">
+                            <template x-for="cat in filteredCategories" :key="cat.name">
                                 <button @click="toggleCategory(cat.name)"
                                     :class="tempCategories.includes(cat.name)
-                                        ? 'bg-[#3d2b1f] text-white border-[#3d2b1f]'
-                                        : 'bg-white text-[#3d2b1f] border-[#c4a882] hover:border-[#3d2b1f] hover:text-[#3d2b1f]'"
-                                    class="px-4 py-2 rounded-2xl text-[13px] font-semibold border-2 transition-all">
+                                        ? 'bg-[#3d2b1f] dark:bg-[#ff9100] text-white border-[#3d2b1f] dark:border-[#ff9100] shadow-md shadow-black/15 scale-[1.02]'
+                                        : 'bg-white dark:bg-[#231811] text-[#3d2b1f] dark:text-[#D8C6B6] border-[#c4a882] dark:border-white/10 hover:border-[#3d2b1f] dark:hover:border-[#ff9100] hover:bg-[#fff7ee] dark:hover:bg-[#2c1d15]'"
+                                    class="px-4 py-2 rounded-2xl text-[13px] font-semibold border-2 transition-all duration-200 active:scale-95 select-none inline-flex items-center gap-1.5 cursor-pointer">
                                     <span x-text="cat.name"></span>
-                                    <span class="ml-1 text-[11px] opacity-60" x-text="'(' + cat.count + ')'"></span>
+                                    <span class="text-[11px] opacity-80" x-text="'(' + cat.count + ')'"></span>
+                                    <template x-if="tempCategories.includes(cat.name)">
+                                        <svg class="w-3.5 h-3.5 ml-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </template>
                                 </button>
                             </template>
                         </div>
@@ -352,14 +409,17 @@
             </div>
 
             {{-- Footer --}}
-            <div class="shrink-0 px-5 py-4 border-t border-gray-100 flex gap-3">
+            <div class="shrink-0 px-5 sm:px-6 py-4 border-t border-[#e8d5c4] dark:border-white/10 flex gap-3">
                 <button @click="reset()"
-                    class="flex-1 py-3.5 rounded-2xl border-2 border-[#ff9100] dark:border-[#b35200] text-[#2C1A0E] font-bold text-[14px] hover:bg-[#fff2e0] transition-colors">
+                    class="flex-1 py-3.5 rounded-2xl border-2 border-[#ff9100] dark:border-[#b35200] text-[#2C1A0E] dark:text-[#FDF5EC] font-bold text-[14px] hover:bg-[#fff2e0] dark:hover:bg-white/5 active:scale-[0.98] transition-all duration-200 cursor-pointer">
                     Atur Ulang
                 </button>
                 <button @click="apply()"
-                    class="flex-1 py-3.5 rounded-2xl bg-[#ff9100] dark:bg-[#b35200] text-[#2C1A0E] dark:text-white font-bold text-[14px] hover:bg-[#e07d00] dark:hover:bg-[#994500] transition-colors shadow-md">
-                    Terapkan
+                    class="flex-1 py-3.5 rounded-2xl bg-[#ff9100] dark:bg-[#b35200] text-white font-bold text-[14px] hover:bg-[#e07d00] dark:hover:bg-[#994500] hover:shadow-lg hover:shadow-[#ff9100]/25 active:scale-[0.98] transition-all duration-200 shadow-md inline-flex items-center justify-center gap-2 cursor-pointer">
+                    <span>Terapkan</span>
+                    <span x-show="tempTypes.length + tempCategories.length > 0"
+                          class="px-2 py-0.5 text-[11px] bg-white/25 rounded-full font-black tracking-wide"
+                          x-text="tempTypes.length + tempCategories.length"></span>
                 </button>
             </div>
 

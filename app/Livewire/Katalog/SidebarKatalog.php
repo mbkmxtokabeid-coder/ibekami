@@ -54,9 +54,10 @@ class SidebarKatalog extends Component
                     'type_id' => $cat->type_id,
                 ];
                 $this->allCategories[] = [
-                    'id'    => $cat->id,
-                    'name'  => $cat->name,
-                    'count' => $cat->products_count,
+                    'id'      => $cat->id,
+                    'type_id' => $cat->type_id,
+                    'name'    => $cat->name,
+                    'count'   => $cat->products_count,
                 ];
             }
         }

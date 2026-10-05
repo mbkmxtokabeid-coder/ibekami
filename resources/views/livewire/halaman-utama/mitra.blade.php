@@ -178,10 +178,7 @@
                 <h3 class="text-2xl md:text-3xl font-extrabold mb-2 text-white tracking-tight">{{ __('messages.become_next_partner') }}</h3>
                 <p class="text-sm text-white/80">{{ __('messages.collaboration_best_solution') }}</p>
             </div>
-            @php
-                $mitraWaText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
-            @endphp
-            <a href="https://wa.me/628170769999?text={{ rawurlencode($mitraWaText) }}" 
+            <a href="https://wa.me/62817076999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
                rel="noopener noreferrer"
                @click.throttle.2000ms

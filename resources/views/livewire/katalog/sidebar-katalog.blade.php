@@ -155,10 +155,7 @@
         <div class="bg-[#ff9100] dark:bg-[#b35200] rounded-[32px] p-6 text-center shadow-[0_20px_40px_rgba(255,145,0,0.25)] dark:shadow-[0_20px_40px_rgba(179,82,0,0.25)] border-t border-white/20 transition-colors duration-200">
             <p class="text-white font-black text-[16px] mb-1">{{ __('messages.need_help') }}</p>
             <p class="text-white/80 text-[12px] mb-5 font-medium leading-relaxed">{{ __('messages.free_consultation') }}</p>
-            @php
-                $sidebarWaText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
-            @endphp
-            <a href="https://wa.me/628170769999?text={{ rawurlencode($sidebarWaText) }}"
+            <a href="https://wa.me/62817076999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F"
                target="_blank"
                rel="noopener noreferrer"
                @click.throttle.2000ms

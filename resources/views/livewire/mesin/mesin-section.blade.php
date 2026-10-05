@@ -146,19 +146,11 @@
                 </div>
 
             </div>
-
-
-            @php
-                $waMesinText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
-            @endphp
-            <!-- WHATSAPP BUTTON -->
-            <a
-                href="https://wa.me/628170769999?text={{ rawurlencode($waMesinText) }}"
-                target="_blank"
-                rel="noopener noreferrer"
-                @click.throttle.2000ms
-                class="w-full md:w-auto bg-[#ff9100] dark:bg-[#b35200] hover:bg-[#e07d00] dark:hover:bg-[#994500] active:scale-[0.98] text-[#130D08] dark:text-white px-5 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-4.5 rounded-xl sm:rounded-2xl lg:rounded-[1.8rem] font-extrabold transition-all duration-300 text-center uppercase tracking-wider sm:tracking-widest text-xs shadow-lg shadow-[#ff9100]/25 dark:shadow-[#b35200]/30 shrink-0"
-            >
+            <a href="https://wa.me/62817076999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+               target="_blank"
+               rel="noopener noreferrer"
+               @click.throttle.2000ms
+               class="w-full md:w-auto bg-[#ff9100] dark:bg-[#b35200] hover:bg-[#e07d00] dark:hover:bg-[#994500] active:scale-[0.98] text-[#130D08] dark:text-white px-5 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-4.5 rounded-xl sm:rounded-2xl lg:rounded-[1.8rem] font-extrabold transition-all duration-300 text-center uppercase tracking-wider sm:tracking-widest text-xs shadow-lg shadow-[#ff9100]/25 dark:shadow-[#b35200]/30 shrink-0">
                 {{ __('messages.contact_via_whatsapp') }}
             </a>
 

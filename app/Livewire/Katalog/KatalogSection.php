@@ -105,6 +105,13 @@ class KatalogSection extends Component
         $this->selectedTypes      = $types;
         $this->selectedCategories = $categories;
         $this->typeFilter         = null;
+        if (count($types) > 0) {
+            $this->activeCategory = $types[0];
+        } elseif (count($categories) > 0) {
+            $this->activeCategory = $categories[0];
+        } else {
+            $this->activeCategory = __('messages.all_products');
+        }
         $this->page               = 1;
     }
 
@@ -144,11 +151,13 @@ class KatalogSection extends Component
 
             if ($hasMultiFilter) {
                 $query->where(function ($q) use ($typeNameColumn, $categoryNameColumn) {
-                    if (count($this->selectedTypes) > 0) {
-                        $q->orWhereHas('type', fn($tq) => $tq->whereIn($typeNameColumn, $this->selectedTypes));
-                    }
-                    if (count($this->selectedCategories) > 0) {
-                        $q->orWhereHas('category', fn($cq) => $cq->whereIn($categoryNameColumn, $this->selectedCategories));
+                    if (count($this->selectedTypes) > 0 && count($this->selectedCategories) > 0) {
+                        $q->whereHas('type', fn($tq) => $tq->whereIn($typeNameColumn, $this->selectedTypes))
+                          ->whereHas('category', fn($cq) => $cq->whereIn($categoryNameColumn, $this->selectedCategories));
+                    } elseif (count($this->selectedTypes) > 0) {
+                        $q->whereHas('type', fn($tq) => $tq->whereIn($typeNameColumn, $this->selectedTypes));
+                    } elseif (count($this->selectedCategories) > 0) {
+                        $q->whereHas('category', fn($cq) => $cq->whereIn($categoryNameColumn, $this->selectedCategories));
                     }
                 });
             }
