@@ -13,10 +13,12 @@ class Type extends Model
     protected static function booted(): void
     {
         static::saved(function () {
-            Cache::forget('navbar:product_types');
+            Cache::forget('navbar:product_types_id');
+            Cache::forget('navbar:product_types_en');
         });
         static::deleted(function () {
-            Cache::forget('navbar:product_types');
+            Cache::forget('navbar:product_types_id');
+            Cache::forget('navbar:product_types_en');
         });
     }
 

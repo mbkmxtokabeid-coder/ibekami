@@ -2,13 +2,16 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Type;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Livewire\Attributes\On;
+use Livewire\Component;
 
 class Navbar extends Component
 {
     public array $productTypes = [];
+
     public string $search = '';
 
     public function mount(): void
@@ -18,14 +21,15 @@ class Navbar extends Component
 
     public function loadProductTypes(): void
     {
-        $this->productTypes = \Illuminate\Support\Facades\Cache::remember('navbar:product_types', now()->addMinutes(60), function () {
+        $locale = app()->getLocale();
+        $this->productTypes = Cache::remember("navbar:product_types_{$locale}", now()->addMinutes(60), function () {
             return Type::orderBy('name_id', 'asc')
                 ->get()
                 ->map(function ($type) {
                     return [
                         'id' => $type->id,
                         'name' => $type->name,
-                        'slug' => \Illuminate\Support\Str::slug($type->name_id ?: $type->name_en),
+                        'slug' => Str::slug($type->name_id ?: $type->name_en),
                     ];
                 })
                 ->toArray();
@@ -45,7 +49,7 @@ class Navbar extends Component
         if (in_array($locale, ['id', 'en'])) {
             session(['locale' => $locale]);
             app()->setLocale($locale);
-            
+
             // Reload halaman untuk apply perubahan bahasa
             $this->js('window.location.reload()');
         }
