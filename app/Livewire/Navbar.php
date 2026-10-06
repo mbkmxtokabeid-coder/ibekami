@@ -57,6 +57,8 @@ class Navbar extends Component
 
     public function render()
     {
+        $this->loadProductTypes();
+
         return view('livewire.navbar');
     }
 }

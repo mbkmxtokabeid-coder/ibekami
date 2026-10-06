@@ -18,7 +18,7 @@
         <!-- Header Section -->
         <div class="mb-6 sm:mb-8 relative flex flex-col md:block">
             <!-- Label + Judul — tetap di tengah -->
-            <div class="text-center max-w-xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto">
                 <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.2em] mb-2 sm:mb-3">
                     <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
                     {{ __('messages.special_offer') }}
@@ -29,7 +29,7 @@
                     {{ __('messages.hot_deals_this_month') }}
                 </h2>
                 <!-- Subtitle di tengah -->
-                <p class="text-[12px] md:text-sm text-[#886852] dark:text-[#9E8B7D] mt-2 leading-relaxed">
+                <p class="text-[12px] md:text-sm text-[#886852] dark:text-[#9E8B7D] mt-2 leading-relaxed sm:whitespace-nowrap">
                     {{ __('messages.best_price_all_categories') }}
                 </p>
             </div>

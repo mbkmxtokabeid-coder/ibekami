@@ -16,11 +16,15 @@ class Promo extends Model
         static::saved(function () {
             \Illuminate\Support\Facades\Cache::forever('katalog_cache_version', time());
             \Illuminate\Support\Facades\Cache::forget('homepage:hot_deals');
+            \Illuminate\Support\Facades\Cache::forget('homepage:hot_deals_id');
+            \Illuminate\Support\Facades\Cache::forget('homepage:hot_deals_en');
         });
 
         static::deleted(function () {
             \Illuminate\Support\Facades\Cache::forever('katalog_cache_version', time());
             \Illuminate\Support\Facades\Cache::forget('homepage:hot_deals');
+            \Illuminate\Support\Facades\Cache::forget('homepage:hot_deals_id');
+            \Illuminate\Support\Facades\Cache::forget('homepage:hot_deals_en');
         });
     }
 

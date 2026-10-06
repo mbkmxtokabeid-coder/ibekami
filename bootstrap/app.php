@@ -25,6 +25,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo(fn () => route('admin.login'));
         $middleware->redirectUsersTo(fn () => route('admin.dashboard'));
         
+        $middleware->encryptCookies(except: [
+            'locale',
+        ]);
+
         // Add SetLocale middleware to web group
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,

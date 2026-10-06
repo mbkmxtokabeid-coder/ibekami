@@ -44,7 +44,7 @@ return [
     'start_custom' => 'Start Custom',
     'trusted_by' => 'Trusted by 1,000+',
     'partners' => 'Partners',
-    'custom_souvenir' => 'Custom souvenir, merchandise & digital printing with sharp quality and high precision.',
+    'custom_souvenir' => 'Custom merchandise & digital printing with sharp quality and high precision.',
     'precision' => 'Precision',
     'rating' => 'Rating',
     'made_in_medan' => 'Ikhtiar Berkah, Creative Economy from Medan Indonesia (IBEKAMI)',
@@ -100,7 +100,7 @@ return [
     'no_partner_data' => 'No partner data yet.',
     'join_us' => 'Join Us',
     'become_next_partner' => 'Become IBEKAMI\'s Next Partner',
-    'collaboration_best_solution' => 'Collaboration for the best merchandise & printing solutions in Medan',
+    'collaboration_best_solution' => 'Collaboration for the best merchandise & digital printing solutions in Medan',
     'contact_us' => 'Contact Us',
     
     // Mesin
@@ -115,7 +115,7 @@ return [
     'start_your_project' => 'Start Your Project?',
     'lets_build_together' => '"Let\'s build something aesthetic together"',
     'contact_via_whatsapp' => 'Contact via WhatsApp',
-    'our_technology' => 'Our Technology',
+    'our_technology' => 'Our Technologies',
     'hero_machine_title_prefix' => 'Production Machines and',
     'hero_machine_title_highlight' => 'Workshop',
     'hero_machine_title_suffix' => 'IBEKAMI',
@@ -129,6 +129,7 @@ return [
     'consistency' => 'consistency',
     
     // Footer
+    'company_full_name' => 'Ikhtiar Berkah, Creative Economy from Medan Indonesia (IBEKAMI)',
     'social_media' => 'Social Media',
     'follow_us' => 'Follow Us',
     'follow_us_desc' => 'Follow us for the latest product updates, design inspiration, and exclusive promos.',
@@ -207,27 +208,27 @@ return [
     // FAQ & About Section
     'faq_badge' => 'FAQ',
     'faq_title' => 'Frequently Asked Questions',
-    'faq_subtitle' => 'Find answers to common questions about ordering custom acrylic plaques, corporate merchandise, and our express printing services in Medan.',
-    'about_title' => 'Trusted Custom Souvenir Manufacturer & Printing in Medan',
-    'about_desc' => 'IBEKAMI (Ikhtiar Berkah, Ekonomi Kreatif Asli Medan Indonesia) is a leading custom printing and corporate souvenir vendor based in Medan, North Sumatra. We specialize in producing custom acrylic plaques, laser-engraved tumblers, corporate gift sets, business cards, brochures, banners, stickers, and other promotional items. Equipped with high-tech flatbed UV printers and precision laser cutting machines, we deliver sharp print quality, quick turnaround times, and competitive pricing for individuals, BUMN, government institutions, and private enterprises.',
+    'faq_subtitle' => 'Find clear answers about ordering custom acrylic plaques, corporate souvenirs, and our express printing services in Medan.',
+    'about_title' => 'Trusted Custom Printing & Souvenir Maker in Medan',
+    'about_desc' => 'IBEKAMI is a trusted custom printing and souvenir maker based in Medan, North Sumatra. We specialize in custom acrylic plaques, engraved tumblers, goodie bags, business cards, brochures, banners, stickers, and corporate gift sets. Powered by modern UV flatbed printing and high-precision laser cutting, we deliver sharp, fast, and high-quality results at friendly prices—welcoming both single-item and bulk orders for individuals, businesses, and organizations.',
     
-    'faq_q1' => 'How can I order custom acrylic plaques at IBEKAMI?',
-    'faq_a1' => 'Ordering is easy! Simply click the "Start Custom" or "Ask Now" buttons to connect directly with our WhatsApp admin. You can consult on design preferences, plaque types, material thickness, and order quantity. Our design team will provide free design consultations until you approve the layouts before production.',
+    'faq_q1' => 'How do I order custom acrylic plaques or souvenirs at IBEKAMI?',
+    'faq_a1' => 'Ordering is quick and easy! Simply click the WhatsApp button to chat directly with our team. Tell us what you need—such as product type, design ideas, dimensions, and quantity. Our design team will provide a free design preview for your review and approval before production begins.',
     
-    'faq_q2' => 'Can I order custom souvenirs in single quantities?',
-    'faq_a2' => 'Yes, absolutely! IBEKAMI supports local creators, individuals, and organizations by offering single-unit custom printing for select products like acrylic plaques, tumblers, mugs, keychains, and custom t-shirts, as well as bulk quantities for corporate orders with special pricing.',
+    'faq_q2' => 'Can I order custom items in single pieces or small quantities?',
+    'faq_a2' => 'Yes, absolutely! We gladly accept single-item orders for products like acrylic plaques, engraved tumblers, mugs, keychains, and t-shirts. For bulk corporate orders, we also offer special discounted pricing.',
     
-    'faq_q3' => 'What types of plaque materials are available?',
-    'faq_a3' => 'We manufacture high-quality plaques using clear/colored premium acrylic, wood with metal/acrylic plates, resin/crystal, and marble. All plaques are cut using laser-cutting technology to ensure smooth, precise edges.',
+    'faq_q3' => 'What materials are available for custom plaques?',
+    'faq_a3' => 'We offer a variety of high-quality materials, including clear and colored acrylic (our most popular), wood with metal or acrylic accents, crystal/resin, and marble. All plaques are crafted using precision laser cutting for smooth and clean edges.',
     
-    'faq_q4' => 'How long does the printing and merchandise production take?',
-    'faq_a4' => 'For standard express items like standard plaques, banners, or documents, production takes only 1-2 business days after design approval. For bulk corporate orders or large merchandise volumes, production times range from 3-7 business days depending on the current production queue.',
+    'faq_q4' => 'How long does production take?',
+    'faq_a4' => 'For single items or express orders (like standard plaques, banners, or business cards), production usually takes only 1–2 business days after design approval. For large bulk orders, production typically takes 3–7 business days depending on order size.',
     
     'faq_q5' => 'Does IBEKAMI ship outside Medan?',
-    'faq_a5' => 'Yes, we ship to all areas in North Sumatra (such as Deli Serdang, Binjai, Tebing Tinggi, Siantar, Toba) as well as nationwide across Indonesia using trusted logistics partners. All products are safely packaged with thick bubble wrap and wooden crates when necessary.',
+    'faq_a5' => 'Yes! We ship across North Sumatra and to all regions throughout Indonesia via trusted delivery partners. Every order is securely packaged with thick bubble wrap and sturdy protection (including wooden crates if needed) to ensure safe arrival.',
     
-    'faq_q6' => 'Why should I choose IBEKAMI as my custom printing vendor?',
-    'faq_a6' => 'IBEKAMI combines advanced UV flatbed printing technology, high-precision laser cutters, professional designers, and premium materials. We guarantee precise prints, quick express completion times, friendly customer service, and competitive pricing for both individual and corporate clients.',
+    'faq_q6' => 'Why should I choose IBEKAMI for printing and souvenirs?',
+    'faq_a6' => 'We combine modern UV flatbed printing, precise laser cutting, premium materials, and an experienced design team. We guarantee sharp results, fast turnaround times, friendly customer service, and competitive pricing for both personal and business needs.',
 
     // 404 Error Page
     'error_404_badge' => 'Error 404',

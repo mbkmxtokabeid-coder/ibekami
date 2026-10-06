@@ -64,13 +64,13 @@
                         <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        <span class="text-xs sm:text-sm font-semibold text-white">{{ $operatingDays }}: <span class="font-normal opacity-95">{{ $operatingHours }}</span></span>
+                        <span class="text-xs sm:text-[13px] font-semibold text-white whitespace-nowrap">{{ $operatingDays }}: <span class="font-normal opacity-95">{{ $operatingHours }}</span></span>
                     </div>
                     <div class="flex items-center gap-3 opacity-95">
                         <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
-                        <span class="text-xs sm:text-sm font-semibold text-white">{{ $closedDays }}: <span class="font-normal">{{ __('messages.closed') }}</span></span>
+                        <span class="text-xs sm:text-[13px] font-semibold text-white whitespace-nowrap">{{ $closedDays }}: <span class="font-normal">{{ __('messages.closed') }}</span></span>
                     </div>
                 </div>
             </div>
@@ -126,7 +126,7 @@
     {{-- Copyright --}}
     <div class="max-w-7xl mx-auto pt-6 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6 text-white">
         <p class="text-[11px] font-medium opacity-90 tracking-wide text-center md:text-left leading-relaxed text-white">
-            © 2025 {{ $companyName }} · {{ $companyFullName }}<br class="md:hidden">
+            © 2025 {{ $companyName }} · {{ __('messages.company_full_name') }}<br class="md:hidden">
             <span class="hidden md:inline mx-2 text-white/60">|</span> {{ __('messages.all_rights_reserved') }}.
         </p>
         <div class="flex items-center gap-2">

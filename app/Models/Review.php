@@ -23,10 +23,14 @@ class Review extends Model
     {
         static::saved(function () {
             \Illuminate\Support\Facades\Cache::forget('homepage:reviews');
+            \Illuminate\Support\Facades\Cache::forget('homepage:reviews_id');
+            \Illuminate\Support\Facades\Cache::forget('homepage:reviews_en');
         });
 
         static::deleted(function () {
             \Illuminate\Support\Facades\Cache::forget('homepage:reviews');
+            \Illuminate\Support\Facades\Cache::forget('homepage:reviews_id');
+            \Illuminate\Support\Facades\Cache::forget('homepage:reviews_en');
         });
     }
 

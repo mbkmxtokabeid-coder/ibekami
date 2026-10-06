@@ -23,7 +23,7 @@ class LanguageController extends Controller
                     'message' => 'Invalid locale. Only "id" and "en" are supported.',
                 ], 400);
             }
-            return redirect()->route('homepage');
+            return redirect()->route('home');
         }
 
         // Store locale in session
@@ -55,9 +55,9 @@ class LanguageController extends Controller
         
         // Sanitize target URL to ensure it is secure, canonical, and not causing infinite redirect loops
         if (empty($backUrl) || !str_starts_with($backUrl, url('/')) || str_contains($backUrl, '/lang/')) {
-            $backUrl = route('homepage');
+            $backUrl = route('home');
         } else {
-            // Standardize URL to secure HTTPS and strip out WWW prefix to match canonical structure in a single hop
+            // Standardize URL to secure HTTPS (or HTTP on local) and strip out WWW prefix
             $parsedUrl = parse_url($backUrl);
             $path = $parsedUrl['path'] ?? '/';
             $query = isset($parsedUrl['query']) ? '?' . $parsedUrl['query'] : '';
@@ -66,8 +66,8 @@ class LanguageController extends Controller
             $host = $parsedUrl['host'] ?? $request->getHost();
             $host = preg_replace('/^www\./i', '', $host);
             
-            // Reconstruct absolute URL based on HTTPS canonical format
-            $backUrl = 'https://' . $host . $path . $query;
+            $scheme = app()->environment('local') ? $request->getScheme() : 'https';
+            $backUrl = $scheme . '://' . $host . $path . $query;
         }
 
         return redirect()->to($backUrl, 302)->withCookie($cookie);

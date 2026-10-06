@@ -57,6 +57,10 @@ class MesinSection extends Component
 
     public function render()
     {
-        return view('livewire.mesin.mesin-section');
+        $this->loadMachines();
+
+        return view('livewire.mesin.mesin-section', [
+            'machines' => $this->machines,
+        ]);
     }
 }

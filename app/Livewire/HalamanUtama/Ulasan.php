@@ -17,20 +17,24 @@ class Ulasan extends Component
 
     public function loadReviews(): void
     {
-        // Load reviews from cache -> DB
-        $dbReviews = Cache::remember('homepage:reviews', now()->addMinutes(15), function () {
+        $locale = app()->getLocale();
+
+        // Load reviews from cache -> DB per locale
+        $dbReviews = Cache::remember("homepage:reviews_{$locale}", now()->addMinutes(15), function () use ($locale) {
             return Review::query()
                 ->orderBy('review_date', 'desc')
                 ->take(10)
                 ->get()
-                ->map(function ($review) {
+                ->map(function ($review) use ($locale) {
                     return [
                         'id' => $review->id,
                         'name' => $review->name,
                         'initials' => $this->getInitials($review->name),
                         'text' => $review->review,
                         'rating' => $review->star ?? 5,
-                        'date' => $review->review_date ? \Carbon\Carbon::parse($review->review_date)->diffForHumans() : '1 bulan lalu',
+                        'date' => $review->review_date 
+                            ? \Carbon\Carbon::parse($review->review_date)->locale($locale)->diffForHumans() 
+                            : ($locale === 'en' ? '1 month ago' : '1 bulan lalu'),
                     ];
                 })
                 ->toArray();
@@ -38,7 +42,12 @@ class Ulasan extends Component
 
         // Jika tidak ada review di database, gunakan dummy data
         if (empty($dbReviews)) {
-            $this->reviews = [
+            $this->reviews = $locale === 'en' ? [
+                ['id' => 1, 'name' => 'Putri Andini', 'initials' => 'PA', 'text' => 'Very satisfied with the plaque printing here, the quality is great and sharp.', 'rating' => 5, 'date' => '1 month ago'],
+                ['id' => 2, 'name' => 'Adelsa Putri', 'initials' => 'AP', 'text' => 'Laser cut calligraphy is very precise down to small details.', 'rating' => 5, 'date' => '1 month ago'],
+                ['id' => 3, 'name' => 'Berkat Siagian', 'initials' => 'BS', 'text' => 'The mug design turned out smooth, admin is fast response.', 'rating' => 5, 'date' => '1 month ago'],
+                ['id' => 4, 'name' => 'Putri Andini', 'initials' => 'PA', 'text' => 'Very satisfied with the plaque printing here, the quality is great and sharp.', 'rating' => 5, 'date' => '2 months ago'],
+            ] : [
                 ['id' => 1, 'name' => 'Putri Andini', 'initials' => 'PA', 'text' => 'Sangat puas cetak plakat di sini, hasil cetaknya bagus banget dan tajam.', 'rating' => 5, 'date' => '1 bulan lalu'],
                 ['id' => 2, 'name' => 'Adelsa Putri', 'initials' => 'AP', 'text' => 'Laser cutting kaligrafinya sangat presisi sampai ke detail kecil.', 'rating' => 5, 'date' => '1 bulan lalu'],
                 ['id' => 3, 'name' => 'Berkat Siagian', 'initials' => 'BS', 'text' => 'Hasil desain mug-nya mulus, admin juga fast respon.', 'rating' => 5, 'date' => '1 bulan lalu'],
@@ -60,18 +69,22 @@ class Ulasan extends Component
 
     public function placeholder()
     {
-        return <<<'HTML'
+        $locale = app()->getLocale();
+        $title = $locale === 'en' ? 'What They Say' : 'Apa Kata Mereka?';
+        $badge = $locale === 'en' ? 'Customer Reviews' : 'Ulasan Pelanggan';
+
+        return <<<HTML
         <div class="py-16 px-4 bg-[#fdfaf7]">
             <div class="max-w-7xl mx-auto">
                 <div class="mb-10 relative flex flex-col md:block">
                     <div class="text-center max-w-lg mx-auto">
                         <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-2 sm:mb-3">
                             <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
-                            Ulasan Pelanggan
+                            {$badge}
                             <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
                         </div>
                         <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] tracking-tight leading-tight">
-                            Apa Kata Mereka?
+                            {$title}
                         </h2>
                     </div>
 
@@ -101,6 +114,10 @@ class Ulasan extends Component
 
     public function render()
     {
-        return view('livewire.halaman-utama.ulasan');
+        $this->loadReviews();
+
+        return view('livewire.halaman-utama.ulasan', [
+            'reviews' => $this->reviews,
+        ]);
     }
 }

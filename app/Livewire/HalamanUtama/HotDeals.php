@@ -44,7 +44,8 @@ class HotDeals extends Component
 
     public function render()
     {
-        $deals = Cache::remember('homepage:hot_deals', now()->addMinutes(30), function () {
+        $locale = app()->getLocale();
+        $deals = Cache::remember('homepage:hot_deals_' . $locale, now()->addMinutes(30), function () {
             // Ambil semua Type yang memiliki image_url
             return Promo::query()
                 ->whereNotNull('image_url')

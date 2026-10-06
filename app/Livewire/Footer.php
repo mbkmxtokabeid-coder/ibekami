@@ -27,6 +27,8 @@ class Footer extends Component
 
     public function mount(): void
     {
+        $this->companyFullName = __('messages.company_full_name');
+
         // Operating Hours
         $this->operatingDays  = __('messages.monday_saturday');
         $this->operatingHours = __('messages.operating_hours_time');

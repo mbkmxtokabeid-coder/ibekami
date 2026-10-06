@@ -1,7 +1,8 @@
 @php
     $version = Cache::rememberForever('homepage_products_version', fn() => time());
-    // Ambil 12 produk pertama langsung dari cache
-    $initialData = Cache::remember("homepage:ssr:products:v{$version}", now()->addMinutes(10), function() {
+    $locale = app()->getLocale();
+    // Ambil 12 produk pertama langsung dari cache sesuai bahasa aktif
+    $initialData = Cache::remember("homepage:ssr:products:v{$version}:{$locale}", now()->addMinutes(10), function() {
         return App\Models\Product::query()
             ->with(['type', 'category'])
             ->where('status', 'Aktif')

@@ -41,10 +41,10 @@ return [
     'discover_products' => 'Temukan Produk Terbaik',
     'hero_subtitle' => 'Jelajahi berbagai produk digital printing berkualitas tinggi',
     'view_catalog' => 'Lihat Katalog',
-    'start_custom' => 'Mulai Custom',
+    'start_custom' => 'Mulai Kustom',
     'trusted_by' => 'Dipercaya',
     'partners' => 'Mitra',
-    'custom_souvenir' => 'Souvenir, merchandise & digital printing custom dengan kualitas tajam dan presisi tinggi.',
+    'custom_souvenir' => 'Suvenir & percetakan digital kustom dengan kualitas tajam dan presisi tinggi.',
     'precision' => 'Presisi',
     'rating' => 'Rating',
     'made_in_medan' => 'Ikhtiar Berkah, Ekonomi Kreatif Asli Medan Indonesia (IBEKAMI)',
@@ -56,7 +56,7 @@ return [
     'special_offers' => 'Penawaran Spesial Untuk Anda',
     'dont_miss_deals' => 'Jangan lewatkan penawaran eksklusif kami',
     'hot_deals_this_month' => 'Promo Bulan Ini',
-    'best_price_all_categories' => 'Dapatkan harga terbaik untuk semua kategori produk custom kami. Jangan sampai kehabisan!',
+    'best_price_all_categories' => 'Dapatkan harga terbaik untuk semua kategori produk kustom kami. Jangan sampai kehabisan!',
     'ask_price' => 'Tanya Harga',
     'hot_deal' => 'Promo',
     'no_product_types' => 'Belum ada jenis produk tersedia.',
@@ -101,7 +101,7 @@ return [
     'no_partner_data' => 'Belum ada data mitra.',
     'join_us' => 'Bergabung Bersama Kami',
     'become_next_partner' => 'Jadilah Mitra IBEKAMI Berikutnya',
-    'collaboration_best_solution' => 'Kolaborasi untuk solusi merchandise & printing terbaik di Medan',
+    'collaboration_best_solution' => 'Kolaborasi untuk solusi suvenir & percetakan digital terbaik di Medan',
     'contact_us' => 'Hubungi Kami',
     
     // Mesin
@@ -130,9 +130,10 @@ return [
     'consistency' => 'konsistensi',
     
     // Footer
+    'company_full_name' => 'Ikhtiar Berkah Ekonomi Kreatif Asli Medan Indonesia',
     'social_media' => 'Media Sosial',
     'follow_us' => 'Ikuti Kami',
-    'follow_us_desc' => 'Ikuti kami untuk update produk terbaru, inspirasi desain, dan promo eksklusif.',
+    'follow_us_desc' => 'Ikuti kami untuk informasi produk terbaru, inspirasi desain, dan promo eksklusif.',
     'contact' => 'Kontak',
     'operating_hours' => 'Jam Operasional',
     'location' => 'Lokasi',
@@ -218,27 +219,27 @@ return [
     // FAQ & About Section
     'faq_badge' => 'TANYA JAWAB',
     'faq_title' => 'Pertanyaan yang Sering Diajukan',
-    'faq_subtitle' => 'Temukan jawaban atas pertanyaan umum mengenai pemesanan plakat akrilik, souvenir custom, dan layanan percetakan express kami di Medan.',
-    'about_title' => 'Percetakan & Produsen Souvenir Custom Terpercaya di Medan',
-    'about_desc' => 'IBEKAMI (Ikhtiar Berkah, Ekonomi Kreatif Asli Medan Indonesia) adalah vendor digital printing dan souvenir custom terdepan yang berbasis di Medan, Sumatera Utara. Kami melayani pembuatan plakat akrilik custom, tumbler grafir, goodie bag, kartu nama, brosur, banner, stiker, hingga paket merchandise perusahaan (corporate gift set). Didukung oleh mesin cetak flatbed UV berteknologi tinggi dan mesin cutting laser presisi, kami siap memberikan hasil cetak tajam, cepat, dengan harga kompetitif untuk kebutuhan personal, instansi pemerintah, BUMN, maupun swasta baik dalam jumlah satuan maupun partai besar.',
+    'faq_subtitle' => 'Temukan jawaban atas pertanyaan umum mengenai pemesanan plakat akrilik, suvenir kustom, dan layanan percetakan cepat kami di Medan.',
+    'about_title' => 'Percetakan & Produsen Suvenir Kustom Terpercaya di Medan',
+    'about_desc' => 'IBEKAMI (Ikhtiar Berkah, Ekonomi Kreatif Asli Medan Indonesia) adalah penyedia percetakan digital dan produsen suvenir kustom terpercaya di Medan, Sumatera Utara. Kami melayani pembuatan plakat akrilik kustom, tumbler grafir, tas bingkisan, kartu nama, brosur, spanduk, stiker, hingga paket suvenir perusahaan. Didukung mesin cetak UV modern dan mesin pemotong laser presisi, kami siap memberikan hasil cetak yang tajam, cepat, dan rapi dengan harga terjangkau, baik untuk pesanan satuan maupun partai besar bagi perorangan, instansi pemerintah, BUMN, maupun perusahaan swasta.',
     
-    'faq_q1' => 'Bagaimana cara memesan plakat akrilik custom di IBEKAMI?',
-    'faq_a1' => 'Pemesanan sangat mudah! Anda cukup klik tombol "Mulai Custom" atau "Tanya Sekarang" untuk terhubung langsung dengan admin WhatsApp kami. Konsultasikan kebutuhan desain, jenis plakat, ketebalan bahan, dan jumlah pesanan Anda. Tim desain kami siap membantu mendesain plakat Anda secara gratis hingga disetujui (approval) sebelum naik cetak.',
+    'faq_q1' => 'Bagaimana cara memesan plakat akrilik kustom di IBEKAMI?',
+    'faq_a1' => 'Pemesanan sangat mudah! Cukup hubungi kami melalui tombol WhatsApp untuk langsung terhubung dengan admin kami. Sampaikan kebutuhan Anda seperti jenis produk, konsep desain, ukuran, dan jumlah pesanan. Tim desainer kami siap membantu membuatkan pratinjau desain secara gratis sampai Anda setuju sebelum proses cetak dimulai.',
     
-    'faq_q2' => 'Apakah bisa memesan souvenir custom dalam jumlah satuan?',
-    'faq_a2' => 'Ya, tentu saja! IBEKAMI berkomitmen mendukung pelaku ekonomi kreatif, individu, dan komunitas dengan melayani pemesanan souvenir custom seperti plakat akrilik, tumbler, mug, gantungan kunci, dan kaos secara satuan maupun dalam volume besar untuk corporate gift set dengan harga khusus.',
+    'faq_q2' => 'Apakah bisa memesan suvenir kustom dalam jumlah satuan?',
+    'faq_a2' => 'Ya, tentu saja! Kami melayani pemesanan satuan untuk produk seperti plakat akrilik, tumbler grafir, mug, gantungan kunci, hingga kaos. Untuk pemesanan dalam jumlah banyak (paket suvenir perusahaan), kami juga menyediakan harga khusus yang lebih hemat.',
     
     'faq_q3' => 'Apa saja jenis bahan plakat yang tersedia?',
-    'faq_a3' => 'Kami memproduksi berbagai pilihan plakat berkualitas tinggi, antara lain plakat akrilik bening/warna (paling populer), plakat kayu kombinasi logam/akrilik, plakat resin/kristal, dan plakat marmer. Seluruh plakat dikerjakan menggunakan mesin laser cutting untuk presisi pinggiran yang halus.',
+    'faq_a3' => 'Kami menyediakan beragam pilihan bahan plakat berkualitas, antara lain akrilik bening dan berwarna (paling diminati), kayu kombinasi logam atau akrilik, resin, kristal, serta marmer. Semua plakat dipotong menggunakan mesin laser presisi agar tepiannya halus dan rapi.',
     
-    'faq_q4' => 'Berapa lama proses pengerjaan cetak digital dan merchandise?',
-    'faq_a4' => 'Untuk produk express/satuan seperti plakat standar dan cetak dokumen/banner, pengerjaan dapat diselesaikan dalam 1-2 hari kerja setelah desain disetujui. Untuk pemesanan massal corporate souvenir atau merchandise kustom dalam jumlah besar, waktu produksi berkisar antara 3-7 hari kerja tergantung antrean produksi.',
+    'faq_q4' => 'Berapa lama proses pengerjaan cetak digital dan suvenir?',
+    'faq_a4' => 'Untuk pesanan satuan atau kebutuhan cepat (seperti plakat standar, spanduk, atau kartu nama), biasanya selesai dalam 1–2 hari kerja setelah desain disetujui. Untuk pesanan massal dalam jumlah banyak, waktu pengerjaan berkisar 3–7 hari kerja tergantung antrean produksi.',
     
     'faq_q5' => 'Apakah IBEKAMI melayani pengiriman ke luar kota Medan?',
-    'faq_a5' => 'Kami melayani pengiriman ke seluruh wilayah Sumatera Utara (seperti Deli Serdang, Binjai, Tebing Tinggi, Siantar, Toba) serta pengiriman domestik ke seluruh kota di Indonesia menggunakan ekspedisi terpercaya dengan pengemasan aman (bubble wrap tebal & peti kayu jika diperlukan).',
+    'faq_a5' => 'Ya! Kami melayani pengiriman ke seluruh wilayah Sumatera Utara hingga ke seluruh Indonesia menggunakan jasa ekspedisi terpercaya. Semua produk dikemas aman dengan plastik gelembung tebal dan pelindung kokoh (serta peti kayu jika diperlukan) agar pesanan sampai dalam kondisi terbaik.',
     
-    'faq_q6' => 'Mengapa harus memilih IBEKAMI sebagai vendor printing Anda?',
-    'faq_a6' => 'IBEKAMI memadukan teknologi mesin UV flatbed modern, laser cutting presisi, tim desainer profesional, dan bahan baku premium. Kami berkomitmen memberikan garansi hasil cetak presisi, pengerjaan express, layanan ramah, serta penawaran harga terbaik yang bersahabat baik bagi perorangan maupun korporasi.',
+    'faq_q6' => 'Mengapa harus memilih IBEKAMI sebagai tempat percetakan pilihan Anda?',
+    'faq_a6' => 'Kami memadukan mesin cetak UV modern, mesin pemotong laser presisi, bahan baku berkualitas, dan tim desain berpengalaman. Kami menjamin hasil cetak yang tajam dan presisi, pengerjaan tepat waktu, harga bersahabat, serta pelayanan ramah untuk setiap pelanggan.',
 
     // 404 Error Page
     'error_404_badge' => 'Error 404',
