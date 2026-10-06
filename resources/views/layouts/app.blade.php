@@ -182,7 +182,9 @@
     </noscript>
     @endif
 
-    <livewire:navbar />
+    @sectionMissing('hide_navbar')
+        <livewire:navbar />
+    @endif
 
     @hasSection('header')
         <header class="bg-white dark:bg-gray-800 shadow-sm">

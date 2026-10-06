@@ -25,7 +25,7 @@
                     <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
                 </div>
                 
-                <h2 class="font-['Playfair_Display'] text-3xl md:text-4xl lg:text-5xl font-black text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight">
+                <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight leading-tight">
                     {{ __('messages.hot_deals_this_month') }}
                 </h2>
                 <!-- Subtitle di tengah -->

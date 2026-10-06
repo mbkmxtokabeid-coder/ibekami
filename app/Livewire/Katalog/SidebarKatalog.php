@@ -43,7 +43,9 @@ class SidebarKatalog extends Component
         $this->categories[] = ['name' => __('messages.all_products'), 'count' => $totalProducts, 'group' => 'all'];
 
         // Load all categories grouped by type_id
-        $dbCategories = Category::withCount('products')->get();
+        $dbCategories = Category::withCount('products')
+            ->orderByDesc('products_count')
+            ->get();
         $categoriesByType = [];
         foreach ($dbCategories as $cat) {
             if ($cat->products_count > 0) {
@@ -63,7 +65,9 @@ class SidebarKatalog extends Component
         }
 
         // Build 2-level structure: Type with nested categories
-        $dbTypes = Type::withCount('products')->get();
+        $dbTypes = Type::withCount('products')
+            ->orderByDesc('products_count')
+            ->get();
         foreach ($dbTypes as $type) {
             if ($type->products_count > 0) {
                 $this->allTypes[] = [

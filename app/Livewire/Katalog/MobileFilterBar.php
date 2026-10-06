@@ -36,7 +36,9 @@ class MobileFilterBar extends Component
         $this->allTypes = [];
         $this->allCategories = [];
 
-        $dbTypes = Type::withCount('products')->get();
+        $dbTypes = Type::withCount('products')
+            ->orderByDesc('products_count')
+            ->get();
         foreach ($dbTypes as $type) {
             if ($type->products_count > 0) {
                 $this->allTypes[] = [
@@ -47,7 +49,9 @@ class MobileFilterBar extends Component
             }
         }
 
-        $dbCategories = Category::withCount('products')->get();
+        $dbCategories = Category::withCount('products')
+            ->orderByDesc('products_count')
+            ->get();
         foreach ($dbCategories as $cat) {
             if ($cat->products_count > 0) {
                 $this->allCategories[] = [

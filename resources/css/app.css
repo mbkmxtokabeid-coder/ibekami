@@ -141,6 +141,20 @@ html.dark img[src*="placeholder.com"] {
     border-radius: 8px;
 }
 
+/* Brand logo light/dark mode switching */
+.logo-light {
+    display: block !important;
+}
+.logo-dark {
+    display: none !important;
+}
+html.dark .logo-light {
+    display: none !important;
+}
+html.dark .logo-dark {
+    display: block !important;
+}
+
 /* Text color overrides */
 html.dark .text-\[\#2C1A0E\],
 html.dark .text-\[\#2c1a0e\],

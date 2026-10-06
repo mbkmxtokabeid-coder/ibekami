@@ -33,11 +33,8 @@
             <!-- Headline -->
             <h1 class="font-playfair text-[38px] sm:text-[48px] lg:text-[60px] font-extrabold leading-[1.1] text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight">
                 {{ __('messages.make_ideas_real') }} <br class="hidden sm:block">
-                <span class="relative inline-block text-[#A64E2F] dark:text-[#ff9100]">
+                <span class="text-[#A64E2F] dark:text-[#ff9100]">
                     {{ __('messages.real_work') }}
-                    <svg class="absolute w-full h-3 -bottom-2 left-0 text-[#A64E2F]/20 dark:text-[#ff9100]/25" viewBox="0 0 100 20" fill="currentColor">
-                        <path d="M0 15 Q 25 5 50 15 T 100 15 L 100 20 L 0 20 Z"></path>
-                    </svg>
                 </span>
             </h1>
 
@@ -132,7 +129,7 @@
 
             <!-- Carousel Indicators (di bawah container foto) -->
             @if(count($banners) > 1)
-                <div class="flex gap-1.5 mt-4 bg-[#b35200] dark:bg-[#b35200] border border-white/25 dark:border-white/15 px-3.5 py-1.5 rounded-full items-center shadow-md shadow-[#b35200]/25 dark:shadow-black/40 z-20">
+                <div class="flex gap-1.5 mt-4 bg-[#FF9100] border border-white/30 px-3.5 py-1.5 rounded-full items-center shadow-md shadow-[#FF9100]/25 z-20">
                     @foreach($banners as $index => $bannerItem)
                         <button @click="activeSlide = {{ $index }}"
                                 aria-label="Slide {{ $index + 1 }}"

@@ -63,26 +63,17 @@
              :class="scrolled ? 'bg-[#ffe8ca]/95 shadow-[0_12px_40px_rgba(255,145,0,0.08)]' : ''">
             
             <!-- 1. Logo Brand -->
-            <a href="/" class="flex items-center gap-2.5 group shrink-0 outline-none">
-                {{-- Logo Mode Terang (Teks Ibekami Gelap) --}}
-                <img src="{{ asset('storage/logos/logo ibekami (3).webp') }}" 
+            <a href="/" class="flex items-center gap-2.5 group shrink-0 outline-none" title="IBEKAMI">
+                <img src="{{ asset('logos/logo-ibekami.webp') }}" 
                      alt="IBEKAMI Logo" 
                      width="36"
                      height="36"
-                     class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300 block dark:hidden"
-                     onerror="this.style.display='none'; document.getElementById('navbar-logo-fallback')?.classList.remove('hidden');">
-
-                {{-- Logo Mode Gelap (Teks Ibekami Putih) --}}
-                <img src="{{ asset('storage/logos/logo-ibekami-dark.webp') }}" 
+                     class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300 logo-light block dark:hidden">
+                <img src="{{ asset('logos/logo-ibekami-dark.webp') }}" 
                      alt="IBEKAMI Logo" 
                      width="36"
                      height="36"
-                     class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300 hidden dark:block"
-                     onerror="this.style.display='none'; document.getElementById('navbar-logo-fallback')?.classList.remove('hidden');">
-
-                <div id="navbar-logo-fallback" class="w-8 h-8 sm:w-9 sm:h-9 bg-[#b35200] rounded-full items-center justify-center hidden">
-                    <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white" viewBox="0 0 20 20"><path d="M10 2L3 7v11h5v-5h4v5h5V7z"/></svg>
-                </div>
+                     class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition-transform duration-300 logo-dark hidden dark:block">
             </a>
 
             <!-- 2. Desktop Links -->

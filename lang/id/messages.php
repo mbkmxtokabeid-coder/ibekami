@@ -241,12 +241,12 @@ return [
     'faq_a6' => 'IBEKAMI memadukan teknologi mesin UV flatbed modern, laser cutting presisi, tim desainer profesional, dan bahan baku premium. Kami berkomitmen memberikan garansi hasil cetak presisi, pengerjaan express, layanan ramah, serta penawaran harga terbaik yang bersahabat baik bagi perorangan maupun korporasi.',
 
     // 404 Error Page
-    'error_404_badge' => 'ERROR 404 • HALAMAN TIDAK DITEMUKAN',
-    'error_404_title' => 'Ups! Halaman Tidak Ditemukan',
-    'error_404_desc' => 'Halaman atau tautan yang Anda tuju mungkin sudah dipindahkan, dihapus, atau alamat URL yang dimasukkan kurang tepat. Tenang, Anda dapat kembali ke beranda atau mencari produk yang Anda butuhkan.',
-    'back_to_home' => 'Kembali ke Beranda',
+    'error_404_badge' => 'Error 404',
+    'error_404_title' => 'Halaman Tidak Ditemukan',
+    'error_404_desc' => 'Halaman yang Anda tuju tidak ditemukan atau sudah dipindahkan.',
+    'back_to_home' => 'Beranda',
     'explore_catalog' => 'Jelajahi Katalog',
-    'back_to_previous' => 'Halaman Sebelumnya',
+    'back_to_previous' => 'Kembali',
     'search_product_404' => 'Cari produk yang Anda cari...',
     'search_button' => 'Cari',
     'popular_recommendations' => 'Halaman Populer',
