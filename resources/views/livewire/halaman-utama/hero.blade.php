@@ -129,7 +129,7 @@
 
             <!-- Carousel Indicators (di bawah container foto) -->
             @if(count($banners) > 1)
-                <div class="flex gap-1.5 mt-4 bg-[#FF9100] border border-white/30 px-3.5 py-1.5 rounded-full items-center shadow-md shadow-[#FF9100]/25 z-20">
+                <div class="flex gap-1.5 mt-4 bg-[#FF9100] dark:bg-[#b35200] border border-white/30 dark:border-white/20 px-3.5 py-1.5 rounded-full items-center shadow-md shadow-[#FF9100]/25 dark:shadow-[0_4px_14px_rgba(179,82,0,0.3)] z-20 transition-all duration-300">
                     @foreach($banners as $index => $bannerItem)
                         <button @click="activeSlide = {{ $index }}"
                                 aria-label="Slide {{ $index + 1 }}"
