@@ -35,19 +35,36 @@ class KatalogSection extends Component
         
         // Check if there's a search parameter in the URL
         if (request()->has('search')) {
-            $this->search = request()->get('search');
+            $this->search = (string) request()->get('search');
         }
         
         // Check if there's a type parameter in the URL
         if (request()->has('type')) {
-            $typeSlug = request()->get('type');
+            $typeSlug = (string) request()->get('type');
             $type = Type::all()->first(function ($t) use ($typeSlug) {
-                return \Illuminate\Support\Str::slug($t->name_id ?: $t->name_en) === $typeSlug;
+                return \Illuminate\Support\Str::slug($t->name_id ?: '') === $typeSlug
+                    || \Illuminate\Support\Str::slug($t->name_en ?: '') === $typeSlug
+                    || \Illuminate\Support\Str::slug($t->name) === $typeSlug;
             });
             
             if ($type) {
                 $this->activeCategory = $type->name;
                 $this->typeFilter = $type->name;
+            }
+        }
+
+        // Check if there's a category parameter in the URL
+        if (request()->has('category')) {
+            $catSlug = (string) request()->get('category');
+            $cat = \App\Models\Category::all()->first(function ($c) use ($catSlug) {
+                return \Illuminate\Support\Str::slug($c->name_id ?: '') === $catSlug
+                    || \Illuminate\Support\Str::slug($c->name_en ?: '') === $catSlug
+                    || \Illuminate\Support\Str::slug($c->name) === $catSlug
+                    || $c->name === $catSlug;
+            });
+
+            if ($cat) {
+                $this->activeCategory = $cat->name;
             }
         }
     }
@@ -125,6 +142,7 @@ class KatalogSection extends Component
         $this->selectedCategories = [];
         $this->page               = 1;
         $this->dispatch('filtersReset');
+        $this->js("window.history.replaceState({}, '', '" . route('katalog') . "')");
     }
 
     protected function getFilteredProducts(): array

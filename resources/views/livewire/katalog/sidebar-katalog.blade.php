@@ -30,12 +30,8 @@
             {{-- Kategori Section 2-Tingkat — desktop only, di mobile pakai popup filter --}}
             <div class="hidden lg:block" x-data="{
                 open: true,
-                debounceTimer: null,
                 debouncedSetCategory(categoryName) {
-                    clearTimeout(this.debounceTimer);
-                    this.debounceTimer = setTimeout(() => {
-                        $wire.setCategory(categoryName);
-                    }, 400);
+                    $wire.setCategory(categoryName);
                 }
             }">
                 <button @click="open = !open"
@@ -60,7 +56,8 @@
                     @foreach($categories as $cat)
                         @if($cat['group'] === 'all')
                         <button
-                            @click="debouncedSetCategory('{{ $cat['name'] }}')"
+                            wire:key="cat-all"
+                            @click="debouncedSetCategory(@js($cat['name']))"
                             class="w-full flex items-center justify-between px-5 py-3 rounded-2xl text-[14px] font-bold transition-all
                                 {{ $activeCategory === $cat['name']
                                     ? 'bg-white text-[#ff9100] dark:text-[#b35200] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 dark:border-[#b35200]/10 scale-[1.02]'
@@ -83,13 +80,27 @@
                         $hasActiveSub = collect($typeItem['categories'])->contains('name', $activeCategory);
                         $isExpanded  = $typeActive || $hasActiveSub;
                     @endphp
-                    <div x-data="{ openType: {{ $isExpanded ? 'true' : 'false' }} }" class="pt-0.5">
+                    <div wire:key="type-group-{{ $typeItem['id'] }}"
+                         x-data="{ 
+                             openType: {{ $isExpanded ? 'true' : 'false' }},
+                             init() {
+                                 this.$watch('$wire.activeCategory', (val) => {
+                                     const typeName = @js($typeItem['name']);
+                                     const subNames = @js(collect($typeItem['categories'])->pluck('name')->toArray());
+                                     if (val === typeName || subNames.includes(val)) {
+                                         this.openType = true;
+                                     }
+                                 });
+                             }
+                         }" 
+                         class="pt-0.5">
 
                         {{-- Baris Type (Tingkat 1): bisa diklik untuk filter + expand/collapse --}}
                         <div class="flex items-center gap-1">
                             {{-- Tombol filter by type --}}
                             <button
-                                @click="debouncedSetCategory('{{ $typeItem['name'] }}')"
+                                wire:key="btn-type-{{ $typeItem['id'] }}"
+                                @click="openType = true; debouncedSetCategory(@js($typeItem['name']))"
                                 class="flex-1 flex items-center justify-between px-5 py-2.5 rounded-2xl text-[13px] font-bold transition-all
                                     {{ $typeActive
                                         ? 'bg-white text-[#ff9100] dark:text-[#b35200] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 dark:border-[#b35200]/10 scale-[1.02]'
@@ -105,7 +116,8 @@
                             {{-- Tombol expand/collapse sub-kategori --}}
                             @if(count($typeItem['categories']) > 0)
                             <button @click="openType = !openType"
-                                class="p-2 rounded-xl text-[#b35200] hover:bg-white/50 transition-all outline-none shrink-0">
+                                class="p-2 rounded-xl text-[#b35200] hover:bg-white/50 transition-all outline-none shrink-0"
+                                aria-label="Toggle {{ $typeItem['name'] }}">
                                 <svg class="w-3.5 h-3.5 transition-transform duration-200" :class="openType ? 'rotate-180' : ''"
                                      fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
@@ -126,7 +138,8 @@
                             @foreach($typeItem['categories'] as $subCat)
                             @php $subActive = $activeCategory === $subCat['name']; @endphp
                             <button
-                                @click="debouncedSetCategory('{{ $subCat['name'] }}')"
+                                wire:key="subcat-{{ $subCat['id'] }}"
+                                @click="debouncedSetCategory(@js($subCat['name']))"
                                 class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-[12px] font-semibold transition-all
                                     {{ $subActive
                                         ? 'bg-white text-[#ff9100] dark:text-[#b35200] shadow-[0_4px_10px_rgba(0,0,0,0.07)] border border-[#ff9100]/10 dark:border-[#b35200]/10'

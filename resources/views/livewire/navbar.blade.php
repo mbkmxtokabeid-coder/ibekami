@@ -78,7 +78,7 @@
 
             <!-- 2. Desktop Links -->
             <div class="hidden lg:flex items-center gap-1 xl:gap-2">
-                <a href="{{ url('/') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none">
+                <a href="{{ url('/') }}" class="px-4 py-2 rounded-full text-[13px] xl:text-[14px] font-semibold transition-all outline-none {{ request()->is('/') ? 'text-[#b35200] font-bold' : 'text-[#5C3D28] hover:text-[#b35200] hover:bg-white/50' }}">
                     {{ __('messages.home') }}
                 </a>
                 <!-- <a href="{{ url('/#hot-deals') }}" 
@@ -92,7 +92,7 @@
                     <button @click="catalogMenuOpen = !catalogMenuOpen" @click.outside="catalogMenuOpen = false" 
                             aria-label="{{ __('messages.catalog') }}, {{ app()->getLocale() === 'id' ? 'buka menu' : 'open menu' }}"
                             :aria-expanded="catalogMenuOpen ? 'true' : 'false'"
-                            class="flex items-center gap-1.5 px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none"
+                            class="flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] xl:text-[14px] font-semibold transition-all outline-none {{ request()->routeIs('katalog*') ? 'text-[#b35200] font-bold' : 'text-[#5C3D28] hover:text-[#b35200] hover:bg-white/50' }}"
                             :class="catalogMenuOpen ? 'bg-white/60 text-[#b35200] shadow-sm' : ''">
                         {{ __('messages.catalog') }}
                         <svg class="w-3.5 h-3.5 transition-transform duration-300" :class="{'rotate-180': catalogMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
@@ -106,13 +106,28 @@
                          x-transition:leave="transition ease-in duration-150"
                          x-transition:leave-start="transform opacity-100 scale-100 translate-y-0"
                          x-transition:leave-end="transform opacity-0 scale-95 -translate-y-2"
-                         class="absolute top-full left-0 mt-4 w-56 bg-white/95 backdrop-blur-xl border border-white/60 rounded-2xl shadow-xl overflow-hidden z-50 p-2">
-                        <a href="{{ route('katalog') }}" class="block px-4 py-2.5 rounded-xl text-[14px] font-bold text-[#b35200] bg-[#fff2e0]/50 hover:bg-[#fff2e0] transition-colors mb-1">{{ __('messages.all_products') }}</a>
+                         class="absolute top-full left-0 mt-4 w-56 bg-white/95 dark:bg-[#1E140D]/95 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-2xl shadow-xl overflow-hidden z-50 p-2">
+                        @php
+                            $isAllProductsSelected = $isKatalogPage && (
+                                empty($selectedTypeSlug) && 
+                                ($selectedCategory === __('messages.all_products') || empty($selectedCategory) || $selectedCategory === 'Semua Produk' || $selectedCategory === 'All Products')
+                            );
+                        @endphp
+                        <a href="{{ route('katalog') }}" 
+                           class="block px-4 py-2.5 rounded-xl text-[14px] transition-colors mb-1 {{ $isAllProductsSelected ? 'font-bold text-[#b35200] bg-[#fff2e0] dark:bg-[#b35200]/20' : 'font-medium text-[#5C3D28] dark:text-[#D8C6B6] hover:text-[#b35200] hover:bg-black/5 dark:hover:bg-white/5' }}">
+                            {{ __('messages.all_products') }}
+                        </a>
                         
                         @forelse($productTypes as $type)
+                            @php
+                                $isTypeSelected = $isKatalogPage && (
+                                    (!empty($selectedTypeSlug) && $selectedTypeSlug === $type['slug']) ||
+                                    (!empty($selectedCategory) && $selectedCategory === $type['name'])
+                                );
+                            @endphp
                             <a href="{{ route('katalog', ['type' => $type['slug']]) }}"
                                wire:key="desktop-type-{{ $type['id'] }}"
-                               class="block px-4 py-2 rounded-xl text-[13px] font-medium text-[#5C3D28] hover:text-[#b35200] hover:bg-black/5 transition-colors">
+                               class="block px-4 py-2 rounded-xl text-[13px] transition-colors {{ $isTypeSelected ? 'font-bold text-[#b35200] bg-[#fff2e0] dark:bg-[#b35200]/20' : 'font-medium text-[#5C3D28] dark:text-[#D8C6B6] hover:text-[#b35200] hover:bg-black/5 dark:hover:bg-white/5' }}">
                                 {{ $type['name'] }}
                             </a>
                         @empty
@@ -121,7 +136,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('mesin') }}" class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none">
+                <a href="{{ route('mesin') }}" class="px-4 py-2 rounded-full text-[13px] xl:text-[14px] font-semibold transition-all outline-none {{ request()->routeIs('mesin') ? 'text-[#b35200] font-bold' : 'text-[#5C3D28] hover:text-[#b35200] hover:bg-white/50' }}">
                     {{ __('messages.our_machines') }}
                 </a>
                 <a href="{{ url('/#footer') }}" 
@@ -275,9 +290,6 @@
             <a href="{{ url('/') }}" 
                @click="mobileMenuOpen = false;"
                class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
-            <a href="{{ url('/#hot-deals') }}" 
-               @click="mobileMenuOpen = false; if (document.getElementById('hot-deals')) { $event.preventDefault(); document.getElementById('hot-deals').scrollIntoView({ behavior: 'smooth' }); }"
-               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.hot_deals') }}</a>
             
             <!-- Katalog Dropdown (Mobile) -->
             <div class="bg-[#fff2e0]/40 rounded-2xl">
@@ -296,13 +308,28 @@
                      x-transition:leave-start="opacity-100 translate-y-0"
                      x-transition:leave-end="opacity-0 -translate-y-1"
                      class="px-4 pb-3 flex flex-col gap-2">
-                    <div class="w-full h-px bg-black/5 mb-1"></div>
-                    <a href="{{ route('katalog') }}" class="px-3 py-2 rounded-xl bg-[#b35200]/10 text-[14px] font-bold text-[#b35200]">{{ __('messages.all_products') }}</a>
+                    <div class="w-full h-px bg-black/5 dark:bg-white/10 mb-1"></div>
+                    @php
+                        $isAllProductsSelectedMobile = $isKatalogPage && (
+                            empty($selectedTypeSlug) && 
+                            ($selectedCategory === __('messages.all_products') || empty($selectedCategory) || $selectedCategory === 'Semua Produk' || $selectedCategory === 'All Products')
+                        );
+                    @endphp
+                    <a href="{{ route('katalog') }}" 
+                       class="px-3 py-2 rounded-xl text-[14px] transition-colors {{ $isAllProductsSelectedMobile ? 'bg-[#b35200]/10 text-[#b35200] font-bold dark:bg-[#b35200]/20' : 'text-[#5C3D28] dark:text-[#D8C6B6] font-medium hover:bg-[#fff2e0] dark:hover:bg-white/5' }}">
+                        {{ __('messages.all_products') }}
+                    </a>
                     
                     @forelse($productTypes as $type)
+                        @php
+                            $isTypeSelectedMobile = $isKatalogPage && (
+                                (!empty($selectedTypeSlug) && $selectedTypeSlug === $type['slug']) ||
+                                (!empty($selectedCategory) && $selectedCategory === $type['name'])
+                            );
+                        @endphp
                         <a href="{{ route('katalog', ['type' => $type['slug']]) }}"
                            wire:key="mobile-type-{{ $type['id'] }}"
-                           class="px-3 py-2 rounded-xl text-[14px] font-medium text-[#5C3D28] hover:bg-[#fff2e0]">
+                           class="px-3 py-2 rounded-xl text-[14px] transition-colors {{ $isTypeSelectedMobile ? 'bg-[#b35200]/10 text-[#b35200] font-bold dark:bg-[#b35200]/20' : 'text-[#5C3D28] dark:text-[#D8C6B6] font-medium hover:bg-[#fff2e0] dark:hover:bg-white/5' }}">
                             {{ $type['name'] }}
                         </a>
                     @empty
