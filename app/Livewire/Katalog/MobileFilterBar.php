@@ -29,20 +29,6 @@ class MobileFilterBar extends Component
             $this->search = (string) request()->get('search');
         }
 
-        if (request()->has('type')) {
-            $typeSlug = (string) request()->get('type');
-            $type = Type::all()->first(function ($t) use ($typeSlug) {
-                return \Illuminate\Support\Str::slug($t->name_id ?: '') === $typeSlug
-                    || \Illuminate\Support\Str::slug($t->name_en ?: '') === $typeSlug
-                    || \Illuminate\Support\Str::slug($t->name) === $typeSlug;
-            });
-
-            if ($type) {
-                $this->activeCategory = $type->name;
-                $this->selectedTypes = [$type->name];
-            }
-        }
-
         if (request()->has('category')) {
             $catSlug = (string) request()->get('category');
             $category = Category::all()->first(function ($c) use ($catSlug) {
@@ -55,7 +41,25 @@ class MobileFilterBar extends Component
             if ($category) {
                 $this->activeCategory = $category->name;
                 $this->selectedCategories = [$category->name];
+                $this->selectedTypes = [];
             }
+        } elseif (request()->has('type')) {
+            $typeSlug = (string) request()->get('type');
+            $type = Type::all()->first(function ($t) use ($typeSlug) {
+                return \Illuminate\Support\Str::slug($t->name_id ?: '') === $typeSlug
+                    || \Illuminate\Support\Str::slug($t->name_en ?: '') === $typeSlug
+                    || \Illuminate\Support\Str::slug($t->name) === $typeSlug;
+            });
+
+            if ($type) {
+                $this->activeCategory = $type->name;
+                $this->selectedTypes = [$type->name];
+                $this->selectedCategories = [];
+            }
+        }
+
+        if (request()->has('type') || request()->has('category')) {
+            session(['katalog_last_url' => request()->fullUrl()]);
         }
 
         $this->loadData();
@@ -103,21 +107,40 @@ class MobileFilterBar extends Component
         if ($cat === __('messages.all_products') || $cat === 'Semua Produk' || $cat === 'All Products') {
             $this->selectedTypes = [];
             $this->selectedCategories = [];
+            session()->forget('katalog_last_url');
             $this->dispatch('multiFilterChanged', types: [], categories: []);
             $this->dispatch('categoryChanged', category: $cat);
             $this->js("window.history.replaceState({}, '', '" . route('katalog') . "')");
         } else {
-            $this->selectedTypes = [$cat];
-            $this->selectedCategories = [];
-            $this->dispatch('multiFilterChanged', types: [$cat], categories: []);
-            $this->dispatch('categoryChanged', category: $cat);
-
             $type = Type::all()->first(fn($t) => $t->name === $cat || $t->name_id === $cat || $t->name_en === $cat);
             if ($type) {
-                $slug = \Illuminate\Support\Str::slug($type->name_id ?: $type->name_en);
-                $this->js("window.history.replaceState({}, '', '" . route('katalog', ['type' => $slug]) . "')");
+                $this->selectedTypes = [$type->name];
+                $this->selectedCategories = [];
+                $slug = \Illuminate\Support\Str::slug($type->name_id ?: $type->name_en ?: $type->name);
+                $url = route('katalog', ['type' => $slug]);
+                session(['katalog_last_url' => $url]);
+                $this->dispatch('multiFilterChanged', types: [$type->name], categories: []);
+                $this->dispatch('categoryChanged', category: $type->name);
+                $this->js("window.history.replaceState({}, '', '" . $url . "')");
             } else {
-                $this->js("window.history.replaceState({}, '', '" . route('katalog') . "')");
+                $category = Category::all()->first(fn($c) => $c->name === $cat || $c->name_id === $cat || $c->name_en === $cat);
+                if ($category) {
+                    $this->selectedTypes = [];
+                    $this->selectedCategories = [$category->name];
+                    $slug = \Illuminate\Support\Str::slug($category->name_id ?: $category->name_en ?: $category->name);
+                    $url = route('katalog', ['category' => $slug]);
+                    session(['katalog_last_url' => $url]);
+                    $this->dispatch('multiFilterChanged', types: [], categories: [$category->name]);
+                    $this->dispatch('categoryChanged', category: $category->name);
+                    $this->js("window.history.replaceState({}, '', '" . $url . "')");
+                } else {
+                    $this->selectedTypes = [];
+                    $this->selectedCategories = [];
+                    session()->forget('katalog_last_url');
+                    $this->dispatch('multiFilterChanged', types: [], categories: []);
+                    $this->dispatch('categoryChanged', category: $cat);
+                    $this->js("window.history.replaceState({}, '', '" . route('katalog') . "')");
+                }
             }
         }
     }
@@ -135,6 +158,27 @@ class MobileFilterBar extends Component
             $this->activeCategory = __('messages.all_products');
         }
 
+        if (count($types) === 1 && count($categories) === 0) {
+            $type = Type::all()->first(fn($t) => $t->name === $types[0] || $t->name_id === $types[0] || $t->name_en === $types[0]);
+            if ($type) {
+                $slug = \Illuminate\Support\Str::slug($type->name_id ?: $type->name_en ?: $type->name);
+                $url = route('katalog', ['type' => $slug]);
+                session(['katalog_last_url' => $url]);
+                $this->js("window.history.replaceState({}, '', '" . $url . "')");
+            }
+        } elseif (count($categories) === 1 && count($types) === 0) {
+            $category = Category::all()->first(fn($c) => $c->name === $categories[0] || $c->name_id === $categories[0] || $c->name_en === $categories[0]);
+            if ($category) {
+                $slug = \Illuminate\Support\Str::slug($category->name_id ?: $category->name_en ?: $category->name);
+                $url = route('katalog', ['category' => $slug]);
+                session(['katalog_last_url' => $url]);
+                $this->js("window.history.replaceState({}, '', '" . $url . "')");
+            }
+        } elseif (count($types) === 0 && count($categories) === 0) {
+            session()->forget('katalog_last_url');
+            $this->js("window.history.replaceState({}, '', '" . route('katalog') . "')");
+        }
+
         $this->dispatch('multiFilterChanged', types: $types, categories: $categories);
     }
 
@@ -145,8 +189,17 @@ class MobileFilterBar extends Component
             $this->selectedTypes = [];
             $this->selectedCategories = [];
         } else {
-            $this->selectedTypes = [$category];
-            $this->selectedCategories = [];
+            $type = Type::all()->first(fn($t) => $t->name === $category || $t->name_id === $category || $t->name_en === $category);
+            if ($type) {
+                $this->selectedTypes = [$type->name];
+                $this->selectedCategories = [];
+            } else {
+                $cat = Category::all()->first(fn($c) => $c->name === $category || $c->name_id === $category || $c->name_en === $category);
+                if ($cat) {
+                    $this->selectedTypes = [];
+                    $this->selectedCategories = [$cat->name];
+                }
+            }
         }
     }
 

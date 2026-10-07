@@ -107,7 +107,8 @@
             </div>
 
             <div class="flex flex-col sm:flex-row gap-4 w-full">
-                <a href="{{ route('katalog') }}" 
+                <a href="{{ session('katalog_last_url', route('katalog')) }}" 
+                   @click="if (window.history.length > 1 && document.referrer && document.referrer.includes('/katalog')) { $event.preventDefault(); window.history.back(); }"
                    class="flex-1 bg-white dark:bg-[#231811] border-2 border-[#ff9100] dark:border-[#b35200] text-[#2C1A0E] dark:text-[#FDF5EC] py-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-base transition-all hover:bg-[#fff2e0] dark:hover:bg-[#b35200]/20 active:scale-[0.98] shadow-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>

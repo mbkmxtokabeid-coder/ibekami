@@ -38,22 +38,7 @@ class KatalogSection extends Component
             $this->search = (string) request()->get('search');
         }
         
-        // Check if there's a type parameter in the URL
-        if (request()->has('type')) {
-            $typeSlug = (string) request()->get('type');
-            $type = Type::all()->first(function ($t) use ($typeSlug) {
-                return \Illuminate\Support\Str::slug($t->name_id ?: '') === $typeSlug
-                    || \Illuminate\Support\Str::slug($t->name_en ?: '') === $typeSlug
-                    || \Illuminate\Support\Str::slug($t->name) === $typeSlug;
-            });
-            
-            if ($type) {
-                $this->activeCategory = $type->name;
-                $this->typeFilter = $type->name;
-            }
-        }
-
-        // Check if there's a category parameter in the URL
+        // Check if there's a category parameter in the URL (higher priority than type)
         if (request()->has('category')) {
             $catSlug = (string) request()->get('category');
             $cat = \App\Models\Category::all()->first(function ($c) use ($catSlug) {
@@ -65,6 +50,19 @@ class KatalogSection extends Component
 
             if ($cat) {
                 $this->activeCategory = $cat->name;
+                $this->typeFilter = null;
+            }
+        } elseif (request()->has('type')) {
+            $typeSlug = (string) request()->get('type');
+            $type = Type::all()->first(function ($t) use ($typeSlug) {
+                return \Illuminate\Support\Str::slug($t->name_id ?: '') === $typeSlug
+                    || \Illuminate\Support\Str::slug($t->name_en ?: '') === $typeSlug
+                    || \Illuminate\Support\Str::slug($t->name) === $typeSlug;
+            });
+            
+            if ($type) {
+                $this->activeCategory = $type->name;
+                $this->typeFilter = $type->name;
             }
         }
     }
@@ -141,6 +139,7 @@ class KatalogSection extends Component
         $this->selectedTypes      = [];
         $this->selectedCategories = [];
         $this->page               = 1;
+        session()->forget('katalog_last_url');
         $this->dispatch('filtersReset');
         $this->js("window.history.replaceState({}, '', '" . route('katalog') . "')");
     }
@@ -187,7 +186,7 @@ class KatalogSection extends Component
                 });
             }
             // Filter dari sidebar single-select
-            elseif ($this->activeCategory !== __('messages.all_products')) {
+            elseif ($this->activeCategory !== __('messages.all_products') && $this->activeCategory !== 'Semua Produk' && $this->activeCategory !== 'All Products') {
                 $query->where(function ($q) use ($typeNameColumn, $categoryNameColumn) {
                     $q->whereHas('category', fn($cq) => $cq->where($categoryNameColumn, 'like', '%' . $this->activeCategory . '%'))
                       ->orWhereHas('type', fn($tq) => $tq->where($typeNameColumn, 'like', '%' . $this->activeCategory . '%'));

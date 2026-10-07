@@ -60,4 +60,13 @@
 {{-- Footer --}}
 <livewire:footer lazy />
 
+@push('scripts')
+<script>
+    // Sinkronisasi state katalog saat pengguna menavigasi riwayat browser (Back/Forward)
+    window.addEventListener('popstate', function() {
+        window.location.reload();
+    });
+</script>
+@endpush
+
 @endsection

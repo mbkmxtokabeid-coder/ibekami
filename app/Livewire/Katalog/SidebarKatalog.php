@@ -43,20 +43,6 @@ class SidebarKatalog extends Component
             $this->search = (string) request()->get('search');
         }
 
-        if (request()->has('type')) {
-            $typeSlug = (string) request()->get('type');
-            $type = Type::all()->first(function ($t) use ($typeSlug) {
-                return Str::slug($t->name_id ?: '') === $typeSlug
-                    || Str::slug($t->name_en ?: '') === $typeSlug
-                    || Str::slug($t->name) === $typeSlug;
-            });
-
-            if ($type) {
-                $this->activeCategory = $type->name;
-                $this->selectedTypes = [$type->name];
-            }
-        }
-
         if (request()->has('category')) {
             $catSlug = (string) request()->get('category');
             $category = Category::all()->first(function ($c) use ($catSlug) {
@@ -69,7 +55,27 @@ class SidebarKatalog extends Component
             if ($category) {
                 $this->activeCategory = $category->name;
                 $this->selectedCategories = [$category->name];
+                $this->selectedTypes = [];
             }
+        } elseif (request()->has('type')) {
+            $typeSlug = (string) request()->get('type');
+            $type = Type::all()->first(function ($t) use ($typeSlug) {
+                return Str::slug($t->name_id ?: '') === $typeSlug
+                    || Str::slug($t->name_en ?: '') === $typeSlug
+                    || Str::slug($t->name) === $typeSlug;
+            });
+
+            if ($type) {
+                $this->activeCategory = $type->name;
+                $this->selectedTypes = [$type->name];
+                $this->selectedCategories = [];
+            }
+        } else {
+            session()->forget('katalog_last_url');
+        }
+
+        if (request()->has('type') || request()->has('category')) {
+            session(['katalog_last_url' => request()->fullUrl()]);
         }
 
         $this->loadCategories();
@@ -134,20 +140,40 @@ class SidebarKatalog extends Component
     public function setCategory(string $cat): void
     {
         $this->activeCategory = $cat;
-        $this->selectedTypes = [];
-        $this->selectedCategories = [];
-        $this->dispatch('categoryChanged', category: $cat);
 
-        // Update URL browser tanpa reload halaman
         if ($cat === __('messages.all_products') || $cat === 'Semua Produk' || $cat === 'All Products') {
+            $this->selectedTypes = [];
+            $this->selectedCategories = [];
+            session()->forget('katalog_last_url');
+            $this->dispatch('categoryChanged', category: $cat);
             $this->js("window.history.replaceState({}, '', '" . route('katalog') . "')");
         } else {
             $type = Type::all()->first(fn($t) => $t->name === $cat || $t->name_id === $cat || $t->name_en === $cat);
             if ($type) {
-                $slug = Str::slug($type->name_id ?: $type->name_en);
-                $this->js("window.history.replaceState({}, '', '" . route('katalog', ['type' => $slug]) . "')");
+                $this->selectedTypes = [$type->name];
+                $this->selectedCategories = [];
+                $slug = Str::slug($type->name_id ?: $type->name_en ?: $type->name);
+                $url = route('katalog', ['type' => $slug]);
+                session(['katalog_last_url' => $url]);
+                $this->dispatch('categoryChanged', category: $type->name);
+                $this->js("window.history.replaceState({}, '', '" . $url . "')");
             } else {
-                $this->js("window.history.replaceState({}, '', '" . route('katalog') . "')");
+                $category = Category::all()->first(fn($c) => $c->name === $cat || $c->name_id === $cat || $c->name_en === $cat);
+                if ($category) {
+                    $this->selectedTypes = [];
+                    $this->selectedCategories = [$category->name];
+                    $slug = Str::slug($category->name_id ?: $category->name_en ?: $category->name);
+                    $url = route('katalog', ['category' => $slug]);
+                    session(['katalog_last_url' => $url]);
+                    $this->dispatch('categoryChanged', category: $category->name);
+                    $this->js("window.history.replaceState({}, '', '" . $url . "')");
+                } else {
+                    $this->selectedTypes = [];
+                    $this->selectedCategories = [];
+                    session()->forget('katalog_last_url');
+                    $this->dispatch('categoryChanged', category: $cat);
+                    $this->js("window.history.replaceState({}, '', '" . route('katalog') . "')");
+                }
             }
         }
     }
@@ -167,6 +193,22 @@ class SidebarKatalog extends Component
     public function onCategoryChanged(string $category): void
     {
         $this->activeCategory = $category;
+        if ($category === __('messages.all_products') || $category === 'Semua Produk' || $category === 'All Products') {
+            $this->selectedTypes = [];
+            $this->selectedCategories = [];
+        } else {
+            $type = Type::all()->first(fn($t) => $t->name === $category || $t->name_id === $category || $t->name_en === $category);
+            if ($type) {
+                $this->selectedTypes = [$type->name];
+                $this->selectedCategories = [];
+            } else {
+                $cat = Category::all()->first(fn($c) => $c->name === $category || $c->name_id === $category || $c->name_en === $category);
+                if ($cat) {
+                    $this->selectedTypes = [];
+                    $this->selectedCategories = [$cat->name];
+                }
+            }
+        }
     }
 
     #[On('searchChanged')]
@@ -195,6 +237,30 @@ class SidebarKatalog extends Component
     {
         $this->onMultiFilterChanged($types, $categories);
         $this->dispatch('multiFilterChanged', types: $types, categories: $categories);
+
+        if (count($types) === 1 && count($categories) === 0) {
+            $type = Type::all()->first(fn($t) => $t->name === $types[0] || $t->name_id === $types[0] || $t->name_en === $types[0]);
+            if ($type) {
+                $slug = Str::slug($type->name_id ?: $type->name_en ?: $type->name);
+                $url = route('katalog', ['type' => $slug]);
+                session(['katalog_last_url' => $url]);
+                $this->js("window.history.replaceState({}, '', '" . $url . "')");
+                return;
+            }
+        } elseif (count($categories) === 1 && count($types) === 0) {
+            $category = Category::all()->first(fn($c) => $c->name === $categories[0] || $c->name_id === $categories[0] || $c->name_en === $categories[0]);
+            if ($category) {
+                $slug = Str::slug($category->name_id ?: $category->name_en ?: $category->name);
+                $url = route('katalog', ['category' => $slug]);
+                session(['katalog_last_url' => $url]);
+                $this->js("window.history.replaceState({}, '', '" . $url . "')");
+                return;
+            }
+        } elseif (count($types) === 0 && count($categories) === 0) {
+            session()->forget('katalog_last_url');
+            $this->js("window.history.replaceState({}, '', '" . route('katalog') . "')");
+            return;
+        }
     }
 
     #[On('filtersReset')]
@@ -211,6 +277,8 @@ class SidebarKatalog extends Component
         $this->activeCategory     = __('messages.all_products');
         $this->sortBy             = __('messages.newest');
         $this->search             = '';
+
+        session()->forget('katalog_last_url');
 
         $this->dispatch('multiFilterChanged', types: [], categories: []);
         $this->dispatch('categoryChanged', category: $this->activeCategory);

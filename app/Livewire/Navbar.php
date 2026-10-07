@@ -37,22 +37,7 @@ class Navbar extends Component
         $this->isKatalogPage = request()->routeIs('katalog') || request()->is('katalog');
 
         if ($this->isKatalogPage) {
-            if (request()->has('type')) {
-                $typeSlug = (string) request()->get('type');
-                $type = Type::all()->first(function ($t) use ($typeSlug) {
-                    return Str::slug($t->name_id ?: '') === $typeSlug
-                        || Str::slug($t->name_en ?: '') === $typeSlug
-                        || Str::slug($t->name) === $typeSlug;
-                });
-
-                if ($type) {
-                    $this->selectedTypeSlug = Str::slug($type->name_id ?: $type->name_en);
-                    $this->selectedCategory = $type->name;
-                } else {
-                    $this->selectedTypeSlug = $typeSlug;
-                    $this->selectedCategory = null;
-                }
-            } elseif (request()->has('category')) {
+            if (request()->has('category')) {
                 $catSlug = (string) request()->get('category');
                 $cat = Category::with('type')->get()->first(function ($c) use ($catSlug) {
                     return Str::slug($c->name_id ?: '') === $catSlug
@@ -66,6 +51,21 @@ class Navbar extends Component
                     if ($cat->type) {
                         $this->selectedTypeSlug = Str::slug($cat->type->name_id ?: $cat->type->name_en);
                     }
+                }
+            } elseif (request()->has('type')) {
+                $typeSlug = (string) request()->get('type');
+                $type = Type::all()->first(function ($t) use ($typeSlug) {
+                    return Str::slug($t->name_id ?: '') === $typeSlug
+                        || Str::slug($t->name_en ?: '') === $typeSlug
+                        || Str::slug($t->name) === $typeSlug;
+                });
+
+                if ($type) {
+                    $this->selectedTypeSlug = Str::slug($type->name_id ?: $type->name_en);
+                    $this->selectedCategory = $type->name;
+                } else {
+                    $this->selectedTypeSlug = $typeSlug;
+                    $this->selectedCategory = null;
                 }
             } else {
                 $this->selectedCategory = __('messages.all_products');
