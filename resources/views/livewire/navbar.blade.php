@@ -200,7 +200,7 @@
                         type="button"
                         aria-label="Toggle Dark / Light Mode"
                         class="flex items-center justify-center w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-full bg-white/40 border border-white/50 text-[#5C3D28] hover:text-[#b35200] hover:bg-white transition-all outline-none shadow-sm hover:scale-105 active:scale-95 shrink-0"
-                        :title="isDark ? 'Mode Terang' : 'Mode Gelap'">
+                        :title="isDark ? '{{ app()->getLocale() === 'id' ? 'Mode Terang' : 'Light Mode' }}' : '{{ app()->getLocale() === 'id' ? 'Mode Gelap' : 'Dark Mode' }}'">
                     <!-- Sun icon: shown when dark (click to switch to light) -->
                     <svg x-show="isDark" x-cloak class="w-4.5 h-4.5 text-[#FFA026]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -349,12 +349,12 @@
             <div @click="toggleTheme()" class="flex items-center justify-between px-4 py-2.5 rounded-2xl bg-[#fff2e0]/60 dark:bg-[#2c1d15] my-1 cursor-pointer select-none transition-colors">
                 <span class="text-[14px] font-semibold text-[#5C3D28] dark:text-[#FDF5EC] flex items-center gap-2.5">
                     <span class="text-base" x-text="isDark ? '🌙' : '☀️'"></span>
-                    <span>Mode Gelap</span>
+                    <span>{{ app()->getLocale() === 'id' ? 'Mode Gelap' : 'Dark Mode' }}</span>
                 </span>
                 <button type="button" 
                         role="switch"
                         :aria-checked="isDark"
-                        aria-label="Toggle Mode Gelap"
+                        aria-label="{{ app()->getLocale() === 'id' ? 'Aktifkan Mode Gelap' : 'Toggle Dark Mode' }}"
                         class="relative inline-flex h-7 w-[52px] shrink-0 cursor-pointer rounded-full p-0.5 transition-colors duration-300 ease-in-out focus:outline-none shadow-inner"
                         :class="isDark ? 'bg-[#b35200]' : 'bg-[#d8c5b5]'">
                     <span class="pointer-events-none inline-flex items-center justify-center h-6 w-6 transform rounded-full bg-white shadow-md transition-transform duration-300 ease-in-out text-[8px] font-black uppercase tracking-wider"
