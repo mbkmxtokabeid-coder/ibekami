@@ -269,6 +269,14 @@ Route::prefix('admin')
                     $message .= " [Info Log: {$logError}]";
                 }
 
+                // ── 5. GENERATE SITEMAP OTOMATIS & RAPI ──
+                try {
+                    \Illuminate\Support\Facades\Artisan::call('sitemap:generate');
+                    $message .= " Sitemap XML berhasil diperbarui secara otomatis.";
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning('Gagal generate sitemap saat optimasi: ' . $e->getMessage());
+                }
+
                 // Naikkan versi cache dinamis & hapus cache partners & hero banners
                 \Illuminate\Support\Facades\Cache::forever('homepage_products_version', time());
                 \Illuminate\Support\Facades\Cache::forget('homepage:partners');

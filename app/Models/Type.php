@@ -45,4 +45,54 @@ class Type extends Model
             return $this->name_id ?: $this->name_en;
         });
     }
+
+    /**
+     * Slug resmi SEO untuk Type.
+     */
+    public function getSlug(): string
+    {
+        $customSlugs = [
+            1  => 'suvenir',
+            2  => 'plakat',
+            8  => 'percetakan-digital',
+            9  => 'akrilik',
+            10 => 'simbol-k3-spesialis',
+        ];
+
+        return $customSlugs[$this->id] ?? \Illuminate\Support\Str::slug($this->name_id ?: $this->name_en ?: 'kategori');
+    }
+
+    /**
+     * Cari Type berdasarkan slug atau aliasnya.
+     */
+    public static function findBySlug(string $slug): ?self
+    {
+        $aliases = [
+            'suvenir'               => 1,
+            'souvenir'              => 1,
+            'souvenir-merchandise'  => 1,
+            'plakat'                => 2,
+            'plaque'                => 2,
+            'plaque-plakat'         => 2,
+            'percetakan-digital'    => 8,
+            'digital-printing'      => 8,
+            'akrilik'               => 9,
+            'acrylic'               => 9,
+            'simbol-k3-spesialis'   => 10,
+            'specialist-k3-symbols' => 10,
+        ];
+
+        if (isset($aliases[$slug])) {
+            $type = self::find($aliases[$slug]);
+            if ($type) {
+                return $type;
+            }
+        }
+
+        return self::all()->first(function ($t) use ($slug) {
+            return \Illuminate\Support\Str::slug($t->name_id ?: '') === $slug
+                || \Illuminate\Support\Str::slug($t->name_en ?: '') === $slug
+                || \Illuminate\Support\Str::slug($t->name) === $slug;
+        });
+    }
 }

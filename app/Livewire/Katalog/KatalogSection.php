@@ -54,11 +54,7 @@ class KatalogSection extends Component
             }
         } elseif (request()->has('type')) {
             $typeSlug = (string) request()->get('type');
-            $type = Type::all()->first(function ($t) use ($typeSlug) {
-                return \Illuminate\Support\Str::slug($t->name_id ?: '') === $typeSlug
-                    || \Illuminate\Support\Str::slug($t->name_en ?: '') === $typeSlug
-                    || \Illuminate\Support\Str::slug($t->name) === $typeSlug;
-            });
+            $type = Type::findBySlug($typeSlug);
             
             if ($type) {
                 $this->activeCategory = $type->name;

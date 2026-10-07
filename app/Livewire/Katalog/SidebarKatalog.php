@@ -59,11 +59,7 @@ class SidebarKatalog extends Component
             }
         } elseif (request()->has('type')) {
             $typeSlug = (string) request()->get('type');
-            $type = Type::all()->first(function ($t) use ($typeSlug) {
-                return Str::slug($t->name_id ?: '') === $typeSlug
-                    || Str::slug($t->name_en ?: '') === $typeSlug
-                    || Str::slug($t->name) === $typeSlug;
-            });
+            $type = Type::findBySlug($typeSlug);
 
             if ($type) {
                 $this->activeCategory = $type->name;
@@ -152,7 +148,7 @@ class SidebarKatalog extends Component
             if ($type) {
                 $this->selectedTypes = [$type->name];
                 $this->selectedCategories = [];
-                $slug = Str::slug($type->name_id ?: $type->name_en ?: $type->name);
+                $slug = $type->getSlug();
                 $url = route('katalog', ['type' => $slug]);
                 session(['katalog_last_url' => $url]);
                 $this->dispatch('categoryChanged', category: $type->name);
@@ -241,7 +237,7 @@ class SidebarKatalog extends Component
         if (count($types) === 1 && count($categories) === 0) {
             $type = Type::all()->first(fn($t) => $t->name === $types[0] || $t->name_id === $types[0] || $t->name_en === $types[0]);
             if ($type) {
-                $slug = Str::slug($type->name_id ?: $type->name_en ?: $type->name);
+                $slug = $type->getSlug();
                 $url = route('katalog', ['type' => $slug]);
                 session(['katalog_last_url' => $url]);
                 $this->js("window.history.replaceState({}, '', '" . $url . "')");

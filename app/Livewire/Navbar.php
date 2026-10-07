@@ -54,14 +54,10 @@ class Navbar extends Component
                 }
             } elseif (request()->has('type')) {
                 $typeSlug = (string) request()->get('type');
-                $type = Type::all()->first(function ($t) use ($typeSlug) {
-                    return Str::slug($t->name_id ?: '') === $typeSlug
-                        || Str::slug($t->name_en ?: '') === $typeSlug
-                        || Str::slug($t->name) === $typeSlug;
-                });
+                $type = Type::findBySlug($typeSlug);
 
                 if ($type) {
-                    $this->selectedTypeSlug = Str::slug($type->name_id ?: $type->name_en);
+                    $this->selectedTypeSlug = $type->getSlug();
                     $this->selectedCategory = $type->name;
                 } else {
                     $this->selectedTypeSlug = $typeSlug;
@@ -88,7 +84,7 @@ class Navbar extends Component
                     return [
                         'id' => $type->id,
                         'name' => $type->name,
-                        'slug' => Str::slug($type->name_id ?: $type->name_en),
+                        'slug' => $type->getSlug(),
                     ];
                 })
                 ->toArray();
@@ -116,11 +112,11 @@ class Navbar extends Component
         } else {
             $type = Type::all()->first(fn($t) => $t->name === $category || $t->name_id === $category || $t->name_en === $category);
             if ($type) {
-                $this->selectedTypeSlug = Str::slug($type->name_id ?: $type->name_en);
+                $this->selectedTypeSlug = $type->getSlug();
             } else {
                 $cat = Category::with('type')->get()->first(fn($c) => $c->name === $category || $c->name_id === $category || $c->name_en === $category);
                 if ($cat && $cat->type) {
-                    $this->selectedTypeSlug = Str::slug($cat->type->name_id ?: $cat->type->name_en);
+                    $this->selectedTypeSlug = $cat->type->getSlug();
                 } else {
                     $this->selectedTypeSlug = null;
                 }
