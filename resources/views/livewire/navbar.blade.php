@@ -78,22 +78,17 @@
 
             <!-- 2. Desktop Links -->
             <div class="hidden lg:flex items-center gap-1 xl:gap-2">
-                <a href="{{ url('/') }}" class="px-4 py-2 rounded-full text-[13px] xl:text-[14px] font-semibold transition-all outline-none {{ request()->is('/') ? 'text-[#b35200] font-bold' : 'text-[#5C3D28] hover:text-[#b35200] hover:bg-white/50' }}">
+                <a href="{{ url('/') }}" class="px-4 py-2 rounded-full text-[13px] xl:text-[14px] font-semibold transition-all outline-none {{ request()->is('/') ? 'text-[#b35200] dark:text-[#ff9100] font-bold' : 'text-[#5C3D28] dark:text-white hover:text-[#b35200] dark:hover:text-[#ff9100] hover:font-bold hover:bg-white/50 dark:hover:bg-[#2A1D15]' }}">
                     {{ __('messages.home') }}
                 </a>
-                <!-- <a href="{{ url('/#hot-deals') }}" 
-                   @click="if (document.getElementById('hot-deals')) { $event.preventDefault(); document.getElementById('hot-deals').scrollIntoView({ behavior: 'smooth' }); }"
-                   class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none">
-                    {{ __('messages.hot_deals') }}
-                </a> -->
                 
                 <!-- Katalog Dropdown (Desktop) -->
                 <div class="relative">
                     <button @click="catalogMenuOpen = !catalogMenuOpen" @click.outside="catalogMenuOpen = false" 
                             aria-label="{{ __('messages.catalog') }}, {{ app()->getLocale() === 'id' ? 'buka menu' : 'open menu' }}"
                             :aria-expanded="catalogMenuOpen ? 'true' : 'false'"
-                            class="flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] xl:text-[14px] font-semibold transition-all outline-none {{ request()->routeIs('katalog*') ? 'text-[#b35200] font-bold' : 'text-[#5C3D28] hover:text-[#b35200] hover:bg-white/50' }}"
-                            :class="catalogMenuOpen ? 'bg-white/60 text-[#b35200] shadow-sm' : ''">
+                            class="flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] xl:text-[14px] font-semibold transition-all outline-none cursor-pointer {{ request()->routeIs('katalog*') ? 'text-[#b35200] dark:text-[#ff9100] font-bold' : 'text-[#5C3D28] dark:text-white hover:text-[#b35200] dark:hover:text-[#ff9100] hover:font-bold hover:bg-white/50 dark:hover:bg-[#2A1D15]' }}"
+                            :class="catalogMenuOpen ? 'bg-white/60 dark:bg-[#231811] text-[#b35200] dark:text-[#ff9100] shadow-sm font-bold' : ''">
                         {{ __('messages.catalog') }}
                         <svg class="w-3.5 h-3.5 transition-transform duration-300" :class="{'rotate-180': catalogMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                     </button>
@@ -114,7 +109,7 @@
                             );
                         @endphp
                         <a href="{{ route('katalog') }}" 
-                           class="block px-4 py-2.5 rounded-xl text-[14px] transition-colors mb-1 {{ $isAllProductsSelected ? 'font-bold text-[#b35200] bg-[#fff2e0] dark:bg-[#b35200]/20' : 'font-medium text-[#5C3D28] dark:text-[#D8C6B6] hover:text-[#b35200] hover:bg-black/5 dark:hover:bg-white/5' }}">
+                           class="block px-4 py-2.5 rounded-xl text-[14px] transition-colors mb-1 {{ $isAllProductsSelected ? 'font-bold text-[#b35200] dark:text-[#ff9100] bg-[#fff2e0] dark:bg-[#ff9100]/20' : 'font-medium text-[#5C3D28] dark:text-white hover:text-[#b35200] dark:hover:text-[#ff9100] hover:font-bold hover:bg-black/5 dark:hover:bg-[#2A1D15]' }}">
                             {{ __('messages.all_products') }}
                         </a>
                         
@@ -127,7 +122,7 @@
                             @endphp
                             <a href="{{ route('katalog', ['type' => $type['slug']]) }}"
                                wire:key="desktop-type-{{ $type['id'] }}"
-                               class="block px-4 py-2 rounded-xl text-[13px] transition-colors {{ $isTypeSelected ? 'font-bold text-[#b35200] bg-[#fff2e0] dark:bg-[#b35200]/20' : 'font-medium text-[#5C3D28] dark:text-[#D8C6B6] hover:text-[#b35200] hover:bg-black/5 dark:hover:bg-white/5' }}">
+                               class="block px-4 py-2 rounded-xl text-[13px] transition-colors {{ $isTypeSelected ? 'font-bold text-[#b35200] dark:text-[#ff9100] bg-[#fff2e0] dark:bg-[#ff9100]/20' : 'font-medium text-[#5C3D28] dark:text-white hover:text-[#b35200] dark:hover:text-[#ff9100] hover:font-bold hover:bg-black/5 dark:hover:bg-[#2A1D15]' }}">
                                 {{ $type['name'] }}
                             </a>
                         @empty
@@ -136,12 +131,12 @@
                     </div>
                 </div>
 
-                <a href="{{ route('mesin') }}" class="px-4 py-2 rounded-full text-[13px] xl:text-[14px] font-semibold transition-all outline-none {{ request()->routeIs('mesin') ? 'text-[#b35200] font-bold' : 'text-[#5C3D28] hover:text-[#b35200] hover:bg-white/50' }}">
+                <a href="{{ route('mesin') }}" class="px-4 py-2 rounded-full text-[13px] xl:text-[14px] font-semibold transition-all outline-none {{ request()->routeIs('mesin') ? 'text-[#b35200] dark:text-[#ff9100] font-bold' : 'text-[#5C3D28] dark:text-white hover:text-[#b35200] dark:hover:text-[#ff9100] hover:font-bold hover:bg-white/50 dark:hover:bg-[#2A1D15]' }}">
                     {{ __('messages.our_machines') }}
                 </a>
                 <a href="{{ url('/#footer') }}" 
                    @click="if (document.getElementById('footer')) { $event.preventDefault(); document.getElementById('footer').scrollIntoView({ behavior: 'smooth' }); }"
-                   class="px-4 py-2 rounded-full text-[#5C3D28] text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] hover:bg-white/50 transition-all outline-none">
+                   class="px-4 py-2 rounded-full text-[#5C3D28] dark:text-white text-[13px] xl:text-[14px] font-semibold hover:text-[#b35200] dark:hover:text-[#ff9100] hover:font-bold hover:bg-white/50 dark:hover:bg-[#2A1D15] transition-all outline-none">
                     {{ __('messages.information') }}
                 </a>
             </div>
@@ -149,24 +144,12 @@
             <!-- 3. Right Actions (Search, Language, CTA, Mobile Toggles) -->
             <div class="flex items-center gap-2 xl:gap-3">
                 
-                <!-- Search Bar (Desktop & Tablet) -->
-                <!-- <div class="relative hidden md:block group">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                        <svg class="w-4 h-4 text-[#8A6A54] group-focus-within:text-[#b35200] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0Z"/></svg>
-                    </div>
-                    <input type="text" 
-                           wire:model.live.debounce.350ms="search"
-                           wire:keydown.enter="performSearch"
-                           class="block w-32 xl:w-44 p-2 pl-9 text-[12px] font-medium text-[#2C1A0E] bg-white/40 border border-white/50 rounded-full focus:ring-2 focus:ring-[#b35200]/30 focus:bg-white outline-none placeholder-[#8A6A54] transition-all shadow-inner" 
-                           placeholder="{{ __('messages.search') }}...">
-                </div> -->
-
                 <!-- Language Dropdown -->
                 <div class="relative shrink-0">
                     <button @click="langMenuOpen = !langMenuOpen" @click.outside="langMenuOpen = false" 
                             aria-label="{{ app()->getLocale() === 'id' ? 'ID - Pilih Bahasa' : 'EN - Choose Language' }}"
-                            class="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/40 border border-white/50 text-[#5C3D28] hover:text-[#b35200] hover:bg-white transition-all outline-none shadow-sm"
-                            :class="langMenuOpen ? 'bg-white ring-2 ring-[#b35200]/30' : ''">
+                            class="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/40 dark:bg-[#231811] border border-white/50 dark:border-white/10 text-[#5C3D28] dark:text-white hover:text-[#b35200] dark:hover:text-[#ff9100] hover:bg-white dark:hover:bg-[#2A1D15] transition-all outline-none shadow-sm cursor-pointer"
+                            :class="langMenuOpen ? 'bg-white dark:bg-[#2A1D15] ring-2 ring-[#b35200]/30 dark:ring-[#ff9100]/40 text-[#b35200] dark:text-[#ff9100] font-bold' : ''">
                         <span class="text-[12px] font-bold tracking-wide" x-text="currentLocale.toUpperCase()"></span>
                         <svg class="w-3 h-3 transition-transform duration-300" :class="{'rotate-180': langMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                     </button>
@@ -177,17 +160,17 @@
                          x-transition:enter-start="transform opacity-0 scale-95 -translate-y-2"
                          x-transition:enter-end="transform opacity-100 scale-100 translate-y-0"
                          x-transition:leave="transition ease-in duration-150"
-                         class="absolute right-0 mt-3 w-36 bg-white/95 backdrop-blur-xl border border-white/60 rounded-2xl shadow-xl overflow-hidden z-50 p-2">
+                         class="absolute right-0 mt-3 w-36 bg-white/95 dark:bg-[#1E140D]/95 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-2xl shadow-xl overflow-hidden z-50 p-2">
                         <button @click="debouncedChangeLanguage('id')" 
-                                class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold w-full transition-colors"
-                                :class="currentLocale === 'id' ? 'bg-[#fff2e0]/50 text-[#b35200]' : 'hover:bg-black/5 text-[#5C3D28]'"
+                                class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] w-full transition-colors cursor-pointer"
+                                :class="currentLocale === 'id' ? 'font-bold bg-[#fff2e0]/70 dark:bg-[#ff9100]/20 text-[#b35200] dark:text-[#ff9100]' : 'font-medium hover:bg-black/5 dark:hover:bg-[#2A1D15] text-[#5C3D28] dark:text-white hover:text-[#b35200] dark:hover:text-[#ff9100] hover:font-bold'"
                                 :disabled="isChangingLanguage">
                             <span class="text-[12px] font-bold tracking-wider w-6 text-left">ID</span>
                             <span>Indonesia</span>
                         </button>
                         <button @click="debouncedChangeLanguage('en')" 
-                                class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold w-full transition-colors"
-                                :class="currentLocale === 'en' ? 'bg-[#fff2e0]/50 text-[#b35200]' : 'hover:bg-black/5 text-[#5C3D28]'"
+                                class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] w-full transition-colors cursor-pointer"
+                                :class="currentLocale === 'en' ? 'font-bold bg-[#fff2e0]/70 dark:bg-[#ff9100]/20 text-[#b35200] dark:text-[#ff9100]' : 'font-medium hover:bg-black/5 dark:hover:bg-[#2A1D15] text-[#5C3D28] dark:text-white hover:text-[#b35200] dark:hover:text-[#ff9100] hover:font-bold'"
                                 :disabled="isChangingLanguage">
                             <span class="text-[12px] font-bold tracking-wider w-6 text-left">EN</span>
                             <span>English</span>
@@ -199,7 +182,7 @@
                 <button @click="toggleTheme()" 
                         type="button"
                         aria-label="Toggle Dark / Light Mode"
-                        class="flex items-center justify-center w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-full bg-white/40 border border-white/50 text-[#5C3D28] hover:text-[#b35200] hover:bg-white transition-all outline-none shadow-sm hover:scale-105 active:scale-95 shrink-0"
+                        class="flex items-center justify-center w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-full bg-white/40 dark:bg-[#231811] border border-white/50 dark:border-white/10 text-[#5C3D28] dark:text-white hover:text-[#b35200] dark:hover:text-[#ff9100] hover:bg-white dark:hover:bg-[#2A1D15] transition-all outline-none shadow-sm hover:scale-105 active:scale-95 shrink-0 cursor-pointer"
                         :title="isDark ? 'Mode Terang' : 'Mode Gelap'">
                     <!-- Sun icon: shown when dark (click to switch to light) -->
                     <svg x-show="isDark" x-cloak class="w-4.5 h-4.5 text-[#FFA026]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -220,19 +203,11 @@
                     {{ __('messages.order') }}
                 </a>
 
-                <!-- Search Toggle Button (Khusus Mobile) -->
-                <!-- <button @click="searchOpen = !searchOpen; mobileMenuOpen = false" 
-                        aria-label="{{ __('messages.search_products') }}"
-                        :aria-expanded="searchOpen ? 'true' : 'false'"
-                        class="md:hidden flex items-center justify-center w-9 h-9 rounded-full bg-white/50 text-[#5C3D28] hover:bg-white hover:text-[#b35200] transition-colors outline-none shadow-sm">
-                    <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                </button> -->
-
                 <!-- Mobile Menu Toggle -->
                 <button @click="mobileMenuOpen = !mobileMenuOpen; searchOpen = false" 
                         aria-label="{{ app()->getLocale() === 'id' ? 'Buka Menu Navigasi' : 'Toggle Navigation' }}"
                         :aria-expanded="mobileMenuOpen ? 'true' : 'false'"
-                        class="lg:hidden flex items-center justify-center w-9 h-9 rounded-full bg-white/50 text-[#5C3D28] hover:bg-white hover:text-[#b35200] transition-colors outline-none shadow-sm">
+                        class="lg:hidden flex items-center justify-center w-9 h-9 rounded-full bg-white/50 dark:bg-[#231811] border border-transparent dark:border-white/10 text-[#5C3D28] dark:text-white hover:bg-white dark:hover:bg-[#2A1D15] hover:text-[#b35200] dark:hover:text-[#ff9100] transition-colors outline-none shadow-sm cursor-pointer">
                     <svg x-show="!mobileMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     <svg x-show="mobileMenuOpen" x-cloak class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
@@ -289,16 +264,16 @@
              style="overscroll-behavior: contain; -webkit-overflow-scrolling: touch;">
             <a href="{{ url('/') }}" 
                @click="mobileMenuOpen = false;"
-               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.home') }}</a>
+               class="px-4 py-3 {{ request()->is('/') ? 'font-bold text-[#b35200] dark:text-[#ff9100]' : 'font-semibold text-[#5C3D28] dark:text-white hover:font-bold hover:text-[#b35200] dark:hover:text-[#ff9100]' }} hover:bg-[#fff2e0]/80 dark:hover:bg-[#2A1D15] rounded-2xl text-[15px] transition-colors">{{ __('messages.home') }}</a>
             
             <!-- Katalog Dropdown (Mobile) -->
-            <div class="bg-[#fff2e0]/40 rounded-2xl">
+            <div class="bg-[#fff2e0]/40 dark:bg-[#130D08]/60 rounded-2xl border border-transparent dark:border-white/5">
                 <button @click="catalogMenuOpen = !catalogMenuOpen" 
                         aria-label="{{ __('messages.catalog') }}, {{ app()->getLocale() === 'id' ? 'buka menu' : 'open menu' }}"
                         :aria-expanded="catalogMenuOpen ? 'true' : 'false'"
-                        class="w-full flex justify-between items-center px-4 py-3 text-[15px] font-semibold text-[#2C1A0E] outline-none active:scale-[0.99] transition-transform duration-200">
+                        class="w-full flex justify-between items-center px-4 py-3 text-[15px] {{ request()->routeIs('katalog*') ? 'font-bold text-[#b35200] dark:text-[#ff9100]' : 'font-semibold text-[#2C1A0E] dark:text-white hover:font-bold hover:text-[#b35200] dark:hover:text-[#ff9100]' }} outline-none active:scale-[0.99] transition-transform duration-200 cursor-pointer">
                     {{ __('messages.catalog') }}
-                    <svg class="w-5 h-5 transition-transform duration-300 text-[#b35200]" :class="{'rotate-180': catalogMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    <svg class="w-5 h-5 transition-transform duration-300 text-[#b35200] dark:text-[#ff9100]" :class="{'rotate-180': catalogMenuOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 <div x-show="catalogMenuOpen" x-cloak 
                      x-transition:enter="transition ease-out duration-200"
@@ -316,7 +291,7 @@
                         );
                     @endphp
                     <a href="{{ route('katalog') }}" 
-                       class="px-3 py-2 rounded-xl text-[14px] transition-colors {{ $isAllProductsSelectedMobile ? 'bg-[#b35200]/10 text-[#b35200] font-bold dark:bg-[#b35200]/20' : 'text-[#5C3D28] dark:text-[#D8C6B6] font-medium hover:bg-[#fff2e0] dark:hover:bg-white/5' }}">
+                       class="px-3 py-2 rounded-xl text-[14px] transition-colors {{ $isAllProductsSelectedMobile ? 'bg-[#b35200]/10 text-[#b35200] dark:text-[#ff9100] font-bold dark:bg-[#ff9100]/20' : 'text-[#5C3D28] dark:text-white font-medium hover:font-bold hover:bg-[#fff2e0] dark:hover:bg-[#2A1D15] hover:text-[#b35200] dark:hover:text-[#ff9100]' }}">
                         {{ __('messages.all_products') }}
                     </a>
                     
@@ -329,7 +304,7 @@
                         @endphp
                         <a href="{{ route('katalog', ['type' => $type['slug']]) }}"
                            wire:key="mobile-type-{{ $type['id'] }}"
-                           class="px-3 py-2 rounded-xl text-[14px] transition-colors {{ $isTypeSelectedMobile ? 'bg-[#b35200]/10 text-[#b35200] font-bold dark:bg-[#b35200]/20' : 'text-[#5C3D28] dark:text-[#D8C6B6] font-medium hover:bg-[#fff2e0] dark:hover:bg-white/5' }}">
+                           class="px-3 py-2 rounded-xl text-[14px] transition-colors {{ $isTypeSelectedMobile ? 'bg-[#b35200]/10 text-[#b35200] dark:text-[#ff9100] font-bold dark:bg-[#ff9100]/20' : 'text-[#5C3D28] dark:text-white font-medium hover:font-bold hover:bg-[#fff2e0] dark:hover:bg-[#2A1D15] hover:text-[#b35200] dark:hover:text-[#ff9100]' }}">
                             {{ $type['name'] }}
                         </a>
                     @empty
@@ -340,14 +315,14 @@
 
             <a href="{{ route('mesin') }}" 
                @click="mobileMenuOpen = false;"
-               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.our_machines') }}</a>
+               class="px-4 py-3 {{ request()->routeIs('mesin') ? 'font-bold text-[#b35200] dark:text-[#ff9100]' : 'font-semibold text-[#5C3D28] dark:text-white hover:font-bold hover:text-[#b35200] dark:hover:text-[#ff9100]' }} hover:bg-[#fff2e0]/80 dark:hover:bg-[#2A1D15] rounded-2xl text-[15px] transition-colors">{{ __('messages.our_machines') }}</a>
             <a href="{{ url('/#footer') }}" 
                @click="mobileMenuOpen = false; if (document.getElementById('footer')) { $event.preventDefault(); document.getElementById('footer').scrollIntoView({ behavior: 'smooth' }); }"
-               class="px-4 py-3 text-[#5C3D28] hover:bg-[#fff2e0]/80 hover:text-[#b35200] rounded-2xl font-semibold text-[15px] transition-colors">{{ __('messages.information') }}</a>
+               class="px-4 py-3 font-semibold hover:font-bold text-[#5C3D28] dark:text-white hover:text-[#b35200] dark:hover:text-[#ff9100] hover:bg-[#fff2e0]/80 dark:hover:bg-[#2A1D15] rounded-2xl text-[15px] transition-colors">{{ __('messages.information') }}</a>
             
             <!-- Mobile Theme Switcher Row -->
             <div @click="toggleTheme()" class="flex items-center justify-between px-4 py-2.5 rounded-2xl bg-[#fff2e0]/60 dark:bg-[#2c1d15] my-1 cursor-pointer select-none transition-colors">
-                <span class="text-[14px] font-semibold text-[#5C3D28] dark:text-[#FDF5EC] flex items-center gap-2.5">
+                <span class="text-[14px] font-semibold text-[#5C3D28] dark:text-white flex items-center gap-2.5">
                     <span class="text-base" x-text="isDark ? '🌙' : '☀️'"></span>
                     <span>Mode Gelap</span>
                 </span>
@@ -365,7 +340,7 @@
                 </button>
             </div>
 
-            <div class="w-full h-px bg-black/5 my-2"></div>
+            <div class="w-full h-px bg-black/5 dark:bg-white/10 my-2"></div>
             
             <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"

@@ -106,9 +106,9 @@
                         </template>
 
                         <!-- Info Overlay -->
-                        <div class="absolute bottom-0 left-0 right-0 z-20 bg-black/60 dark:bg-black/85 backdrop-blur-md p-4 sm:p-5 text-white border-t border-white/10">
-                            <p class="font-bold text-sm leading-tight text-white">{{ $addressLine1 }}</p>
-                            <p class="text-xs text-white/80 mt-1">{{ $addressLine2 }}</p>
+                        <div class="absolute bottom-0 left-0 right-0 z-20 bg-white/95 dark:bg-[#1A120B]/95 backdrop-blur-md p-4 sm:p-5 border-t border-black/5 dark:border-white/10 transition-colors duration-200">
+                            <p class="font-bold text-sm leading-tight text-[#2C1A0E] dark:text-white">{{ $addressLine1 }}</p>
+                            <p class="text-xs text-[#5C3D28] dark:text-[#D8C6B6] mt-1">{{ $addressLine2 }}</p>
                         </div>
 
                         <!-- Float Button (z-20, white background with black text in both modes) -->

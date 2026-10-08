@@ -35,9 +35,9 @@
                 }
             }">
                 <button @click="open = !open"
-                    class="w-full flex items-center justify-between mb-4 ml-1 outline-none group">
-                    <p class="text-[11px] font-black tracking-[0.15em] uppercase text-[#7a5d48]">{{ __('messages.category') }}</p>
-                    <svg class="w-4 h-4 text-[#b35200] transition-transform duration-300 mr-1"
+                    class="w-full flex items-center justify-between mb-4 ml-1 outline-none group cursor-pointer">
+                    <p class="text-[11px] font-black tracking-[0.15em] uppercase text-[#7a5d48] dark:text-[#9E8B7D] group-hover:text-[#b35200] dark:group-hover:text-[#ff9100] transition-colors">{{ __('messages.category') }}</p>
+                    <svg class="w-4 h-4 text-[#b35200] dark:text-[#ff9100] transition-transform duration-300 mr-1"
                          :class="open ? 'rotate-180' : ''"
                          fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
@@ -58,15 +58,15 @@
                         <button
                             wire:key="cat-all"
                             @click="debouncedSetCategory(@js($cat['name']))"
-                            class="w-full flex items-center justify-between px-5 py-3 rounded-2xl text-[14px] font-bold transition-all
+                            class="group w-full flex items-center justify-between px-5 py-3 rounded-2xl text-[14px] font-bold transition-all cursor-pointer
                                 {{ $activeCategory === $cat['name']
-                                    ? 'bg-white text-[#ff9100] dark:text-[#b35200] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 dark:border-[#b35200]/10 scale-[1.02]'
-                                    : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1' }}">
+                                    ? 'bg-white dark:bg-[#231811] text-[#b35200] dark:text-[#ff9100] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/15 dark:border-[#ff9100]/40 dark:shadow-[0_4px_20px_rgba(255,145,0,0.15)] scale-[1.02]'
+                                    : 'text-[#8c7664] dark:text-[#D8C6B6] hover:bg-white/60 dark:hover:bg-[#2A1D15] hover:text-[#b35200] dark:hover:text-[#ff9100] hover:translate-x-1 border border-transparent dark:hover:border-white/5' }}">
                             <span class="flex items-center gap-3">
-                                <span class="w-2.5 h-2.5 rounded-full shrink-0 {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100] dark:bg-[#b35200] shadow-[0_0_8px_#ff9100] dark:shadow-[0_0_8px_#b35200]' : 'bg-[#d1c2b4]' }}"></span>
+                                <span class="w-2.5 h-2.5 rounded-full shrink-0 transition-all {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100] dark:bg-[#ff9100] shadow-[0_0_8px_#ff9100]' : 'bg-[#d1c2b4] dark:bg-[#5C3D28] group-hover:bg-[#b35200] dark:group-hover:bg-[#ff9100]' }}"></span>
                                 {{ $cat['name'] }}
                             </span>
-                            <span class="text-[11px] font-black px-2.5 py-1 rounded-full {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100]/10 dark:bg-[#b35200]/10 text-[#ff9100] dark:text-[#b35200]' : 'bg-[#f5ede8] text-[#a89584]' }}">
+                            <span class="text-[11px] font-black px-2.5 py-1 rounded-full transition-colors {{ $activeCategory === $cat['name'] ? 'bg-[#ff9100]/10 dark:bg-[#ff9100]/20 text-[#b35200] dark:text-[#ff9100] dark:border dark:border-[#ff9100]/30' : 'bg-[#f5ede8] dark:bg-[#231811] text-[#a89584] dark:text-[#9E8B7D] border border-transparent dark:border-white/10 group-hover:text-[#b35200] dark:group-hover:text-[#ff9100]' }}">
                                 {{ $cat['count'] }}
                             </span>
                         </button>
@@ -96,27 +96,29 @@
                          class="pt-0.5">
 
                         {{-- Baris Type (Tingkat 1): bisa diklik untuk filter + expand/collapse --}}
-                        <div class="flex items-center gap-1">
+                        <div class="flex items-center gap-1 group">
                             {{-- Tombol filter by type --}}
                             <button
                                 wire:key="btn-type-{{ $typeItem['id'] }}"
                                 @click="openType = true; debouncedSetCategory(@js($typeItem['name']))"
-                                class="flex-1 flex items-center justify-between px-5 py-2.5 rounded-2xl text-[13px] font-bold transition-all
+                                class="flex-1 flex items-center justify-between px-5 py-2.5 rounded-2xl text-[13px] font-bold transition-all cursor-pointer
                                     {{ $typeActive
-                                        ? 'bg-white text-[#ff9100] dark:text-[#b35200] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/10 dark:border-[#b35200]/10 scale-[1.02]'
-                                        : ($hasActiveSub ? 'bg-white/60 text-[#b35200] dark:text-[#ff9100]' : 'text-[#8c7664] hover:bg-white/40 hover:translate-x-1') }}">
+                                        ? 'bg-white dark:bg-[#231811] text-[#b35200] dark:text-[#ff9100] shadow-[0_8px_15px_rgba(0,0,0,0.08)] border border-[#ff9100]/15 dark:border-[#ff9100]/40 dark:shadow-[0_4px_20px_rgba(255,145,0,0.15)] scale-[1.02]'
+                                        : ($hasActiveSub
+                                            ? 'bg-white/60 dark:bg-[#231811]/80 text-[#b35200] dark:text-[#ff9100] border border-[#ff9100]/15 dark:border-[#ff9100]/30'
+                                            : 'text-[#8c7664] dark:text-[#D8C6B6] hover:bg-white/60 dark:hover:bg-[#2A1D15] hover:text-[#b35200] dark:hover:text-[#ff9100] hover:translate-x-1 border border-transparent dark:hover:border-white/5') }}">
                                 <span class="flex items-center gap-3 text-left flex-1">
-                                    <span class="w-2 h-2 rounded-full shrink-0 {{ ($typeActive || $hasActiveSub) ? 'bg-[#ff9100] dark:bg-[#b35200]' : 'bg-[#d1c2b4]' }}"></span>
+                                    <span class="w-2 h-2 rounded-full shrink-0 transition-all {{ ($typeActive || $hasActiveSub) ? 'bg-[#ff9100] dark:bg-[#ff9100] shadow-[0_0_8px_#ff9100]' : 'bg-[#d1c2b4] dark:bg-[#5C3D28] group-hover:bg-[#b35200] dark:group-hover:bg-[#ff9100]' }}"></span>
                                     <span class="leading-tight">{{ $typeItem['name'] }}</span>
                                 </span>
-                                <span class="text-[11px] font-black px-2 py-0.5 rounded-full {{ $typeActive ? 'bg-[#ff9100]/10 dark:bg-[#b35200]/10 text-[#ff9100] dark:text-[#b35200]' : 'bg-[#f5ede8] text-[#a89584]' }}">
+                                <span class="text-[11px] font-black px-2 py-0.5 rounded-full transition-colors {{ $typeActive ? 'bg-[#ff9100]/10 dark:bg-[#ff9100]/20 text-[#b35200] dark:text-[#ff9100] dark:border dark:border-[#ff9100]/30' : ($hasActiveSub ? 'bg-[#ff9100]/10 dark:bg-[#ff9100]/20 text-[#b35200] dark:text-[#ff9100] dark:border dark:border-[#ff9100]/20' : 'bg-[#f5ede8] dark:bg-[#231811] text-[#a89584] dark:text-[#9E8B7D] border border-transparent dark:border-white/10 group-hover:text-[#b35200] dark:group-hover:text-[#ff9100]') }}">
                                     {{ $typeItem['count'] }}
                                 </span>
                             </button>
                             {{-- Tombol expand/collapse sub-kategori --}}
                             @if(count($typeItem['categories']) > 0)
                             <button @click="openType = !openType"
-                                class="p-2 rounded-xl text-[#b35200] hover:bg-white/50 transition-all outline-none shrink-0"
+                                class="p-2 rounded-xl text-[#b35200] dark:text-[#ff9100] hover:bg-white/50 dark:hover:bg-[#2A1D15] transition-all outline-none shrink-0 cursor-pointer"
                                 aria-label="Toggle {{ $typeItem['name'] }}">
                                 <svg class="w-3.5 h-3.5 transition-transform duration-200" :class="openType ? 'rotate-180' : ''"
                                      fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -134,21 +136,21 @@
                              x-transition:enter-end="opacity-100 translate-y-0"
                              x-transition:leave="transition ease-in duration-150"
                              x-transition:leave-end="opacity-0 -translate-y-1"
-                             class="ml-4 mt-1 space-y-0.5 border-l-2 border-[#f0d9c8] dark:border-[#b35200]/30 pl-3">
+                             class="ml-4 mt-1 space-y-0.5 border-l-2 border-[#f0d9c8] dark:border-[#ff9100]/30 pl-3">
                             @foreach($typeItem['categories'] as $subCat)
                             @php $subActive = $activeCategory === $subCat['name']; @endphp
                             <button
                                 wire:key="subcat-{{ $subCat['id'] }}"
                                 @click="debouncedSetCategory(@js($subCat['name']))"
-                                class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-[12px] font-semibold transition-all
+                                class="group/sub w-full flex items-center justify-between px-3 py-2 rounded-xl text-[12px] font-semibold transition-all cursor-pointer
                                     {{ $subActive
-                                        ? 'bg-white text-[#ff9100] dark:text-[#b35200] shadow-[0_4px_10px_rgba(0,0,0,0.07)] border border-[#ff9100]/10 dark:border-[#b35200]/10'
-                                        : 'text-[#a89584] hover:bg-white/50 hover:text-[#6b4f3a]' }}">
+                                        ? 'bg-white dark:bg-[#231811] text-[#b35200] dark:text-[#ff9100] shadow-[0_4px_10px_rgba(0,0,0,0.07)] border border-[#ff9100]/15 dark:border-[#ff9100]/40'
+                                        : 'text-[#a89584] dark:text-[#D8C6B6]/80 hover:bg-white/50 dark:hover:bg-[#2A1D15] hover:text-[#6b4f3a] dark:hover:text-[#ff9100] border border-transparent dark:hover:border-white/5' }}">
                                 <span class="flex items-center gap-2.5 text-left flex-1">
-                                    <span class="w-1.5 h-1.5 rounded-full shrink-0 {{ $subActive ? 'bg-[#ff9100] dark:bg-[#b35200]' : 'bg-[#d1c2b4]' }}"></span>
+                                    <span class="w-1.5 h-1.5 rounded-full shrink-0 transition-all {{ $subActive ? 'bg-[#ff9100] dark:bg-[#ff9100] shadow-[0_0_6px_#ff9100]' : 'bg-[#d1c2b4] dark:bg-[#5C3D28] group-hover/sub:bg-[#b35200] dark:group-hover/sub:bg-[#ff9100]' }}"></span>
                                     <span class="leading-tight">{{ $subCat['name'] }}</span>
                                 </span>
-                                <span class="text-[10px] font-black px-1.5 py-0.5 rounded-full {{ $subActive ? 'bg-[#ff9100]/10 dark:bg-[#b35200]/10 text-[#ff9100] dark:text-[#b35200]' : 'bg-[#f5ede8] text-[#a89584]' }}">
+                                <span class="text-[10px] font-black px-1.5 py-0.5 rounded-full transition-colors {{ $subActive ? 'bg-[#ff9100]/10 dark:bg-[#ff9100]/20 text-[#b35200] dark:text-[#ff9100] dark:border dark:border-[#ff9100]/30' : 'bg-[#f5ede8] dark:bg-[#231811] text-[#a89584] dark:text-[#9E8B7D] border border-transparent dark:border-white/10 group-hover/sub:text-[#b35200] dark:group-hover/sub:text-[#ff9100]' }}">
                                     {{ $subCat['count'] }}
                                 </span>
                             </button>

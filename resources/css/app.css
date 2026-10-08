@@ -95,6 +95,17 @@ html.dark [class*="bg-[#f4f1ea]"] {
     background-color: #130D08 !important;
 }
 
+html.dark [class*="bg-[#f5ede8]"],
+html.dark [class*="bg-[#F5EDE8]"] {
+    background-color: #231811 !important;
+    color: #D8C6B6 !important;
+}
+
+html.dark [class*="hover:bg-[#f5ede8]"]:hover,
+html.dark [class*="hover:bg-[#F5EDE8]"]:hover {
+    background-color: #2A1D15 !important;
+}
+
 html.dark .bg-white-pure,
 .bg-white-pure {
     background-color: #ffffff !important;
