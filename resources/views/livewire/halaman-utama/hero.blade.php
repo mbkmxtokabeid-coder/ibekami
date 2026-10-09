@@ -103,7 +103,7 @@
                                 <img src="{{ $bannerItem['url'] }}"
                                      srcset="{{ $bannerItem['mobile_url'] }} 480w, {{ $bannerItem['url'] }} 800w"
                                      sizes="(max-width: 640px) 480px, 800px"
-                                     alt="Banner utama IBEKAMI"
+                                     alt="Produksi Plakat Akrilik, Souvenir Custom dan Percetakan Digital IBEKAMI Medan"
                                      width="800"
                                      height="800"
                                      @if($index === 0) loading="eager" fetchpriority="high" decoding="sync" @else loading="lazy" decoding="async" @endif

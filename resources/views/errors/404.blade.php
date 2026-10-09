@@ -108,8 +108,8 @@
             <button @click="toggleTheme()" 
                     type="button"
                     id="btn-theme-toggle"
-                    aria-label="Toggle Dark / Light Mode"
-                    :title="isDark ? 'Mode Terang' : 'Mode Gelap'"
+                    :aria-label="currentLocale === 'id' ? (isDark ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap') : (isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode')"
+                    :title="currentLocale === 'id' ? (isDark ? 'Mode Terang' : 'Mode Gelap') : (isDark ? 'Light Mode' : 'Dark Mode')"
                     class="flex items-center justify-center w-9 h-9 rounded-full bg-white/70 dark:bg-[#1E140E]/70 backdrop-blur-md border border-[#ff9100]/25 dark:border-white/10 text-[#5C3D28] dark:text-[#FDF5EC] hover:text-[#b35200] dark:hover:text-[#FFA026] hover:bg-white dark:hover:bg-[#2A1D15] transition-all outline-none shadow-xs hover:scale-105 active:scale-95 shrink-0 cursor-pointer">
                 <!-- Sun icon (shown when dark, click to switch to light) -->
                 <svg x-show="isDark" x-cloak class="w-4.5 h-4.5 text-[#FFA026]" fill="none" viewBox="0 0 24 24" stroke="currentColor">

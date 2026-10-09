@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Percetakan Express Medan | Souvenir Custom Satuan')
+@section('title', 'Plakat Akrilik, Suvenir & Percetakan Digital di Medan | IBEKAMI')
 @section('canonical', 'https://ibekami.id/')
-@section('meta_description', 'Butuh cetak cepat? IBEKAMI adalah percetakan express terdekat di Medan untuk souvenir custom terjangkau. Melayani partai besar, partai kecil, dan satuan.')
+@section('meta_description', 'Solusi pembuatan plakat, suvenir, dan cetak digital berkualitas untuk kebutuhan personal maupun instansi di Medan. Siap melayani pesanan satuan maupun partai besar.')
 @section('og_image', asset('storage/banners/428f232a-c988-4731-8cf7-ceec4874496c.webp'))
 
 @section('content')

@@ -24,12 +24,12 @@
 <div class="min-h-screen bg-[#fff2e0] dark:bg-[#130D08] pt-24 lg:pt-28 transition-colors duration-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-12 sm:pt-4 sm:pb-14">
 
-        {{-- Header: judul + subtitle — desktop only --}}
-        <div class="hidden lg:block mb-6">
+        {{-- Header: judul + subtitle --}}
+        <div class="text-center mb-6 sm:mb-8">
             <h1 class="text-3xl md:text-4xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] leading-tight tracking-tight">
                 {{ __('messages.product_catalog') }}
             </h1>
-            <p class="text-[13px] text-[#886852] dark:text-[#9E8B7D] mt-1">
+            <p class="text-[13px] sm:text-sm text-[#886852] dark:text-[#9E8B7D] mt-1.5 max-w-xl mx-auto">
                 {{ __('messages.catalog_subtitle') }}
             </p>
         </div>

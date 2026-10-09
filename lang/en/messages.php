@@ -12,6 +12,8 @@ return [
     'order_now' => 'Order Now',
     'search' => 'Search',
     'search_placeholder' => 'Search products or services...',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
     
     // Katalog
     'product_catalog' => 'Product Catalog',
@@ -44,24 +46,24 @@ return [
     'start_custom' => 'Start Custom',
     'trusted_by' => 'Trusted by 1,000+',
     'partners' => 'Partners',
-    'custom_souvenir' => 'Custom merchandise & digital printing with sharp quality and high precision.',
+    'custom_souvenir' => 'Quality acrylic plaques, custom souvenirs, and digital printing solutions for personal and institutional needs. Ready for single items and bulk orders.',
     'precision' => 'Precision',
     'rating' => 'Rating',
     'made_in_medan' => 'Ikhtiar Berkah, Creative Economy from Medan Indonesia (IBEKAMI)',
-    'make_ideas_real' => 'Turn Ideas Into',
-    'real_work' => 'Real Work',
+    'make_ideas_real' => 'Acrylic Plaques, Souvenirs, &',
+    'real_work' => 'Digital Printing in Medan',
 
     
     // Hot Deals
     'special_offers' => 'Special Offers For You',
     'dont_miss_deals' => 'Don\'t miss our exclusive offers',
-    'hot_deals_this_month' => 'Hot Deals This Month',
-    'best_price_all_categories' => 'Get the best prices for all our custom product categories. Don\'t run out!',
+    'hot_deals_this_month' => 'Our Products & Packages',
+    'best_price_all_categories' => 'From acrylic plaques, custom souvenirs, to digital printing. Choose what suits your needs!',
     'ask_price' => 'Ask Price',
     'hot_deal' => 'Hot Deal',
     'no_product_types' => 'No product types available yet.',
     'ask_via_wa' => 'Ask via WA',
-    'special_offer' => 'Special Offer',
+    'special_offer' => 'Special for You',
     
     // Product Section
     'our_latest_products' => 'Our Latest Products',
@@ -100,7 +102,7 @@ return [
     'no_partner_data' => 'No partner data yet.',
     'join_us' => 'Join Us',
     'become_next_partner' => 'Become IBEKAMI\'s Next Partner',
-    'collaboration_best_solution' => 'Collaboration for the best merchandise & digital printing solutions in Medan',
+    'collaboration_best_solution' => 'Collaboration for quality merchandise & digital printing solutions in Medan',
     'contact_us' => 'Contact Us',
     
     // Mesin
@@ -132,7 +134,7 @@ return [
     'company_full_name' => 'Ikhtiar Berkah, Creative Economy from Medan Indonesia (IBEKAMI)',
     'social_media' => 'Social Media',
     'follow_us' => 'Follow Us',
-    'follow_us_desc' => 'Follow us for the latest product updates, design inspiration, and exclusive promos.',
+    'follow_us_desc' => 'Get the latest product updates, design inspiration, and exclusive promos.',
     'contact' => 'Contact',
     'operating_hours' => 'Operating Hours',
     'location' => 'Location',
@@ -176,7 +178,7 @@ return [
     'section_1_item_3_desc' => 'Logo files, photos, or design materials you send for custom printing needs.',
     'section_2_title' => 'USE OF YOUR INFORMATION',
     'section_2_intro' => 'The information we collect is used exclusively to:',
-    'section_2_item_1' => 'Process and complete your digital printing or souvenir product orders.',
+    'section_2_item_1' => 'Process and complete your digital printing or custom souvenir orders.',
     'section_2_item_2' => 'Communicate regarding order status or technical design questions.',
     'section_2_item_3' => 'Arrange product delivery to arrive on time at your location.',
     'section_2_item_4' => 'Improve service quality based on customer feedback.',
@@ -210,7 +212,7 @@ return [
     'faq_title' => 'Frequently Asked Questions',
     'faq_subtitle' => 'Find clear answers about ordering custom acrylic plaques, corporate souvenirs, and our express printing services in Medan.',
     'about_title' => 'Trusted Custom Printing & Souvenir Maker in Medan',
-    'about_desc' => 'IBEKAMI is a trusted custom printing and souvenir maker based in Medan, North Sumatra. We specialize in custom acrylic plaques, engraved tumblers, goodie bags, business cards, brochures, banners, stickers, and corporate gift sets. Powered by modern UV flatbed printing and high-precision laser cutting, we deliver sharp, fast, and high-quality results at friendly prices—welcoming both single-item and bulk orders for individuals, businesses, and organizations.',
+    'about_desc' => 'IBEKAMI is your reliable partner for all custom souvenir and digital printing needs in Medan, North Sumatra. We specialize in custom acrylic plaques, engraved tumblers, goodie bags, business cards, brochures, banners, stickers, and corporate gift sets. Powered by modern UV flatbed printing and high-precision laser cutting, we deliver sharp, fast, and high-quality results at friendly prices—welcoming both single-item and bulk orders for individuals, businesses, and organizations.',
     
     'faq_q1' => 'How do I order custom acrylic plaques or souvenirs at IBEKAMI?',
     'faq_a1' => 'Ordering is quick and easy! Simply click the WhatsApp button to chat directly with our team. Tell us what you need—such as product type, design ideas, dimensions, and quantity. Our design team will provide a free design preview for your review and approval before production begins.',

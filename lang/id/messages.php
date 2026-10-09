@@ -12,6 +12,8 @@ return [
     'order_now' => 'Pesan Sekarang',
     'search' => 'Cari',
     'search_placeholder' => 'Cari produk atau layanan...',
+    'dark_mode' => 'Mode Gelap',
+    'light_mode' => 'Mode Terang',
     
     // Katalog
     'product_catalog' => 'Katalog Produk',
@@ -44,24 +46,24 @@ return [
     'start_custom' => 'Mulai Kustom',
     'trusted_by' => 'Dipercaya',
     'partners' => 'Mitra',
-    'custom_souvenir' => 'Suvenir & percetakan digital kustom dengan kualitas tajam dan presisi tinggi.',
+    'custom_souvenir' => 'Solusi pembuatan plakat, suvenir, dan cetak digital berkualitas untuk kebutuhan personal maupun instansi. Siap melayani pesanan satuan maupun partai besar.',
     'precision' => 'Presisi',
     'rating' => 'Rating',
     'made_in_medan' => 'Ikhtiar Berkah, Ekonomi Kreatif Asli Medan Indonesia (IBEKAMI)',
-    'make_ideas_real' => 'Wujudkan Ide Jadi',
-    'real_work' => 'Karya Nyata',
+    'make_ideas_real' => 'Plakat Akrilik, Suvenir, &',
+    'real_work' => 'Percetakan Digital di Medan',
 
     
     // Hot Deals
     'special_offers' => 'Penawaran Spesial Untuk Anda',
     'dont_miss_deals' => 'Jangan lewatkan penawaran eksklusif kami',
-    'hot_deals_this_month' => 'Promo Bulan Ini',
-    'best_price_all_categories' => 'Dapatkan harga terbaik untuk semua kategori produk kustom kami. Jangan sampai kehabisan!',
+    'hot_deals_this_month' => 'Produk & Paket Kami',
+    'best_price_all_categories' => 'Dari plakat akrilik, suvenir kustom, hingga cetak digital. Pilih sesuai kebutuhan Anda!',
     'ask_price' => 'Tanya Harga',
     'hot_deal' => 'Promo',
     'no_product_types' => 'Belum ada jenis produk tersedia.',
     'ask_via_wa' => 'Tanya via WA',
-    'special_offer' => 'Penawaran Spesial',
+    'special_offer' => 'Spesial untuk Anda',
     
     // Product Section
     'our_latest_products' => 'Produk Terbaru Kami',
@@ -101,7 +103,7 @@ return [
     'no_partner_data' => 'Belum ada data mitra.',
     'join_us' => 'Bergabung Bersama Kami',
     'become_next_partner' => 'Jadilah Mitra IBEKAMI Berikutnya',
-    'collaboration_best_solution' => 'Kolaborasi untuk solusi suvenir & percetakan digital terbaik di Medan',
+    'collaboration_best_solution' => 'Kolaborasi untuk solusi suvenir & percetakan digital berkualitas di Medan',
     'contact_us' => 'Hubungi Kami',
     
     // Mesin
@@ -133,7 +135,7 @@ return [
     'company_full_name' => 'Ikhtiar Berkah Ekonomi Kreatif Asli Medan Indonesia',
     'social_media' => 'Media Sosial',
     'follow_us' => 'Ikuti Kami',
-    'follow_us_desc' => 'Ikuti kami untuk informasi produk terbaru, inspirasi desain, dan promo eksklusif.',
+    'follow_us_desc' => 'Dapatkan informasi produk terbaru, inspirasi desain, dan promo eksklusif.',
     'contact' => 'Kontak',
     'operating_hours' => 'Jam Operasional',
     'location' => 'Lokasi',
@@ -189,7 +191,7 @@ return [
     'section_1_item_3_desc' => 'File logo, foto, atau materi desain yang Anda kirimkan untuk kebutuhan cetak kustom.',
     'section_2_title' => 'PENGGUNAAN INFORMASI ANDA',
     'section_2_intro' => 'Informasi yang kami kumpulkan digunakan secara eksklusif untuk:',
-    'section_2_item_1' => 'Memproses dan menyelesaikan pesanan produk digital printing atau souvenir Anda.',
+    'section_2_item_1' => 'Memproses dan menyelesaikan pesanan produk percetakan digital atau suvenir Anda.',
     'section_2_item_2' => 'Berkomunikasi terkait status pesanan atau pertanyaan teknis desain.',
     'section_2_item_3' => 'Mengatur pengiriman barang agar sampai tepat waktu ke lokasi Anda.',
     'section_2_item_4' => 'Meningkatkan kualitas layanan berdasarkan umpan balik pelanggan.',
@@ -221,7 +223,7 @@ return [
     'faq_title' => 'Pertanyaan yang Sering Diajukan',
     'faq_subtitle' => 'Temukan jawaban atas pertanyaan umum mengenai pemesanan plakat akrilik, suvenir kustom, dan layanan percetakan cepat kami di Medan.',
     'about_title' => 'Percetakan & Produsen Suvenir Kustom Terpercaya di Medan',
-    'about_desc' => 'IBEKAMI (Ikhtiar Berkah, Ekonomi Kreatif Asli Medan Indonesia) adalah penyedia percetakan digital dan produsen suvenir kustom terpercaya di Medan, Sumatera Utara. Kami melayani pembuatan plakat akrilik kustom, tumbler grafir, tas bingkisan, kartu nama, brosur, spanduk, stiker, hingga paket suvenir perusahaan. Didukung mesin cetak UV modern dan mesin pemotong laser presisi, kami siap memberikan hasil cetak yang tajam, cepat, dan rapi dengan harga terjangkau, baik untuk pesanan satuan maupun partai besar bagi perorangan, instansi pemerintah, BUMN, maupun perusahaan swasta.',
+    'about_desc' => 'IBEKAMI (Ikhtiar Berkah, Ekonomi Kreatif Asli Medan Indonesia) hadir sebagai mitra andalan Anda dalam pembuatan berbagai kebutuhan suvenir dan percetakan digital di Medan, Sumatera Utara. Kami melayani pembuatan plakat akrilik kustom, tumbler grafir, tas bingkisan, kartu nama, brosur, spanduk, stiker, hingga paket suvenir perusahaan. Didukung mesin cetak UV modern dan mesin pemotong laser presisi, kami siap memberikan hasil cetak yang tajam, cepat, dan rapi dengan harga terjangkau, baik untuk pesanan satuan maupun partai besar bagi perorangan, instansi pemerintah, BUMN, maupun perusahaan swasta.',
     
     'faq_q1' => 'Bagaimana cara memesan plakat akrilik kustom di IBEKAMI?',
     'faq_a1' => 'Pemesanan sangat mudah! Cukup hubungi kami melalui tombol WhatsApp untuk langsung terhubung dengan admin kami. Sampaikan kebutuhan Anda seperti jenis produk, konsep desain, ukuran, dan jumlah pesanan. Tim desainer kami siap membantu membuatkan pratinjau desain secara gratis sampai Anda setuju sebelum proses cetak dimulai.',

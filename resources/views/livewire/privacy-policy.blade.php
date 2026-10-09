@@ -139,12 +139,28 @@ class="bg-[#F4F1EA] dark:bg-[#130D08] text-[#222222] dark:text-[#D8C6B6] font-sa
                                         <a href="mailto:ikhtiarberkah1010@gmail.com" class="text-[#A65D3B] dark:text-[#b35200] font-bold hover:underline">ikhtiarberkah1010@gmail.com</a>
                                     </li>
                                     <li class="flex flex-col sm:flex-row items-baseline">
+                                        <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0">WhatsApp:</strong>
+                                        <a href="https://wa.me/628170769999" target="_blank" rel="noopener noreferrer" class="text-[#A65D3B] dark:text-[#b35200] font-bold hover:underline">+62 817-0769-9999</a>
+                                    </li>
+                                    <li class="flex flex-col sm:flex-row items-baseline">
                                         <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0">{{ __('messages.instagram') }}:</strong>
                                         <a href="https://www.instagram.com/ibekami.id/" target="_blank" rel="noopener noreferrer" class="text-[#A65D3B] dark:text-[#b35200] font-bold hover:underline">@ibekami.id</a>
                                     </li>
-                                    <li class="flex flex-col sm:flex-row items-baseline">
-                                        <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0">{{ __('messages.location') }}:</strong>
-                                        <span class="text-gray-600 dark:text-[#D8C6B6]">{{ __('messages.medan_indonesia') }}</span>
+                                    <li class="flex flex-col sm:flex-row items-start">
+                                        <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0 mt-0.5">{{ __('messages.location') }}:</strong>
+                                        <a href="https://maps.app.goo.gl/o7soqw1UAc4AzDsH6" 
+                                           target="_blank" 
+                                           rel="noopener noreferrer" 
+                                           title="Buka lokasi di Google Maps"
+                                           class="group inline-block hover:opacity-90 transition-opacity">
+                                            <p class="font-bold text-[#A65D3B] dark:text-[#b35200] group-hover:underline flex items-center gap-1.5">
+                                                <span>{{ __('messages.address_line1') }}</span>
+                                                <svg class="w-3.5 h-3.5 inline-block opacity-75 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                                </svg>
+                                            </p>
+                                            <p class="text-xs sm:text-sm mt-0.5 text-[#5C3D28] dark:text-[#D8C6B6] font-medium">{{ __('messages.address_line2') }}</p>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
