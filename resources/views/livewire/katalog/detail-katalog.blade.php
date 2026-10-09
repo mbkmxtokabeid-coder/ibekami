@@ -1,4 +1,3 @@
-<!-- <div class="bg-[#fff2e0] min-h-screen font-sans text-[#3d2b1f]" wire:poll.10s="checkVersion"> -->
 <div class="bg-[#fff2e0] dark:bg-[#130D08] min-h-screen font-sans text-[#3d2b1f] dark:text-[#D8C6B6]" @production wire:poll.30s="checkVersion" @endproduction>
     
     {{-- Preload primary LCP image for high-speed delivery --}}
@@ -173,74 +172,74 @@
             @endforelse
         </div>
     </section>
-</div>
 
-<script>
-function changeMainImage(imageUrl, clickedButton) {
-    const mainImage = document.getElementById('mainProductImage');
-    if (mainImage) {
-        mainImage.src = imageUrl;
-    }
-    
-    const allThumbnails = document.querySelectorAll('.thumbnail-btn');
-    allThumbnails.forEach(btn => {
-        btn.classList.remove('border-[#b35200]', 'scale-105');
-        btn.classList.add('border-transparent', 'opacity-60');
-    });
-    
-    if (clickedButton) {
-        clickedButton.classList.remove('border-transparent', 'opacity-60');
-        clickedButton.classList.add('border-[#b35200]', 'scale-105');
-    }
-}
-</script>
-
-{{-- Structured Data: Product + BreadcrumbList --}}
-@if(config('app.env') === 'production')
-@php
-    $schemaImages = array_values($productData['images'] ?? [$productData['image']]);
-    $schemaPrice = 0;
-    $schemaPriceNote = '';
-    if ($productData['price'] > 0) {
-        if ($productData['discount'] > 0) {
-            $schemaPrice = round($productData['price'] * (1 - $productData['discount'] / 100));
-        } else {
-            $schemaPrice = $productData['price'];
+    <script>
+    function changeMainImage(imageUrl, clickedButton) {
+        const mainImage = document.getElementById('mainProductImage');
+        if (mainImage) {
+            mainImage.src = imageUrl;
         }
-    } else {
-        $schemaPriceNote = 'Hubungi kami untuk informasi harga';
+        
+        const allThumbnails = document.querySelectorAll('.thumbnail-btn');
+        allThumbnails.forEach(btn => {
+            btn.classList.remove('border-[#b35200]', 'scale-105');
+            btn.classList.add('border-transparent', 'opacity-60');
+        });
+        
+        if (clickedButton) {
+            clickedButton.classList.remove('border-transparent', 'opacity-60');
+            clickedButton.classList.add('border-[#b35200]', 'scale-105');
+        }
     }
-    $schemaData = [
-        '@context' => 'https://schema.org',
-        '@graph' => [
-            [
-                '@type' => 'Product',
-                'name' => $productData['name'],
-                'description' => $productData['desc'],
-                'image' => $schemaImages,
-                'category' => $productData['category'],
-                'brand' => ['@type' => 'Brand', 'name' => 'IBEKAMI'],
-                'offers' => array_filter([
-                    '@type' => 'Offer',
-                    'url' => url()->current(),
-                    'priceCurrency' => 'IDR',
-                    'price' => (string) $schemaPrice,
-                    'description' => $schemaPriceNote ?: null,
-                    'priceValidUntil' => ($productData['discount'] > 0) ? now()->addMonths(3)->toDateString() : null,
-                    'availability' => 'https://schema.org/InStock',
-                    'seller' => ['@type' => 'Organization', 'name' => 'IBEKAMI'],
-                ]),
-            ],
-            [
-                '@type' => 'BreadcrumbList',
-                'itemListElement' => [
-                    ['@type' => 'ListItem', 'position' => 1, 'name' => 'Beranda', 'item' => config('app.url')],
-                    ['@type' => 'ListItem', 'position' => 2, 'name' => 'Katalog', 'item' => route('katalog')],
-                    ['@type' => 'ListItem', 'position' => 3, 'name' => $productData['name'], 'item' => url()->current()],
+    </script>
+
+    {{-- Structured Data: Product + BreadcrumbList --}}
+    @if(config('app.env') === 'production')
+    @php
+        $schemaImages = array_values($productData['images'] ?? [$productData['image']]);
+        $schemaPrice = 0;
+        $schemaPriceNote = '';
+        if ($productData['price'] > 0) {
+            if ($productData['discount'] > 0) {
+                $schemaPrice = round($productData['price'] * (1 - $productData['discount'] / 100));
+            } else {
+                $schemaPrice = $productData['price'];
+            }
+        } else {
+            $schemaPriceNote = 'Hubungi kami untuk informasi harga';
+        }
+        $schemaData = [
+            '@context' => 'https://schema.org',
+            '@graph' => [
+                [
+                    '@type' => 'Product',
+                    'name' => $productData['name'],
+                    'description' => $productData['desc'],
+                    'image' => $schemaImages,
+                    'category' => $productData['category'],
+                    'brand' => ['@type' => 'Brand', 'name' => 'IBEKAMI'],
+                    'offers' => array_filter([
+                        '@type' => 'Offer',
+                        'url' => url()->current(),
+                        'priceCurrency' => 'IDR',
+                        'price' => (string) $schemaPrice,
+                        'description' => $schemaPriceNote ?: null,
+                        'priceValidUntil' => ($productData['discount'] > 0) ? now()->addMonths(3)->toDateString() : null,
+                        'availability' => 'https://schema.org/InStock',
+                        'seller' => ['@type' => 'Organization', 'name' => 'IBEKAMI'],
+                    ]),
+                ],
+                [
+                    '@type' => 'BreadcrumbList',
+                    'itemListElement' => [
+                        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Beranda', 'item' => config('app.url')],
+                        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Katalog', 'item' => route('katalog')],
+                        ['@type' => 'ListItem', 'position' => 3, 'name' => $productData['name'], 'item' => url()->current()],
+                    ],
                 ],
             ],
-        ],
-    ];
-@endphp
-<script type="application/ld+json">{!! json_encode($schemaData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
-@endif
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($schemaData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
+    @endif
+</div>

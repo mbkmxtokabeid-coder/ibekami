@@ -4,7 +4,11 @@
         resizeDebounceTimer: null,
         
         init() {
-            $wire.setPerPage(this.currentLimit);
+            if (this.currentLimit !== 9) {
+                this.$nextTick(() => {
+                    $wire.setPerPage(this.currentLimit);
+                });
+            }
         },
         
         handleResize() {

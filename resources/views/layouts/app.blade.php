@@ -293,8 +293,15 @@
                  return this.allCategories.filter(cat => cat.type_id === selectedType.id);
              },
              apply() {
-                 if (this.wireId) {
-                     Livewire.find(this.wireId).call('applyMultiFilter', this.tempTypes, this.tempCategories);
+                 if (this.wireId && window.Livewire) {
+                     const wireComp = Livewire.find(this.wireId);
+                     if (wireComp) {
+                         if (typeof wireComp.applyMultiFilter === 'function') {
+                             wireComp.applyMultiFilter(this.tempTypes, this.tempCategories);
+                         } else if (typeof wireComp.call === 'function') {
+                             wireComp.call('applyMultiFilter', this.tempTypes, this.tempCategories);
+                         }
+                     }
                  }
                  this.closeModal();
              },

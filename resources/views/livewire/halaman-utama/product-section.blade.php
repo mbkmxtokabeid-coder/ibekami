@@ -85,20 +85,18 @@
             @endforeach
         </div>
 
-    </div>
+    <style>
+        /* Smooth image loading */
+        img {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Line clamp for product names */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
 </section>
-
-<style>
-    /* Smooth image loading */
-    img {
-        transition: opacity 0.3s ease-in-out;
-    }
-
-    /* Line clamp for product names */
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-</style>

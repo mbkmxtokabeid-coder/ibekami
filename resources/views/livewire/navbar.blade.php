@@ -353,8 +353,3 @@
         </div>
     </div>
 </nav>
-
-<style>
-    /* Mencegah kedipan saat load dengan AlpineJS */
-    [x-cloak] { display: none !important; }
-</style>

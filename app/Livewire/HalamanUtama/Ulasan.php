@@ -74,7 +74,7 @@ class Ulasan extends Component
         $badge = $locale === 'en' ? 'Customer Reviews' : 'Ulasan Pelanggan';
 
         return <<<HTML
-        <div class="py-16 px-4 bg-[#fdfaf7]">
+        <section class="py-16 px-4 bg-[#fdfaf7]">
             <div class="max-w-7xl mx-auto">
                 <div class="mb-10 relative flex flex-col md:block">
                     <div class="text-center max-w-lg mx-auto">
@@ -108,7 +108,7 @@ class Ulasan extends Component
                     <div class="w-[280px] md:w-[350px] bg-white p-6 rounded-2xl border border-[#b35200]/5 h-48 flex-shrink-0"></div>
                 </div>
             </div>
-        </div>
+        </section>
         HTML;
     }
 

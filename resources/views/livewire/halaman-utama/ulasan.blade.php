@@ -122,15 +122,13 @@
             <div class="w-2 h-2 rounded-full bg-[#b35200] animate-pulse"></div>
             <div class="w-2 h-2 rounded-full bg-[#b35200]/30"></div>
             <div class="w-2 h-2 rounded-full bg-[#b35200]/30"></div>
-        </div> -->
+        <style>
+        /* Prevent text selection during scroll */
+        .flex-shrink-0 {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+        </style>
     </div>
 </section>
-
-<style>
-/* Prevent text selection during scroll */
-.flex-shrink-0 {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-}
-</style>

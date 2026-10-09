@@ -9,7 +9,7 @@ class ProductSection extends Component
     public function placeholder()
     {
         return <<<'HTML'
-        <div class="py-14 md:py-20 px-4 bg-[#FFF2E0] relative overflow-hidden">
+        <section class="py-14 md:py-20 px-4 bg-[#FFF2E0] relative overflow-hidden">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-xl mx-auto mb-10 sm:mb-12">
                     <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-2 sm:mb-3">
@@ -31,7 +31,7 @@ class ProductSection extends Component
                     <div class="bg-white/90 rounded-3xl p-3 h-[200px] sm:h-[280px] border border-black/5"></div>
                 </div>
             </div>
-        </div>
+        </section>
         HTML;
     }
 

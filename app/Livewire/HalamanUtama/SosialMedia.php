@@ -9,7 +9,7 @@ class SosialMedia extends Component
     public function placeholder()
     {
         return <<<'HTML'
-        <div class="py-16 sm:py-20 px-5 sm:px-6 lg:px-8 bg-[#fdfaf7]">
+        <section class="py-16 sm:py-20 px-5 sm:px-6 lg:px-8 bg-[#fdfaf7]">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-xl mx-auto mb-10 sm:mb-12">
                     <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-2 sm:mb-3">
@@ -29,7 +29,7 @@ class SosialMedia extends Component
                     <div class="bg-white rounded-3xl p-6 h-28 border border-black/5"></div>
                 </div>
             </div>
-        </div>
+        </section>
         HTML;
     }
 

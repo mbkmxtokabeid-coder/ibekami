@@ -37,7 +37,7 @@ class Mitra extends Component
     public function placeholder()
     {
         return <<<'HTML'
-        <div class="py-16 px-4 bg-[#fff2e0] dark:bg-[#130D08]">
+        <section class="py-16 px-4 bg-[#fff2e0] dark:bg-[#130D08]">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-lg mx-auto mb-10">
                     <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-2 sm:mb-3">
@@ -61,7 +61,7 @@ class Mitra extends Component
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
         HTML;
     }
 
