@@ -14,22 +14,20 @@
             } catch (e) {}
         })();
     </script>
-    {{-- CRITICAL: Unregister semua Service Worker SEBELUM apapun di-load --}}
-    {{-- SW lama bisa intercept request dan menyebabkan halaman blank + permission popup --}}
+    {{-- CRITICAL: Unregister Service Worker lama tanpa memblokir parsing HTML awal --}}
     <script>
-        (function() {
+        window.addEventListener('load', function() {
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.getRegistrations().then(function(regs) {
                     regs.forEach(function(r) { r.unregister(); });
                 });
-                // Hapus semua cache SW lama
                 if ('caches' in window) {
                     caches.keys().then(function(keys) {
                         keys.forEach(function(key) { caches.delete(key); });
                     });
                 }
             }
-        })();
+        });
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,10 +74,13 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
 
-    {{-- Google Fonts: Poppins & Plus Jakarta Sans --}}
+    {{-- Google Fonts: Poppins & Plus Jakarta Sans (Non-render-blocking with inlined fallback) --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    </noscript>
 
     {{-- Preload critical fonts for better performance (Network Dependency Tree optimization) --}}
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/plus-jakarta-sans-latin.woff2') }}" crossorigin>

@@ -44,13 +44,18 @@
         <div>
             <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 opacity-95">{{ __('messages.contact') }}</h4>
             <div class="flex flex-col gap-5 text-sm">
-                <div class="flex items-start gap-3">
-                    <svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                    </svg>
-                    <div>
-                        <a href="mailto:{{ $email }}" class="text-white hover:text-white/80 transition-colors font-semibold">{{ $email }}</a>
-                    </div>
+                <div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ $email }}"
+                       onclick="if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) { window.location.href = 'mailto:{{ $email }}'; return false; }"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       title="Kirim email ke {{ $email }}"
+                       class="group inline-flex items-center gap-3 text-white hover:text-white/80 transition-colors">
+                        <svg class="w-5 h-5 text-white group-hover:scale-110 transition-transform shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="font-semibold">{{ $email }}</span>
+                    </a>
                 </div>
                 <a href="{{ route('privacy-policy') }}" class="text-xs text-white/90 hover:text-white underline underline-offset-4 decoration-white/40 transition-all">
                     {{ __('messages.privacy_policy_terms') }}

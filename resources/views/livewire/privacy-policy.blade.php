@@ -34,7 +34,7 @@ class="bg-[#F4F1EA] dark:bg-[#130D08] text-[#222222] dark:text-[#D8C6B6] font-sa
                 {{ __('messages.privacy_policy_title') }}
             </h1>
             <p class="text-gray-500 dark:text-[#9E8B7D] text-sm italic">
-                {{ __('messages.last_updated') }}: {{ date('d F Y') }}
+                {{ __('messages.last_updated') }}: {{ \Carbon\Carbon::now()->locale(app()->getLocale())->translatedFormat('d F Y') }}
             </p>
         </header>
 
@@ -134,9 +134,19 @@ class="bg-[#F4F1EA] dark:bg-[#130D08] text-[#222222] dark:text-[#D8C6B6] font-sa
                             
                             <div class="bg-[#fdfaf5] dark:bg-[#231811] border border-[#e0ddd5] dark:border-white/10 rounded-xl p-8 shadow-inner">
                                 <ul class="space-y-4">
-                                    <li class="flex flex-col sm:flex-row items-baseline">
+                                    <li class="flex flex-col sm:flex-row items-baseline gap-1 sm:gap-0">
                                         <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0">{{ __('messages.email') }}:</strong>
-                                        <a href="mailto:ikhtiarberkah1010@gmail.com" class="text-[#A65D3B] dark:text-[#b35200] font-bold hover:underline">ikhtiarberkah1010@gmail.com</a>
+                                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ikhtiarberkah1010@gmail.com"
+                                           onclick="if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) { window.location.href = 'mailto:ikhtiarberkah1010@gmail.com'; return false; }"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           title="Kirim email ke ikhtiarberkah1010@gmail.com"
+                                           class="text-[#A65D3B] dark:text-[#b35200] font-bold hover:underline inline-flex items-center gap-1.5">
+                                            <span>ikhtiarberkah1010@gmail.com</span>
+                                            <svg class="w-3.5 h-3.5 opacity-75" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                            </svg>
+                                        </a>
                                     </li>
                                     <li class="flex flex-col sm:flex-row items-baseline">
                                         <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0">WhatsApp:</strong>

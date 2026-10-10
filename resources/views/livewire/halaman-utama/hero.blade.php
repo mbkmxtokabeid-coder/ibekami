@@ -106,7 +106,7 @@
                                      alt="Produksi Plakat Akrilik, Souvenir Custom dan Percetakan Digital IBEKAMI Medan"
                                      width="800"
                                      height="800"
-                                     @if($index === 0) loading="eager" fetchpriority="high" decoding="sync" @else loading="lazy" decoding="async" @endif
+                                     @if($index === 0) loading="eager" fetchpriority="high" decoding="async" @else loading="lazy" decoding="async" @endif
                                      class="w-full h-full object-cover">
                             </div>
                         @endforeach
