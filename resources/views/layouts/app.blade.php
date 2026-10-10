@@ -84,6 +84,7 @@
 
     {{-- Preload critical fonts for better performance (Network Dependency Tree optimization) --}}
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/plus-jakarta-sans-latin.woff2') }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/poppins-black-latin.woff2') }}" crossorigin>
     
     {{-- Inlined Self-hosted fonts CSS to eliminate a render-blocking HTTP request --}}
     <style>

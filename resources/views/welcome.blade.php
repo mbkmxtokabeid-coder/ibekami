@@ -16,8 +16,8 @@
     {{-- Product Section — render lazily --}}
     <livewire:halaman-utama.product-section lazy />
 
-    {{-- Sosial Media — render lazily --}}
-    <livewire:halaman-utama.sosial-media lazy />
+    {{-- Sosial Media — komponen statis ringan, render langsung tanpa roundtrip --}}
+    <livewire:halaman-utama.sosial-media />
 
     {{-- Ulasan — render lazily --}}
     <livewire:halaman-utama.ulasan lazy />
