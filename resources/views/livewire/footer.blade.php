@@ -26,7 +26,7 @@
             <div class="mt-8">
                 <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-4 opacity-95">{{ __('messages.need_help') }}</h4>
                 @php
-                    $footerWaText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
+                    $footerWaText = __('messages.wa_default_message');
                 @endphp
                 <a href="https://wa.me/{{ $whatsappNumber }}?text={{ rawurlencode($footerWaText) }}" 
                    target="_blank"

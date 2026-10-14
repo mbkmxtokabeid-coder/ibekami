@@ -255,5 +255,9 @@ return [
     'popular_recommendations' => 'Halaman Populer',
     'need_help_404' => 'Butuh bantuan cepat atau ingin konsultasi pesanan?',
     'contact_admin' => 'Hubungi Admin via WhatsApp',
+
+    // WhatsApp Pre-filled Messages
+    'wa_default_message' => 'Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?',
+    'wa_product_message' => 'Halo Admin, saya tertarik dengan produk :product dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?',
 ];
 

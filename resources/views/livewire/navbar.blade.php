@@ -195,7 +195,7 @@
                 </button>
 
                 <!-- CTA Button -->
-                <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+                <a href="https://wa.me/628170769999?text={{ rawurlencode(__('messages.wa_default_message')) }}" 
                    target="_blank"
                    rel="noopener noreferrer"
                    @click.throttle.2000ms
@@ -344,7 +344,7 @@
 
             <div class="w-full h-px bg-black/5 dark:bg-white/10 my-2"></div>
             
-            <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+            <a href="https://wa.me/628170769999?text={{ rawurlencode(__('messages.wa_default_message')) }}" 
                target="_blank"
                rel="noopener noreferrer"
                @click.throttle.2000ms

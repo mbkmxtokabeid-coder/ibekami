@@ -451,7 +451,7 @@
     {{-- WhatsApp Floating Button — Selalu tampil langsung saat web dibuka tanpa harus menunggu scroll ke bawah --}}
     @php
         $globalWaNumber = '628170769999';
-        $globalWaText = "Halo Admin, saya tertarik dengan produk dari website Ibekami.id. Bisa bantu untuk info lebih lanjut?";
+        $globalWaText = __('messages.wa_default_message');
     @endphp
     <a href="https://wa.me/{{ $globalWaNumber }}?text={{ rawurlencode($globalWaText) }}" 
        target="_blank"
