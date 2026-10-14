@@ -6,10 +6,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-6 sm:pt-24 sm:pb-8 md:pt-28 md:pb-10 relative z-10">
         <div class="text-center">
             {{-- Badge --}}
-            <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.2em] mb-2 sm:mb-3">
-                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
-                {{ __('messages.our_technology') }}
-                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
+            <div class="flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-2 sm:mb-3">
+                <span class="w-6 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100] shrink-0"></span>
+                <span class="whitespace-nowrap">{{ __('messages.our_technology') }}</span>
+                <span class="w-6 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100] shrink-0"></span>
             </div>
 
             {{-- Title --}}
@@ -18,9 +18,9 @@
             </h1>
 
             {{-- Description --}}
-            <div class="max-w-4xl mx-auto px-2">
-                <p class="text-[#7a6452] dark:text-[#D8C6B6] text-xs sm:text-base md:text-lg leading-relaxed font-medium">
-                    {{ __('messages.hero_machine_desc') }} <span class="text-[#b35200] dark:text-[#ff9100] font-bold">{{ __('messages.precision') }}</span> {{ __('messages.and') }} <span class="text-[#b35200] dark:text-[#ff9100] font-bold">{{ __('messages.consistency') }}</span>.
+            <div class="max-w-3xl lg:max-w-4xl mx-auto px-2">
+                <p class="text-[#7a6452] dark:text-[#D8C6B6] text-xs sm:text-base md:text-lg leading-relaxed font-medium text-balance [text-wrap:balance]">
+                    {{ __('messages.hero_machine_desc') }}
                 </p>
             </div>
         </div>

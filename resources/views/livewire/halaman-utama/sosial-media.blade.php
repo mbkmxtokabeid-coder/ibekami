@@ -1,4 +1,4 @@
-<section class="py-10 md:py-14 px-4 sm:px-6 lg:px-8 bg-[#fdfaf7] dark:bg-[#1A120B] transition-colors duration-200">
+<section class="cv-auto py-10 md:py-14 px-4 sm:px-6 lg:px-8 bg-[#fdfaf7] dark:bg-[#1A120B] transition-colors duration-200">
     <div class="max-w-7xl mx-auto">
 
         {{-- Header --}}
@@ -23,6 +23,7 @@
             <a href="https://www.tiktok.com/@ibekami.id"
                target="_blank"
                rel="noopener noreferrer"
+               aria-label="Kunjungi akun TikTok Ibekami @ibekami.id"
                class="bg-white dark:bg-[#231811] p-5 sm:p-6 rounded-3xl border border-black/5 dark:border-[#b35200]/20 flex items-center gap-5 sm:gap-6 group
                       hover:border-[#010101]/20 dark:hover:border-white/20 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)]
                       transition-all duration-300 hover:scale-[1.02] ease-out">
@@ -56,6 +57,7 @@
             <a href="https://www.instagram.com/ibekami.id"
                target="_blank"
                rel="noopener noreferrer"
+               aria-label="Kunjungi akun Instagram Ibekami @ibekami.id"
                class="bg-white dark:bg-[#231811] p-5 sm:p-6 rounded-3xl border border-black/5 dark:border-[#b35200]/20 flex items-center gap-5 sm:gap-6 group
                       hover:border-[#E1306C]/20 dark:hover:border-[#E1306C]/40 hover:shadow-[0_8px_30px_rgba(225,48,108,0.1)]
                       transition-all duration-300 hover:scale-[1.02] ease-out">

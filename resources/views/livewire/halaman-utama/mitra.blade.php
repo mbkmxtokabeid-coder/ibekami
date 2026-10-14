@@ -1,4 +1,4 @@
-<section class="py-10 md:py-14 px-4 bg-[#fff2e0] dark:bg-[#130D08] overflow-hidden transition-colors duration-200">
+<section class="cv-auto py-10 md:py-14 px-4 bg-[#fff2e0] dark:bg-[#130D08] overflow-hidden transition-colors duration-200">
     <div class="max-w-7xl mx-auto">
         <div class="text-center max-w-3xl mx-auto mb-10">
             <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.2em] mb-2 sm:mb-3">
@@ -28,31 +28,44 @@
                     <div x-data="{
                         scrollPosition: 0,
                         isPaused: false,
+                        isVisible: false,
                         totalWidth: 0,
                         animFrame: null,
                         lastTime: null,
                         
                         init() {
                             this.$nextTick(() => {
-                                // DOM Cloning untuk efek infinite scroll tanpa download request gambar ganda
                                 const track = this.$refs.track;
+                                if (!track) return;
                                 const items = Array.from(track.children);
                                 items.forEach(item => {
                                     const clone = item.cloneNode(true);
                                     track.appendChild(clone);
                                 });
 
+                                const observer = new IntersectionObserver(([entry]) => {
+                                    this.isVisible = entry.isIntersecting;
+                                    if (this.isVisible && !this.animFrame) {
+                                        this.lastTime = null;
+                                        this.startAutoScroll();
+                                    }
+                                }, { threshold: 0.05 });
+                                observer.observe(this.$el);
+
                                 requestAnimationFrame(() => {
                                     this.totalWidth = track.scrollWidth / 2;
-                                    this.startAutoScroll();
                                 });
                             });
                         },
                         
                         startAutoScroll() {
                             const step = (timestamp) => {
+                                if (!this.isVisible) {
+                                    this.animFrame = null;
+                                    return;
+                                }
                                 if (!this.lastTime) this.lastTime = timestamp;
-                                const delta = timestamp - this.lastTime;
+                                const delta = Math.min(timestamp - this.lastTime, 100);
                                 this.lastTime = timestamp;
 
                                 if (!this.isPaused) {
@@ -100,32 +113,45 @@
                     <div x-data="{
                         scrollPosition: 0,
                         isPaused: false,
+                        isVisible: false,
                         totalWidth: 0,
                         animFrame: null,
                         lastTime: null,
                         
                         init() {
                             this.$nextTick(() => {
-                                // DOM Cloning untuk efek infinite scroll tanpa download request gambar ganda
                                 const track = this.$refs.track;
+                                if (!track) return;
                                 const items = Array.from(track.children);
                                 items.forEach(item => {
                                     const clone = item.cloneNode(true);
                                     track.appendChild(clone);
                                 });
 
+                                const observer = new IntersectionObserver(([entry]) => {
+                                    this.isVisible = entry.isIntersecting;
+                                    if (this.isVisible && !this.animFrame) {
+                                        this.lastTime = null;
+                                        this.startAutoScroll();
+                                    }
+                                }, { threshold: 0.05 });
+                                observer.observe(this.$el);
+
                                 requestAnimationFrame(() => {
                                     this.totalWidth = track.scrollWidth / 2;
                                     this.scrollPosition = this.totalWidth;
-                                    this.startAutoScroll();
                                 });
                             });
                         },
                         
                         startAutoScroll() {
                             const step = (timestamp) => {
+                                if (!this.isVisible) {
+                                    this.animFrame = null;
+                                    return;
+                                }
                                 if (!this.lastTime) this.lastTime = timestamp;
-                                const delta = timestamp - this.lastTime;
+                                const delta = Math.min(timestamp - this.lastTime, 100);
                                 this.lastTime = timestamp;
 
                                 if (!this.isPaused) {
@@ -172,11 +198,11 @@
         </div>
 
         <!-- CTA Banner -->
-        <div x-ignore class="mt-16 bg-[#ff9100] dark:bg-[#b35200] rounded-[32px] p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl shadow-[#ff9100]/25 dark:shadow-[#b35200]/20 transition-colors duration-200">
+        <div x-ignore class="mt-16 bg-[#ff9100] dark:bg-[#b35200] rounded-[32px] p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl shadow-[#ff9100]/25 dark:shadow-[#b35200]/20 border border-white/10 transition-colors duration-200">
             <div class="text-center md:text-left text-white">
-                <div class="text-[11px] font-bold opacity-90 uppercase tracking-[2px] mb-2">{{ __('messages.join_us') }}</div>
+                <div class="text-[11px] font-bold opacity-95 uppercase tracking-[2px] mb-2">{{ __('messages.join_us') }}</div>
                 <h3 class="text-2xl md:text-3xl font-extrabold mb-2 text-white tracking-tight">{{ __('messages.become_next_partner') }}</h3>
-                <p class="text-sm text-white/80">{{ __('messages.collaboration_best_solution') }}</p>
+                <p class="text-sm text-white/95">{{ __('messages.collaboration_best_solution') }}</p>
             </div>
             <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"

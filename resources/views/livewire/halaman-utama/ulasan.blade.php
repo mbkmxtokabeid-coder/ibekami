@@ -1,4 +1,4 @@
-<section class="py-10 md:py-14 px-4 bg-[#fdfaf7] dark:bg-[#1A120B] overflow-hidden transition-colors duration-200">
+<section class="cv-auto py-10 md:py-14 px-4 bg-[#fdfaf7] dark:bg-[#1A120B] overflow-hidden transition-colors duration-200">
     <div class="max-w-7xl mx-auto">
         <div class="mb-10 relative flex flex-col md:block">
             <div class="text-center max-w-lg mx-auto">

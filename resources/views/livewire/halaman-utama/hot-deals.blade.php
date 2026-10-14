@@ -7,7 +7,7 @@
   - Asymmetric border-radius for aesthetic image shapes
   - Mobile 2-Columns Layout Optimized
 --}}
-<section id="hot-deals" class="py-10 md:py-14 px-4 bg-[#fdfaf7] relative overflow-hidden">
+<section id="hot-deals" class="cv-auto py-10 md:py-14 px-4 bg-[#fdfaf7] relative overflow-hidden">
     
     <!-- Dekorasi Background Ringan (CSS Blur Blob) -->
     <div class="absolute top-0 right-[-5%] w-72 h-72 bg-[#b35200]/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -16,26 +16,26 @@
     <div class="max-w-7xl mx-auto relative z-10">
         
         <!-- Header Section -->
-        <div class="mb-6 sm:mb-8 relative flex flex-col md:block">
+        <div class="mb-6 sm:mb-8 relative">
             <!-- Label + Judul — tetap di tengah -->
-            <div class="text-center max-w-3xl mx-auto">
-                <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.2em] mb-2 sm:mb-3">
-                    <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
-                    {{ __('messages.special_offer') }}
-                    <span class="w-10 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100]"></span>
+            <div class="text-center max-w-2xl mx-auto px-2">
+                <div class="flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-2 sm:mb-3">
+                    <span class="w-8 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100] shrink-0"></span>
+                    <span class="whitespace-nowrap">{{ __('messages.special_offer') }}</span>
+                    <span class="w-8 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100] shrink-0"></span>
                 </div>
                 
                 <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight leading-tight">
                     {{ __('messages.hot_deals_this_month') }}
                 </h2>
-                <!-- Subtitle di tengah -->
-                <p class="text-[12px] md:text-sm text-[#886852] dark:text-[#9E8B7D] mt-2 leading-relaxed sm:whitespace-nowrap">
+                <!-- Subtitle di tengah (wrap responsif tanpa menabrak tombol) -->
+                <p class="text-[12px] md:text-sm text-[#886852] dark:text-[#9E8B7D] mt-2 leading-relaxed max-w-xl mx-auto">
                     {{ __('messages.best_price_all_categories') }}
                 </p>
             </div>
             
-            <!-- Tombol CTA Header — Diposisikan ke Kanan & Ringkas (w-auto) -->
-            <div class="mt-4 md:mt-0 md:absolute md:right-0 md:bottom-0 flex items-center justify-end shrink-0">
+            <!-- Tombol CTA Header — Center di Mobile & Tablet, Kanan di Desktop (lg+) -->
+            <div class="mt-4 sm:mt-5 lg:mt-0 lg:absolute lg:right-0 lg:bottom-0 flex items-center justify-center lg:justify-end shrink-0">
                 <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
                    rel="noopener noreferrer"

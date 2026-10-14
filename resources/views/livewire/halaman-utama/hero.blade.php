@@ -11,8 +11,8 @@
 <section class="relative bg-[#FFF2E0] flex items-center justify-center overflow-hidden px-4 pt-24 pb-12 sm:pt-28 sm:pb-14 lg:pt-32 lg:pb-16">
     
     <!-- Background Blurs (lebih ringan & subtle) -->
-    <div class="absolute top-0 right-[-10%] w-[40vw] max-w-[420px] h-[40vw] max-h-[420px] bg-[#b35200]/10 blur-[80px] rounded-full animate-[pulse_6s_ease-in-out_infinite]"></div>
-    <div class="absolute bottom-[-10%] left-[-10%] w-[38vw] max-w-[380px] h-[38vw] max-h-[380px] bg-[#b35200]/5 blur-[100px] rounded-full animate-[pulse_8s_ease-in-out_infinite]"></div>
+    <div class="absolute top-0 right-[-10%] w-[40vw] max-w-[420px] h-[40vw] max-h-[420px] bg-[#b35200]/10 blur-[80px] rounded-full pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] left-[-10%] w-[38vw] max-w-[380px] h-[38vw] max-h-[380px] bg-[#b35200]/5 blur-[100px] rounded-full pointer-events-none"></div>
 
     <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center relative z-10">
         
@@ -82,9 +82,11 @@
                  slidesCount: {{ count($banners) }},
                  init() {
                      if (this.slidesCount > 1) {
-                         setInterval(() => {
-                              this.activeSlide = (this.activeSlide + 1) % this.slidesCount;
-                         }, 5000);
+                         setTimeout(() => {
+                             setInterval(() => {
+                                  this.activeSlide = (this.activeSlide + 1) % this.slidesCount;
+                             }, 5000);
+                         }, 4000);
                      }
                  }
              }">

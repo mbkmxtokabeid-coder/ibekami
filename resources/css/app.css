@@ -364,4 +364,10 @@ html.dark .bg-map-container:hover {
     background-color: #0a0a0a !important;
 }
 
+/* Offscreen rendering optimization for Mobile PageSpeed */
+.cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 500px;
+}
+
 

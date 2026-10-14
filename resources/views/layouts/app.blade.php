@@ -17,16 +17,18 @@
     {{-- CRITICAL: Unregister Service Worker lama tanpa memblokir parsing HTML awal --}}
     <script>
         window.addEventListener('load', function() {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.getRegistrations().then(function(regs) {
-                    regs.forEach(function(r) { r.unregister(); });
-                });
+            try {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(function(regs) {
+                        regs.forEach(function(r) { r.unregister().catch(function(){}); });
+                    }).catch(function(){});
+                }
                 if ('caches' in window) {
                     caches.keys().then(function(keys) {
-                        keys.forEach(function(key) { caches.delete(key); });
-                    });
+                        keys.forEach(function(key) { caches.delete(key).catch(function(){}); });
+                    }).catch(function(){});
                 }
-            }
+            } catch (e) {}
         });
     </script>
     <meta charset="utf-8">
@@ -42,7 +44,7 @@
 
     <title>@yield('title', 'IBEKAMI - Digital Printing & Souvenir Custom Medan')</title>
     <meta name="description" content="@yield('meta_description', 'IBEKAMI - Percetakan dan souvenir kreatif terbaik di Medan. Melayani plakat, digital printing, dan merchandise custom dengan kualitas premium.')">
-    <meta name="keywords" content="@yield('meta_keywords', 'percetakan Medan, souvenir custom Medan, merchandise perusahaan Medan, digital printing Medan, goodie bag Medan, acrylic Medan')">
+    <meta name="keywords" content="@yield('meta_keywords', 'produk cetak digital Medan, cetak digital Medan, percetakan Medan, souvenir custom Medan, merchandise perusahaan Medan, plakat akrilik Medan, tas bingkisan Medan')">
 
     <!-- Open Graph (Facebook / Instagram / WhatsApp) -->
     <meta property="og:type"        content="website">
@@ -74,17 +76,26 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
 
-    {{-- Google Fonts: Poppins & Plus Jakarta Sans (Non-render-blocking with inlined fallback) --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-    </noscript>
-
-    {{-- Preload critical fonts for better performance (Network Dependency Tree optimization) --}}
+    {{-- Preload critical self-hosted fonts for instant Zero-Latency First Paint --}}
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/plus-jakarta-sans-latin.woff2') }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/poppins-black-latin.woff2') }}" crossorigin>
+    
+    {{-- Asynchronously load full Google Fonts weights after page load without delaying critical path --}}
+    <script>
+        window.addEventListener('load', function() {
+            var loadGf = function() {
+                var gf = document.createElement('link');
+                gf.rel = 'stylesheet';
+                gf.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap';
+                document.head.appendChild(gf);
+            };
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(function() { setTimeout(loadGf, 2500); });
+            } else {
+                setTimeout(loadGf, 3000);
+            }
+        });
+    </script>
     
     {{-- Inlined Self-hosted fonts CSS to eliminate a render-blocking HTTP request --}}
     <style>
@@ -476,10 +487,89 @@
                     'longitude' => 98.636926,
                 ],
                 'areaServed' => ['Medan', 'Sumatera Utara', 'Indonesia'],
+                'knowsAbout' => [
+                    'Produk Cetak Digital Medan',
+                    'Produk Cetak Digital di Medan',
+                    'Cetak Digital Medan',
+                    'Cetak Digital di Medan',
+                    'Percetakan Digital di Medan',
+                    'Jasa Cetak Digital di Medan',
+                    'Plakat di Medan',
+                    'Plakat Akrilik di Medan',
+                    'Suvenir di Medan',
+                    'Souvenir di Medan',
+                    'Souvenir Perusahaan di Medan',
+                    'Paket Suvenir Perusahaan di Medan',
+                    'Tumbler di Medan',
+                    'Tumbler Grafir di Medan',
+                    'Tumbler Grafir Laser di Medan',
+                    'Kartu Nama di Medan',
+                    'Cetak Kartu Nama di Medan',
+                    'Spanduk di Medan',
+                    'Cetak Spanduk di Medan',
+                    'Cetak Banner di Medan',
+                    'Cetak Spanduk dan Banner di Medan',
+                    'Stiker di Medan',
+                    'Cetak Stiker di Medan',
+                    'Tas Bingkisan di Medan',
+                    'Cetak Tas Bingkisan di Medan',
+                    'Paket Perusahaan di Medan',
+                ],
                 'hasOfferCatalog' => [
                     '@type' => 'OfferCatalog',
-                    'name' => 'Katalog Produk IBEKAMI',
+                    'name' => 'Katalog Layanan Cetak Digital & Suvenir IBEKAMI Medan',
                     'url' => route('katalog'),
+                    'itemListElement' => [
+                        [
+                            '@type' => 'OfferCatalog',
+                            'name' => 'Plakat Akrilik di Medan',
+                            'itemListElement' => [
+                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Pembuatan Plakat Akrilik Kustom di Medan']]
+                            ]
+                        ],
+                        [
+                            '@type' => 'OfferCatalog',
+                            'name' => 'Tumbler Grafir di Medan',
+                            'itemListElement' => [
+                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Jasa Tumbler Grafir Laser Kustom di Medan']]
+                            ]
+                        ],
+                        [
+                            '@type' => 'OfferCatalog',
+                            'name' => 'Suvenir & Souvenir di Medan',
+                            'itemListElement' => [
+                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Pengadaan Paket Suvenir & Souvenir Perusahaan di Medan']]
+                            ]
+                        ],
+                        [
+                            '@type' => 'OfferCatalog',
+                            'name' => 'Cetak Kartu Nama di Medan',
+                            'itemListElement' => [
+                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Jasa Cetak Kartu Nama Bisnis Cepat di Medan']]
+                            ]
+                        ],
+                        [
+                            '@type' => 'OfferCatalog',
+                            'name' => 'Cetak Spanduk & Banner di Medan',
+                            'itemListElement' => [
+                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Percetakan Spanduk dan Banner Outdoor Indoor di Medan']]
+                            ]
+                        ],
+                        [
+                            '@type' => 'OfferCatalog',
+                            'name' => 'Cetak Stiker di Medan',
+                            'itemListElement' => [
+                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Jasa Cetak Stiker & Label Kemasan Produk di Medan']]
+                            ]
+                        ],
+                        [
+                            '@type' => 'OfferCatalog',
+                            'name' => 'Cetak Tas Bingkisan di Medan',
+                            'itemListElement' => [
+                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Cetak Tas Bingkisan & Goodie Bag Kustom di Medan']]
+                            ]
+                        ],
+                    ]
                 ],
                 'sameAs' => [
                     'https://wa.me/628170769999',
@@ -502,6 +592,61 @@
                     'ratingCount' => '1',
                 ]
             ];
+
+            // FAQPage Schema for Rich Search Results on Google
+            $graph[] = [
+                '@type' => 'FAQPage',
+                'mainEntity' => [
+                    [
+                        '@type' => 'Question',
+                        'name' => __('messages.faq_q1'),
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => __('messages.faq_a1'),
+                        ],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => __('messages.faq_q2'),
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => __('messages.faq_a2'),
+                        ],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => __('messages.faq_q3'),
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => __('messages.faq_a3'),
+                        ],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => __('messages.faq_q4'),
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => __('messages.faq_a4'),
+                        ],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => __('messages.faq_q5'),
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => __('messages.faq_a5'),
+                        ],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => __('messages.faq_q6'),
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => __('messages.faq_a6'),
+                        ],
+                    ],
+                ],
+            ];
         }
 
         // WebSite schema (selalu ada di setiap halaman)
@@ -522,7 +667,7 @@
     @endif
 
     {{-- Instant Page: Prefetch pages on hover for SPA-like navigation speed --}}
-    <script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.js" type="module" defer></script>
+    <script src="{{ asset('js/instantpage.js') }}" type="module" defer></script>
 
     {{-- Handle smooth scroll on page load for lazy-loaded hash elements --}}
     <script>

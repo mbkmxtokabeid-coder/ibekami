@@ -197,7 +197,7 @@
                 <!-- CTA Button -->
                 <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
-                   rel="noopener"
+                   rel="noopener noreferrer"
                    @click.throttle.2000ms
                    class="hidden md:flex items-center justify-center bg-[#ff9100] dark:bg-[#b35200] text-[#2C1A0E] dark:text-white px-5 xl:px-6 py-2 rounded-full text-[13px] font-bold shadow-[0_4px_14px_rgba(255,145,0,0.3)] dark:shadow-[0_4px_14px_rgba(179,82,0,0.3)] hover:shadow-[0_6px_20px_rgba(255,145,0,0.4)] dark:hover:shadow-[0_6px_20px_rgba(179,82,0,0.4)] hover:-translate-y-0.5 hover:bg-[#e07d00] dark:hover:bg-[#994500] transition-all duration-300 outline-none shrink-0">
                     {{ __('messages.order') }}
@@ -346,7 +346,7 @@
             
             <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                target="_blank"
-               rel="noopener"
+               rel="noopener noreferrer"
                @click.throttle.2000ms
                class="w-full py-3.5 bg-[#ff9100] dark:bg-[#b35200] text-[#2C1A0E] dark:text-white rounded-2xl font-bold text-[15px] shadow-lg shadow-[#ff9100]/25 dark:shadow-[#b35200]/25 active:scale-[0.98] hover:bg-[#e07d00] dark:hover:bg-[#994500] transition-all flex items-center justify-center gap-2 outline-none">
                 {{ __('messages.order_now') }}

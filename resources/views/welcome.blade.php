@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Plakat Akrilik, Suvenir & Percetakan Digital di Medan | IBEKAMI')
+@section('title', 'Produk Cetak Digital Medan, Plakat Akrilik & Suvenir | IBEKAMI')
 @section('canonical', 'https://ibekami.id/')
-@section('meta_description', 'Solusi pembuatan plakat, suvenir, dan cetak digital berkualitas untuk kebutuhan personal maupun instansi di Medan. Siap melayani pesanan satuan maupun partai besar.')
+@section('meta_description', 'Solusi percetakan digital dan produsen suvenir kustom terpercaya di Medan. Melayani plakat akrilik, tumbler grafir laser, cetak kartu nama bisnis, spanduk banner, stiker, dan tas bingkisan di Medan. Cepat, murah, dan presisi.')
+@section('meta_keywords', 'suvenir di medan, souvenir di medan, tumbler grafir di medan, tumbler grafir laser di medan, kartu nama di medan, cetak kartu nama di medan, cetak spanduk dan banner di medan, cetak spanduk di medan, cetak banner di medan, cetak stiker di medan, plakat di medan, plakat akrilik di medan, cetak digital di medan, percetakan digital di medan, produk cetak digital medan, cetak tas bingkisan di medan, paket suvenir perusahaan di medan')
 @section('og_image', asset('storage/banners/428f232a-c988-4731-8cf7-ceec4874496c.webp'))
 
 @section('content')
@@ -26,7 +27,7 @@
     <livewire:halaman-utama.mitra lazy />
 
     {{-- FAQ & About Section for SEO and Customer Information --}}
-    <section id="faq-about" class="py-12 md:py-16 px-4 bg-[#fdfaf7] dark:bg-[#1A120B] text-slate-800 dark:text-[#D8C6B6] relative overflow-hidden transition-colors duration-200">
+    <section id="faq-about" class="cv-auto py-12 md:py-16 px-4 bg-[#fdfaf7] dark:bg-[#1A120B] text-slate-800 dark:text-[#D8C6B6] relative overflow-hidden transition-colors duration-200">
         {{-- Background blur blobs --}}
         <div class="absolute top-1/2 left-[-10%] w-[30vw] h-[30vw] bg-[#b35200]/5 dark:bg-[#b35200]/10 rounded-full blur-[100px] pointer-events-none"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[25vw] h-[25vw] bg-[#b35200]/5 dark:bg-[#b35200]/10 rounded-full blur-[80px] pointer-events-none"></div>
@@ -53,7 +54,7 @@
                 <div class="mb-4">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff9100]/10 dark:bg-[#b35200]/15 border border-[#ff9100]/20 dark:border-[#b35200]/30">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#ff9100] dark:bg-[#b35200]"></span>
-                        <span class="text-[10px] font-bold text-[#ff9100] dark:text-[#ff9100] uppercase tracking-widest">{{ __('messages.faq_badge') }}</span>
+                        <span class="text-[10px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-widest">{{ __('messages.faq_badge') }}</span>
                     </div>
                     <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight leading-tight mt-2 sm:mt-3">
                         {{ __('messages.faq_title') }}

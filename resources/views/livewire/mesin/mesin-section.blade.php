@@ -3,14 +3,14 @@
         
         <!-- HEADER SECTION -->
         <div class="pt-6 pb-3 sm:pt-10 sm:pb-6 text-center">
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-[#FDF5EC] mb-1.5 sm:mb-2">
+            <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-[#FDF5EC] mb-1.5 sm:mb-2">
                 {{ __('messages.workshop_capabilities') }}
                 <span class="text-[#b35200] dark:text-[#ff9100]">
                     {{ __('messages.capabilities') }}
                 </span>
             </h2>
 
-            <p class="text-slate-500 dark:text-[#D8C6B6] max-w-4xl mx-auto text-xs sm:text-base lg:text-lg">
+            <p class="text-slate-500 dark:text-[#D8C6B6] max-w-5xl xl:max-w-6xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed text-balance [text-wrap:balance]">
                 {{ __('messages.supported_by_latest_tech') }}
             </p>
         </div>
