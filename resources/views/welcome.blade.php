@@ -14,8 +14,8 @@
     {{-- Hot Deals — render lazily --}}
     <livewire:halaman-utama.hot-deals lazy />
 
-    {{-- Product Section — render lazily --}}
-    <livewire:halaman-utama.product-section lazy />
+    {{-- Product Section — render langsung tanpa double skeleton --}}
+    <livewire:halaman-utama.product-section />
 
     {{-- Sosial Media — komponen statis ringan, render langsung tanpa roundtrip --}}
     <livewire:halaman-utama.sosial-media />
@@ -106,7 +106,7 @@
         </div>
     </section>
 
-    {{-- Footer — render lazily --}}
-    <livewire:footer lazy />
+    {{-- Footer --}}
+    <livewire:footer />
 
 @endsection

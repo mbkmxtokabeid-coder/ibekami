@@ -16,7 +16,7 @@
     <div class="max-w-7xl mx-auto relative z-10">
         
         <!-- Header Section -->
-        <div class="mb-6 sm:mb-8 relative">
+        <div class="mb-8 sm:mb-10 lg:mb-12 relative flex flex-col items-center justify-center">
             <!-- Label + Judul — tetap di tengah -->
             <div class="text-center max-w-2xl mx-auto px-2">
                 <div class="flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-2 sm:mb-3">
@@ -35,7 +35,7 @@
             </div>
             
             <!-- Tombol CTA Header — Center di Mobile & Tablet, Kanan di Desktop (lg+) -->
-            <div class="mt-4 sm:mt-5 lg:mt-0 lg:absolute lg:right-0 lg:bottom-0 flex items-center justify-center lg:justify-end shrink-0">
+            <div class="mt-4 sm:mt-5 lg:mt-0 lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 flex items-center justify-center lg:justify-end shrink-0">
                 <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
                    target="_blank"
                    rel="noopener noreferrer"

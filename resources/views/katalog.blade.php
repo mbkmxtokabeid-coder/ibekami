@@ -58,7 +58,7 @@
 </div>
 
 {{-- Footer --}}
-<livewire:footer lazy />
+<livewire:footer />
 
 @push('scripts')
 <script>
