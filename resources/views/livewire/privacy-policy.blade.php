@@ -1,177 +1,466 @@
-<div x-data="{ 
-    activeSection: 'section-0',
-    scrollToSection(id) {
-        const element = document.getElementById(id);
-        if (element) {
-            window.scrollTo({
-                top: element.offsetTop - 100,
-                behavior: 'smooth'
-            });
-            this.activeSection = id;
-        }
-    }
-}" 
-@scroll.window.throttle.150ms="
-    const sections = ['section-1', 'section-2', 'section-3', 'section-4', 'section-5', 'section-6'];
-    const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
-    
-    sections.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            if (scrollPos >= el.offsetTop - 150) {
-                activeSection = id;
+
+<div
+    x-data="{
+        activeSection: 'section-0',
+
+        scrollToSection(id) {
+            const element = document.getElementById(id);
+
+            if (element) {
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top
+                        + window.scrollY - 100,
+                    behavior: 'smooth'
+                });
+
+                this.activeSection = id;
             }
         }
-    });
-"
-class="bg-[#F4F1EA] dark:bg-[#130D08] text-[#222222] dark:text-[#D8C6B6] font-sans antialiased min-h-screen py-12 lg:py-20 transition-colors duration-200">
+    }"
+    @scroll.window.throttle.150ms="
+        const sections = [
+            'section-1',
+            'section-2',
+            'section-3',
+            'section-4',
+            'section-5',
+            'section-6'
+        ];
 
-    <div class="container mx-auto px-4 max-w-7xl">
-        
-        <!-- Header Section -->
-        <header class="text-center mb-12">
-            <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight mb-4 text-[#2C1A0E] dark:text-[#FDF5EC]">
+        const scrollPos =
+            window.pageYOffset ||
+            document.documentElement.scrollTop;
+
+        sections.forEach(id => {
+            const el = document.getElementById(id);
+
+            if (
+                el &&
+                scrollPos >=
+                el.getBoundingClientRect().top +
+                window.scrollY - 150
+            ) {
+                activeSection = id;
+            }
+        });
+    "
+    class="min-h-screen overflow-x-hidden bg-[#F4F1EA]
+           pt-24 pb-10 font-sans text-[#222222]
+           antialiased transition-colors duration-200
+           dark:bg-[#130D08] dark:text-[#D8C6B6]
+           sm:pt-28 sm:pb-12 lg:pt-28 lg:pb-20"
+>
+    <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <!-- Header -->
+        <header class="mb-6 w-full min-w-0 text-center sm:mb-8">
+            <h1
+                class="mx-auto mb-3 max-w-full break-words
+                       text-3xl font-extrabold leading-tight
+                       tracking-tight text-[#2C1A0E]
+                       dark:text-[#FDF5EC]
+                       sm:mb-4 sm:text-4xl lg:text-5xl"
+            >
                 {{ __('messages.privacy_policy_title') }}
             </h1>
-            <p class="text-gray-500 dark:text-[#9E8B7D] text-sm italic">
-                {{ __('messages.last_updated') }}: {{ \Carbon\Carbon::now()->locale(app()->getLocale())->translatedFormat('d F Y') }}
+
+            <p
+                class="text-sm italic leading-relaxed
+                       text-gray-500 dark:text-[#9E8B7D]
+                       sm:text-base"
+            >
+                {{ __('messages.last_updated') }}:
+                {{ \Carbon\Carbon::now()->locale(app()->getLocale())->translatedFormat('d F Y') }}
             </p>
         </header>
 
-        <div class="flex flex-col lg:flex-row gap-8">
-            
-            <!-- Sidebar Nav (Desktop) -->
-            <aside class="hidden lg:block w-1/4">
-                <div class="sticky top-24 bg-white dark:bg-[#231811] border border-[#e0ddd5] dark:border-white/10 rounded-2xl p-6 shadow-sm">
-                    <h5 class="text-xs font-black uppercase tracking-widest text-[#A65D3B] dark:text-[#b35200] mb-5">
+        <div class="flex min-w-0 flex-col gap-6 lg:flex-row lg:gap-8">
+
+            <!-- Daftar Isi Desktop -->
+            <aside class="hidden w-1/4 lg:block">
+                <div
+                    class="sticky top-24 rounded-2xl border
+                           border-[#e0ddd5] bg-white p-6 shadow-sm
+                           dark:border-white/10 dark:bg-[#231811]"
+                >
+                    <h5
+                        class="mb-5 text-xs font-black uppercase
+                               tracking-widest text-[#A65D3B]
+                               dark:text-[#b35200]"
+                    >
                         {{ __('messages.table_of_contents') }}
                     </h5>
+
                     <ul class="space-y-1">
-                        <li><a @click.prevent="scrollToSection('section-1')" :class="activeSection === 'section-1' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-100 dark:border-white/5">1. {{ __('messages.section_1_title') }}</a></li>
-                        <li><a @click.prevent="scrollToSection('section-2')" :class="activeSection === 'section-2' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-100 dark:border-white/5">2. {{ __('messages.section_2_title') }}</a></li>
-                        <li><a @click.prevent="scrollToSection('section-3')" :class="activeSection === 'section-3' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-100 dark:border-white/5">3. {{ __('messages.section_3_title') }}</a></li>
-                        <li><a @click.prevent="scrollToSection('section-4')" :class="activeSection === 'section-4' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-100 dark:border-white/5">4. {{ __('messages.section_4_title') }}</a></li>
-                        <li><a @click.prevent="scrollToSection('section-5')" :class="activeSection === 'section-5' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer border-b border-gray-100 dark:border-white/5">5. {{ __('messages.section_5_title') }}</a></li>
-                        <li><a @click.prevent="scrollToSection('section-6')" :class="activeSection === 'section-6' ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2' : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'" class="block py-2 text-sm transition-all cursor-pointer">6. {{ __('messages.section_6_title') }}</a></li>
+                        @foreach (range(1, 6) as $number)
+                            <li>
+                                <a
+                                    href="#section-{{ $number }}"
+                                    @click.prevent="scrollToSection('section-{{ $number }}')"
+                                    :class="activeSection === 'section-{{ $number }}'
+                                        ? 'text-[#A65D3B] dark:text-[#b35200] font-bold pl-2'
+                                        : 'text-gray-700 dark:text-[#D8C6B6] hover:text-[#A65D3B] dark:hover:text-[#b35200] hover:pl-2'"
+                                    class="block cursor-pointer
+                                           border-b border-gray-100
+                                           py-2 text-sm transition-all
+                                           dark:border-white/5"
+                                >
+                                    {{ $number }}.
+                                    {{ __('messages.section_' . $number . '_title') }}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </aside>
 
-            <!-- Main Content Area -->
-            <main class="w-full lg:w-3/4">
-                <div class="bg-white dark:bg-[#1A120B] rounded-2xl shadow-sm p-8 lg:p-12 border border-[#e0ddd5] dark:border-white/10">
-                    
-                    <!-- Section Intro -->
-                    <div id="section-0" class="mb-12">
-                        <p class="text-lg font-medium text-gray-700 dark:text-[#E8DDD3] leading-relaxed">
+            <!-- Konten Utama -->
+            <main class="w-full min-w-0 lg:w-3/4">
+                <div
+                    class="min-w-0 rounded-2xl border
+                           border-[#e0ddd5] bg-white p-5 shadow-sm
+                           dark:border-white/10 dark:bg-[#1A120B]
+                           sm:p-8 lg:p-12"
+                >
+
+                    <!-- Pendahuluan -->
+                    <div
+                        id="section-0"
+                        class="mb-8 min-w-0 scroll-mt-28 sm:mb-10"
+                    >
+                        <p
+                            class="text-base font-medium leading-relaxed
+                                   text-gray-700 dark:text-[#E8DDD3]
+                                   sm:text-lg"
+                        >
                             {{ __('messages.privacy_intro') }}
                         </p>
                     </div>
 
-                    <div class="space-y-12">
-                        <!-- Section 1 -->
-                        <section id="section-1" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
+                    <div class="min-w-0 space-y-10 sm:space-y-12">
+
+                        <!-- Bagian 1 -->
+                        <section
+                            id="section-1"
+                            class="min-w-0 scroll-mt-28"
+                        >
+                            <h3
+                                class="mb-5 border-l-4 border-[#A65D3B]
+                                       pl-3 text-lg font-bold uppercase
+                                       leading-snug tracking-wide
+                                       text-[#2C1A0E]
+                                       dark:border-[#b35200]
+                                       dark:text-[#FDF5EC]
+                                       sm:mb-6 sm:border-l-8
+                                       sm:pl-5 sm:text-xl"
+                            >
                                 1. {{ __('messages.section_1_title') }}
                             </h3>
-                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed mb-4">{{ __('messages.section_1_intro') }}</p>
+
+                            <p
+                                class="mb-4 leading-relaxed text-gray-600
+                                       dark:text-[#D8C6B6]"
+                            >
+                                {{ __('messages.section_1_intro') }}
+                            </p>
+
                             <ul class="space-y-3 text-gray-600 dark:text-[#D8C6B6]">
-                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> <span><strong class="text-gray-900 dark:text-[#FDF5EC]">{{ __('messages.section_1_item_1') }}</strong> {{ __('messages.section_1_item_1_desc') }}</span></li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> <span><strong class="text-gray-900 dark:text-[#FDF5EC]">{{ __('messages.section_1_item_2') }}</strong> {{ __('messages.section_1_item_2_desc') }}</span></li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> <span><strong class="text-gray-900 dark:text-[#FDF5EC]">{{ __('messages.section_1_item_3') }}</strong> {{ __('messages.section_1_item_3_desc') }}</span></li>
+                                @foreach ([1, 2, 3] as $item)
+                                    <li class="flex min-w-0 items-start gap-2">
+                                        <span
+                                            class="shrink-0 font-bold
+                                                   text-[#A65D3B]
+                                                   dark:text-[#b35200]"
+                                        >→</span>
+
+                                        <span class="min-w-0 leading-relaxed">
+                                            <strong class="text-gray-900 dark:text-[#FDF5EC]">
+                                                {{ __('messages.section_1_item_' . $item) }}
+                                            </strong>
+                                            {{ __('messages.section_1_item_' . $item . '_desc') }}
+                                        </span>
+                                    </li>
+                                @endforeach
                             </ul>
                         </section>
 
-                        <!-- Section 2 -->
-                        <section id="section-2" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
+                        <!-- Bagian 2 -->
+                        <section
+                            id="section-2"
+                            class="min-w-0 scroll-mt-28"
+                        >
+                            <h3
+                                class="mb-5 border-l-4 border-[#A65D3B]
+                                       pl-3 text-lg font-bold uppercase
+                                       leading-snug tracking-wide
+                                       text-[#2C1A0E]
+                                       dark:border-[#b35200]
+                                       dark:text-[#FDF5EC]
+                                       sm:mb-6 sm:border-l-8
+                                       sm:pl-5 sm:text-xl"
+                            >
                                 2. {{ __('messages.section_2_title') }}
                             </h3>
-                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed mb-4">{{ __('messages.section_2_intro') }}</p>
+
+                            <p class="mb-4 leading-relaxed text-gray-600 dark:text-[#D8C6B6]">
+                                {{ __('messages.section_2_intro') }}
+                            </p>
+
                             <ul class="space-y-3 text-gray-600 dark:text-[#D8C6B6]">
-                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_2_item_1') }}</li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_2_item_2') }}</li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_2_item_3') }}</li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_2_item_4') }}</li>
+                                @foreach ([1, 2, 3, 4] as $item)
+                                    <li class="flex min-w-0 items-start gap-2">
+                                        <span class="shrink-0 font-bold text-[#A65D3B] dark:text-[#b35200]">→</span>
+                                        <span class="min-w-0 leading-relaxed">
+                                            {{ __('messages.section_2_item_' . $item) }}
+                                        </span>
+                                    </li>
+                                @endforeach
                             </ul>
                         </section>
 
-                        <!-- Section 3 -->
-                        <section id="section-3" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
+                        <!-- Bagian 3 -->
+                        <section
+                            id="section-3"
+                            class="min-w-0 scroll-mt-28"
+                        >
+                            <h3
+                                class="mb-5 border-l-4 border-[#A65D3B]
+                                       pl-3 text-lg font-bold uppercase
+                                       leading-snug tracking-wide
+                                       text-[#2C1A0E]
+                                       dark:border-[#b35200]
+                                       dark:text-[#FDF5EC]
+                                       sm:mb-6 sm:border-l-8
+                                       sm:pl-5 sm:text-xl"
+                            >
                                 3. {{ __('messages.section_3_title') }}
                             </h3>
-                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed">{{ __('messages.section_3_content') }}</p>
+
+                            <p class="leading-relaxed text-gray-600 dark:text-[#D8C6B6]">
+                                {{ __('messages.section_3_content') }}
+                            </p>
                         </section>
 
-                        <!-- Section 4 -->
-                        <section id="section-4" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
+                        <!-- Bagian 4 -->
+                        <section
+                            id="section-4"
+                            class="min-w-0 scroll-mt-28"
+                        >
+                            <h3
+                                class="mb-5 border-l-4 border-[#A65D3B]
+                                       pl-3 text-lg font-bold uppercase
+                                       leading-snug tracking-wide
+                                       text-[#2C1A0E]
+                                       dark:border-[#b35200]
+                                       dark:text-[#FDF5EC]
+                                       sm:mb-6 sm:border-l-8
+                                       sm:pl-5 sm:text-xl"
+                            >
                                 4. {{ __('messages.section_4_title') }}
                             </h3>
-                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed">{{ __('messages.section_4_content') }}</p>
+
+                            <p class="leading-relaxed text-gray-600 dark:text-[#D8C6B6]">
+                                {{ __('messages.section_4_content') }}
+                            </p>
                         </section>
 
-                        <!-- Section 5 -->
-                        <section id="section-5" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
+                        <!-- Bagian 5 -->
+                        <section
+                            id="section-5"
+                            class="min-w-0 scroll-mt-28"
+                        >
+                            <h3
+                                class="mb-5 border-l-4 border-[#A65D3B]
+                                       pl-3 text-lg font-bold uppercase
+                                       leading-snug tracking-wide
+                                       text-[#2C1A0E]
+                                       dark:border-[#b35200]
+                                       dark:text-[#FDF5EC]
+                                       sm:mb-6 sm:border-l-8
+                                       sm:pl-5 sm:text-xl"
+                            >
                                 5. {{ __('messages.section_5_title') }}
                             </h3>
-                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed mb-4">{{ __('messages.section_5_intro') }}</p>
+
+                            <p class="mb-4 leading-relaxed text-gray-600 dark:text-[#D8C6B6]">
+                                {{ __('messages.section_5_intro') }}
+                            </p>
+
                             <ul class="space-y-3 text-gray-600 dark:text-[#D8C6B6]">
-                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_5_item_1') }}</li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_5_item_2') }}</li>
-                                <li class="flex items-start"><span class="text-[#A65D3B] dark:text-[#b35200] font-bold mr-2">→</span> {{ __('messages.section_5_item_3') }}</li>
+                                @foreach ([1, 2, 3] as $item)
+                                    <li class="flex min-w-0 items-start gap-2">
+                                        <span class="shrink-0 font-bold text-[#A65D3B] dark:text-[#b35200]">→</span>
+                                        <span class="min-w-0 leading-relaxed">
+                                            {{ __('messages.section_5_item_' . $item) }}
+                                        </span>
+                                    </li>
+                                @endforeach
                             </ul>
                         </section>
 
-                        <!-- Section 6: Contact -->
-                        <section id="section-6" class="scroll-mt-28">
-                            <h3 class="text-xl font-bold uppercase tracking-wide border-l-8 border-[#A65D3B] dark:border-[#b35200] pl-5 mb-6 text-[#2C1A0E] dark:text-[#FDF5EC]">
+                        <!-- Bagian 6: Kontak -->
+                        <section
+                            id="section-6"
+                            class="min-w-0 scroll-mt-28"
+                        >
+                            <h3
+                                class="mb-5 border-l-4 border-[#A65D3B]
+                                       pl-3 text-lg font-bold uppercase
+                                       leading-snug tracking-wide
+                                       text-[#2C1A0E]
+                                       dark:border-[#b35200]
+                                       dark:text-[#FDF5EC]
+                                       sm:mb-6 sm:border-l-8
+                                       sm:pl-5 sm:text-xl"
+                            >
                                 6. {{ __('messages.section_6_title') }}
                             </h3>
-                            <p class="text-gray-600 dark:text-[#D8C6B6] leading-relaxed mb-8">{{ __('messages.section_6_intro') }}</p>
-                            
-                            <div class="bg-[#fdfaf5] dark:bg-[#231811] border border-[#e0ddd5] dark:border-white/10 rounded-xl p-8 shadow-inner">
-                                <ul class="space-y-4">
-                                    <li class="flex flex-col sm:flex-row items-baseline gap-1 sm:gap-0">
-                                        <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0">{{ __('messages.email') }}:</strong>
-                                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ikhtiarberkah1010@gmail.com"
-                                           onclick="if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) { window.location.href = 'mailto:ikhtiarberkah1010@gmail.com'; return false; }"
-                                           target="_blank"
-                                           rel="noopener noreferrer"
-                                           title="Kirim email ke ikhtiarberkah1010@gmail.com"
-                                           class="text-[#A65D3B] dark:text-[#b35200] font-bold hover:underline inline-flex items-center gap-1.5">
-                                            <span>ikhtiarberkah1010@gmail.com</span>
-                                            <svg class="w-3.5 h-3.5 opacity-75" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+
+                            <p class="mb-6 leading-relaxed text-gray-600 dark:text-[#D8C6B6] sm:mb-8">
+                                {{ __('messages.section_6_intro') }}
+                            </p>
+
+                            <!-- Kartu Kontak -->
+                            <div
+                                class="w-full min-w-0 rounded-xl border
+                                       border-[#e0ddd5] bg-[#fdfaf5]
+                                       p-4 shadow-inner
+                                       dark:border-white/10
+                                       dark:bg-[#231811]
+                                       sm:p-6 lg:p-8"
+                            >
+                                <ul class="w-full min-w-0 space-y-5">
+
+                                    <!-- Email -->
+                                    <li class="min-w-0">
+                                        <div class="mb-1">
+                                            <strong class="text-sm font-semibold text-gray-800 dark:text-[#FDF5EC] sm:text-base">
+                                                {{ __('messages.email') }}:
+                                            </strong>
+                                        </div>
+
+                                        <a
+                                            href="mailto:ikhtiarberkah1010@gmail.com"
+                                            title="Kirim email ke ikhtiarberkah1010@gmail.com"
+                                            class="inline-flex max-w-full items-center gap-1
+                                                   whitespace-nowrap text-xs font-semibold
+                                                   leading-normal text-[#A65D3B]
+                                                   hover:underline dark:text-[#b35200]
+                                                   sm:text-sm"
+                                        >
+                                            <span class="whitespace-nowrap">
+                                                ikhtiarberkah1010@gmail.com
+                                            </span>
+
+                                            <svg
+                                                class="h-3 w-3 shrink-0 opacity-75"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                viewBox="0 0 24 24"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                                />
                                             </svg>
                                         </a>
                                     </li>
-                                    <li class="flex flex-col sm:flex-row items-baseline">
-                                        <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0">WhatsApp:</strong>
-                                        <a href="https://wa.me/628170769999" target="_blank" rel="noopener noreferrer" class="text-[#A65D3B] dark:text-[#b35200] font-bold hover:underline">+62 817-0769-9999</a>
-                                    </li>
-                                    <li class="flex flex-col sm:flex-row items-baseline">
-                                        <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0">{{ __('messages.instagram') }}:</strong>
-                                        <a href="https://www.instagram.com/ibekami.id/" target="_blank" rel="noopener noreferrer" class="text-[#A65D3B] dark:text-[#b35200] font-bold hover:underline">@ibekami.id</a>
-                                    </li>
-                                    <li class="flex flex-col sm:flex-row items-start">
-                                        <strong class="w-32 text-gray-800 dark:text-[#FDF5EC] shrink-0 mt-0.5">{{ __('messages.location') }}:</strong>
-                                        <a href="https://maps.app.goo.gl/o7soqw1UAc4AzDsH6" 
-                                           target="_blank" 
-                                           rel="noopener noreferrer" 
-                                           title="Buka lokasi di Google Maps"
-                                           class="group inline-block hover:opacity-90 transition-opacity">
-                                            <p class="font-bold text-[#A65D3B] dark:text-[#b35200] group-hover:underline flex items-center gap-1.5">
-                                                <span>{{ __('messages.address_line1') }}</span>
-                                                <svg class="w-3.5 h-3.5 inline-block opacity-75 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                                                </svg>
-                                            </p>
-                                            <p class="text-xs sm:text-sm mt-0.5 text-[#5C3D28] dark:text-[#D8C6B6] font-medium">{{ __('messages.address_line2') }}</p>
+
+                                    <!-- WhatsApp -->
+                                    <li class="min-w-0">
+                                        <div class="mb-1">
+                                            <strong class="text-sm font-semibold text-gray-800 dark:text-[#FDF5EC] sm:text-base">
+                                                WhatsApp:
+                                            </strong>
+                                        </div>
+
+                                        <a
+                                            href="https://wa.me/628170769999"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="text-sm font-semibold leading-relaxed
+                                                   text-[#A65D3B] hover:underline
+                                                   dark:text-[#b35200] sm:text-base"
+                                        >
+                                            +62 817-0769-9999
                                         </a>
                                     </li>
+
+                                    <!-- Instagram -->
+                                    <li class="min-w-0">
+                                        <div class="mb-1">
+                                            <strong class="text-sm font-semibold text-gray-800 dark:text-[#FDF5EC] sm:text-base">
+                                                {{ __('messages.instagram') }}:
+                                            </strong>
+                                        </div>
+
+                                        <a
+                                            href="https://www.instagram.com/ibekami.id/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="text-sm font-semibold leading-relaxed
+                                                   text-[#A65D3B] hover:underline
+                                                   dark:text-[#b35200] sm:text-base"
+                                        >
+                                            @ibekami.id
+                                        </a>
+                                    </li>
+
+                                    <!-- Lokasi -->
+                                    <li class="min-w-0">
+                                        <div class="mb-1">
+                                            <strong class="text-sm font-semibold text-gray-800 dark:text-[#FDF5EC] sm:text-base">
+                                                {{ __('messages.location') }}:
+                                            </strong>
+                                        </div>
+
+                                        <a
+                                            href="https://maps.app.goo.gl/o7soqw1UAc4AzDsH6"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            title="Buka lokasi di Google Maps"
+                                            class="group block min-w-0 max-w-full"
+                                        >
+                                            <span
+                                                class="inline-flex max-w-full items-start gap-1.5
+                                                       text-sm font-semibold leading-relaxed
+                                                       text-[#A65D3B] group-hover:underline
+                                                       dark:text-[#b35200] sm:text-base"
+                                            >
+                                                <span class="min-w-0 break-words">
+                                                    {{ __('messages.address_line1') }}
+                                                </span>
+
+                                                <svg
+                                                    class="mt-1 h-3.5 w-3.5 shrink-0 opacity-75"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    stroke-width="2"
+                                                    viewBox="0 0 24 24"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                                    />
+                                                </svg>
+                                            </span>
+
+                                            <span
+                                                class="mt-1 block break-words
+                                                       text-sm font-medium leading-relaxed
+                                                       text-[#5C3D28]
+                                                       dark:text-[#D8C6B6]"
+                                            >
+                                                {{ __('messages.address_line2') }}
+                                            </span>
+                                        </a>
+                                    </li>
+
                                 </ul>
                             </div>
                         </section>

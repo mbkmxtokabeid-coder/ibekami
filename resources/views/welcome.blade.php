@@ -107,6 +107,6 @@
     </section>
 
     {{-- Footer — render lazily --}}
-    <livewire:footer lazy />
+   <livewire:footer />
 
 @endsection

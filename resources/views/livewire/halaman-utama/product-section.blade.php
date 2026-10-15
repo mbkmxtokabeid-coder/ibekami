@@ -28,7 +28,7 @@
     });
 @endphp
 
-<section id="katalog" x-ignore class="cv-auto py-10 md:py-14 px-4 bg-[#FFF2E0] relative overflow-hidden">
+<section id="katalog" x-ignore class="py-10 md:py-14 px-4 bg-[#FFF2E0] relative overflow-hidden">
     <!-- Background Decorations -->
     <div class="absolute top-10 left-[-5%] w-72 h-72 bg-[#b35200]/10 rounded-full blur-[80px] pointer-events-none"></div>
     <div class="absolute bottom-10 right-[-5%] w-64 h-64 bg-white/40 rounded-full blur-[60px] pointer-events-none"></div>

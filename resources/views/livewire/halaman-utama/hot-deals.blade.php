@@ -7,7 +7,7 @@
   - Asymmetric border-radius for aesthetic image shapes
   - Mobile 2-Columns Layout Optimized
 --}}
-<section id="hot-deals" class="cv-auto py-10 md:py-14 px-4 bg-[#fdfaf7] relative overflow-hidden">
+<section id="hot-deals" class="py-10 md:py-14 px-4 bg-[#fdfaf7] relative overflow-hidden">
     
     <!-- Dekorasi Background Ringan (CSS Blur Blob) -->
     <div class="absolute top-0 right-[-5%] w-72 h-72 bg-[#b35200]/10 rounded-full blur-3xl pointer-events-none"></div>
