@@ -106,12 +106,7 @@
         </div>
     </section>
 
-<<<<<<< HEAD
-    {{-- Footer — render lazily --}}
-   <livewire:footer />
-=======
     {{-- Footer --}}
     <livewire:footer />
->>>>>>> 131e55f43f18d47f57cfbb6df99ce8c6a7956a40
 
 @endsection

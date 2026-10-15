@@ -142,6 +142,7 @@ return [
     'our_location' => 'Lokasi Kami',
     'click_for_map' => 'Klik untuk Peta',
     'open_map' => 'Buka Peta',
+    'close_map' => 'Tutup Peta',
     'all_rights_reserved' => 'Seluruh Hak Cipta Dilindungi',
     'privacy_policy_terms' => 'Kebijakan Privasi & Ketentuan',
     'ask_now' => 'Tanya Sekarang',

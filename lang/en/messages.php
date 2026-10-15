@@ -140,6 +140,7 @@ return [
     'our_location' => 'Our Location',
     'click_for_map' => 'Click for Map',
     'open_map' => 'Open Map',
+    'close_map' => 'Close Map',
     'all_rights_reserved' => 'All Rights Reserved',
     'privacy_policy_terms' => 'Privacy Policy & Terms',
     'ask_now' => 'Ask Now',
