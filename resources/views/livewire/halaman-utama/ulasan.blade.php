@@ -26,7 +26,6 @@
                 </div>
             </div>
         </div>
-        </div>
 
         <!-- Auto-scroll Carousel with Alpine.js -->
         <div class="relative w-full overflow-hidden"

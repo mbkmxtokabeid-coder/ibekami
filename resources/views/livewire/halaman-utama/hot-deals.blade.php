@@ -16,9 +16,9 @@
     <div class="max-w-7xl mx-auto relative z-10">
         
         <!-- Header Section -->
-        <div class="mb-6 sm:mb-8 relative">
+        <div class="mb-8 sm:mb-10 lg:mb-12 relative flex flex-col items-center justify-center">
             <!-- Label + Judul — tetap di tengah -->
-            <div class="text-center max-w-2xl mx-auto px-2">
+            <div class="text-center max-w-4xl mx-auto px-2">
                 <div class="flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] dark:text-[#ff9100] uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-2 sm:mb-3">
                     <span class="w-8 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100] shrink-0"></span>
                     <span class="whitespace-nowrap">{{ __('messages.special_offer') }}</span>
@@ -28,15 +28,15 @@
                 <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] dark:text-[#FDF5EC] tracking-tight leading-tight">
                     {{ __('messages.hot_deals_this_month') }}
                 </h2>
-                <!-- Subtitle di tengah (wrap responsif tanpa menabrak tombol) -->
-                <p class="text-[12px] md:text-sm text-[#886852] dark:text-[#9E8B7D] mt-2 leading-relaxed max-w-xl mx-auto">
+                <!-- Subtitle di tengah (sejajar 1 baris) -->
+                <p class="text-[12px] sm:text-[13px] md:text-sm text-[#886852] dark:text-[#9E8B7D] mt-2 leading-relaxed max-w-4xl mx-auto sm:whitespace-nowrap">
                     {{ __('messages.best_price_all_categories') }}
                 </p>
             </div>
             
             <!-- Tombol CTA Header — Center di Mobile & Tablet, Kanan di Desktop (lg+) -->
-            <div class="mt-4 sm:mt-5 lg:mt-0 lg:absolute lg:right-0 lg:bottom-0 flex items-center justify-center lg:justify-end shrink-0">
-                <a href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F" 
+            <div class="mt-4 sm:mt-5 lg:mt-0 lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 flex items-center justify-center lg:justify-end shrink-0">
+                <a href="https://wa.me/628170769999?text={{ rawurlencode(__('messages.wa_default_message')) }}" 
                    target="_blank"
                    rel="noopener noreferrer"
                    @click.throttle.2000ms
@@ -66,7 +66,7 @@
             @forelse($deals as $index => $deal)
             <!-- Kartu Individu -->
             <a wire:key="deal-{{ $deal->id }}"
-               href="https://wa.me/628170769999?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20produk%20{{ urlencode($deal->name) }}%20dari%20Website%20Ibekami.id.%20Bisa%20bantu%20untuk%20info%20lebih%20lanjut%3F"
+               href="https://wa.me/628170769999?text={{ rawurlencode(__('messages.wa_product_message', ['product' => $deal->name])) }}"
                target="_blank"
                rel="noopener noreferrer"
                @click.throttle.2000ms

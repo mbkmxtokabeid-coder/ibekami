@@ -243,5 +243,9 @@ return [
     'popular_recommendations' => 'Popular Pages',
     'need_help_404' => 'Need quick assistance or order consultation?',
     'contact_admin' => 'Contact Admin on WhatsApp',
+
+    // WhatsApp Pre-filled Messages
+    'wa_default_message' => 'Hello Admin, I am interested in products from the Ibekami.id website. Could you provide more information?',
+    'wa_product_message' => 'Hello Admin, I am interested in the product :product from the Ibekami.id website. Could you provide more information?',
 ];
 
