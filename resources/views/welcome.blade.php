@@ -105,6 +105,7 @@
             </div>
         </div>
     </section>
+    {{-- Footer --}}
     <livewire:footer />
 
 @endsection

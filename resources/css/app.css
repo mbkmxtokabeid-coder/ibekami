@@ -278,14 +278,26 @@ html.dark .shadow-2xl {
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Footer White Action Buttons (Always White Background + Black Text in all modes) */
-#footer .btn-white-action,
-html.dark #footer .btn-white-action {
+/* Footer Action Buttons (White in light mode, Brand Orange in dark mode) */
+#footer .btn-white-action {
     background-color: #FFFFFF !important;
     color: #130D08 !important;
 }
 
-#footer .btn-white-action *,
+#footer .btn-white-action * {
+    color: #130D08 !important;
+    fill: #130D08 !important;
+}
+
+html.dark #footer .btn-white-action {
+    background-color: #ff9100 !important;
+    color: #130D08 !important;
+}
+
+html.dark #footer .btn-white-action:hover {
+    background-color: #e07d00 !important;
+}
+
 html.dark #footer .btn-white-action * {
     color: #130D08 !important;
     fill: #130D08 !important;
@@ -349,19 +361,27 @@ html.dark .card-glow:hover {
 
 /* Footer Map Container Background */
 .bg-map-container {
-    background-color: #FFF2E0;
+    background-color: #fceddf;
 }
 
 .bg-map-container:hover {
-    background-color: #FFE5C8;
+    background-color: #fae3cb;
 }
 
 html.dark .bg-map-container {
-    background-color: #000000 !important;
+    background-color: #1E140D !important;
 }
 
 html.dark .bg-map-container:hover {
-    background-color: #0a0a0a !important;
+    background-color: #2a1c12 !important;
+}
+
+.bg-map-pin {
+    background-color: #ead5be;
+}
+
+html.dark .bg-map-pin {
+    background-color: #342419 !important;
 }
 
 /* Offscreen rendering optimization for Mobile PageSpeed */

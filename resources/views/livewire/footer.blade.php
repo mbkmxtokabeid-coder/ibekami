@@ -87,7 +87,7 @@
             <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 opacity-95">{{ __('messages.our_location') }}</h4>
             
             <div x-data="{ mapLoaded: false }" class="relative group block w-full rounded-2xl overflow-hidden border-4 border-white/20 shadow-xl transition-all duration-300 hover:border-white/40">
-                <div class="relative w-full bg-[#fceddf] dark:bg-[#1E140D] overflow-hidden transition-colors duration-200" style="height: 300px; min-height: 300px;">
+                <div class="relative w-full bg-[#fceddf] bg-map-container dark:bg-[#1E140D] overflow-hidden transition-colors duration-200" style="height: 300px; min-height: 300px;">
                     
                     {{-- Google Maps Embed Iframe (Hanya dimuat ketika diklik) --}}
                     <template x-if="mapLoaded">
@@ -102,10 +102,10 @@
                     {{-- Preview Tampilan Peta Sebelum Diklik (Sesuai Desain Mockup) --}}
                     <div x-show="!mapLoaded" 
                          @click="mapLoaded = true"
-                         class="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer select-none bg-[#fceddf] dark:bg-[#20150d] transition-all duration-300 hover:bg-[#fae3cb] dark:hover:bg-[#2a1c12] pb-16">
+                         class="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer select-none bg-[#fceddf] bg-map-container dark:bg-[#20150d] transition-all duration-300 hover:bg-[#fae3cb] dark:hover:bg-[#2a1c12] pb-16">
                         
                         {{-- Lingkaran Pin Lokasi --}}
-                        <div class="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-[#ead5be] dark:bg-[#342419] flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] mb-3 group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-[#ead5be] bg-map-pin dark:bg-[#342419] flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] mb-3 group-hover:scale-110 transition-transform duration-300">
                             <svg class="w-7 h-7 sm:w-8 sm:h-8 text-[#2C1A0E] dark:text-[#FDF5EC]" viewBox="0 0 24 24" fill="currentColor">
                                 <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
                             </svg>
