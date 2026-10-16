@@ -45,12 +45,11 @@
             <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 opacity-95">{{ __('messages.contact') }}</h4>
             <div class="flex flex-col gap-5 text-sm">
                 <div>
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ $email }}"
-                       onclick="if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) { window.location.href = 'mailto:{{ $email }}'; return false; }"
+                    <a href="https://mail.google.com/mail/?to={{ $email }}&tf=cm"
                        target="_blank"
                        rel="noopener noreferrer"
-                       aria-label="Kirim email ke {{ $email }}"
-                       title="Kirim email ke {{ $email }}"
+                       aria-label="Kirim email ke {{ $email }} via Gmail"
+                       title="Kirim email ke {{ $email }} via Gmail"
                        class="group inline-flex items-center gap-3 text-white hover:text-white/80 transition-colors">
                         <svg class="w-5 h-5 text-white group-hover:scale-110 transition-transform shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>

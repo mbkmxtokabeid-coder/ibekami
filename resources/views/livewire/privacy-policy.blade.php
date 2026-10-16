@@ -340,8 +340,11 @@
                                         </div>
 
                                         <a
-                                            href="mailto:ikhtiarberkah1010@gmail.com"
-                                            title="Kirim email ke ikhtiarberkah1010@gmail.com"
+                                            href="https://mail.google.com/mail/?to=ikhtiarberkah1010@gmail.com&tf=cm"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            aria-label="Kirim email ke ikhtiarberkah1010@gmail.com via Gmail"
+                                            title="Kirim email ke ikhtiarberkah1010@gmail.com via Gmail"
                                             class="inline-flex max-w-full items-center gap-1
                                                    whitespace-nowrap text-xs font-semibold
                                                    leading-normal text-[#A65D3B]
