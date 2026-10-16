@@ -142,6 +142,7 @@ return [
     'our_location' => 'Lokasi Kami',
     'click_for_map' => 'Klik untuk Peta',
     'open_map' => 'Buka Peta',
+    'close_map' => 'Tutup Peta',
     'all_rights_reserved' => 'Seluruh Hak Cipta Dilindungi',
     'privacy_policy_terms' => 'Kebijakan Privasi & Ketentuan',
     'ask_now' => 'Tanya Sekarang',
@@ -218,10 +219,51 @@ return [
     'no_category' => 'Belum ada kategori',
     'consultation_desc' => 'Konsultasi & pemesanan langsung dengan admin kami.',
 
+    // Layanan Unggulan SEO Medan
+    'services_badge' => 'LAYANAN TERLENGKAP DI MEDAN',
+    'services_title' => 'Pusat Plakat Akrilik, Suvenir & Cetak Digital di Medan',
+    'services_subtitle' => 'Solusi lengkap percetakan digital express, suvenir kustom, dan plakat akrilik terpercaya dengan pengerjaan cepat dan kualitas premium di Kota Medan.',
+    
+    'service_1_title' => 'Plakat Akrilik di Medan',
+    'service_1_desc' => 'Jasa pembuatan plakat akrilik di Medan untuk wisuda, penghargaan, piala kejuaraan, plakat kado, dan kenang-kenangan. Dikerjakan dengan mesin potong laser canggih sehingga sudut presisi, bening, dan rapi.',
+    'service_1_tag' => 'Potong Laser · Bening & Tebal',
+
+    'service_2_title' => 'Suvenir di Medan',
+    'service_2_desc' => 'Produsen suvenir di Medan terlengkap. Melayani pembuatan tumbler kustom grafir nama/logo, mug keramik, gantungan kunci, flashdisk kayu, hingga payung untuk acara personal maupun instansi.',
+    'service_2_tag' => 'Tumbler Grafir · Souvenir Custom',
+
+    'service_3_title' => 'Aneka Produk Cetak Digital di Medan',
+    'service_3_desc' => 'Pusat aneka produk cetak digital di Medan kualitas warna tajam dan anti pudar. Dari cetak brosur, flyer promosi, leaflet, sertifikat penghargaan, kalender dinding & meja, hingga company profile kantor.',
+    'service_3_tag' => 'Warna Tajam · Kertas Premium',
+
+    'service_4_title' => 'Percetakan Digital di Medan',
+    'service_4_desc' => 'Layanan percetakan digital di Medan berkecepatan tinggi dengan standar kualitas industri. Melayani cetak dokumen warna, proposal, booklet jilid kawat/spiral, hingga cetakan promosi bisnis satuan dan partai besar.',
+    'service_4_tag' => 'Cetak Express · Siap Cetak Cepat',
+
+    'service_5_title' => 'Cetak Kartu Nama di Medan',
+    'service_5_desc' => 'Jasa cetak kartu nama di Medan untuk profesional, eksekutif, dan pelaku usaha. Tersedia pilihan kertas Art Carton tebal 260–310 gsm, tekstur mewah, laminasi doff / glossy, dan potong sudut rounded elegan.',
+    'service_5_tag' => 'Art Carton Tebal · Laminasi Doff/Glossy',
+
+    'service_6_title' => 'Cetak Spanduk & Banner di Medan',
+    'service_6_desc' => 'Percetakan cetak spanduk & banner di Medan bahan flexi outdoor tahan panas & hujan. Menyediakan spanduk promosi toko, baliho, X-Banner, Y-Banner, dan Roll-Up Banner praktis untuk pameran atau event kantor.',
+    'service_6_tag' => 'Flexi Tahan Cuaca · X-Banner & Roll-Up',
+
+    'service_7_title' => 'Cetak Stiker di Medan',
+    'service_7_desc' => 'Solusi cetak stiker di Medan untuk label kemasan produk makanan, minuman, kosmetik, dan branding. Pilihan bahan stiker vinyl susu anti-air, stiker transparan, stiker cromo, dan cutting die-cut / kiss-cut rapi.',
+    'service_7_tag' => 'Vinyl Anti Air · Cutting Kiss-Cut & Die-Cut',
+
+    'service_8_title' => 'Cetak Tas Bingkisan di Medan',
+    'service_8_desc' => 'Layanan cetak tas bingkisan di Medan untuk kebutuhan goodie bag spunbond seminar, tote bag kanvas promosi, tas hajatan, ulang tahun, dan shopping bag berlogo custom dengan sablon/print tahan lama.',
+    'service_8_tag' => 'Spunbond & Kanvas · Goodie Bag Event',
+
+    'service_9_title' => 'Paket Suvenir Perusahaan di Medan',
+    'service_9_desc' => 'Pengadaan paket suvenir perusahaan di Medan dan corporate gift set eksklusif. Paket lengkap notebook agenda, tumbler grafir, pulpen metal, lanyard, dan flashdisk dalam hardbox mewah berlogo instansi/perusahaan Anda.',
+    'service_9_tag' => 'Corporate Gift Set · Seminar Kit VIP',
+
     // FAQ & About Section
     'faq_badge' => 'TANYA JAWAB',
     'faq_title' => 'Pertanyaan yang Sering Diajukan',
-    'faq_subtitle' => 'Temukan jawaban seputar pembuatan plakat akrilik, tumbler grafir, suvenir, cetak kartu nama, spanduk, stiker, hingga tas bingkisan di Medan.',
+    'faq_subtitle' => 'Temukan jawaban seputar pembuatan plakat akrilik, tumbler grafir, suvenir, cetak kartu nama, spanduk banner, stiker, cetak tas bingkisan, hingga paket suvenir perusahaan di Medan.',
     'about_title' => 'Percetakan Digital & Produsen Suvenir Kustom di Medan',
     'about_desc' => 'IBEKAMI (Ikhtiar Berkah, Ekonomi Kreatif Asli Medan Indonesia) hadir sebagai solusi percetakan digital dan produsen suvenir kustom terpercaya di Medan, Sumatera Utara. Kami melayani pembuatan plakat akrilik, tumbler grafir, suvenir, cetak kartu nama, cetak spanduk & banner, cetak stiker, cetak tas bingkisan, aneka produk cetak digital, hingga paket suvenir perusahaan. Didukung fasilitas mesin cetak UV modern serta pemotong laser presisi tinggi, IBEKAMI menghadirkan cetakan tajam, rapi, dan cepat dengan harga terjangkau, baik untuk pesanan satuan maupun partai besar perorangan, instansi pemerintah, BUMN, dan perusahaan swasta di Medan.',
     
@@ -240,8 +282,8 @@ return [
     'faq_q5' => 'Apa saja bahan plakat akrilik yang tersedia dan berapa lama proses pengerjaannya di Medan?',
     'faq_a5' => 'Kami memproduksi plakat akrilik di Medan menggunakan akrilik premium berkualitas bening maupun warna (ketebalan 2mm sampai 20mm), plakat kayu kombinasi logam/akrilik, plakat resin, dan kristal. Dipotong dengan mesin pemotong laser presisi tinggi sehingga sudutnya sangat rapi dan halus. Pesanan kilat atau satuan di Medan selesai dalam 1–2 hari kerja, sedangkan pesanan partai besar suvenir berkisar 3–5 hari kerja.',
     
-    'faq_q6' => 'Apakah melayani pengiriman pesanan suvenir dan cetak digital ke seluruh wilayah Medan dan sekitarnya?',
-    'faq_a6' => 'Tentu saja! Kami melayani pengantaran cepat via kurir instan ke seluruh kecamatan di Kota Medan (Medan Selayang, Medan Baru, Medan Sunggal, Medan Petisah, Medan Kota, dll) serta pengiriman ke seluruh Sumatera Utara dan penjuru Indonesia via ekspedisi terpercaya. Seluruh paket suvenir dan hasil cetakan dikemas ekstra aman menggunakan bubble wrap tebal agar sampai dalam kondisi prima.',
+    'faq_q6' => 'Apakah melayani cetak tas bingkisan, paket suvenir perusahaan, dan pengiriman ke seluruh Medan?',
+    'faq_a6' => 'Tentu saja! Kami memproduksi cetak tas bingkisan (goodie bag spunbond & kanvas) serta paket suvenir perusahaan di Medan lengkap dengan branding logo. Kami melayani pengantaran express ke seluruh kecamatan di Kota Medan (Medan Selayang, Medan Baru, Medan Sunggal, Medan Petisah, Medan Kota, dll) serta pengiriman ke seluruh Sumatera Utara dan Indonesia. Seluruh paket suvenir dan pesanan dikemas ekstra aman menggunakan bubble wrap tebal agar sampai dalam kondisi prima.',
 
     // 404 Error Page
     'error_404_badge' => 'Error 404',

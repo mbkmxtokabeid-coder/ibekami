@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+   <!-- ===================================================== -->
+   <!-- 1. Halaman Utama (Beranda / Homepage)                  -->
+   <!-- Mencakup Hero Banner, Promo, Produk Pilihan & Ulasan   -->
+   <!-- ===================================================== -->
    <url>
       <loc>https://ibekami.id/</loc>
-      <lastmod>2026-10-07</lastmod>
+      <lastmod>2026-10-16</lastmod>
       <changefreq>daily</changefreq>
       <priority>1.0</priority>
    </url>
+
+   <!-- ===================================================== -->
+   <!-- 2. Katalog Lengkap (Semua Produk)                      -->
+   <!-- ===================================================== -->
    <url>
       <loc>https://ibekami.id/katalog</loc>
       <lastmod>2026-09-25</lastmod>
@@ -13,20 +22,24 @@
       <priority>0.9</priority>
    </url>
 
+   <!-- ===================================================== -->
+   <!-- 3. Kategori & Jenis Layanan Produk                     -->
+   <!-- ===================================================== -->
+   <!-- Kategori: Akrilik -->
    <url>
       <loc>https://ibekami.id/katalog?type=akrilik</loc>
       <lastmod>2026-09-25</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
-   <!-- Kategori: Digital Printing -->
+   <!-- Kategori: Percetakan Digital -->
    <url>
       <loc>https://ibekami.id/katalog?type=percetakan-digital</loc>
       <lastmod>2026-09-25</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
-   <!-- Kategori: Plaque / Plakat -->
+   <!-- Kategori: Plakat -->
    <url>
       <loc>https://ibekami.id/katalog?type=plakat</loc>
       <lastmod>2026-09-25</lastmod>
@@ -40,7 +53,7 @@
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
-   <!-- Kategori: Souvenir / Merchandise -->
+   <!-- Kategori: Suvenir -->
    <url>
       <loc>https://ibekami.id/katalog?type=suvenir</loc>
       <lastmod>2026-09-25</lastmod>
@@ -48,16 +61,116 @@
       <priority>0.8</priority>
    </url>
 
+   <!-- ===================================================== -->
+   <!-- 4. Halaman Detail Produk (Tersusun Rapi per Kategori)  -->
+   <!-- ===================================================== -->
+
+   <!-- ── Subkategori Produk: Percetakan Digital ── -->
+   <!-- Produk: Roll Banner -->
+   <url>
+      <loc>https://ibekami.id/katalog/roll-banner</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <!-- Produk: X-Banner Kemenkes -->
+   <url>
+      <loc>https://ibekami.id/katalog/x-banner-kemenkes</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- ── Subkategori Produk: Plakat ── -->
+   <!-- Produk: Plakat Sport Cular -->
+   <url>
+      <loc>https://ibekami.id/katalog/plakat-sport-cular</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <!-- Produk: Plakat Turnamen Futsal -->
+   <url>
+      <loc>https://ibekami.id/katalog/plakat-turnamen-futsal</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <!-- Produk: Plakat Penghormatan Pertamina -->
+   <url>
+      <loc>https://ibekami.id/katalog/plakat-penghormatan-pertamina</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- ── Subkategori Produk: Suvenir ── -->
+   <!-- Produk: Pena Anugerah Gemilang -->
+   <url>
+      <loc>https://ibekami.id/katalog/pena-anugerah-gemilang</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <!-- Produk: Mug Ibekami -->
+   <url>
+      <loc>https://ibekami.id/katalog/mug-ibekami</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <!-- Produk: Suvenir Kotak Tumbler -->
+   <url>
+      <loc>https://ibekami.id/katalog/suvenir-kotak-tumbler</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <!-- Produk: Tumbler Olahraga Gunung -->
+   <url>
+      <loc>https://ibekami.id/katalog/tumbler-olahraga-gunung</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <!-- Produk: Tumbler Olahraga 4.0/25 -->
+   <url>
+      <loc>https://ibekami.id/katalog/tumbler-olahraga-4025</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <!-- Produk: Mug Legenda Danau Toba -->
+   <url>
+      <loc>https://ibekami.id/katalog/mug-legenda-danau-toba</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <!-- Produk: Pena Bank Sumut -->
+   <url>
+      <loc>https://ibekami.id/katalog/pena-bank-sumut</loc>
+      <lastmod>2026-09-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- ===================================================== -->
+   <!-- 5. Fasilitas Mesin & Produksi                          -->
+   <!-- ===================================================== -->
    <url>
       <loc>https://ibekami.id/mesin</loc>
-      <lastmod>2026-10-07</lastmod>
+      <lastmod>2026-10-16</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.7</priority>
    </url>
 
+   <!-- ===================================================== -->
+   <!-- 6. Informasi Legalitas & Kebijakan Privasi             -->
+   <!-- ===================================================== -->
    <url>
       <loc>https://ibekami.id/privacy-policy</loc>
-      <lastmod>2026-10-07</lastmod>
+      <lastmod>2026-10-16</lastmod>
       <changefreq>yearly</changefreq>
       <priority>0.5</priority>
    </url>

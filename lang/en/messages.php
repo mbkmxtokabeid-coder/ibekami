@@ -140,6 +140,7 @@ return [
     'our_location' => 'Our Location',
     'click_for_map' => 'Click for Map',
     'open_map' => 'Open Map',
+    'close_map' => 'Close Map',
     'all_rights_reserved' => 'All Rights Reserved',
     'privacy_policy_terms' => 'Privacy Policy & Terms',
     'ask_now' => 'Ask Now',
@@ -206,10 +207,51 @@ return [
     'address_line1' => 'SETIA BUDI POINT COMPLEX',
     'address_line2' => 'Setia Budi Street No. D-10, Tj. Sari, Medan Selayang District, Medan City',
 
+    // Services SEO Medan
+    'services_badge' => 'MOST COMPLETE SERVICES IN MEDAN',
+    'services_title' => 'Acrylic Plaques, Souvenirs & Digital Printing in Medan',
+    'services_subtitle' => 'Complete digital printing express, promotional souvenirs, and custom acrylic plaques with fast turnaround and premium quality in Medan, North Sumatra.',
+    
+    'service_1_title' => 'Acrylic Plaques in Medan',
+    'service_1_desc' => 'Custom acrylic plaque production in Medan for graduations, corporate awards, sports trophies, and mementos. Manufactured with high-precision laser cutting for crystal clear and smooth finishes.',
+    'service_1_tag' => 'Laser Cut · Crystal Clear',
+
+    'service_2_title' => 'Custom Souvenirs in Medan',
+    'service_2_desc' => 'Most comprehensive souvenir maker in Medan. Providing laser-engraved tumblers, ceramic mugs, keychains, wooden flash drives, and promotional umbrellas for events and corporate branding.',
+    'service_2_tag' => 'Laser Engraved · Custom Souvenir',
+
+    'service_3_title' => 'Digital Printing Products in Medan',
+    'service_3_desc' => 'High-resolution digital printing products in Medan with vivid and fade-resistant colors. From brochures, promotional flyers, certificates, desk & wall calendars, to company profiles.',
+    'service_3_tag' => 'Vivid Colors · Premium Paper',
+
+    'service_4_title' => 'Digital Printing Services in Medan',
+    'service_4_desc' => 'High-speed digital printing services in Medan with industrial-grade standards. Catering to documents, proposals, wire/spiral bound booklets, and marketing collaterals for retail and bulk orders.',
+    'service_4_tag' => 'Express Printing · Quick Turnaround',
+
+    'service_5_title' => 'Business Card Printing in Medan',
+    'service_5_desc' => 'Business card printing in Medan for executives and businesses. Available on thick Art Carton (260–310 gsm), luxury textured papers, with matte/gloss lamination and elegant rounded corners.',
+    'service_5_tag' => 'Thick Art Carton · Matte/Glossy Finish',
+
+    'service_6_title' => 'Banners & Spanduk Printing in Medan',
+    'service_6_desc' => 'Outdoor & indoor banner printing in Medan using weather-resistant flexi material. Supplying shop banners, billboards, X-Banners, and Roll-Up banners for expos and seminars.',
+    'service_6_tag' => 'Weather Resistant · Roll-Up & X-Banner',
+
+    'service_7_title' => 'Sticker & Label Printing in Medan',
+    'service_7_desc' => 'Sticker printing in Medan for food, beverage, and cosmetic packaging. Featuring waterproof vinyl, transparent stickers, cromo, and precise kiss-cut or die-cut trimming.',
+    'service_7_tag' => 'Waterproof Vinyl · Kiss-Cut & Die-Cut',
+
+    'service_8_title' => 'Goodie Bag & Tote Bag in Medan',
+    'service_8_desc' => 'Custom goodie bag and tote bag printing in Medan for corporate seminars, events, birthdays, and branded shopping bags with durable, high-quality printing.',
+    'service_8_tag' => 'Spunbond & Canvas · Event Goodie Bag',
+
+    'service_9_title' => 'Corporate Souvenir Packages in Medan',
+    'service_9_desc' => 'Corporate gift sets and VIP souvenir packages in Medan. Complete sets of custom notebooks, engraved tumblers, metal pens, lanyards, and USBs in luxury branded gift boxes.',
+    'service_9_tag' => 'Corporate Gift Sets · VIP Seminar Kits',
+
     // FAQ & About Section
     'faq_badge' => 'FAQ',
     'faq_title' => 'Frequently Asked Questions',
-    'faq_subtitle' => 'Find clear answers about custom acrylic plaques, engraved tumblers, souvenirs, business cards, banners, stickers, and express digital printing in Medan.',
+    'faq_subtitle' => 'Find clear answers about custom acrylic plaques, engraved tumblers, souvenirs, business cards, banners, stickers, gift bags, and corporate packages in Medan.',
     'about_title' => 'Trusted Custom Printing & Souvenir Maker in Medan',
     'about_desc' => 'IBEKAMI is here as a trusted digital printing solution and custom souvenir manufacturer in Medan, North Sumatra. We specialize in custom acrylic plaques, engraved tumblers, souvenirs, business cards, banners, stickers, gift bags, digital printing products, and corporate souvenir packages. Powered by modern UV flatbed printing and high-precision laser cutting, we deliver sharp, fast, and high-quality results at friendly prices—welcoming both single-item and bulk orders for individuals, businesses, state-owned enterprises (BUMN), and organizations in Medan.',
     
@@ -228,8 +270,8 @@ return [
     'faq_q5' => 'What materials are used for acrylic plaques and what is the production lead time in Medan?',
     'faq_a5' => 'We craft acrylic plaques in Medan using premium clear or colored cast acrylic (2mm to 20mm thickness), wood with metal accents, resin, and crystal. Cut with high-speed CO2 laser machines for smooth, polished edges. Express single orders in Medan are completed within 1–2 business days, while bulk souvenir orders take 3–5 business days.',
     
-    'faq_q6' => 'Does IBEKAMI deliver souvenirs and printed goods across Medan and other regions?',
-    'faq_a6' => 'Yes! We offer instant courier delivery across all subdistricts of Medan (Medan Selayang, Medan Baru, Medan Sunggal, Medan Petisah, etc.) as well as delivery across North Sumatra and throughout Indonesia via reliable cargo carriers. Every package is reinforced with thick bubble wrap to guarantee safe arrival.',
+    'faq_q6' => 'Does IBEKAMI deliver gift bags, souvenir packages, and goods across Medan?',
+    'faq_a6' => 'Yes! We print custom gift bags (spunbond & canvas goodie bags) and assemble corporate souvenir packages in Medan. We offer instant courier delivery across all subdistricts of Medan (Medan Selayang, Medan Baru, Medan Sunggal, Medan Petisah, etc.) as well as delivery across North Sumatra and throughout Indonesia via reliable cargo carriers. Every package is reinforced with thick bubble wrap to guarantee safe arrival.',
 
     // 404 Error Page
     'error_404_badge' => 'Error 404',

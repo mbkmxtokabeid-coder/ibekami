@@ -1,25 +1,25 @@
 @extends('layouts.app')
 
-@section('title', 'Cetak Souvenir Custom Terdekat di Medan | Cepat & Terjangkau')
-@section('meta_description', 'Katalog produk percetakan express & souvenir custom terdekat di Medan. Melayani pesanan satuan, grosiran, partai besar & kecil cepat & harga terjangkau.')
+@section('title', 'Katalog Plakat Akrilik, Suvenir & Cetak Digital Medan | IBEKAMI')
+@section('canonical', 'https://ibekami.id/katalog')
+@section('meta_description', 'Katalog lengkap plakat akrilik di Medan, suvenir di Medan, cetak kartu nama, spanduk banner, stiker, hingga tas bingkisan. Pesan cepat satuan maupun grosir.')
+@section('meta_keywords', 'katalog plakat akrilik di medan, suvenir di medan, souvenir di medan, aneka produk cetak digital di medan, cetak kartu nama di medan, cetak spanduk & banner di medan, cetak stiker di medan, cetak tas bingkisan di medan, paket suvenir perusahaan di medan, tumbler grafir di medan')
 @section('og_image', asset('storage/banners/e840d922-8a26-4f10-98a3-80f53fb62364.webp'))
 
 @section('content')
 
 {{-- Structured Data: BreadcrumbList halaman Katalog --}}
-@if(config('app.env') === 'production')
 @php
     $katalogSchema = [
         '@context' => 'https://schema.org',
         '@type' => 'BreadcrumbList',
         'itemListElement' => [
-            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Beranda', 'item' => config('app.url')],
-            ['@type' => 'ListItem', 'position' => 2, 'name' => 'Katalog Produk', 'item' => route('katalog')],
+            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Beranda', 'item' => config('app.url', 'https://ibekami.id')],
+            ['@type' => 'ListItem', 'position' => 2, 'name' => 'Katalog Produk Cetak & Suvenir Medan', 'item' => route('katalog')],
         ],
     ];
 @endphp
 <script type="application/ld+json">{!! json_encode($katalogSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
-@endif
 
 <div class="min-h-screen bg-[#fff2e0] dark:bg-[#130D08] pt-24 lg:pt-28 transition-colors duration-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-12 sm:pt-4 sm:pb-14">

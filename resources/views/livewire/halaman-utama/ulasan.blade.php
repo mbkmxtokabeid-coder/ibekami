@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <!-- Auto-scroll Carousel with Alpine.js -->
+        <!-- Auto-scroll Carousel with Alpine.js (Scroll ke KANAN) -->
         <div class="relative w-full overflow-hidden"
              x-data="{
                 scrollPosition: 0,
@@ -37,9 +37,11 @@
                 lastTime: null,
                 
                 init() {
-                    // Defer layout reads to after paint — avoids forced reflow on init
                     requestAnimationFrame(() => {
+                        if (!this.$refs.track) return;
                         this.totalWidth = this.$refs.track.scrollWidth / 3;
+                        this.scrollPosition = this.totalWidth;
+                        this.$refs.track.style.transform = `translateX(-${this.scrollPosition}px)`;
                         this.startAutoScroll();
                     });
                 },
@@ -47,13 +49,13 @@
                 startAutoScroll() {
                     const step = (timestamp) => {
                         if (!this.lastTime) this.lastTime = timestamp;
-                        const delta = timestamp - this.lastTime;
+                        const delta = Math.min(timestamp - this.lastTime, 100);
                         this.lastTime = timestamp;
 
-                        if (!this.isPaused) {
-                            this.scrollPosition += delta * 0.04; // ~1px per 25ms
-                            if (this.scrollPosition >= this.totalWidth) {
-                                this.scrollPosition = 0;
+                        if (!this.isPaused && this.totalWidth > 0) {
+                            this.scrollPosition -= delta * 0.035;
+                            if (this.scrollPosition <= 0) {
+                                this.scrollPosition = this.totalWidth;
                             }
                             this.$refs.track.style.transform = `translateX(-${this.scrollPosition}px)`;
                         }
@@ -66,7 +68,7 @@
              @mouseleave="isPaused = false">
             
             <!-- Slider Track -->
-            <div x-ref="track" class="flex gap-6 transition-transform duration-100 ease-linear">
+            <div x-ref="track" class="flex gap-6 w-max shrink-0">
                 @php
                     // Duplikasi 3x untuk infinite loop
                     $loop = array_merge($reviews, $reviews, $reviews);

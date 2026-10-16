@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Produk Cetak Digital Medan, Plakat Akrilik & Suvenir | IBEKAMI')
+@section('title', 'Plakat Akrilik, Suvenir & Cetak Digital di Medan | IBEKAMI')
 @section('canonical', 'https://ibekami.id/')
-@section('meta_description', 'Solusi percetakan digital dan produsen suvenir kustom terpercaya di Medan. Melayani plakat akrilik, tumbler grafir laser, cetak kartu nama bisnis, spanduk banner, stiker, dan tas bingkisan di Medan. Cepat, murah, dan presisi.')
-@section('meta_keywords', 'suvenir di medan, souvenir di medan, tumbler grafir di medan, tumbler grafir laser di medan, kartu nama di medan, cetak kartu nama di medan, cetak spanduk dan banner di medan, cetak spanduk di medan, cetak banner di medan, cetak stiker di medan, plakat di medan, plakat akrilik di medan, cetak digital di medan, percetakan digital di medan, produk cetak digital medan, cetak tas bingkisan di medan, paket suvenir perusahaan di medan')
+@section('meta_description', 'Pusat plakat akrilik di Medan, suvenir di Medan & aneka produk percetakan digital di Medan. Melayani cetak kartu nama, spanduk & banner, stiker, tas bingkisan, hingga paket suvenir perusahaan cepat dan berkualitas.')
+@section('meta_keywords', 'plakat akrilik di medan, suvenir di medan, souvenir di medan, aneka produk cetak digital di medan, cetak digital di medan, percetakan digital di medan, cetak kartu nama di medan, cetak spanduk & banner di medan, cetak spanduk di medan, cetak banner di medan, cetak stiker di medan, cetak tas bingkisan di medan, paket suvenir perusahaan di medan, tumbler grafir di medan')
 @section('og_image', asset('storage/banners/428f232a-c988-4731-8cf7-ceec4874496c.webp'))
 
 @section('content')
@@ -11,8 +11,8 @@
     {{-- Hero Section — above the fold, render langsung --}}
     <livewire:halaman-utama.hero />
 
-    {{-- Hot Deals — render lazily --}}
-    <livewire:halaman-utama.hot-deals lazy />
+    {{-- Hot Deals — render langsung tanpa layout shift --}}
+    <livewire:halaman-utama.hot-deals />
 
     {{-- Product Section — render langsung tanpa double skeleton --}}
     <livewire:halaman-utama.product-section />
@@ -105,13 +105,6 @@
             </div>
         </div>
     </section>
-
-<<<<<<< HEAD
-    {{-- Footer — render lazily --}}
-   <livewire:footer />
-=======
-    {{-- Footer --}}
     <livewire:footer />
->>>>>>> 131e55f43f18d47f57cfbb6df99ce8c6a7956a40
 
 @endsection

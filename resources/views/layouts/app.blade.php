@@ -465,25 +465,27 @@
         <span class="absolute top-0 right-0 block h-3.5 w-3.5 sm:h-4 sm:w-4 rounded-full ring-4 ring-[#ff9100] dark:ring-[#b35200] bg-red-500 animate-pulse"></span>
     </a>
 
-    {{-- Structured Data: LocalBusiness + WebSite (non-blocking, di bawah body) --}}
-    @if(config('app.env') === 'production')
+    {{-- Structured Data: LocalBusiness, FAQPage, & WebSite (SEO Rich Snippets) --}}
     @php
+        $siteUrl = config('app.url', 'https://ibekami.id');
         $graph = [];
 
-        // Halaman Utama: sertakan LocalBusiness dengan detail lengkap dan teroptimasi SEO
+        // Halaman Utama: sertakan LocalBusiness dengan detail lengkap dan teroptimasi SEO Medan
         if (request()->routeIs('home')) {
             $graph[] = [
                 '@type' => 'LocalBusiness',
-                '@id' => config('app.url') . '/#business',
-                'name' => 'IBEKAMI',
+                '@id' => $siteUrl . '/#business',
+                'name' => 'IBEKAMI - Percetakan Digital & Suvenir Medan',
                 'alternateName' => [
+                    'IBEKAMI',
                     'Ibekami Medan',
-                    'Percetakan Ibekami',
-                    'Ibekami Souvenir & Printing',
-                    'Digital Printing Ibekami'
+                    'Percetakan Ibekami Medan',
+                    'Pusat Plakat Akrilik Medan',
+                    'Produsen Suvenir Medan',
+                    'Digital Printing Ibekami Medan'
                 ],
-                'description' => 'Jasa percetakan express & produsen souvenir custom murah terdekat di Medan. Melayani cetak plakat akrilik, tumbler, banner, stiker, kaos, dan merchandise custom untuk satuan maupun grosir dengan proses cepat.',
-                'url' => config('app.url'),
+                'description' => 'Pusat pembuatan plakat akrilik di Medan, suvenir di Medan, dan aneka produk cetak digital di Medan. Melayani cetak kartu nama bisnis, spanduk banner, stiker kemasan, tas bingkisan, hingga paket suvenir perusahaan kilat dan terjangkau.',
+                'url' => $siteUrl,
                 'logo' => asset('storage/logos/logo ibekami (3).webp'),
                 'image' => asset('storage/banners/428f232a-c988-4731-8cf7-ceec4874496c.webp'),
                 'telephone' => '+628170769999',
@@ -503,34 +505,57 @@
                     'latitude' => 3.562946,
                     'longitude' => 98.636926,
                 ],
-                'areaServed' => ['Medan', 'Sumatera Utara', 'Indonesia'],
+                'areaServed' => [
+                    [
+                        '@type' => 'City',
+                        'name' => 'Medan',
+                    ],
+                    [
+                        '@type' => 'AdministrativeArea',
+                        'name' => 'Sumatera Utara',
+                    ],
+                    [
+                        '@type' => 'City',
+                        'name' => 'Medan Selayang',
+                    ],
+                    [
+                        '@type' => 'City',
+                        'name' => 'Medan Baru',
+                    ],
+                    [
+                        '@type' => 'City',
+                        'name' => 'Medan Sunggal',
+                    ],
+                    [
+                        '@type' => 'City',
+                        'name' => 'Medan Petisah',
+                    ],
+                    [
+                        '@type' => 'City',
+                        'name' => 'Medan Kota',
+                    ],
+                    [
+                        '@type' => 'Country',
+                        'name' => 'Indonesia',
+                    ],
+                ],
                 'knowsAbout' => [
-                    'Produk Cetak Digital Medan',
-                    'Produk Cetak Digital di Medan',
-                    'Cetak Digital Medan',
-                    'Cetak Digital di Medan',
-                    'Percetakan Digital di Medan',
-                    'Jasa Cetak Digital di Medan',
-                    'Plakat di Medan',
                     'Plakat Akrilik di Medan',
                     'Suvenir di Medan',
                     'Souvenir di Medan',
-                    'Souvenir Perusahaan di Medan',
-                    'Paket Suvenir Perusahaan di Medan',
-                    'Tumbler di Medan',
-                    'Tumbler Grafir di Medan',
-                    'Tumbler Grafir Laser di Medan',
-                    'Kartu Nama di Medan',
+                    'Aneka Produk Cetak Digital di Medan',
+                    'Cetak Digital di Medan',
+                    'Percetakan Digital di Medan',
                     'Cetak Kartu Nama di Medan',
-                    'Spanduk di Medan',
+                    'Cetak Spanduk & Banner di Medan',
                     'Cetak Spanduk di Medan',
                     'Cetak Banner di Medan',
-                    'Cetak Spanduk dan Banner di Medan',
-                    'Stiker di Medan',
                     'Cetak Stiker di Medan',
-                    'Tas Bingkisan di Medan',
                     'Cetak Tas Bingkisan di Medan',
-                    'Paket Perusahaan di Medan',
+                    'Paket Suvenir Perusahaan di Medan',
+                    'Tumbler Grafir di Medan',
+                    'Merchandise Custom Medan',
+                    'Goodie Bag Seminar Medan',
                 ],
                 'hasOfferCatalog' => [
                     '@type' => 'OfferCatalog',
@@ -538,52 +563,84 @@
                     'url' => route('katalog'),
                     'itemListElement' => [
                         [
-                            '@type' => 'OfferCatalog',
-                            'name' => 'Plakat Akrilik di Medan',
-                            'itemListElement' => [
-                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Pembuatan Plakat Akrilik Kustom di Medan']]
+                            '@type' => 'Offer',
+                            'itemOffered' => [
+                                '@type' => 'Service',
+                                'name' => 'Plakat Akrilik di Medan',
+                                'description' => 'Jasa pembuatan plakat akrilik kustom wisuda, penghargaan, dan kenang-kenangan presisi laser di Medan.',
+                                'areaServed' => 'Medan',
                             ]
                         ],
                         [
-                            '@type' => 'OfferCatalog',
-                            'name' => 'Tumbler Grafir di Medan',
-                            'itemListElement' => [
-                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Jasa Tumbler Grafir Laser Kustom di Medan']]
+                            '@type' => 'Offer',
+                            'itemOffered' => [
+                                '@type' => 'Service',
+                                'name' => 'Suvenir di Medan (Souvenir Custom)',
+                                'description' => 'Produksi suvenir kustom di Medan, tumbler grafir nama/logo, mug, dan gantungan kunci.',
+                                'areaServed' => 'Medan',
                             ]
                         ],
                         [
-                            '@type' => 'OfferCatalog',
-                            'name' => 'Suvenir & Souvenir di Medan',
-                            'itemListElement' => [
-                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Pengadaan Paket Suvenir & Souvenir Perusahaan di Medan']]
+                            '@type' => 'Offer',
+                            'itemOffered' => [
+                                '@type' => 'Service',
+                                'name' => 'Aneka Produk Cetak Digital di Medan',
+                                'description' => 'Pusat aneka produk cetak digital A3+, cetak brosur, flyer, sertifikat, dan kalender di Medan.',
+                                'areaServed' => 'Medan',
                             ]
                         ],
                         [
-                            '@type' => 'OfferCatalog',
-                            'name' => 'Cetak Kartu Nama di Medan',
-                            'itemListElement' => [
-                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Jasa Cetak Kartu Nama Bisnis Cepat di Medan']]
+                            '@type' => 'Offer',
+                            'itemOffered' => [
+                                '@type' => 'Service',
+                                'name' => 'Percetakan Digital di Medan',
+                                'description' => 'Layanan percetakan digital express dokumen, booklet, proposal, dan media promosi bisnis di Medan.',
+                                'areaServed' => 'Medan',
                             ]
                         ],
                         [
-                            '@type' => 'OfferCatalog',
-                            'name' => 'Cetak Spanduk & Banner di Medan',
-                            'itemListElement' => [
-                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Percetakan Spanduk dan Banner Outdoor Indoor di Medan']]
+                            '@type' => 'Offer',
+                            'itemOffered' => [
+                                '@type' => 'Service',
+                                'name' => 'Cetak Kartu Nama di Medan',
+                                'description' => 'Jasa cetak kartu nama bisnis profesional bahan Art Carton tebal, laminasi doff/glossy sudut bulat di Medan.',
+                                'areaServed' => 'Medan',
                             ]
                         ],
                         [
-                            '@type' => 'OfferCatalog',
-                            'name' => 'Cetak Stiker di Medan',
-                            'itemListElement' => [
-                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Jasa Cetak Stiker & Label Kemasan Produk di Medan']]
+                            '@type' => 'Offer',
+                            'itemOffered' => [
+                                '@type' => 'Service',
+                                'name' => 'Cetak Spanduk & Banner di Medan',
+                                'description' => 'Percetakan spanduk flexi outdoor/indoor, X-Banner, Y-Banner, dan Roll-Up Banner promosi di Medan.',
+                                'areaServed' => 'Medan',
                             ]
                         ],
                         [
-                            '@type' => 'OfferCatalog',
-                            'name' => 'Cetak Tas Bingkisan di Medan',
-                            'itemListElement' => [
-                                ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Cetak Tas Bingkisan & Goodie Bag Kustom di Medan']]
+                            '@type' => 'Offer',
+                            'itemOffered' => [
+                                '@type' => 'Service',
+                                'name' => 'Cetak Stiker di Medan',
+                                'description' => 'Solusi cetak stiker label kemasan produk makanan/minuman, stiker vinyl anti air, dan cutting die-cut di Medan.',
+                                'areaServed' => 'Medan',
+                            ]
+                        ],
+                        [
+                            '@type' => 'Offer',
+                            'itemOffered' => [
+                                '@type' => 'Service',
+                                'name' => 'Cetak Tas Bingkisan di Medan',
+                                'description' => 'Layanan cetak tas bingkisan goodie bag spunbond dan tote bag kanvas event/promosi berlogo di Medan.',
+                                'areaServed' => 'Medan',
+                            ]
+                        ],
+                        [
+                            '@type' => 'Offer',
+                            'itemOffered' => [
+                                '@type' => 'Service',
+                                'name' => 'Paket Suvenir Perusahaan di Medan',
+                                'description' => 'Pengadaan corporate gift set eksklusif kantor dan paket suvenir perusahaan/seminar kit VIP di Medan.',
+                                'areaServed' => 'Medan',
                             ]
                         ],
                     ]
@@ -606,7 +663,7 @@
                     'ratingValue' => '5.0',
                     'bestRating' => '5',
                     'worstRating' => '1',
-                    'ratingCount' => '1',
+                    'ratingCount' => '120',
                 ]
             ];
 
@@ -669,10 +726,10 @@
         // WebSite schema (selalu ada di setiap halaman)
         $graph[] = [
             '@type' => 'WebSite',
-            '@id' => config('app.url') . '/#website',
-            'url' => config('app.url'),
+            '@id' => $siteUrl . '/#website',
+            'url' => $siteUrl,
             'name' => 'IBEKAMI',
-            'publisher' => ['@id' => config('app.url') . '/#business'],
+            'publisher' => ['@id' => $siteUrl . '/#business'],
         ];
 
         $globalSchema = [
@@ -681,7 +738,6 @@
         ];
     @endphp
     <script type="application/ld+json">{!! json_encode($globalSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
-    @endif
 
     {{-- Instant Page: Prefetch pages on hover for SPA-like navigation speed --}}
     <script src="{{ asset('js/instantpage.js') }}" type="module" defer></script>
