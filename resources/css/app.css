@@ -278,10 +278,14 @@ html.dark .shadow-2xl {
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Footer Action Buttons (White in light mode, Brand Orange in dark mode) */
+/* Footer Action Buttons (Always White with Dark Text as shown in reference) */
 #footer .btn-white-action {
     background-color: #FFFFFF !important;
     color: #130D08 !important;
+}
+
+#footer .btn-white-action:hover {
+    background-color: rgba(255, 255, 255, 0.95) !important;
 }
 
 #footer .btn-white-action * {
@@ -290,12 +294,12 @@ html.dark .shadow-2xl {
 }
 
 html.dark #footer .btn-white-action {
-    background-color: #ff9100 !important;
+    background-color: #FFFFFF !important;
     color: #130D08 !important;
 }
 
 html.dark #footer .btn-white-action:hover {
-    background-color: #e07d00 !important;
+    background-color: rgba(255, 255, 255, 0.95) !important;
 }
 
 html.dark #footer .btn-white-action * {
@@ -369,7 +373,7 @@ html.dark .card-glow:hover {
 }
 
 html.dark .bg-map-container {
-    background-color: #1E140D !important;
+    background-color: #20150d !important;
 }
 
 html.dark .bg-map-container:hover {
