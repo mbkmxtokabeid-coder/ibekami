@@ -740,7 +740,9 @@
     <script type="application/ld+json">{!! json_encode($globalSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
 
     {{-- Instant Page: Prefetch pages on hover for SPA-like navigation speed --}}
-    <script src="{{ asset('js/instantpage.js') }}" type="module" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module" defer></script>
+
+    {{-- <script src="{{ asset('js/instantpage.js') }}" type="module" defer></script> --}}
 
     {{-- Handle smooth scroll on page load for lazy-loaded hash elements --}}
     <script>

@@ -37,11 +37,22 @@
 
         <!-- Header -->
         <div class="text-center max-w-xl mx-auto mb-10 sm:mb-12">
-            <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-2 sm:mb-3">
+            {{-- <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#b35200] uppercase tracking-[0.2em] mb-2 sm:mb-3">
                 <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
                 {{ __('messages.our_collection') }}
                 <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
+            </div> --}}
+            {{-- <div class="flex items-center justify-center gap-3 text-xs sm:text-[13px] font-bold text-[#8c3b00] uppercase tracking-[0.2em] mb-2 sm:mb-3">
+                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
+                {{ __('messages.our_collection') }}
+                <span class="w-10 sm:w-12 h-[1px] bg-[#b35200]"></span>
+            </div> --}}
+            <div class="flex items-center justify-center gap-3 sm:gap-3 text-xs sm:text-[13px] font-bold text-[#803900] dark:text-[#ff9100] uppercase tracking-[0.2em]  mb-2 sm:mb-3">
+                    <span class="w-8 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100] shrink-0"></span>
+                    <span class="whitespace-nowrap">{{ __('messages.our_collection') }}</span>
+                    <span class="w-8 sm:w-12 h-[1px] bg-[#b35200] dark:bg-[#ff9100] shrink-0"></span>
             </div>
+           
             <h2 class="font-['Poppins',sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2C1A0E] tracking-tight leading-tight">
                 {{ __('messages.available_products') }}
             </h2>
