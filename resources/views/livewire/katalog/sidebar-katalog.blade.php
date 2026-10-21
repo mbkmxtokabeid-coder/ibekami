@@ -5,13 +5,13 @@
     <div class="lg:sticky lg:top-[76px] space-y-6">
 
         {{-- Main Sidebar Frame --}}
-        <div class="bg-[#fff2e0] dark:bg-[#1A120B] rounded-[40px] p-8 space-y-8 shadow-[0_20px_50px_rgba(166,78,47,0.15),0_10px_20px_rgba(0,0,0,0.05)] border border-white/50 dark:border-[#b35200]/20 transition-colors duration-200">
+        <div class="bg-[#ffe8ca] dark:bg-[#1A120B] rounded-[40px] p-8 space-y-8 shadow-[0_20px_50px_rgba(166,78,47,0.15),0_10px_20px_rgba(0,0,0,0.05)] border border-white/50 dark:border-[#b35200]/20 transition-colors duration-200">
 
             {{-- Search Section — desktop only --}}
             <div class="hidden lg:block">
-                <p class="text-[11px] font-black tracking-[0.15em] uppercase text-[#ff9100] dark:text-[#b35200] mb-4 ml-1">{{ __('messages.search_products') }}</p>
+                <p class="text-[11px] font-black tracking-[0.15em] uppercase text-[#804500] dark:text-[#b35200] mb-4 ml-1">{{ __('messages.search_products') }}</p>
                 <div class="relative group">
-                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/90 z-10"
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/90 z-10"
                          fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -20,7 +20,7 @@
                         wire:model.live.debounce.400ms="search"
                         type="text"
                         placeholder="{{ __('messages.search_products_placeholder') }}"
-                        class="w-full bg-[#ff9100] dark:bg-[#b35200] text-white placeholder-white/70 text-[13px] font-medium
+                        class="w-full bg-[#ff9100] dark:bg-[#b3520] text-black placeholder-black/70 text-[13px] font-medium
                                pl-12 pr-4 py-4 rounded-2xl border-none outline-none
                                shadow-[0_10px_20px_-5px_rgba(255,145,0,0.35)] dark:shadow-[0_10px_20px_-5px_rgba(179,82,0,0.35)] focus:ring-4 focus:ring-[#ff9100]/20 dark:focus:ring-[#b35200]/20 transition-all"
                     >
@@ -36,7 +36,7 @@
             }">
                 <button @click="open = !open"
                     class="w-full flex items-center justify-between mb-4 ml-1 outline-none group cursor-pointer">
-                    <p class="text-[11px] font-black tracking-[0.15em] uppercase text-[#7a5d48] dark:text-[#9E8B7D] group-hover:text-[#b35200] dark:group-hover:text-[#ff9100] transition-colors">{{ __('messages.category') }}</p>
+                    <p class="text-[11px] font-black tracking-[0.15em] uppercase text-[#513B2E] dark:text-[#9E8B7D] group-hover:text-[#b35200] dark:group-hover:text-[#ff9100] transition-colors">{{ __('messages.category') }}</p>
                     <svg class="w-4 h-4 text-[#b35200] dark:text-[#ff9100] transition-transform duration-300 mr-1"
                          :class="open ? 'rotate-180' : ''"
                          fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -168,8 +168,8 @@
 
         {{-- WhatsApp CTA Card --}}
         <div class="bg-[#ff9100] dark:bg-[#b35200] rounded-[32px] p-6 text-center shadow-[0_20px_40px_rgba(255,145,0,0.25)] dark:shadow-[0_20px_40px_rgba(179,82,0,0.25)] border-t border-white/20 transition-colors duration-200">
-            <p class="text-white font-black text-[16px] mb-1">{{ __('messages.need_help') }}</p>
-            <p class="text-white/80 text-[12px] mb-5 font-medium leading-relaxed">{{ __('messages.free_consultation') }}</p>
+            <p class="text-black font-black text-[16px] mb-1">{{ __('messages.need_help') }}</p>
+            <p class="text-black/80 text-[12px] mb-5 font-medium leading-relaxed">{{ __('messages.free_consultation') }}</p>
             <a href="https://wa.me/628170769999?text={{ rawurlencode(__('messages.wa_default_message')) }}"
                target="_blank"
                rel="noopener noreferrer"

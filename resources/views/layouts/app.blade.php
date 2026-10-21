@@ -81,7 +81,7 @@
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/poppins-black-latin.woff2') }}" crossorigin>
     
     {{-- Asynchronously load full Google Fonts weights after page load without delaying critical path --}}
-    <script>
+    {{-- <script>
         window.addEventListener('load', function() {
             var loadGf = function() {
                 var gf = document.createElement('link');
@@ -95,7 +95,7 @@
                 setTimeout(loadGf, 3000);
             }
         });
-    </script>
+    </script> --}}
     
     {{-- Inlined Self-hosted fonts CSS to eliminate a render-blocking HTTP request --}}
     <style>
@@ -738,12 +738,19 @@
         ];
     @endphp
     <script type="application/ld+json">{!! json_encode($globalSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
-
-    {{-- Instant Page: Prefetch pages on hover for SPA-like navigation speed --}}
-    <script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module" defer></script>
+    <script>
+    window.addEventListener('load', function() {
+        var s = document.createElement('script');
+        s.type = 'module';
+        s.src = "{{ asset('js/instantpage.js') }}";
+        document.body.appendChild(s);
+        });
+    </script>
+    {{-- Instant Page: Prefetch pages on hover for SPA-like navigation speed
+    <script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module" defer></script> --}}
 
     {{-- <script src="{{ asset('js/instantpage.js') }}" type="module" defer></script> --}}
-
+    
     {{-- Handle smooth scroll on page load for lazy-loaded hash elements --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {

@@ -37,7 +37,7 @@
                 wire:click="setCategory('{{ __('messages.all_products') }}')"
                 class="shrink-0 px-3.5 py-2 rounded-xl text-[12px] font-semibold border transition-all duration-200 active:scale-95 cursor-pointer select-none
                     {{ ($activeCategory === __('messages.all_products') || empty($activeCategory) || (count($selectedTypes) === 0 && count($selectedCategories) === 0))
-                        ? 'bg-[#ff9100] dark:bg-[#b35200] text-white border-[#ff9100] dark:border-[#b35200] shadow-md shadow-[#ff9100]/20'
+                        ? 'bg-[#ff9100] dark:bg-[#b35200] text-black border-[#ff9100] dark:border-[#b35200] shadow-md shadow-[#ff9100]/20'
                         : 'bg-white dark:bg-[#231811] text-[#7a5d48] dark:text-[#D8C6B6] border-[#e8d5c4] dark:border-white/10 hover:border-[#ff9100]/50' }}">
                 {{ __('messages.all_products') }}
             </button>
@@ -47,7 +47,7 @@
                 wire:click="setCategory('{{ $type['name'] }}')"
                 class="shrink-0 px-3.5 py-2 rounded-xl text-[12px] font-semibold border transition-all duration-200 active:scale-95 cursor-pointer select-none
                     {{ (in_array($type['name'], $selectedTypes) || (count($selectedTypes) === 0 && $activeCategory === $type['name']))
-                        ? 'bg-[#ff9100] dark:bg-[#b35200] text-white border-[#ff9100] dark:border-[#b35200] shadow-md shadow-[#ff9100]/20'
+                        ? 'bg-[#ff9100] dark:bg-[#b35200] text-black border-[#ff9100] dark:border-[#b35200] shadow-md shadow-[#ff9100]/20'
                         : 'bg-white dark:bg-[#231811] text-[#7a5d48] dark:text-[#D8C6B6] border-[#e8d5c4] dark:border-white/10 hover:border-[#ff9100]/50' }}">
                 {{ $type['name'] }}
             </button>
@@ -66,7 +66,7 @@
             class="relative shrink-0 flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl border transition-all duration-200 active:scale-90 hover:scale-105 cursor-pointer select-none
                 {{ count($selectedTypes) > 0 || count($selectedCategories) > 0
                     ? 'bg-[#ff9100] dark:bg-[#b35200] text-white border-[#ff9100] dark:border-[#b35200] shadow-md shadow-[#ff9100]/25'
-                    : 'bg-white dark:bg-[#231811] text-[#ff9100] dark:text-[#b35200] border-[#ff9100]/40 dark:border-[#b35200]/40 hover:bg-[#fff7ee] dark:hover:bg-[#2c1d15]' }}">
+                    : 'bg-white dark:bg-[#231811] text-black dark:text-[#b35200] border-[#ff9100]/40 dark:border-[#b35200]/40 hover:bg-[#fff7ee] dark:hover:bg-[#2c1d15]' }}">
             <svg class="w-4 h-4 transition-transform duration-200 group-hover:rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
             </svg>

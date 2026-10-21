@@ -73,9 +73,9 @@
                         <p class="text-[10px] font-bold text-[#A64E2F] dark:text-[#b35200] uppercase tracking-wider mb-1 group-hover:text-[#ff9100] dark:group-hover:text-[#b35200] transition-colors duration-200">
                             {{ $product['cat'] }}
                         </p>
-                        <h3 class="text-[13px] font-bold text-[#2C1A0E] dark:text-[#FDF5EC] group-hover:text-[#ff9100] dark:group-hover:text-[#b35200] leading-snug line-clamp-2 transition-colors duration-200">
+                        <p class="text-[13px] font-bold text-[#2C1A0E] dark:text-[#FDF5EC] group-hover:text-[#ff9100] dark:group-hover:text-[#b35200] leading-snug line-clamp-2 transition-colors duration-200">
                             {{ $product['name'] }}
-                        </h3>
+                        </p>
                     </div>
                 </a>
             @endforeach

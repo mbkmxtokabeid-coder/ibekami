@@ -59,8 +59,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         
         <!-- Floating Pill Container (Glassmorphism) -->
-        <div class="bg-[#ffdbac]/85 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_rgba(255,145,0,0.05)] rounded-full px-4 sm:px-5 py-2.5 flex items-center justify-between transition-all duration-300"
-             :class="scrolled ? 'bg-[#ffe8ca]/95 shadow-[0_12px_40px_rgba(255,145,0,0.08)]' : ''">
+        <div class="bg-[#ffe8ca] backdrop-blur-xl border border-white/10 shadow-[0_8px_30px_rgba(255,145,0,0.05)] rounded-full px-4 sm:px-5 py-2.5 flex items-center justify-between transition-all duration-300"
+             :class="scrolled ? 'bg-[#ffe8ca]/95 shadow-[0_12px_40px_rgba(0,0,0,0.08)]' : ''">
             
             <!-- 1. Logo Brand -->
             <a href="/" class="flex items-center gap-2.5 group shrink-0 outline-none" title="IBEKAMI">

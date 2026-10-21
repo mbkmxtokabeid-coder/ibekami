@@ -135,11 +135,11 @@
                 <!-- CONTACT TEXT -->
                 <div class="min-w-0">
 
-                    <h5 class="text-sm sm:text-lg lg:text-xl font-bold text-slate-900 dark:text-[#FDF5EC] uppercase tracking-tight truncate">
+                    <p class="text-sm sm:text-lg lg:text-xl font-bold text-slate-900 dark:text-[#FDF5EC] uppercase tracking-tight truncate">
                         {{ __('messages.start_your_project') }}
-                    </h5>
+                    </p>
 
-                    <p class="text-slate-400 dark:text-[#9E8B7D] text-xs sm:text-sm italic truncate pr-2">
+                    <p class="text-slate-700 dark:text-[#9E8B7D] text-xs sm:text-sm italic truncate pr-2">
                         {{ __('messages.lets_build_together') }}
                     </p>
 
